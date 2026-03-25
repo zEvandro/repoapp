@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <meta name="theme-color" content="#0b0e17"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-title" content="RepoApp"/>
+  <title>RepoApp</title>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, push, onValue, remove, set, serverTimestamp }
+      from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
+      authDomain:        "repoapp-1edbd.firebaseapp.com",
+      databaseURL:       "https://repoapp-1edbd-default-rtdb.firebaseio.com",
+      projectId:         "repoapp-1edbd",
+      storageBucket:     "repoapp-1edbd.firebasestorage.app",
+      messagingSenderId: "151491743077",
+      appId:             "1:151491743077:web:06aa81e8ce4c4e032f258c"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getDatabase(app);
+    const tasksRef = ref(db, "tarefas");
+
+    // ── ENDEREÇO PARSER ────────────────────────────────────────────────────
+    function parseEndereco(s) {
+      s = s.trim();
+      const reCompleto = /^B\s+(\d{3})\s+(\d{4})\s+(\d{2})$/i;
+      if (reCompleto.test(s)) return { completo: s.toUpperCase(), valido: true, erro: "" };
+
+      const p = s.split(/[-\/\s]+/).filter(Boolean);
+      if (p.length !== 3) return { valido: false, erro: 'Use: RUA-POSIÇÃO-NÍVEL  ex: "4-56-2"' };
+
+      const rua = parseInt(p[0]), pos = parseInt(p[1]), nivel = parseInt(p[2]);
+      if (isNaN(rua)||isNaN(pos)||isNaN(nivel)) return { valido: false, erro: "Apenas números" };
+      if (rua  < 1 || rua  > 4)  return { valido: false, erro: "Rua: 1 a 4" };
+      if (pos  < 1 || pos  > 88) return { valido: false, erro: "Posição: 1 a 88" };
+      if (nivel< 1 || nivel> 5)  return { valido: false, erro: "Nível: 1=picking, 2–5=altura" };
+
+      const nivelLabel = ["","Picking","2º nível","3º nível","4º nível","5º nível"][nivel];
+      const completo = `B ${String(rua).padStart(3,"0")} ${String(pos).padStart(4,"0")} ${String(nivel*10).padStart(2,"0")}`;
+      return { completo, valido: true, erro: "", rua, pos, nivel, nivelLabel };
+    }
+
+    // ── ESTADO ─────────────────────────────────────────────────────────────
+    let perfil = null;
+    let tarefas = [];
+
+    // ── RENDER ─────────────────────────────────────────────────────────────
+    function fmtHora(ts) {
+      if (!ts) return "";
+      return new Date(ts).toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+    }
+
+    function renderLogin() {
+      document.getElementById("app").innerHTML = `
+        <div class="login">
+          <div class="logo">R</div>
+          <h1>REPOAPP</h1>
+          <p class="sub">Reposição de Picking</p>
+          <div class="cards">
+            <button class="card" onclick="escolher('repositor')">
+              <span class="card-icon">📋</span>
+              <span class="card-title">REPOSITOR</span>
+              <span class="card-desc">Enviar endereço ao operador</span>
+            </button>
+            <button class="card" onclick="escolher('operador')">
+              <span class="card-icon">🏗️</span>
+              <span class="card-title">OPERADOR</span>
+              <span class="card-desc">Ver endereços para repor</span>
+            </button>
+          </div>
+        </div>`;
+    }
+
+    function renderRepositor() {
+      const ativas = tarefas.filter(t => t.status !== "concluido" && t.status !== "vazio");
+      const hist   = tarefas.filter(t => t.status === "concluido" || t.status === "vazio");
+      const alertas= tarefas.filter(t => t.status === "vazio" && !t.alertaVisto);
+
+      document.getElementById("app").innerHTML = `
+        <div class="topbar">
+          <span class="tlogo">REPO</span>
+          <span class="trole rep">📋 Repositor</span>
+          <span class="spacer"></span>
+          <span class="live"><span class="dot"></span>ao vivo</span>
+          <button class="btnout" onclick="sair()">Trocar</button>
+        </div>
+
+        ${alertas.map(t => `
+          <div class="alerta" id="al-${t.id}">
+            <span class="adot"></span>
+            <div>
+              <b>⚠️ Endereço vazio!</b><br>
+              <span>${t.endereco} — ${t.descricao||""}</span><br>
+              <small>Consulte o Basic e envie novo endereço.</small>
+            </div>
+            <button onclick="fecharAlerta('${t.id}')">✕</button>
+          </div>`).join("")}
+
+        <div class="main">
+          <div class="formcard">
+            <div class="ftitle">📦 Nova Reposição</div>
+
+            <label class="lbl">Endereço <small>ex: 4-56-2</small></label>
+            <input id="fEnd" class="inp" placeholder="4-56-2" oninput="previewEnd(this.value)"/>
+            <div id="previewEnd" class="preview hidden"></div>
+
+            <label class="lbl">Código do produto</label>
+            <input id="fCod" class="inp" placeholder="Código de barras"/>
+
+            <label class="lbl">Descrição</label>
+            <input id="fDesc" class="inp" placeholder="Nome do produto"/>
+
+            <label class="lbl">Tipo</label>
+            <div class="toggle">
+              <button class="tbtn active" id="tPick" onclick="setTipo('picking')">📦 Picking</button>
+              <button class="tbtn"        id="tPal"  onclick="setTipo('palete')">🏗️ Palete</button>
+            </div>
+
+            <button class="btnenv" onclick="enviar()">ENVIAR AO OPERADOR →</button>
+          </div>
+
+          ${ativas.length > 0 ? `
+            <div class="secao">EM ABERTO (${ativas.length})</div>
+            ${ativas.map(t => cardRepositor(t)).join("")}
+          ` : ""}
+
+          ${hist.length > 0 ? `
+            <div class="secao">HOJE — HISTÓRICO</div>
+            ${hist.map(t => cardRepositor(t)).join("")}
+            <button class="btnlimpar" onclick="limparTudo()">🗑️ Limpar tudo</button>
+          ` : ""}
+        </div>`;
+
+      // Repor valores do form se havia
+      if (window._formState) {
+        document.getElementById("fEnd").value  = window._formState.end  || "";
+        document.getElementById("fCod").value  = window._formState.cod  || "";
+        document.getElementById("fDesc").value = window._formState.desc || "";
+        if (window._formState.tipo === "palete") setTipo("palete");
+        previewEnd(window._formState.end || "");
+      }
+    }
+
+    function cardRepositor(t) {
+      const cor = { pendente:"#f59e0b", andamento:"#3b82f6", concluido:"#22c55e", vazio:"#ef4444" }[t.status];
+      const label = { pendente:"PENDENTE", andamento:"EM ANDAMENTO", concluido:"CONCLUÍDO", vazio:"END. VAZIO" }[t.status];
+      return `
+        <div class="card-task" style="border-left-color:${cor}">
+          <div class="ct-top">
+            <span class="ct-addr" style="color:${cor}">${t.endereco}</span>
+            <span class="chip" style="color:${cor};border-color:${cor}40;background:${cor}15">${label}</span>
+          </div>
+          <div class="ct-prod">${t.descricao||""}</div>
+          <div class="ct-meta">${t.tipo==="picking"?"📦 Picking":"🏗️ Palete"} · ${fmtHora(t.ts)}</div>
+        </div>`;
+    }
+
+    function renderOperador() {
+      const fila = tarefas.filter(t => t.status === "pendente" || t.status === "andamento");
+      const hist = tarefas.filter(t => t.status === "concluido" || t.status === "vazio");
+
+      document.getElementById("app").innerHTML = `
+        <div class="topbar">
+          <span class="tlogo">REPO</span>
+          <span class="trole oper">🏗️ Operador</span>
+          <span class="spacer"></span>
+          <span class="live"><span class="dot"></span>ao vivo</span>
+          <button class="btnout" onclick="sair()">Trocar</button>
+        </div>
+        <div class="main">
+          ${fila.length === 0 ? `
+            <div class="empty">
+              <div class="ei">🟢</div>
+              <div class="et">Sem tarefas</div>
+              <div class="es">Aguardando reposições.<br>A tela atualiza sozinha.</div>
+            </div>` :
+            fila.map(t => cardOperador(t)).join("")
+          }
+          ${hist.length > 0 ? `
+            <div class="secao">CONCLUÍDAS HOJE (${hist.length})</div>
+            ${hist.map(t => `
+              <div class="card-task" style="border-left-color:${t.status==="concluido"?"#22c55e":"#ef4444"};opacity:.7">
+                <div class="ct-top">
+                  <span class="ct-addr" style="color:${t.status==="concluido"?"#22c55e":"#ef4444"};font-size:20px">${t.endereco}</span>
+                  <span class="chip" style="color:${t.status==="concluido"?"#22c55e":"#ef4444"}">${t.status==="concluido"?"✅ FEITO":"⚠️ VAZIO"}</span>
+                </div>
+                <div class="ct-prod">${t.descricao||""}</div>
+                <div class="ct-meta">${fmtHora(t.ts)}</div>
+              </div>`).join("")}
+          ` : ""}
+        </div>`;
+    }
+
+    function cardOperador(t) {
+      const isPend = t.status === "pendente";
+      const isAnd  = t.status === "andamento";
+      const cor    = isPend ? "#f59e0b" : "#3b82f6";
+      return `
+        <div class="card-task op" style="border-left-color:${cor}">
+          <div class="addr-big" style="color:${cor}">${t.endereco}</div>
+          <div class="ct-prod">${t.descricao||""}</div>
+          <div class="ct-meta">${t.tipo==="picking"?"📦 Picking":"🏗️ Palete"} · ${fmtHora(t.ts)}</div>
+          <div class="ct-btns">
+            ${isPend ? `<button class="abtn blue" onclick="acao('${t.id}','andamento')">✊ RECEBI — VOU AGORA</button>` : ""}
+            ${isAnd  ? `
+              <button class="abtn green" onclick="acao('${t.id}','concluido')">✅ CONCLUÍDO</button>
+              <button class="abtn red"   onclick="acao('${t.id}','vazio')">⚠️ ENDEREÇO VAZIO</button>` : ""}
+          </div>
+        </div>`;
+    }
+
+    function render() {
+      if (!perfil)           renderLogin();
+      else if (perfil === "repositor") renderRepositor();
+      else                   renderOperador();
+    }
+
+    // ── AÇÕES ──────────────────────────────────────────────────────────────
+    window.escolher = (p) => { perfil = p; render(); };
+    window.sair     = ()  => { perfil = null; render(); };
+
+    let tipoAtual = "picking";
+    window.setTipo = (t) => {
+      tipoAtual = t;
+      document.getElementById("tPick")?.classList.toggle("active", t === "picking");
+      document.getElementById("tPal") ?.classList.toggle("active", t === "palete");
+    };
+
+    window.previewEnd = (v) => {
+      const el = document.getElementById("previewEnd");
+      if (!el) return;
+      if (!v.trim()) { el.classList.add("hidden"); return; }
+      const r = parseEndereco(v);
+      el.classList.remove("hidden");
+      if (r.valido) {
+        el.className = "preview ok";
+        el.innerHTML = `<span class="pok">✓</span><div><div class="pfull">${r.completo}</div>${r.nivelLabel ? `<div class="pdet">Rua ${r.rua} · Posição ${r.pos} · ${r.nivelLabel}</div>` : ""}</div>`;
+      } else {
+        el.className = "preview err";
+        el.innerHTML = `<span class="perr">✕</span><span style="font-size:11px;color:#ef4444">${r.erro}</span>`;
+      }
+    };
+
+    window.enviar = async () => {
+      const endRaw  = document.getElementById("fEnd")?.value  || "";
+      const cod     = document.getElementById("fCod")?.value  || "";
+      const desc    = document.getElementById("fDesc")?.value || "";
+      const r = parseEndereco(endRaw);
+
+      if (!r.valido)   { alert(r.erro || "Endereço inválido"); return; }
+      if (!desc.trim()){ alert("Informe a descrição do produto"); return; }
+
+      window._formState = null;
+      await push(tasksRef, {
+        endereco: r.completo,
+        codigo:   cod.trim(),
+        descricao:desc.trim(),
+        tipo:     tipoAtual,
+        status:   "pendente",
+        ts:       Date.now(),
+      });
+    };
+
+    window.acao = async (id, novoStatus) => {
+      const taskRef = ref(db, `tarefas/${id}`);
+      const task = tarefas.find(t => t.id === id);
+      if (task) await set(taskRef, { ...task, id: undefined, status: novoStatus });
+    };
+
+    window.fecharAlerta = (id) => {
+      const taskRef = ref(db, `tarefas/${id}`);
+      const task = tarefas.find(t => t.id === id);
+      if (task) set(taskRef, { ...task, id: undefined, alertaVisto: true });
+      document.getElementById(`al-${id}`)?.remove();
+    };
+
+    window.limparTudo = async () => {
+      if (!confirm("Limpar todas as tarefas de hoje?")) return;
+      await remove(tasksRef);
+    };
+
+    // ── FIREBASE LISTENER ──────────────────────────────────────────────────
+    onValue(tasksRef, (snap) => {
+      const data = snap.val() || {};
+      // Salva estado do form antes de re-render
+      if (perfil === "repositor") {
+        window._formState = {
+          end:  document.getElementById("fEnd")?.value,
+          cod:  document.getElementById("fCod")?.value,
+          desc: document.getElementById("fDesc")?.value,
+          tipo: tipoAtual,
+        };
+      }
+      tarefas = Object.entries(data).map(([id, v]) => ({ id, ...v }))
+        .sort((a, b) => b.ts - a.ts);
+      render();
+    });
+
+    // Boot
+    render();
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;700&display=swap');
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0b0e17;--s1:#131726;--s2:#1a1f32;--s3:#222840;--bd:#2c3454;
+      --am:#f59e0b;--bl:#3b82f6;--gr:#22c55e;--rd:#ef4444;
+      --tx:#dde3f5;--tx2:#8892b0;--mu:#4b5882;
+    }
+    html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif}
+    #app{display:flex;flex-direction:column;min-height:100dvh}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+
+    /* LOGIN */
+    .login{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+      padding:24px;background:radial-gradient(ellipse 80% 60% at 50% 0%,#1a2040,var(--bg) 70%)}
+    .logo{width:72px;height:72px;border-radius:18px;background:var(--am);display:flex;
+      align-items:center;justify-content:center;font-family:'Bebas Neue';font-size:40px;
+      color:#0b0e17;margin-bottom:20px;box-shadow:0 0 40px #f59e0b44}
+    .login h1{font-family:'Bebas Neue';font-size:44px;letter-spacing:3px;color:#fff}
+    .sub{font-size:12px;color:var(--tx2);letter-spacing:2px;text-transform:uppercase;margin-bottom:40px;margin-top:4px}
+    .cards{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+    .card{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:28px 24px;
+      cursor:pointer;transition:all .2s;width:160px;display:flex;flex-direction:column;
+      align-items:center;gap:8px;color:var(--tx)}
+    .card:hover{border-color:var(--am);background:var(--s2);transform:translateY(-2px)}
+    .card-icon{font-size:32px}
+    .card-title{font-family:'Bebas Neue';font-size:20px;letter-spacing:2px}
+    .card-desc{font-size:11px;color:var(--tx2);text-align:center;line-height:1.5}
+
+    /* TOPBAR */
+    .topbar{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 16px;height:52px;
+      display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:50;flex-shrink:0}
+    .tlogo{font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;color:var(--am)}
+    .trole{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:20px}
+    .rep{background:#f59e0b22;color:var(--am);border:1px solid #f59e0b44}
+    .oper{background:#3b82f622;color:var(--bl);border:1px solid #3b82f644}
+    .spacer{flex:1}
+    .live{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--mu)}
+    .dot{width:7px;height:7px;border-radius:50%;background:var(--gr);animation:blink 2s infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+    .btnout{background:transparent;border:1px solid var(--bd);color:var(--tx2);
+      font-size:11px;padding:5px 12px;border-radius:8px;cursor:pointer;font-weight:700}
+    .btnout:hover{border-color:var(--rd);color:var(--rd)}
+
+    /* MAIN */
+    .main{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:0}
+
+    /* FORM */
+    .formcard{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:20px;margin-bottom:14px}
+    .ftitle{font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;color:var(--am);margin-bottom:16px}
+    .lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+      color:var(--mu);margin-bottom:6px;display:block;margin-top:12px}
+    .lbl:first-of-type{margin-top:0}
+    .lbl small{font-size:9px;color:var(--mu);text-transform:none;letter-spacing:0;font-weight:400}
+    .inp{width:100%;background:var(--s2);border:1px solid var(--bd);color:var(--tx);
+      font-size:14px;font-weight:600;padding:11px 13px;border-radius:10px;outline:none;
+      font-family:'DM Sans';transition:border-color .15s}
+    .inp:focus{border-color:var(--am)}
+    .inp::placeholder{color:var(--mu);font-weight:400}
+
+    /* PREVIEW */
+    .preview{margin-top:7px;padding:8px 12px;border-radius:8px;display:flex;align-items:center;gap:8px}
+    .hidden{display:none}
+    .ok{background:#22c55e12;border:1px solid #22c55e40}
+    .err{background:#ef444412;border:1px solid #ef444440}
+    .pok{font-size:11px;color:var(--gr)}
+    .perr{font-size:11px;color:var(--rd)}
+    .pfull{font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;color:var(--gr);line-height:1}
+    .pdet{font-size:10px;color:var(--tx2);margin-top:2px}
+
+    /* TOGGLE */
+    .toggle{display:flex;gap:8px;margin-top:4px}
+    .tbtn{flex:1;padding:10px;border-radius:10px;border:1px solid var(--bd);background:var(--s2);
+      color:var(--tx2);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s}
+    .tbtn.active{background:var(--am);border-color:var(--am);color:#000}
+
+    /* BTN ENVIAR */
+    .btnenv{width:100%;padding:14px;background:var(--am);border:none;color:#000;
+      font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;border-radius:10px;
+      cursor:pointer;margin-top:16px;transition:all .15s}
+    .btnenv:hover{filter:brightness(1.1);transform:translateY(-1px)}
+
+    /* SEÇÃO */
+    .secao{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+      color:var(--mu);margin:16px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--bd)}
+
+    /* TASK CARD */
+    .card-task{background:var(--s1);border:1px solid var(--bd);border-left:3px solid var(--bd);
+      border-radius:16px;padding:14px;margin-bottom:10px;animation:si .2s ease}
+    @keyframes si{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+    .card-task.op{padding:18px}
+    .ct-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+    .ct-addr{font-family:'Bebas Neue';font-size:22px;letter-spacing:3px;flex:1}
+    .chip{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+      padding:3px 8px;border-radius:99px;border:1px solid var(--bd);color:var(--mu)}
+    .ct-prod{font-size:13px;font-weight:700;color:var(--tx);margin-bottom:2px}
+    .ct-meta{font-size:11px;color:var(--tx2)}
+
+    /* ADDR GRANDE (operador) */
+    .addr-big{font-family:'Bebas Neue';font-size:42px;letter-spacing:4px;line-height:1;margin-bottom:10px}
+
+    /* BOTÕES OPERADOR */
+    .ct-btns{display:flex;gap:8px;margin-top:14px}
+    .abtn{flex:1;padding:12px 6px;border-radius:10px;border:none;font-family:'Bebas Neue';
+      font-size:16px;letter-spacing:1.5px;cursor:pointer;transition:all .15s}
+    .abtn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+    .blue{background:var(--bl);color:#fff}
+    .green{background:var(--gr);color:#000}
+    .red{background:var(--rd);color:#fff}
+
+    /* ALERTA */
+    .alerta{background:#ef444414;border:1px solid #ef444440;border-radius:10px;
+      padding:12px 14px;margin:10px 16px 0;display:flex;align-items:flex-start;gap:10px;animation:si .2s ease}
+    .adot{width:8px;height:8px;border-radius:50%;background:var(--rd);flex-shrink:0;
+      margin-top:3px;animation:blink 1s infinite}
+    .alerta b{font-size:13px}
+    .alerta span{font-size:12px;color:var(--tx2)}
+    .alerta small{font-size:10px;color:var(--mu)}
+    .alerta button{background:transparent;border:none;color:var(--mu);cursor:pointer;font-size:16px;margin-left:auto}
+
+    /* EMPTY */
+    .empty{text-align:center;padding:60px 20px;color:var(--mu)}
+    .ei{font-size:44px;margin-bottom:12px;opacity:.4}
+    .et{font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;margin-bottom:6px;color:var(--tx2)}
+    .es{font-size:12px;line-height:1.7}
+
+    /* LIMPAR */
+    .btnlimpar{width:100%;padding:10px;background:transparent;border:1px solid var(--bd);
+      color:var(--mu);border-radius:10px;cursor:pointer;font-size:12px;font-weight:700;
+      margin-top:6px;transition:all .15s}
+    .btnlimpar:hover{border-color:var(--rd);color:var(--rd)}
+
+    /* CONFIG AVISO */
+    .config-aviso{background:#f59e0b15;border:1px solid #f59e0b44;border-radius:12px;
+      padding:16px;margin:20px 16px;font-size:12px;line-height:1.7;color:var(--tx2)}
+    .config-aviso b{color:var(--am);font-size:13px}
+    .config-aviso code{background:var(--s3);padding:2px 6px;border-radius:4px;color:var(--tx);font-size:11px}
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div style="display:flex;align-items:center;justify-content:center;height:100dvh;color:#4b5882;font-size:13px">
+      Carregando...
+    </div>
+  </div>
+</body>
+</html>
