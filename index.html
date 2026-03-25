@@ -15,7 +15,47 @@
     import { getDatabase, ref, push, onValue, remove, update }
       from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    const APP_VERSION = "v1.5";
+    const APP_VERSION = "v1.6";
+
+    // ── CONFIGURAÇÃO DE FONTE ─────────────────────────────────────────────
+    // Tamanhos do endereço principal: P / M / G / GG / Auto
+    const FONT_PRESETS = { P: 42, M: 56, G: 72, GG: 92, Auto: 0 };
+
+    function getFontSize() {
+      const saved = localStorage.getItem("repoapp-fontsize");
+      if (saved && FONT_PRESETS[saved] !== undefined) return saved;
+      return "Auto";
+    }
+
+    function setFontSize(preset) {
+      localStorage.setItem("repoapp-fontsize", preset);
+      aplicarFonte();
+      if (perfil === "operador") renderOperador();
+    }
+
+    function calcAutoFontSize() {
+      const w = window.innerWidth;
+      if (w <= 360) return 48;
+      if (w <= 414) return 58;
+      if (w <= 768) return 68;
+      return 80; // tablet
+    }
+
+    function getFontSizePx() {
+      const preset = getFontSize();
+      if (preset === "Auto") return calcAutoFontSize();
+      return FONT_PRESETS[preset];
+    }
+
+    function aplicarFonte() {
+      const px = getFontSizePx();
+      document.documentElement.style.setProperty("--addr-size", px + "px");
+      document.documentElement.style.setProperty("--addr-spacing", Math.max(2, Math.round(px * 0.07)) + "px");
+    }
+
+    window.addEventListener("resize", () => {
+      if (getFontSize() === "Auto") aplicarFonte();
+    });
 
     const firebaseConfig = {
       apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -236,7 +276,18 @@
           <span class="tsp"></span>
           <span class="tlive"><span class="dot"></span>ao vivo</span>
           <span class="tver">${APP_VERSION}</span>
+          <button class="tout tbtnconf" onclick="toggleConfig()" title="Ajustar fonte">⚙️</button>
           <button class="tout" onclick="sair()">Trocar</button>
+        </div>
+        <div id="configPanel" class="config-panel hidden">
+          <span class="config-label">Tamanho do endereço:</span>
+          <div class="config-btns">
+            ${Object.keys(FONT_PRESETS).map(k => `
+              <button class="cfg-btn ${getFontSize()===k?"cfg-ativo":""}" onclick="setFontSize('${k}');renderConfigBtns()">
+                ${k}${k==="Auto"?" 📱":""}
+              </button>`).join("")}
+          </div>
+          <span class="config-preview" id="cfgPreview">Endereço: B 004 0056 10</span>
         </div>
         <div class="main-op">
           ${fila.length===0?`
@@ -333,8 +384,22 @@
     }
 
     // ── AÇÕES ─────────────────────────────────────────────────────────────
-    window.escolher = p => { perfil=p; prevIds=null; render(); };
+    window.escolher = p => { perfil=p; prevIds=null; aplicarFonte(); render(); };
     window.sair     = () => { clearInterval(window._timerOp); perfil=null; render(); };
+
+    window.toggleConfig = () => {
+      const el = document.getElementById("configPanel");
+      if (el) el.classList.toggle("hidden");
+    };
+
+    window.renderConfigBtns = () => {
+      document.querySelectorAll(".cfg-btn").forEach(btn => {
+        const k = btn.textContent.trim().replace(" 📱","");
+        btn.classList.toggle("cfg-ativo", getFontSize() === k);
+      });
+      const prev = document.getElementById("cfgPreview");
+      if (prev) prev.style.fontSize = getFontSizePx() + "px";
+    };
 
     window.setTipo = t => {
       tipoAtual=t;
@@ -441,6 +506,7 @@
 
     // ── FIREBASE LISTENER ─────────────────────────────────────────────────
     onValue(tasksRef, snap=>{
+      aplicarFonte();
       if(perfil==="repositor"){
         window._fs={
           end: document.getElementById("fEnd")?.value,
@@ -466,6 +532,7 @@
       render();
     });
 
+    aplicarFonte();
     render();
   </script>
 
@@ -583,7 +650,7 @@
       font-family:'Bebas Neue';font-size:24px;letter-spacing:2px;opacity:0;pointer-events:none;white-space:nowrap}
     .tipo-main{font-family:'Bebas Neue';font-size:28px;letter-spacing:3px}
     /* ENDEREÇO ENORME — legível de longe, com luva */
-    .addr-main{font-family:'Bebas Neue';font-size:72px;letter-spacing:6px;color:var(--am);
+    .addr-main{font-family:'Bebas Neue';font-size:var(--addr-size,68px);letter-spacing:var(--addr-spacing,5px);color:var(--am);
       line-height:1;margin:10px 0 12px;word-break:break-all}
     .desc-main{font-size:16px;font-weight:700;color:var(--tx-op);margin-bottom:3px}
     .cod-main{font-size:13px;color:var(--tx2-op);margin-bottom:8px}
@@ -615,7 +682,17 @@
     .alerta b{font-size:13px}.alerta span{font-size:12px;color:var(--tx2)}.alerta small{font-size:10px;color:var(--mu)}
     .alerta button{background:transparent;border:none;color:var(--mu);cursor:pointer;font-size:16px;flex-shrink:0}
 
-    .empty{text-align:center;padding:60px 20px;color:var(--mu-op)}
+    .tbtnconf{font-size:15px;padding:4px 8px}
+    .config-panel{background:var(--s1-op);border-bottom:1px solid var(--bd-op);
+      padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;animation:si .2s ease}
+    .config-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--tx2-op);white-space:nowrap}
+    .config-btns{display:flex;gap:6px;flex-wrap:wrap}
+    .cfg-btn{padding:6px 14px;border-radius:8px;border:1px solid var(--bd-op);background:var(--s2-op);
+      color:var(--tx2-op);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;font-family:'DM Sans'}
+    .cfg-btn:hover{border-color:var(--am);color:var(--am)}
+    .cfg-ativo{background:var(--am)!important;border-color:var(--am)!important;color:#000!important}
+    .config-preview{font-family:'Bebas Neue';letter-spacing:4px;color:var(--am);
+      font-size:var(--addr-size,68px);line-height:1;opacity:.4;margin-left:auto;white-space:nowrap;overflow:hidden}
     .ei{font-size:44px;margin-bottom:12px;opacity:.4}
     .et{font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;margin-bottom:6px;color:var(--tx2-op)}
     .es{font-size:12px;line-height:1.7}
