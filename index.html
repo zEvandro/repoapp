@@ -110,7 +110,23 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
   font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;border-radius:10px;cursor:pointer;margin-top:16px;transition:all .15s}
 .btn-send:hover{filter:brightness(1.1);transform:translateY(-1px)}
 
-/* SECAO */
+/* FILTRO DE RUA */
+.filtro-bar{display:flex;gap:6px;padding:10px 16px;background:var(--s1-op);
+  border-bottom:1px solid var(--bd-op);overflow-x:auto;scrollbar-width:none;flex-shrink:0}
+.filtro-bar::-webkit-scrollbar{display:none}
+.filtro-btn{padding:7px 14px;border-radius:99px;border:1px solid var(--bd-op);background:var(--s2-op);
+  color:var(--tx2-op);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;
+  font-family:'DM Sans';transition:all .15s;display:flex;align-items:center;gap:5px}
+.filtro-btn:hover{border-color:var(--am);color:var(--am)}
+.filtro-ativo{background:var(--am)!important;border-color:var(--am)!important;color:#000!important}
+.filtro-n{background:rgba(0,0,0,0.2);border-radius:99px;font-size:10px;
+  padding:1px 6px;font-weight:800}
+.stat-row{display:flex;gap:8px;margin-bottom:14px}
+.stat-card{flex:1;background:var(--s1);border:1px solid var(--bd);border-radius:12px;
+  padding:12px 8px;text-align:center}
+.stat-card-op{background:var(--s1-op);border-color:var(--bd-op)}
+.stat-num{font-family:'Bebas Neue';font-size:28px;letter-spacing:1px;line-height:1;margin-bottom:3px}
+.stat-lbl{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu)}
 .secao{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
   color:var(--mu);margin:16px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--bd)}
 
@@ -188,7 +204,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getDatabase, ref, push, onValue, remove, update }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-const APP_VERSION = "v1.8";
+const APP_VERSION = "v2.0";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -397,7 +413,26 @@ function renderRepositor() {
         </div>
         <button class="btn-send" onclick="window.enviar()">ENVIAR AO OPERADOR →</button>
       </div>
-      ${fila.length>0?`<div class="secao">FILA (${fila.length})</div>${fila.map(cardRep).join("")}`:""}
+      ${fila.length>0?`
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="stat-num" style="color:var(--am)">${fila.length}</div>
+            <div class="stat-lbl">Na fila</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" style="color:var(--bl)">${fila.filter(t=>t.tipo==="palete").length}</div>
+            <div class="stat-lbl">Paletes</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" style="color:var(--am)">${fila.filter(t=>t.tipo==="picking").length}</div>
+            <div class="stat-lbl">Pickings</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" style="color:var(--gr)">${hist.filter(t=>t.status==="concluido").length}</div>
+            <div class="stat-lbl">Feitos hoje</div>
+          </div>
+        </div>
+        <div class="secao">FILA (${fila.length})</div>${fila.map(cardRep).join("")}`:""}
       ${hist.length>0?`
         <div class="secao">HISTÓRICO HOJE (${hist.length})</div>
         ${hist.map(cardRep).join("")}
@@ -442,6 +477,75 @@ function renderOperador() {
   const fila    = [...ativos,...pulados];
   const hist    = tarefas.filter(t=>t.status==="concluido"||t.status==="vazio");
 
+  const filtroRua = window._filtroRua || "todas";
+  const getRua = t => { const m=t.endereco.match(/B\s+0*(\d+)/); return m?m[1]:null; };
+  const filaFiltrada = filtroRua==="todas" ? fila : fila.filter(t=>getRua(t)===filtroRua);
+  const ruasNaFila = [...new Set(fila.map(getRua).filter(Boolean))].sort();
+
+  document.getElementById("app").innerHTML = `
+    <div class="topbar-op">
+      <span class="tlogo">REPO</span>
+      <span class="trole oper">🏗️ Operador</span>
+      <span class="tsp"></span>
+      <span class="tlive"><span class="dot"></span>ao vivo</span>
+      <span class="tver">${APP_VERSION}</span>
+      <button class="tbtn-icon" onclick="window.toggleFont()" title="Tamanho da fonte">⚙️</button>
+      <button class="tbtn-out" onclick="window.sair()">Trocar</button>
+    </div>
+    ${fontPanelHTML(true)}
+    ${ruasNaFila.length > 1 ? `
+    <div class="filtro-bar">
+      <button class="filtro-btn${filtroRua==="todas"?" filtro-ativo":""}" onclick="window.setFiltroRua('todas')">Todas</button>
+      ${ruasNaFila.map(r=>`
+        <button class="filtro-btn${filtroRua===r?" filtro-ativo":""}" onclick="window.setFiltroRua('${r}')">
+          Rua ${r}<span class="filtro-n">${fila.filter(t=>getRua(t)===r).length}</span>
+        </button>`).join("")}
+    </div>` : ""}
+    <div class="main-op">
+      ${fila.length===0?`
+        <div class="empty">
+          <div class="empty-icon">🟢</div>
+          <div class="empty-title">Sem tarefas</div>
+          <div class="empty-sub">Aguardando reposições.<br>A tela atualiza sozinha.</div>
+        </div>`
+        : `<div class="stat-row">
+          <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--am)">${fila.length}</div><div class="stat-lbl">Na fila</div></div>
+          <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--bl)">${fila.filter(t=>t.tipo==="palete").length}</div><div class="stat-lbl">Paletes</div></div>
+          <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--am)">${fila.filter(t=>t.tipo==="picking").length}</div><div class="stat-lbl">Pickings</div></div>
+          <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--gr)">${hist.filter(t=>t.status==="concluido").length}</div><div class="stat-lbl">Feitos hoje</div></div>
+        </div>
+        ${filaFiltrada.length===0
+          ? `<div class="empty" style="padding:30px 20px">
+               <div class="empty-icon" style="font-size:28px">🔍</div>
+               <div class="empty-title">Nenhum na Rua ${filtroRua}</div>
+               <div class="empty-sub">Selecione outra rua ou "Todas".</div>
+             </div>`
+          : filaFiltrada.map((t,i)=>cardOp(t,i)).join("")}`}
+      ${filaFiltrada.length>0?`
+        <div class="sdica">👉 Arraste para direita para <b>concluir</b> · 👆 Ou toque em <b>✅ CONCLUÍDO</b></div>`:""}
+      ${hist.length>0?`
+        <div class="secao">CONCLUÍDAS HOJE (${hist.length})</div>
+        ${hist.map(t=>`
+          <div class="chist" style="border-left-color:${t.status==="concluido"?"#22c55e":"#ef4444"}">
+            <span style="font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;color:${t.status==="concluido"?"#22c55e":"#ef4444"}">${t.endereco}</span>
+            <span style="margin-left:auto;font-size:10px;color:var(--mu-op)">${t.status==="concluido"?"✅ FEITO":"⚠️ VAZIO"} · ${fmtHora(t.ts)}</span>
+          </div>`).join("")}`:""}
+    </div>`;
+
+  filaFiltrada.forEach(t => {
+    const el = document.getElementById("op-"+t.id);
+    if (el) initSwipe(el, () => window.acao(t.id, "concluido"));
+  });
+
+  clearInterval(window._timerOp);
+  window._timerOp = setInterval(() => {
+    document.querySelectorAll(".tempo-op").forEach(el => {
+      const ts = +el.dataset.ts;
+      if (ts) { el.textContent="⏱ "+tempoFila(ts); el.style.color=corTempo(ts); }
+    });
+  }, 30000);
+}
+
   document.getElementById("app").innerHTML = `
     <div class="topbar-op">
       <span class="tlogo">REPO</span>
@@ -460,7 +564,25 @@ function renderOperador() {
           <div class="empty-title">Sem tarefas</div>
           <div class="empty-sub">Aguardando reposições.<br>A tela atualiza sozinha.</div>
         </div>`
-        : fila.map((t,i)=>cardOp(t,i)).join("")}
+        : `<div class="stat-row">
+          <div class="stat-card stat-card-op">
+            <div class="stat-num" style="color:var(--am)">${fila.length}</div>
+            <div class="stat-lbl">Na fila</div>
+          </div>
+          <div class="stat-card stat-card-op">
+            <div class="stat-num" style="color:var(--bl)">${fila.filter(t=>t.tipo==="palete").length}</div>
+            <div class="stat-lbl">Paletes</div>
+          </div>
+          <div class="stat-card stat-card-op">
+            <div class="stat-num" style="color:var(--am)">${fila.filter(t=>t.tipo==="picking").length}</div>
+            <div class="stat-lbl">Pickings</div>
+          </div>
+          <div class="stat-card stat-card-op">
+            <div class="stat-num" style="color:var(--gr)">${hist.filter(t=>t.status==="concluido").length}</div>
+            <div class="stat-lbl">Feitos hoje</div>
+          </div>
+        </div>
+        ${fila.map((t,i)=>cardOp(t,i)).join("")}`}
       ${fila.length>0?`
         <div class="sdica">
           👉 Arraste para direita para <b>concluir</b> · 👆 Ou toque em <b>✅ CONCLUÍDO</b>
@@ -495,20 +617,22 @@ function cardOp(t, i) {
   const tipoCor  = t.tipo==="picking" ? "#f59e0b" : "#3b82f6";
   const tipoTxt  = t.tipo==="picking" ? "📦 PICKING" : "🏗️ PALETE FECHADO";
 
-  if (isFirst && !isPulado) {
+  // Card principal: sempre o primeiro da fila, pulado ou não
+  if (isFirst) {
     const cor = corTempo(t.ts);
     return `
-      <div class="cop-main" id="op-${t.id}">
+      <div class="cop-main" id="op-${t.id}" style="${isPulado?"border-color:#8892b0":""}">
         <div class="swipe-hint"></div>
+        ${isPulado?`<div style="margin-bottom:6px"><span class="chip" style="color:#8892b0;border-color:#8892b040;background:#8892b015">PULADO — RETOMANDO</span></div>`:""}
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
           <div class="tipo-main" style="color:${tipoCor}">${tipoTxt}</div>
           <span class="tempo-op" data-ts="${t.ts}" style="color:${cor};font-size:13px;font-weight:700">⏱ ${tempoFila(t.ts)}</span>
         </div>
-        <div class="addr-main">${t.endereco}</div>
+        <div class="addr-main" style="${isPulado?"color:#8892b0":""}">${t.endereco}</div>
         ${t.descricao?`<div class="desc-main">${t.descricao}</div>`:""}
         ${t.codigo?`<div class="cod-main">Cód: ${t.codigo}</div>`:""}
         <div class="op-btns">
-          ${t.status==="pendente"
+          ${t.status==="pendente"||t.status==="pulado"
             ? `<button class="abtn abtn-blue" onclick="window.acao('${t.id}','andamento')">✊ RECEBI — VOU AGORA</button>`
             : `<button class="abtn abtn-green" onclick="window.acao('${t.id}','concluido')">✅ CONCLUÍDO</button>
                <button class="abtn abtn-red"   onclick="window.acao('${t.id}','vazio')">⚠️ VAZIO</button>`}
@@ -545,8 +669,10 @@ function render() {
 }
 
 // ── AÇÕES GLOBAIS ─────────────────────────────────────────────────────────────
-window.escolher = p => { perfil=p; showFont=false; prevIds=null; render(); };
+window.escolher = p => { perfil=p; showFont=false; prevIds=null; window._filtroRua="todas"; render(); };
 window.sair     = () => { clearInterval(window._timerOp); perfil=null; showFont=false; render(); };
+
+window.setFiltroRua = rua => { window._filtroRua = rua; render(); };
 
 window.toggleFont = () => {
   showFont = !showFont;
