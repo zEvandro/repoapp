@@ -12,7 +12,7 @@
     import { getDatabase, ref, push, onValue, remove, update }
       from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    const firebaseConfig = {
+    const APP_VERSION = "v1.5";
       apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
       authDomain:        "repoapp-1edbd.firebaseapp.com",
       databaseURL:       "https://repoapp-1edbd-default-rtdb.firebaseio.com",
@@ -122,6 +122,7 @@
           <div class="logo">R</div>
           <h1>REPOAPP</h1>
           <p class="sub">Reposição de Picking</p>
+          <span class="versao">${APP_VERSION}</span>
           <div class="lcards">
             <button class="lcard" onclick="escolher('repositor')">
               <span style="font-size:32px">📋</span>
@@ -149,6 +150,7 @@
           <span class="trole rep">📋 Repositor</span>
           <span class="tsp"></span>
           <span class="tlive"><span class="dot"></span>ao vivo</span>
+          <span class="tver">${APP_VERSION}</span>
           <button class="tout" onclick="sair()">Trocar</button>
         </div>
         ${alts.map(t=>`
@@ -228,6 +230,7 @@
           <span class="trole oper">🏗️ Operador</span>
           <span class="tsp"></span>
           <span class="tlive"><span class="dot"></span>ao vivo</span>
+          <span class="tver">${APP_VERSION}</span>
           <button class="tout" onclick="sair()">Trocar</button>
         </div>
         <div class="main-op">
@@ -491,6 +494,8 @@
     .lcard:hover{border-color:var(--am);background:var(--s2);transform:translateY(-2px)}
     .lct{font-family:'Bebas Neue';font-size:20px;letter-spacing:2px}
     .lcd{font-size:11px;color:var(--tx2);text-align:center;line-height:1.5}
+    .versao{font-size:11px;color:var(--mu);letter-spacing:2px;margin-bottom:28px;margin-top:-10px}
+    .tver{font-size:10px;color:var(--mu);letter-spacing:1px;font-weight:700}
 
     /* ── TOPBAR REPOSITOR ── */
     .topbar{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 16px;height:52px;
