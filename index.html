@@ -15,7 +15,7 @@
     import { getDatabase, ref, push, onValue, remove, update }
       from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    const APP_VERSION = "v1.7";
+    const APP_VERSION = "v1.8";
 
     // ── CONFIGURAÇÃO DE FONTE ─────────────────────────────────────────────
     // Tamanhos do endereço principal: P / M / G / GG / Auto
@@ -43,6 +43,7 @@
         prev.style.letterSpacing = Math.max(2, Math.round(getFontSizePx() * 0.07)) + "px";
       }
     }
+    window.setFontSize = setFontSize;
 
     function calcAutoFontSize() {
       const w = window.innerWidth;
