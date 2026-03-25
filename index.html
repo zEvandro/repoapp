@@ -272,7 +272,10 @@
     window.acao = async (id, novoStatus) => {
       const taskRef = ref(db, `tarefas/${id}`);
       const task = tarefas.find(t => t.id === id);
-      if (task) await set(taskRef, { ...task, id: undefined, status: novoStatus });
+      if (task) {
+        const { id: _remove, ...taskData } = task;
+        await set(taskRef, { ...taskData, status: novoStatus });
+      }
     };
 
     window.fecharAlerta = (id) => {
