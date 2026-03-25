@@ -9,6 +9,8 @@
   <meta name="theme-color" content="#050709"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-title" content="RepoApp"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="apple-touch-icon" href="icon.png"/>
   <title>RepoApp</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;700&display=swap');
@@ -26,8 +28,8 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
 
 /* LOGIN */
-.login{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:24px;background:radial-gradient(ellipse 80% 60% at 50% 0%,#1a2040,var(--bg) 70%)}
+.login{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,#1a2040,var(--bg) 70%)}
 .logo{width:72px;height:72px;border-radius:18px;background:var(--am);display:flex;align-items:center;
   justify-content:center;font-family:'Bebas Neue';font-size:40px;color:#0b0e17;margin-bottom:20px;box-shadow:0 0 40px #f59e0b44}
 .login h1{font-family:'Bebas Neue';font-size:44px;letter-spacing:3px;color:#fff}
@@ -35,13 +37,13 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
 .login-ver{font-size:11px;color:var(--mu);letter-spacing:2px;margin-bottom:36px;margin-top:8px}
 .lcards{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
 .lcard{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:28px 20px;
-  cursor:pointer;transition:all .2s;width:150px;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--tx);border:none}
-.lcard:hover{border:1px solid var(--am);background:var(--s2);transform:translateY(-2px)}
+  cursor:pointer;transition:all .2s;width:150px;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--tx)}
+.lcard:hover{border-color:var(--am);background:var(--s2);transform:translateY(-2px)}
 .lcard-icon{font-size:32px}
 .lcard-title{font-family:'Bebas Neue';font-size:20px;letter-spacing:2px}
 .lcard-desc{font-size:11px;color:var(--tx2);text-align:center;line-height:1.5}
 
-/* TOPBAR */
+/* TOPBARS */
 .topbar{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 16px;height:52px;
   display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:50;flex-shrink:0}
 .topbar-op{background:var(--s1-op);border-bottom:1px solid var(--bd-op);padding:0 16px;height:52px;
@@ -55,18 +57,16 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
 .dot{width:7px;height:7px;border-radius:50%;background:var(--gr);animation:blink 2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
 .tver{font-size:10px;color:var(--mu);letter-spacing:1px;font-weight:700}
-.tbtn-icon{background:transparent;border:1px solid var(--bd);color:var(--tx2);
-  font-size:14px;padding:5px 9px;border-radius:8px;cursor:pointer}
+.tbtn-icon{background:transparent;border:1px solid var(--bd);color:var(--tx2);font-size:14px;padding:5px 9px;border-radius:8px;cursor:pointer}
 .tbtn-icon:hover{border-color:var(--am);color:var(--am)}
-.tbtn-out{background:transparent;border:1px solid var(--bd);color:var(--tx2);
-  font-size:11px;padding:5px 12px;border-radius:8px;cursor:pointer;font-weight:700}
+.tbtn-out{background:transparent;border:1px solid var(--bd);color:var(--tx2);font-size:11px;padding:5px 12px;border-radius:8px;cursor:pointer;font-weight:700}
 .tbtn-out:hover{border-color:var(--rd);color:var(--rd)}
 
 /* PAINEL FONTE */
-.font-panel{padding:12px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-  border-bottom:1px solid var(--bd);animation:si .2s ease}
-.font-panel-op{padding:12px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-  background:var(--s1-op);border-bottom:1px solid var(--bd-op);animation:si .2s ease}
+.font-panel{padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  background:var(--s1);border-bottom:1px solid var(--bd)}
+.font-panel-op{padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  background:var(--s1-op);border-bottom:1px solid var(--bd-op)}
 .font-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);white-space:nowrap}
 .font-btns{display:flex;gap:6px}
 .font-btn{padding:7px 14px;border-radius:8px;border:1px solid var(--bd);background:var(--s2);
@@ -74,41 +74,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
 .font-btn:hover{border-color:var(--am);color:var(--am)}
 .font-btn.ativo{background:var(--am);border-color:var(--am);color:#000}
 .font-preview{font-family:'Bebas Neue';color:var(--am);opacity:.3;margin-left:auto;
-  white-space:nowrap;overflow:hidden;line-height:1;font-size:var(--addr-size);letter-spacing:var(--addr-sp)}
-
-/* MAIN */
-.main{flex:1;overflow-y:auto;padding:16px;background:var(--bg)}
-.main-op{flex:1;overflow-y:auto;padding:16px;background:var(--bg-op)}
-
-/* FORM */
-.formcard{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:20px;margin-bottom:14px}
-.ftitle{font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;color:var(--am);margin-bottom:14px}
-.lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);
-  margin-bottom:6px;display:block;margin-top:12px}
-.lbl:first-child{margin-top:0}
-.lbl small{font-size:9px;color:var(--mu);text-transform:none;letter-spacing:0;font-weight:400}
-.inp{width:100%;background:var(--s2);border:1px solid var(--bd);color:var(--tx);font-size:14px;
-  font-weight:600;padding:11px 13px;border-radius:10px;outline:none;font-family:'DM Sans';transition:border-color .15s}
-.inp:focus{border-color:var(--am)}
-.inp::placeholder{color:var(--mu);font-weight:400}
-.preview{margin-top:7px;padding:8px 12px;border-radius:8px;display:flex;align-items:center;gap:8px}
-.preview.hidden,.hidden{display:none!important}
-.preview.ok{background:#22c55e12;border:1px solid #22c55e40}
-.preview.err{background:#ef444412;border:1px solid #ef444440}
-.pfull{font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;color:var(--gr);line-height:1}
-.pdet{font-size:10px;color:var(--tx2);margin-top:2px}
-.aviso-dup{background:#f59e0b14;border:1px solid #f59e0b50;border-radius:8px;
-  padding:10px 13px;margin-top:7px;font-size:12px;color:var(--am);line-height:1.6}
-.aviso-dup b{color:#fff}
-.btndup{background:var(--am);border:none;color:#000;font-size:11px;font-weight:700;
-  padding:4px 12px;border-radius:6px;cursor:pointer;margin-left:8px;font-family:'DM Sans'}
-.toggle{display:flex;gap:8px;margin-top:4px}
-.tbtn{flex:1;padding:10px;border-radius:10px;border:1px solid var(--bd);background:var(--s2);
-  color:var(--tx2);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;font-family:'DM Sans'}
-.tbtn.active{background:var(--am);border-color:var(--am);color:#000}
-.btn-send{width:100%;padding:14px;background:var(--am);border:none;color:#000;
-  font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;border-radius:10px;cursor:pointer;margin-top:16px;transition:all .15s}
-.btn-send:hover{filter:brightness(1.1);transform:translateY(-1px)}
+  white-space:nowrap;overflow:hidden;line-height:1}
 
 /* FILTRO DE RUA */
 .filtro-bar{display:flex;gap:6px;padding:10px 16px;background:var(--s1-op);
@@ -119,44 +85,82 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
   font-family:'DM Sans';transition:all .15s;display:flex;align-items:center;gap:5px}
 .filtro-btn:hover{border-color:var(--am);color:var(--am)}
 .filtro-ativo{background:var(--am)!important;border-color:var(--am)!important;color:#000!important}
-.filtro-n{background:rgba(0,0,0,0.2);border-radius:99px;font-size:10px;
-  padding:1px 6px;font-weight:800}
+.filtro-n{background:rgba(0,0,0,0.2);border-radius:99px;font-size:10px;padding:1px 6px;font-weight:800}
+
+/* STAT CARDS */
 .stat-row{display:flex;gap:8px;margin-bottom:14px}
-.stat-card{flex:1;background:var(--s1);border:1px solid var(--bd);border-radius:12px;
-  padding:12px 8px;text-align:center}
+.stat-card{flex:1;border:1px solid var(--bd);border-radius:12px;padding:12px 8px;text-align:center;background:var(--s1)}
 .stat-card-op{background:var(--s1-op);border-color:var(--bd-op)}
 .stat-num{font-family:'Bebas Neue';font-size:28px;letter-spacing:1px;line-height:1;margin-bottom:3px}
 .stat-lbl{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu)}
+
+/* MAIN */
+.main{flex:1;overflow-y:auto;padding:16px;background:var(--bg)}
+.main-op{flex:1;overflow-y:auto;padding:16px;background:var(--bg-op)}
+
+/* FORM */
+.formcard{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:20px;margin-bottom:14px}
+.ftitle{font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;color:var(--am);margin-bottom:14px}
+.lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);margin-bottom:6px;display:block;margin-top:12px}
+.lbl:first-child{margin-top:0}
+.lbl small{font-size:9px;color:var(--mu);text-transform:none;letter-spacing:0;font-weight:400}
+.inp{width:100%;background:var(--s2);border:1px solid var(--bd);color:var(--tx);font-size:14px;
+  font-weight:600;padding:11px 13px;border-radius:10px;outline:none;font-family:'DM Sans';transition:border-color .15s}
+.inp:focus{border-color:var(--am)}
+.inp::placeholder{color:var(--mu);font-weight:400}
+.prev-end{margin-top:7px;padding:8px 12px;border-radius:8px;display:flex;align-items:center;gap:8px}
+.prev-end.hidden{display:none}
+.prev-end.ok{background:#22c55e12;border:1px solid #22c55e40}
+.prev-end.err{background:#ef444412;border:1px solid #ef444440}
+.pfull{font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;color:var(--gr);line-height:1}
+.pdet{font-size:10px;color:var(--tx2);margin-top:2px}
+.aviso-dup{background:#f59e0b14;border:1px solid #f59e0b50;border-radius:8px;padding:10px 13px;
+  margin-top:7px;font-size:12px;color:var(--am);line-height:1.6}
+.aviso-dup.hidden{display:none}
+.aviso-dup b{color:#fff}
+.btndup{background:var(--am);border:none;color:#000;font-size:11px;font-weight:700;
+  padding:4px 12px;border-radius:6px;cursor:pointer;margin-left:8px;font-family:'DM Sans'}
+.toggle{display:flex;gap:8px;margin-top:4px}
+.tbtn{flex:1;padding:10px;border-radius:10px;border:1px solid var(--bd);background:var(--s2);
+  color:var(--tx2);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;font-family:'DM Sans'}
+.tbtn.active{background:var(--am);border-color:var(--am);color:#000}
+.btn-send{width:100%;padding:14px;background:var(--am);border:none;color:#000;
+  font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;border-radius:10px;cursor:pointer;margin-top:16px}
+.btn-send:hover{filter:brightness(1.1)}
+
+/* SECAO */
 .secao{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
   color:var(--mu);margin:16px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--bd)}
 
 /* CARDS REPOSITOR */
-.crep{background:var(--s1);border:1px solid var(--bd);border-left:3px solid;
-  border-radius:14px;padding:13px;margin-bottom:9px;animation:si .2s ease}
+.crep{background:var(--s1);border:1px solid var(--bd);border-left:3px solid;border-radius:14px;
+  padding:13px;margin-bottom:9px;animation:si .2s ease}
 @keyframes si{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
 .crep-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
 .crep-addr{font-family:'Bebas Neue';font-size:20px;letter-spacing:2px;flex:1}
 .crep-prod{font-size:13px;font-weight:700;color:var(--tx);margin-bottom:4px}
 .crep-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
-.chip{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
-  padding:3px 8px;border-radius:99px;border:1px solid}
+.chip{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:99px;border:1px solid}
 .tbadge{font-size:10px;font-weight:800;letter-spacing:1px;padding:3px 10px;border-radius:99px;border:1px solid}
 .btn-rem{background:transparent;border:none;color:var(--mu);cursor:pointer;font-size:14px;padding:0 4px;transition:color .15s}
 .btn-rem:hover{color:var(--rd)}
 .btn-limpar{width:100%;padding:10px;background:transparent;border:1px solid var(--bd);
-  color:var(--mu);border-radius:10px;cursor:pointer;font-size:12px;font-weight:700;margin-top:6px;transition:all .15s}
+  color:var(--mu);border-radius:10px;cursor:pointer;font-size:12px;font-weight:700;margin-top:6px}
 .btn-limpar:hover{border-color:var(--rd);color:var(--rd)}
 
 /* ALERTAS */
 .alerta{background:#ef444414;border:1px solid #ef444440;border-radius:10px;padding:12px 14px;
   margin:10px 16px 0;display:flex;align-items:flex-start;gap:10px;animation:si .2s ease}
 .adot{width:8px;height:8px;border-radius:50%;background:var(--rd);flex-shrink:0;margin-top:4px;animation:blink 1s infinite}
-.alerta b{font-size:13px}.alerta span{font-size:12px;color:var(--tx2)}.alerta small{font-size:10px;color:var(--mu)}
+.alerta b{font-size:13px}
+.alerta span{font-size:12px;color:var(--tx2)}
+.alerta small{font-size:10px;color:var(--mu)}
 .alerta button{background:transparent;border:none;color:var(--mu);cursor:pointer;font-size:16px;flex-shrink:0}
 
 /* CARD OPERADOR PRINCIPAL */
 .cop-main{background:var(--s1-op);border:2px solid var(--am);border-radius:18px;padding:22px 20px;
-  margin-bottom:12px;position:relative;overflow:hidden;transition:transform .15s,opacity .15s;animation:si .2s ease;touch-action:pan-y}
+  margin-bottom:12px;position:relative;overflow:hidden;transition:transform .15s,opacity .15s;
+  animation:si .2s ease;touch-action:pan-y}
 .swipe-hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
   font-family:'Bebas Neue';font-size:24px;letter-spacing:2px;opacity:0;pointer-events:none;white-space:nowrap;color:var(--gr)}
 .tipo-main{font-family:'Bebas Neue';font-size:28px;letter-spacing:3px}
@@ -177,15 +181,12 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
 /* CARD OPERADOR SECUNDÁRIO */
 .cop-sec{background:var(--s2-op);border:1px solid var(--bd-op);border-radius:12px;
   padding:13px 14px;margin-bottom:8px;opacity:.5;position:relative;overflow:hidden;touch-action:pan-y}
-.sec-tipo{font-family:'Bebas Neue';font-size:13px;letter-spacing:2px;margin-bottom:2px}
-.sec-addr{font-family:'Bebas Neue';font-size:28px;letter-spacing:3px;line-height:1}
-.sec-desc{font-size:11px;color:var(--tx2-op);margin-top:3px}
 
-/* HISTORICO OP */
+/* HISTORICO */
 .chist{background:var(--s2-op);border:1px solid var(--bd-op);border-left:3px solid;
   border-radius:10px;padding:10px 12px;margin-bottom:7px;display:flex;align-items:center;gap:8px;opacity:.6}
 
-/* DICAS */
+/* DICA */
 .sdica{background:var(--s1-op);border:1px solid var(--bd-op);border-radius:10px;
   padding:10px 14px;margin-bottom:14px;font-size:11px;color:var(--tx2-op);line-height:1.8;text-align:center}
 .sdica b{color:var(--tx-op)}
@@ -216,106 +217,96 @@ const firebaseConfig = {
   appId:             "1:151491743077:web:06aa81e8ce4c4e032f258c"
 };
 
-const app = initializeApp(firebaseConfig);
-const db  = getDatabase(app);
+const fbApp = initializeApp(firebaseConfig);
+const db = getDatabase(fbApp);
 const tasksRef = ref(db, "tarefas");
 
-// ── ESTADO ──────────────────────────────────────────────────────────────────
+// ── ESTADO ───────────────────────────────────────────────────────────────────
 let perfil    = null;
 let tarefas   = [];
 let tipoAtual = "picking";
 let prevIds   = null;
 let showFont  = false;
+let filtroRua = "todas";
 
 // ── FONTE ────────────────────────────────────────────────────────────────────
 const FONT_SIZES = { P:42, M:56, G:72, GG:92 };
 
-function getFontKey()  { return "repoapp-font-" + (perfil || "op"); }
-function getFontPreset() {
-  const s = localStorage.getItem(getFontKey());
-  return (s && FONT_SIZES[s]) ? s : "Auto";
-}
-function getFontPx() {
-  const p = getFontPreset();
-  if (p === "Auto") {
+function fontKey()    { return "repoapp-font-" + (perfil||"op"); }
+function fontPreset() { const s=localStorage.getItem(fontKey()); return (s&&FONT_SIZES[s])?s:"Auto"; }
+function fontPx() {
+  const p = fontPreset();
+  if (p==="Auto") {
     const w = window.innerWidth;
-    if (w <= 360) return 48;
-    if (w <= 414) return 58;
-    if (w <= 768) return 68;
-    return 80;
+    if (w<=360) return 48; if (w<=414) return 58; if (w<=768) return 68; return 80;
   }
   return FONT_SIZES[p];
 }
-function aplicarFonte() {
-  const px = getFontPx();
-  const sp = Math.max(2, Math.round(px * 0.07));
-  document.documentElement.style.setProperty("--addr-size", px + "px");
-  document.documentElement.style.setProperty("--addr-sp",   sp + "px");
+function applyFont() {
+  const px = fontPx();
+  document.documentElement.style.setProperty("--addr-size", px+"px");
+  document.documentElement.style.setProperty("--addr-sp", Math.max(2,Math.round(px*.07))+"px");
 }
-window.addEventListener("resize", () => { if (getFontPreset() === "Auto") aplicarFonte(); });
+window.addEventListener("resize", () => { if (fontPreset()==="Auto") applyFont(); });
 
 // ── UTILS ────────────────────────────────────────────────────────────────────
 const fmtHora = ts => ts ? new Date(ts).toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}) : "";
 
 function tempoFila(ts) {
   const m = Math.floor((Date.now()-ts)/60000);
-  if (m < 1)  return "agora";
-  if (m < 60) return m + " min";
-  const h = Math.floor(m/60), r = m%60;
-  return r ? h+"h "+r+"min" : h+"h";
+  if (m<1) return "agora"; if (m<60) return m+"min";
+  const h=Math.floor(m/60), r=m%60; return r?h+"h "+r+"min":h+"h";
 }
 function corTempo(ts) {
   const m = Math.floor((Date.now()-ts)/60000);
-  if (m < 5)  return "var(--gr)";
-  if (m < 15) return "var(--am)";
-  return "var(--rd)";
+  return m<5?"var(--gr)":m<15?"var(--am)":"var(--rd)";
 }
 
-// ── PARSER ENDEREÇO ───────────────────────────────────────────────────────────
+// ── PARSER ───────────────────────────────────────────────────────────────────
 function parseEnd(s) {
-  s = (s||"").trim();
-  if (!s) return { valido:false, erro:"" };
-  if (/^B\s+\d{3}\s+\d{4}\s+\d{2}$/i.test(s)) return { valido:true, completo:s.toUpperCase(), erro:"" };
-  const p = s.split(/[-\/\s]+/).filter(Boolean);
-  if (p.length !== 3) return { valido:false, erro:'Use: RUA-POS-NÍVEL  ex: "4-56-2"' };
-  const rua=+p[0], pos=+p[1], nivel=+p[2];
-  if (isNaN(rua)||isNaN(pos)||isNaN(nivel)) return { valido:false, erro:"Apenas números" };
-  if (rua<1||rua>4)    return { valido:false, erro:"Rua: 1 a 4" };
-  if (pos<1||pos>88)   return { valido:false, erro:"Posição: 1 a 88" };
-  if (nivel<1||nivel>5) return { valido:false, erro:"Nível: 1–5" };
-  const label = ["","Picking","2º nível","3º nível","4º nível","5º nível"][nivel];
-  const completo = `B ${String(rua).padStart(3,"0")} ${String(pos).padStart(4,"0")} ${String(nivel*10).padStart(2,"0")}`;
-  return { valido:true, completo, erro:"", rua, pos, nivel, label };
+  s=(s||"").trim();
+  if (!s) return {valido:false,erro:""};
+  if (/^B\s+\d{3}\s+\d{4}\s+\d{2}$/i.test(s)) return {valido:true,completo:s.toUpperCase(),erro:""};
+  const p=s.split(/[-\/\s]+/).filter(Boolean);
+  if (p.length!==3) return {valido:false,erro:'Use: RUA-POS-NÍVEL  ex: "4-56-2"'};
+  const rua=+p[0],pos=+p[1],nivel=+p[2];
+  if (isNaN(rua)||isNaN(pos)||isNaN(nivel)) return {valido:false,erro:"Apenas números"};
+  if (rua<1||rua>4)    return {valido:false,erro:"Rua: 1 a 4"};
+  if (pos<1||pos>88)   return {valido:false,erro:"Posição: 1 a 88"};
+  if (nivel<1||nivel>5) return {valido:false,erro:"Nível: 1–5"};
+  const label=["","Picking","2º nível","3º nível","4º nível","5º nível"][nivel];
+  const completo=`B ${String(rua).padStart(3,"0")} ${String(pos).padStart(4,"0")} ${String(nivel*10).padStart(2,"0")}`;
+  return {valido:true,completo,erro:"",rua,pos,nivel,label};
 }
 
 // ── SOM ──────────────────────────────────────────────────────────────────────
 function beep() {
   try {
-    const ctx = new (window.AudioContext||window.webkitAudioContext)();
-    [0, 0.18].forEach(d => {
-      const o=ctx.createOscillator(), g=ctx.createGain();
-      o.connect(g); g.connect(ctx.destination);
-      o.frequency.value=880; o.type="sine";
-      g.gain.setValueAtTime(0, ctx.currentTime+d);
-      g.gain.linearRampToValueAtTime(0.4, ctx.currentTime+d+0.01);
-      g.gain.linearRampToValueAtTime(0, ctx.currentTime+d+0.12);
-      o.start(ctx.currentTime+d); o.stop(ctx.currentTime+d+0.15);
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    [0,.18].forEach(d=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);
+      o.frequency.value=880;o.type="sine";
+      g.gain.setValueAtTime(0,ctx.currentTime+d);
+      g.gain.linearRampToValueAtTime(.4,ctx.currentTime+d+.01);
+      g.gain.linearRampToValueAtTime(0,ctx.currentTime+d+.12);
+      o.start(ctx.currentTime+d);o.stop(ctx.currentTime+d+.15);
     });
   } catch{}
 }
 
 // ── SWIPE ────────────────────────────────────────────────────────────────────
 function initSwipe(el, onRight) {
-  let sx=0, sy=0, dx=0, moving=false;
-  el.addEventListener("touchstart", e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;dx=0;moving=false;},{passive:true});
-  el.addEventListener("touchmove", e=>{
+  let sx=0,sy=0,dx=0,moving=false;
+  el.addEventListener("touchstart",e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;dx=0;moving=false;},{passive:true});
+  el.addEventListener("touchmove",e=>{
     dx=e.touches[0].clientX-sx;
     const dy=e.touches[0].clientY-sy;
-    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>10){
+    if (Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>10) {
       moving=true;
-      if(dx>0){
+      if (dx>0) {
         el.style.transform=`translateX(${dx}px)`;
-        el.style.opacity=`${1-Math.min(dx/200,0.4)}`;
+        el.style.opacity=`${1-Math.min(dx/200,.4)}`;
         const h=el.querySelector(".swipe-hint");
         if(h){h.textContent="✅ CONCLUÍDO";h.style.opacity=Math.min(dx/80,1);}
       }
@@ -329,14 +320,12 @@ function initSwipe(el, onRight) {
   });
 }
 
-// ── PAINEL FONTE HTML ─────────────────────────────────────────────────────────
+// ── PAINEL FONTE ─────────────────────────────────────────────────────────────
 function fontPanelHTML(isOp) {
   if (!showFont) return "";
-  const cur = getFontPreset();
-  const px  = getFontPx();
-  const sp  = Math.max(2, Math.round(px*0.07));
-  const cls = isOp ? "font-panel-op" : "font-panel";
-  const btns = ["P","M","G","GG","Auto"].map(k =>
+  const cur=fontPreset(), px=fontPx(), sp=Math.max(2,Math.round(px*.07));
+  const cls=isOp?"font-panel-op":"font-panel";
+  const btns=["P","M","G","GG","Auto"].map(k=>
     `<button class="font-btn${cur===k?" ativo":""}" data-preset="${k}" onclick="window.setFont('${k}')">${k}${k==="Auto"?" 📱":""}</button>`
   ).join("");
   return `<div class="${cls}" id="fontPanel">
@@ -348,7 +337,7 @@ function fontPanelHTML(isOp) {
 
 // ── RENDER LOGIN ──────────────────────────────────────────────────────────────
 function renderLogin() {
-  document.getElementById("app").innerHTML = `
+  document.getElementById("app").innerHTML=`
     <div class="login">
       <div class="logo">R</div>
       <h1>REPOAPP</h1>
@@ -371,18 +360,26 @@ function renderLogin() {
 
 // ── RENDER REPOSITOR ──────────────────────────────────────────────────────────
 function renderRepositor() {
-  const fila  = tarefas.filter(t=>["pendente","andamento","pulado"].includes(t.status));
-  const hist  = tarefas.filter(t=>["concluido","vazio"].includes(t.status));
-  const alts  = tarefas.filter(t=>t.status==="vazio"&&!t.alertaVisto);
+  const fila = tarefas.filter(t=>["pendente","andamento","pulado"].includes(t.status));
+  const hist = tarefas.filter(t=>["concluido","vazio"].includes(t.status));
+  const alts = tarefas.filter(t=>t.status==="vazio"&&!t.alertaVisto);
 
-  document.getElementById("app").innerHTML = `
+  const statsHTML = fila.length>0 ? `
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-num" style="color:var(--am)">${fila.length}</div><div class="stat-lbl">Na fila</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--bl)">${fila.filter(t=>t.tipo==="palete").length}</div><div class="stat-lbl">Paletes</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--am)">${fila.filter(t=>t.tipo==="picking").length}</div><div class="stat-lbl">Pickings</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--gr)">${hist.filter(t=>t.status==="concluido").length}</div><div class="stat-lbl">Feitos hoje</div></div>
+    </div>` : "";
+
+  document.getElementById("app").innerHTML=`
     <div class="topbar">
       <span class="tlogo">REPO</span>
       <span class="trole rep">📋 Repositor</span>
       <span class="tsp"></span>
       <span class="tlive"><span class="dot"></span>ao vivo</span>
       <span class="tver">${APP_VERSION}</span>
-      <button class="tbtn-icon" onclick="window.toggleFont()" title="Tamanho da fonte">⚙️</button>
+      <button class="tbtn-icon" onclick="window.toggleFont()">⚙️</button>
       <button class="tbtn-out" onclick="window.sair()">Trocar</button>
     </div>
     ${fontPanelHTML(false)}
@@ -400,7 +397,7 @@ function renderRepositor() {
         <div class="ftitle">📦 Nova Reposição</div>
         <label class="lbl">Endereço <small>ex: 4-56-2</small></label>
         <input id="fEnd" class="inp" placeholder="4-56-2" oninput="window.onEnd(this.value)"/>
-        <div id="prevEnd" class="preview hidden"></div>
+        <div id="prevEnd" class="prev-end hidden"></div>
         <div id="avisoEnd" class="aviso-dup hidden"></div>
         <label class="lbl">Código <small>opcional</small></label>
         <input id="fCod" class="inp" placeholder="Código do produto (opcional)"/>
@@ -413,47 +410,28 @@ function renderRepositor() {
         </div>
         <button class="btn-send" onclick="window.enviar()">ENVIAR AO OPERADOR →</button>
       </div>
-      ${fila.length>0?`
-        <div class="stat-row">
-          <div class="stat-card">
-            <div class="stat-num" style="color:var(--am)">${fila.length}</div>
-            <div class="stat-lbl">Na fila</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-num" style="color:var(--bl)">${fila.filter(t=>t.tipo==="palete").length}</div>
-            <div class="stat-lbl">Paletes</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-num" style="color:var(--am)">${fila.filter(t=>t.tipo==="picking").length}</div>
-            <div class="stat-lbl">Pickings</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-num" style="color:var(--gr)">${hist.filter(t=>t.status==="concluido").length}</div>
-            <div class="stat-lbl">Feitos hoje</div>
-          </div>
-        </div>
-        <div class="secao">FILA (${fila.length})</div>${fila.map(cardRep).join("")}`:""}
-      ${hist.length>0?`
+      ${statsHTML}
+      ${fila.length>0 ? `<div class="secao">FILA (${fila.length})</div>${fila.map(cardRep).join("")}` : ""}
+      ${hist.length>0 ? `
         <div class="secao">HISTÓRICO HOJE (${hist.length})</div>
         ${hist.map(cardRep).join("")}
-        <button class="btn-limpar" onclick="window.limparTudo()">🗑️ Limpar tudo</button>`:""}
+        <button class="btn-limpar" onclick="window.limparTudo()">🗑️ Limpar tudo</button>` : ""}
     </div>`;
 
-  // restaurar form
   if (window._fs) {
     const e=document.getElementById("fEnd"),c=document.getElementById("fCod"),d=document.getElementById("fDesc");
-    if(e)e.value=window._fs.end||"";
-    if(c)c.value=window._fs.cod||"";
-    if(d)d.value=window._fs.desc||"";
+    if(e) e.value=window._fs.end||"";
+    if(c) c.value=window._fs.cod||"";
+    if(d) d.value=window._fs.desc||"";
     if(window._fs.tipo==="palete") window.setTipo("palete");
     if(window._fs.end) window.onEnd(window._fs.end);
   }
 }
 
 function cardRep(t) {
-  const cor = {pendente:"#f59e0b",andamento:"#3b82f6",concluido:"#22c55e",vazio:"#ef4444",pulado:"#8892b0"}[t.status];
-  const lbl = {pendente:"PENDENTE",andamento:"EM ANDAMENTO",concluido:"CONCLUÍDO",vazio:"END. VAZIO",pulado:"PULADO"}[t.status];
-  const isHist = ["concluido","vazio"].includes(t.status);
+  const cor={pendente:"#f59e0b",andamento:"#3b82f6",concluido:"#22c55e",vazio:"#ef4444",pulado:"#8892b0"}[t.status];
+  const lbl={pendente:"PENDENTE",andamento:"EM ANDAMENTO",concluido:"CONCLUÍDO",vazio:"END. VAZIO",pulado:"PULADO"}[t.status];
+  const isHist=["concluido","vazio"].includes(t.status);
   return `
     <div class="crep" style="border-left-color:${cor}${isHist?";opacity:.6":""}">
       <div class="crep-top">
@@ -477,116 +455,48 @@ function renderOperador() {
   const fila    = [...ativos,...pulados];
   const hist    = tarefas.filter(t=>t.status==="concluido"||t.status==="vazio");
 
-  const filtroRua = window._filtroRua || "todas";
-  const getRua = t => { const m=t.endereco.match(/B\s+0*(\d+)/); return m?m[1]:null; };
-  const filaFiltrada = filtroRua==="todas" ? fila : fila.filter(t=>getRua(t)===filtroRua);
+  const getRua  = t => { const m=t.endereco.match(/B\s+0*(\d+)/); return m?m[1]:null; };
   const ruasNaFila = [...new Set(fila.map(getRua).filter(Boolean))].sort();
+  const filaFiltrada = filtroRua==="todas" ? fila : fila.filter(t=>getRua(t)===filtroRua);
 
-  document.getElementById("app").innerHTML = `
-    <div class="topbar-op">
-      <span class="tlogo">REPO</span>
-      <span class="trole oper">🏗️ Operador</span>
-      <span class="tsp"></span>
-      <span class="tlive"><span class="dot"></span>ao vivo</span>
-      <span class="tver">${APP_VERSION}</span>
-      <button class="tbtn-icon" onclick="window.toggleFont()" title="Tamanho da fonte">⚙️</button>
-      <button class="tbtn-out" onclick="window.sair()">Trocar</button>
-    </div>
-    ${fontPanelHTML(true)}
-    ${ruasNaFila.length > 1 ? `
+  const filtroBarHTML = ruasNaFila.length>1 ? `
     <div class="filtro-bar">
       <button class="filtro-btn${filtroRua==="todas"?" filtro-ativo":""}" onclick="window.setFiltroRua('todas')">Todas</button>
       ${ruasNaFila.map(r=>`
         <button class="filtro-btn${filtroRua===r?" filtro-ativo":""}" onclick="window.setFiltroRua('${r}')">
           Rua ${r}<span class="filtro-n">${fila.filter(t=>getRua(t)===r).length}</span>
         </button>`).join("")}
-    </div>` : ""}
-    <div class="main-op">
-      ${fila.length===0?`
-        <div class="empty">
-          <div class="empty-icon">🟢</div>
-          <div class="empty-title">Sem tarefas</div>
-          <div class="empty-sub">Aguardando reposições.<br>A tela atualiza sozinha.</div>
-        </div>`
-        : `<div class="stat-row">
-          <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--am)">${fila.length}</div><div class="stat-lbl">Na fila</div></div>
-          <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--bl)">${fila.filter(t=>t.tipo==="palete").length}</div><div class="stat-lbl">Paletes</div></div>
-          <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--am)">${fila.filter(t=>t.tipo==="picking").length}</div><div class="stat-lbl">Pickings</div></div>
-          <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--gr)">${hist.filter(t=>t.status==="concluido").length}</div><div class="stat-lbl">Feitos hoje</div></div>
-        </div>
-        ${filaFiltrada.length===0
-          ? `<div class="empty" style="padding:30px 20px">
-               <div class="empty-icon" style="font-size:28px">🔍</div>
-               <div class="empty-title">Nenhum na Rua ${filtroRua}</div>
-               <div class="empty-sub">Selecione outra rua ou "Todas".</div>
-             </div>`
-          : filaFiltrada.map((t,i)=>cardOp(t,i)).join("")}`}
-      ${filaFiltrada.length>0?`
-        <div class="sdica">👉 Arraste para direita para <b>concluir</b> · 👆 Ou toque em <b>✅ CONCLUÍDO</b></div>`:""}
-      ${hist.length>0?`
-        <div class="secao">CONCLUÍDAS HOJE (${hist.length})</div>
-        ${hist.map(t=>`
-          <div class="chist" style="border-left-color:${t.status==="concluido"?"#22c55e":"#ef4444"}">
-            <span style="font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;color:${t.status==="concluido"?"#22c55e":"#ef4444"}">${t.endereco}</span>
-            <span style="margin-left:auto;font-size:10px;color:var(--mu-op)">${t.status==="concluido"?"✅ FEITO":"⚠️ VAZIO"} · ${fmtHora(t.ts)}</span>
-          </div>`).join("")}`:""}
-    </div>`;
+    </div>` : "";
 
-  filaFiltrada.forEach(t => {
-    const el = document.getElementById("op-"+t.id);
-    if (el) initSwipe(el, () => window.acao(t.id, "concluido"));
-  });
+  const statsHTML = fila.length>0 ? `
+    <div class="stat-row">
+      <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--am)">${fila.length}</div><div class="stat-lbl">Na fila</div></div>
+      <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--bl)">${fila.filter(t=>t.tipo==="palete").length}</div><div class="stat-lbl">Paletes</div></div>
+      <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--am)">${fila.filter(t=>t.tipo==="picking").length}</div><div class="stat-lbl">Pickings</div></div>
+      <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--gr)">${hist.filter(t=>t.status==="concluido").length}</div><div class="stat-lbl">Feitos hoje</div></div>
+    </div>` : "";
 
-  clearInterval(window._timerOp);
-  window._timerOp = setInterval(() => {
-    document.querySelectorAll(".tempo-op").forEach(el => {
-      const ts = +el.dataset.ts;
-      if (ts) { el.textContent="⏱ "+tempoFila(ts); el.style.color=corTempo(ts); }
-    });
-  }, 30000);
-}
+  const filaHTML = fila.length===0
+    ? `<div class="empty"><div class="empty-icon">🟢</div><div class="empty-title">Sem tarefas</div><div class="empty-sub">Aguardando reposições.<br>A tela atualiza sozinha.</div></div>`
+    : statsHTML + (filaFiltrada.length===0
+        ? `<div class="empty" style="padding:30px 20px"><div class="empty-icon" style="font-size:28px">🔍</div><div class="empty-title">Nenhum na Rua ${filtroRua}</div><div class="empty-sub">Selecione outra rua ou "Todas".</div></div>`
+        : filaFiltrada.map((t,i)=>cardOp(t,i)).join(""));
 
-  document.getElementById("app").innerHTML = `
+  document.getElementById("app").innerHTML=`
     <div class="topbar-op">
       <span class="tlogo">REPO</span>
       <span class="trole oper">🏗️ Operador</span>
       <span class="tsp"></span>
       <span class="tlive"><span class="dot"></span>ao vivo</span>
       <span class="tver">${APP_VERSION}</span>
-      <button class="tbtn-icon" onclick="window.toggleFont()" title="Tamanho da fonte">⚙️</button>
+      <button class="tbtn-icon" onclick="window.toggleFont()">⚙️</button>
       <button class="tbtn-out" onclick="window.sair()">Trocar</button>
     </div>
     ${fontPanelHTML(true)}
+    ${filtroBarHTML}
     <div class="main-op">
-      ${fila.length===0?`
-        <div class="empty">
-          <div class="empty-icon">🟢</div>
-          <div class="empty-title">Sem tarefas</div>
-          <div class="empty-sub">Aguardando reposições.<br>A tela atualiza sozinha.</div>
-        </div>`
-        : `<div class="stat-row">
-          <div class="stat-card stat-card-op">
-            <div class="stat-num" style="color:var(--am)">${fila.length}</div>
-            <div class="stat-lbl">Na fila</div>
-          </div>
-          <div class="stat-card stat-card-op">
-            <div class="stat-num" style="color:var(--bl)">${fila.filter(t=>t.tipo==="palete").length}</div>
-            <div class="stat-lbl">Paletes</div>
-          </div>
-          <div class="stat-card stat-card-op">
-            <div class="stat-num" style="color:var(--am)">${fila.filter(t=>t.tipo==="picking").length}</div>
-            <div class="stat-lbl">Pickings</div>
-          </div>
-          <div class="stat-card stat-card-op">
-            <div class="stat-num" style="color:var(--gr)">${hist.filter(t=>t.status==="concluido").length}</div>
-            <div class="stat-lbl">Feitos hoje</div>
-          </div>
-        </div>
-        ${fila.map((t,i)=>cardOp(t,i)).join("")}`}
-      ${fila.length>0?`
-        <div class="sdica">
-          👉 Arraste para direita para <b>concluir</b> · 👆 Ou toque em <b>✅ CONCLUÍDO</b>
-        </div>`:""}
+      ${filaHTML}
+      ${filaFiltrada.length>0?`<div class="sdica">👉 Arraste para direita para <b>concluir</b> · 👆 Ou toque em <b>✅ CONCLUÍDO</b></div>`:""}
       ${hist.length>0?`
         <div class="secao">CONCLUÍDAS HOJE (${hist.length})</div>
         ${hist.map(t=>`
@@ -596,60 +506,60 @@ function renderOperador() {
           </div>`).join("")}`:""}
     </div>`;
 
-  fila.forEach(t => {
-    const el = document.getElementById("op-"+t.id);
-    if (el) initSwipe(el, () => window.acao(t.id, "concluido"));
+  filaFiltrada.forEach(t=>{
+    const el=document.getElementById("op-"+t.id);
+    if(el) initSwipe(el,()=>window.acao(t.id,"concluido"));
   });
 
-  // atualizar tempo a cada 30s
   clearInterval(window._timerOp);
-  window._timerOp = setInterval(() => {
-    document.querySelectorAll(".tempo-op").forEach(el => {
-      const ts = +el.dataset.ts;
-      if (ts) { el.textContent="⏱ "+tempoFila(ts); el.style.color=corTempo(ts); }
+  window._timerOp=setInterval(()=>{
+    document.querySelectorAll(".tempo-op").forEach(el=>{
+      const ts=+el.dataset.ts;
+      if(ts){el.textContent="⏱ "+tempoFila(ts);el.style.color=corTempo(ts);}
     });
-  }, 30000);
+  },30000);
 }
 
 function cardOp(t, i) {
-  const isFirst  = i === 0;
-  const isPulado = t.status === "pulado";
-  const tipoCor  = t.tipo==="picking" ? "#f59e0b" : "#3b82f6";
-  const tipoTxt  = t.tipo==="picking" ? "📦 PICKING" : "🏗️ PALETE FECHADO";
+  const isFirst  = i===0;
+  const isPulado = t.status==="pulado";
+  const tipoCor  = t.tipo==="picking"?"#f59e0b":"#3b82f6";
+  const tipoTxt  = t.tipo==="picking"?"📦 PICKING":"🏗️ PALETE FECHADO";
 
-  // Card principal: sempre o primeiro da fila, pulado ou não
   if (isFirst) {
-    const cor = corTempo(t.ts);
+    const pulLabel = isPulado ? `<div style="margin-bottom:6px"><span class="chip" style="color:#8892b0;border-color:#8892b040;background:#8892b015">PULADO — RETOMANDO</span></div>` : "";
+    const addrCor  = isPulado ? "#8892b0" : "var(--am)";
+    const borderCor= isPulado ? "#8892b0" : "var(--am)";
     return `
-      <div class="cop-main" id="op-${t.id}" style="${isPulado?"border-color:#8892b0":""}">
+      <div class="cop-main" id="op-${t.id}" style="border-color:${borderCor}">
         <div class="swipe-hint"></div>
-        ${isPulado?`<div style="margin-bottom:6px"><span class="chip" style="color:#8892b0;border-color:#8892b040;background:#8892b015">PULADO — RETOMANDO</span></div>`:""}
+        ${pulLabel}
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
           <div class="tipo-main" style="color:${tipoCor}">${tipoTxt}</div>
-          <span class="tempo-op" data-ts="${t.ts}" style="color:${cor};font-size:13px;font-weight:700">⏱ ${tempoFila(t.ts)}</span>
+          <span class="tempo-op" data-ts="${t.ts}" style="color:${corTempo(t.ts)};font-size:13px;font-weight:700">⏱ ${tempoFila(t.ts)}</span>
         </div>
-        <div class="addr-main" style="${isPulado?"color:#8892b0":""}">${t.endereco}</div>
+        <div class="addr-main" style="color:${addrCor}">${t.endereco}</div>
         ${t.descricao?`<div class="desc-main">${t.descricao}</div>`:""}
         ${t.codigo?`<div class="cod-main">Cód: ${t.codigo}</div>`:""}
         <div class="op-btns">
           ${t.status==="pendente"||t.status==="pulado"
             ? `<button class="abtn abtn-blue" onclick="window.acao('${t.id}','andamento')">✊ RECEBI — VOU AGORA</button>`
             : `<button class="abtn abtn-green" onclick="window.acao('${t.id}','concluido')">✅ CONCLUÍDO</button>
-               <button class="abtn abtn-red"   onclick="window.acao('${t.id}','vazio')">⚠️ VAZIO</button>`}
+               <button class="abtn abtn-red" onclick="window.acao('${t.id}','vazio')">⚠️ VAZIO</button>`}
           <button class="abtn abtn-gray" onclick="window.pular('${t.id}')">⏭ PULAR</button>
         </div>
         <div class="sdica2">← Arraste para direita para concluir →</div>
       </div>`;
   }
 
-  const cor = isPulado ? "#8892b0" : "#3b82f6";
+  const cor = isPulado?"#8892b0":"#3b82f6";
   return `
     <div class="cop-sec" id="op-${t.id}">
       <div style="display:flex;align-items:center;gap:10px">
         <div>
-          <div class="sec-tipo" style="color:${tipoCor}">${tipoTxt}</div>
-          <div class="sec-addr" style="color:${cor}">${t.endereco}</div>
-          ${t.descricao?`<div class="sec-desc">${t.descricao}</div>`:""}
+          <div style="font-family:'Bebas Neue';font-size:13px;letter-spacing:2px;color:${tipoCor};margin-bottom:2px">${tipoTxt}</div>
+          <div style="font-family:'Bebas Neue';font-size:28px;letter-spacing:3px;color:${cor};line-height:1">${t.endereco}</div>
+          ${t.descricao?`<div style="font-size:11px;color:var(--tx2-op);margin-top:3px">${t.descricao}</div>`:""}
         </div>
         <div style="margin-left:auto;text-align:right;flex-shrink:0">
           ${isPulado?`<span class="chip" style="color:#8892b0;border-color:#8892b040;background:#8892b015;display:block;margin-bottom:4px">PULADO</span>`:""}
@@ -660,151 +570,142 @@ function cardOp(t, i) {
     </div>`;
 }
 
-// ── RENDER ────────────────────────────────────────────────────────────────────
+// ── RENDER PRINCIPAL ──────────────────────────────────────────────────────────
 function render() {
-  aplicarFonte();
+  applyFont();
   if (!perfil)                  renderLogin();
   else if(perfil==="repositor") renderRepositor();
   else                          renderOperador();
 }
 
-// ── AÇÕES GLOBAIS ─────────────────────────────────────────────────────────────
-window.escolher = p => { perfil=p; showFont=false; prevIds=null; window._filtroRua="todas"; render(); };
+// ── AÇÕES ─────────────────────────────────────────────────────────────────────
+window.escolher = p => { perfil=p; showFont=false; prevIds=null; filtroRua="todas"; render(); };
 window.sair     = () => { clearInterval(window._timerOp); perfil=null; showFont=false; render(); };
 
-window.setFiltroRua = rua => { window._filtroRua = rua; render(); };
+window.setFiltroRua = r => { filtroRua=r; render(); };
 
-window.toggleFont = () => {
-  showFont = !showFont;
-  render();
-};
+window.toggleFont = () => { showFont=!showFont; render(); };
 
 window.setFont = preset => {
-  localStorage.setItem("repoapp-font-"+(perfil||"op"), preset);
-  aplicarFonte();
-  // atualiza botões e preview SEM re-render
-  document.querySelectorAll(".font-btn").forEach(b => {
-    b.classList.toggle("ativo", b.dataset.preset === preset);
-  });
-  const prev = document.getElementById("fontPreview");
-  if (prev) {
-    const px  = getFontPx();
-    const sp  = Math.max(2, Math.round(px*0.07));
-    prev.style.fontSize      = px + "px";
-    prev.style.letterSpacing = sp + "px";
-  }
+  localStorage.setItem(fontKey(), preset);
+  applyFont();
+  document.querySelectorAll(".font-btn").forEach(b=>b.classList.toggle("ativo",b.dataset.preset===preset));
+  const prev=document.getElementById("fontPreview");
+  if(prev){ const px=fontPx(),sp=Math.max(2,Math.round(px*.07)); prev.style.fontSize=px+"px"; prev.style.letterSpacing=sp+"px"; }
 };
 
 window.setTipo = t => {
-  tipoAtual = t;
-  document.getElementById("tPick")?.classList.toggle("active", t==="picking");
-  document.getElementById("tPal") ?.classList.toggle("active", t==="palete");
+  tipoAtual=t;
+  document.getElementById("tPick")?.classList.toggle("active",t==="picking");
+  document.getElementById("tPal") ?.classList.toggle("active",t==="palete");
 };
 
 window.onEnd = v => {
-  const elP = document.getElementById("prevEnd");
-  const elA = document.getElementById("avisoEnd");
-  if (!elP) return;
-  if (!v.trim()) { elP.className="preview hidden"; if(elA) elA.className="aviso-dup hidden"; return; }
-  const r = parseEnd(v);
-  elP.classList.remove("hidden");
-  if (r.valido) {
-    elP.className = "preview ok";
-    elP.innerHTML = `<span style="color:var(--gr)">✓</span><div><div class="pfull">${r.completo}</div>${r.label?`<div class="pdet">Rua ${r.rua} · Pos ${r.pos} · ${r.label}</div>`:""}</div>`;
-    const dup = tarefas.find(t=>t.endereco===r.completo&&["pendente","andamento","pulado"].includes(t.status));
-    if (elA) {
-      if (dup) {
+  const elP=document.getElementById("prevEnd");
+  const elA=document.getElementById("avisoEnd");
+  if(!elP) return;
+  if(!v.trim()){
+    elP.className="prev-end hidden";
+    if(elA) elA.className="aviso-dup hidden";
+    return;
+  }
+  const r=parseEnd(v);
+  if(r.valido){
+    elP.className="prev-end ok";
+    elP.innerHTML=`<span style="color:var(--gr)">✓</span><div><div class="pfull">${r.completo}</div>${r.label?`<div class="pdet">Rua ${r.rua} · Pos ${r.pos} · ${r.label}</div>`:""}</div>`;
+    const dup=tarefas.find(t=>t.endereco===r.completo&&["pendente","andamento","pulado"].includes(t.status));
+    if(elA){
+      if(dup){
         const lbl={pendente:"PENDENTE",andamento:"EM ANDAMENTO",pulado:"PULADO"}[dup.status];
         elA.className="aviso-dup";
         elA.innerHTML=`⚠️ Endereço já está na fila como <b>${lbl}</b>. Deseja enviar mesmo assim? <button class="btndup" onclick="window.enviarForcar()">Sim, enviar</button>`;
-        window._endForcar = r.completo;
+        window._endForcar=r.completo;
       } else {
         elA.className="aviso-dup hidden";
-        window._endForcar = null;
+        window._endForcar=null;
       }
     }
   } else {
-    elP.className = "preview err";
-    elP.innerHTML = `<span style="color:var(--rd)">✕</span><span style="font-size:11px;color:var(--rd)">${r.erro}</span>`;
-    if (elA) elA.className="aviso-dup hidden";
+    elP.className="prev-end err";
+    elP.innerHTML=`<span style="color:var(--rd)">✕</span><span style="font-size:11px;color:var(--rd)">${r.erro}</span>`;
+    if(elA) elA.className="aviso-dup hidden";
   }
 };
 
-async function _push(endCompleto) {
+async function doPush(endCompleto) {
   const cod  = (document.getElementById("fCod")?.value||"").trim();
   const desc = (document.getElementById("fDesc")?.value||"").trim();
-  window._fs = null; window._endForcar = null;
-  await push(tasksRef, { endereco:endCompleto, codigo:cod, descricao:desc, tipo:tipoAtual, status:"pendente", ts:Date.now() });
+  window._fs=null; window._endForcar=null;
+  await push(tasksRef,{endereco:endCompleto,codigo:cod,descricao:desc,tipo:tipoAtual,status:"pendente",ts:Date.now()});
 }
 
 window.enviar = async () => {
-  const raw = document.getElementById("fEnd")?.value||"";
-  const r   = parseEnd(raw);
-  if (!r.valido) { alert(r.erro||"Endereço inválido"); return; }
-  const elA = document.getElementById("avisoEnd");
-  if (elA && !elA.classList.contains("hidden") && window._endForcar) {
-    elA.style.animation="none"; setTimeout(()=>elA.style.animation="",10);
-    return;
-  }
-  await _push(r.completo);
+  const r=parseEnd(document.getElementById("fEnd")?.value||"");
+  if(!r.valido){alert(r.erro||"Endereço inválido");return;}
+  const elA=document.getElementById("avisoEnd");
+  if(elA&&!elA.classList.contains("hidden")&&window._endForcar) return;
+  await doPush(r.completo);
 };
 
 window.enviarForcar = async () => {
-  const raw = document.getElementById("fEnd")?.value||"";
-  const r   = parseEnd(raw);
-  if (r.valido) await _push(r.completo);
+  const r=parseEnd(document.getElementById("fEnd")?.value||"");
+  if(r.valido) await doPush(r.completo);
 };
 
-window.acao = async (id, status) => {
-  try { await update(ref(db,`tarefas/${id}`), {status}); }
-  catch(e) { alert("Erro: "+e.message); }
+window.acao = async (id,status) => {
+  try{ await update(ref(db,`tarefas/${id}`),{status}); }
+  catch(e){ alert("Erro: "+e.message); }
 };
 
 window.pular = async id => {
-  try { await update(ref(db,`tarefas/${id}`), {status:"pulado", ts:Date.now()}); }
-  catch(e) { alert("Erro: "+e.message); }
+  try{ await update(ref(db,`tarefas/${id}`),{status:"pulado",ts:Date.now()}); }
+  catch(e){ alert("Erro: "+e.message); }
 };
 
 window.remover = async id => {
-  if (!confirm("Remover esta tarefa?")) return;
-  try { await remove(ref(db,`tarefas/${id}`)); }
-  catch(e) { alert("Erro: "+e.message); }
+  if(!confirm("Remover esta tarefa?")) return;
+  try{ await remove(ref(db,`tarefas/${id}`)); }
+  catch(e){ alert("Erro: "+e.message); }
 };
 
 window.fecharAlerta = async id => {
-  try { await update(ref(db,`tarefas/${id}`), {alertaVisto:true}); } catch {}
+  try{ await update(ref(db,`tarefas/${id}`),{alertaVisto:true}); } catch{}
   document.getElementById("al-"+id)?.remove();
 };
 
 window.limparTudo = async () => {
-  if (!confirm("Limpar todas as tarefas?")) return;
-  try { await remove(tasksRef); } catch(e) { alert("Erro: "+e.message); }
+  if(!confirm("Limpar todas as tarefas?")) return;
+  try{ await remove(tasksRef); } catch(e){ alert("Erro: "+e.message); }
 };
 
 // ── FIREBASE ──────────────────────────────────────────────────────────────────
 onValue(tasksRef, snap => {
-  if (perfil==="repositor") {
-    window._fs = {
-      end:  document.getElementById("fEnd")?.value,
-      cod:  document.getElementById("fCod")?.value,
-      desc: document.getElementById("fDesc")?.value,
-      tipo: tipoAtual,
+  if(perfil==="repositor"){
+    window._fs={
+      end: document.getElementById("fEnd")?.value,
+      cod: document.getElementById("fCod")?.value,
+      desc:document.getElementById("fDesc")?.value,
+      tipo:tipoAtual,
     };
   }
-  const data = snap.val() || {};
-  const novo = Object.entries(data).map(([id,v])=>({id,...v})).sort((a,b)=>a.ts-b.ts);
+  const data=snap.val()||{};
+  const novo=Object.entries(data).map(([id,v])=>({id,...v})).sort((a,b)=>a.ts-b.ts);
 
-  if (perfil==="operador" && prevIds !== null) {
-    const novosIds = novo.filter(t=>t.status==="pendente").map(t=>t.id);
-    if (novosIds.some(id=>!prevIds.includes(id))) beep();
+  if(perfil==="operador"&&prevIds!==null){
+    const ids=novo.filter(t=>t.status==="pendente").map(t=>t.id);
+    if(ids.some(id=>!prevIds.includes(id))) beep();
   }
-  if (perfil==="operador") prevIds = novo.filter(t=>t.status==="pendente").map(t=>t.id);
+  if(perfil==="operador") prevIds=novo.filter(t=>t.status==="pendente").map(t=>t.id);
 
-  tarefas = novo;
+  tarefas=novo;
   render();
 });
 
 render();
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js").catch(()=>{});
+}
 </script>
 </body>
 </html>
