@@ -21,16 +21,27 @@
     // Tamanhos do endereço principal: P / M / G / GG / Auto
     const FONT_PRESETS = { P: 42, M: 56, G: 72, GG: 92, Auto: 0 };
 
+    function getFontKey() {
+      return perfil === "repositor" ? "repoapp-fontsize-rep" : "repoapp-fontsize-op";
+    }
+
     function getFontSize() {
-      const saved = localStorage.getItem("repoapp-fontsize");
+      const saved = localStorage.getItem(getFontKey());
       if (saved && FONT_PRESETS[saved] !== undefined) return saved;
       return "Auto";
     }
 
     function setFontSize(preset) {
-      localStorage.setItem("repoapp-fontsize", preset);
+      localStorage.setItem(getFontKey(), preset);
       aplicarFonte();
-      if (perfil === "operador") renderOperador();
+      document.querySelectorAll(".cfg-btn").forEach(btn => {
+        btn.classList.toggle("cfg-ativo", btn.dataset.preset === preset);
+      });
+      const prev = document.getElementById("cfgPreview");
+      if (prev) {
+        prev.style.fontSize = getFontSizePx() + "px";
+        prev.style.letterSpacing = Math.max(2, Math.round(getFontSizePx() * 0.07)) + "px";
+      }
     }
 
     function calcAutoFontSize() {
@@ -38,7 +49,7 @@
       if (w <= 360) return 48;
       if (w <= 414) return 58;
       if (w <= 768) return 68;
-      return 80; // tablet
+      return 80;
     }
 
     function getFontSizePx() {
@@ -53,9 +64,21 @@
       document.documentElement.style.setProperty("--addr-spacing", Math.max(2, Math.round(px * 0.07)) + "px");
     }
 
-    window.addEventListener("resize", () => {
-      if (getFontSize() === "Auto") aplicarFonte();
-    });
+    function htmlConfigPanel(bgVar, bdVar) {
+      const cur = getFontSize();
+      const px = getFontSizePx();
+      const sp = Math.max(2, Math.round(px * 0.07));
+      return `<div id="configPanel" class="config-panel hidden" style="background:var(${bgVar});border-bottom:1px solid var(${bdVar})">
+          <span class="config-label">Tamanho do endereço:</span>
+          <div class="config-btns">
+            ${Object.keys(FONT_PRESETS).map(k => `<button class="cfg-btn ${cur===k?"cfg-ativo":""}" data-preset="${k}" onclick="setFontSize('${k}')">${k}${k==="Auto"?" 📱":""}</button>`).join("")}
+          </div>
+          <span class="config-preview" id="cfgPreview" style="font-size:${px}px;letter-spacing:${sp}px">B 004 0056 10</span>
+        </div>`;
+    }
+
+    window.addEventListener("resize", () => { if (getFontSize() === "Auto") aplicarFonte(); });
+
 
     const firebaseConfig = {
       apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -196,8 +219,10 @@
           <span class="tsp"></span>
           <span class="tlive"><span class="dot"></span>ao vivo</span>
           <span class="tver">${APP_VERSION}</span>
+          <button class="tout tbtnconf" onclick="toggleConfig()" title="Ajustar fonte">⚙️</button>
           <button class="tout" onclick="sair()">Trocar</button>
         </div>
+        ${htmlConfigPanel("--s1","--bd")}
         ${alts.map(t=>`
           <div class="alerta" id="al-${t.id}">
             <span class="adot"></span>
@@ -279,16 +304,7 @@
           <button class="tout tbtnconf" onclick="toggleConfig()" title="Ajustar fonte">⚙️</button>
           <button class="tout" onclick="sair()">Trocar</button>
         </div>
-        <div id="configPanel" class="config-panel hidden">
-          <span class="config-label">Tamanho do endereço:</span>
-          <div class="config-btns">
-            ${Object.keys(FONT_PRESETS).map(k => `
-              <button class="cfg-btn ${getFontSize()===k?"cfg-ativo":""}" onclick="setFontSize('${k}');renderConfigBtns()">
-                ${k}${k==="Auto"?" 📱":""}
-              </button>`).join("")}
-          </div>
-          <span class="config-preview" id="cfgPreview">Endereço: B 004 0056 10</span>
-        </div>
+        ${htmlConfigPanel("--s1-op","--bd-op")}
         <div class="main-op">
           ${fila.length===0?`
             <div class="empty">
@@ -390,15 +406,6 @@
     window.toggleConfig = () => {
       const el = document.getElementById("configPanel");
       if (el) el.classList.toggle("hidden");
-    };
-
-    window.renderConfigBtns = () => {
-      document.querySelectorAll(".cfg-btn").forEach(btn => {
-        const k = btn.textContent.trim().replace(" 📱","");
-        btn.classList.toggle("cfg-ativo", getFontSize() === k);
-      });
-      const prev = document.getElementById("cfgPreview");
-      if (prev) prev.style.fontSize = getFontSizePx() + "px";
     };
 
     window.setTipo = t => {
@@ -683,16 +690,15 @@
     .alerta button{background:transparent;border:none;color:var(--mu);cursor:pointer;font-size:16px;flex-shrink:0}
 
     .tbtnconf{font-size:15px;padding:4px 8px}
-    .config-panel{background:var(--s1-op);border-bottom:1px solid var(--bd-op);
-      padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;animation:si .2s ease}
-    .config-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--tx2-op);white-space:nowrap}
+    .config-panel{padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;animation:si .2s ease}
+    .config-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--tx2);white-space:nowrap}
     .config-btns{display:flex;gap:6px;flex-wrap:wrap}
-    .cfg-btn{padding:6px 14px;border-radius:8px;border:1px solid var(--bd-op);background:var(--s2-op);
-      color:var(--tx2-op);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;font-family:'DM Sans'}
+    .cfg-btn{padding:7px 16px;border-radius:8px;border:1px solid var(--bd);background:var(--s2);
+      color:var(--tx2);font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;font-family:'DM Sans'}
     .cfg-btn:hover{border-color:var(--am);color:var(--am)}
     .cfg-ativo{background:var(--am)!important;border-color:var(--am)!important;color:#000!important}
     .config-preview{font-family:'Bebas Neue';letter-spacing:4px;color:var(--am);
-      font-size:var(--addr-size,68px);line-height:1;opacity:.4;margin-left:auto;white-space:nowrap;overflow:hidden}
+      line-height:1;opacity:.35;margin-left:auto;white-space:nowrap;overflow:hidden;max-width:45%}
     .ei{font-size:44px;margin-bottom:12px;opacity:.4}
     .et{font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;margin-bottom:6px;color:var(--tx2-op)}
     .es{font-size:12px;line-height:1.7}
