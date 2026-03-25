@@ -11,7 +11,7 @@
   <!-- Firebase -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, push, onValue, remove, set, serverTimestamp }
+    import { getDatabase, ref, push, onValue, remove, set, update, serverTimestamp }
       from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
@@ -270,18 +270,19 @@
     };
 
     window.acao = async (id, novoStatus) => {
-      const taskRef = ref(db, `tarefas/${id}`);
-      const task = tarefas.find(t => t.id === id);
-      if (task) {
-        const { id: _remove, ...taskData } = task;
-        await set(taskRef, { ...taskData, status: novoStatus });
+      try {
+        const taskRef = ref(db, `tarefas/${id}`);
+        await update(taskRef, { status: novoStatus });
+      } catch(e) {
+        alert("Erro ao atualizar: " + e.message);
       }
     };
 
-    window.fecharAlerta = (id) => {
-      const taskRef = ref(db, `tarefas/${id}`);
-      const task = tarefas.find(t => t.id === id);
-      if (task) set(taskRef, { ...task, id: undefined, alertaVisto: true });
+    window.fecharAlerta = async (id) => {
+      try {
+        const taskRef = ref(db, `tarefas/${id}`);
+        await update(taskRef, { alertaVisto: true });
+      } catch(e) {}
       document.getElementById(`al-${id}`)?.remove();
     };
 
