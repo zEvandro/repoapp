@@ -17,7 +17,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#0b0e17;--s1:#131726;--s2:#1a1f32;--s3:#222840;--bd:#2c3454;
-  --am:#f59e0b;--bl:#3b82f6;--gr:#22c55e;--rd:#ef4444;
+  --am:#f59e0b;--bl:#3b82f6;--gr:#22c55e;--rd:#ef4444;--pu:#8b5cf6;
   --tx:#dde3f5;--tx2:#8892b0;--mu:#4b5882;
   --bg-op:#020305;--s1-op:#0a0d14;--s2-op:#0e1119;--bd-op:#1a2040;
   --tx-op:#f0f4ff;--tx2-op:#6b7aa0;--mu-op:#3a4460;
@@ -26,41 +26,77 @@
 html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif;overflow-x:hidden}
 #app{display:flex;flex-direction:column;min-height:100dvh}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 
 /* LOGIN */
 .login{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;
   background:radial-gradient(ellipse 80% 60% at 50% 0%,#1a2040,var(--bg) 70%)}
 .logo{width:72px;height:72px;border-radius:18px;background:var(--am);display:flex;align-items:center;
-  justify-content:center;font-family:'Bebas Neue';font-size:40px;color:#0b0e17;margin-bottom:20px;box-shadow:0 0 40px #f59e0b44}
+  justify-content:center;margin-bottom:20px;box-shadow:0 0 40px #f59e0b44}
 .login h1{font-family:'Bebas Neue';font-size:44px;letter-spacing:3px;color:#fff}
 .login-sub{font-size:12px;color:var(--tx2);letter-spacing:2px;text-transform:uppercase;margin-top:4px}
 .login-ver{font-size:11px;color:var(--mu);letter-spacing:2px;margin-bottom:36px;margin-top:8px}
-.lcards{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.lcards{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:0}
 .lcard{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:28px 20px;
-  cursor:pointer;transition:all .2s;width:150px;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--tx)}
+  cursor:pointer;transition:all .2s;width:150px;display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--tx)}
 .lcard:hover{border-color:var(--am);background:var(--s2);transform:translateY(-2px)}
-.lcard-icon{font-size:32px}
+.lcard-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center}
 .lcard-title{font-family:'Bebas Neue';font-size:20px;letter-spacing:2px}
 .lcard-desc{font-size:11px;color:var(--tx2);text-align:center;line-height:1.5}
 
+/* NOME DO OPERADOR */
+.op-name-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px;background:radial-gradient(ellipse 80% 60% at 50% 0%,#0a1428,var(--bg-op) 70%)}
+.op-name-box{background:var(--s1-op);border:1px solid var(--bd-op);border-radius:20px;
+  padding:32px 28px;width:100%;max-width:360px;text-align:center}
+.op-name-icon{width:64px;height:64px;border-radius:16px;background:#3b82f622;border:1px solid #3b82f644;
+  display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.op-name-title{font-family:'Bebas Neue';font-size:28px;letter-spacing:2px;color:var(--tx-op);margin-bottom:6px}
+.op-name-sub{font-size:13px;color:var(--tx2-op);margin-bottom:24px;line-height:1.5}
+.op-name-input{width:100%;background:var(--s2-op);border:1px solid var(--bd-op);color:var(--tx-op);
+  font-size:18px;font-weight:700;padding:14px 16px;border-radius:12px;outline:none;
+  font-family:'DM Sans';text-align:center;transition:border-color .15s;margin-bottom:14px}
+.op-name-input:focus{border-color:var(--bl)}
+.op-name-input::placeholder{color:var(--mu-op);font-weight:400;font-size:14px}
+.op-name-btn{width:100%;padding:14px;background:var(--bl);border:none;color:#fff;
+  font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;border-radius:12px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px}
+.op-name-btn:hover{filter:brightness(1.1)}
+.op-name-btn:disabled{opacity:.4;cursor:not-allowed}
+
 /* TOPBARS */
-.topbar{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 16px;height:52px;
+.topbar{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 14px;height:52px;
   display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:50;flex-shrink:0}
-.topbar-op{background:var(--s1-op);border-bottom:1px solid var(--bd-op);padding:0 16px;height:52px;
+.topbar-op{background:var(--s1-op);border-bottom:1px solid var(--bd-op);padding:0 14px;height:52px;
   display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:50;flex-shrink:0}
 .tlogo{font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;color:var(--am)}
-.trole{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:20px}
+.trole{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;display:flex;align-items:center;gap:5px}
 .rep{background:#f59e0b22;color:var(--am);border:1px solid #f59e0b44}
 .oper{background:#3b82f622;color:var(--bl);border:1px solid #3b82f644}
+.op-nome-badge{font-size:11px;font-weight:700;color:var(--bl);background:#3b82f615;
+  border:1px solid #3b82f630;padding:3px 10px;border-radius:99px;max-width:120px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tsp{flex:1}
 .tlive{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--mu)}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--gr);animation:blink 2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
 .tver{font-size:10px;color:var(--mu);letter-spacing:1px;font-weight:700}
-.tbtn-icon{background:transparent;border:1px solid var(--bd);color:var(--tx2);font-size:14px;padding:5px 9px;border-radius:8px;cursor:pointer}
+.tbtn-icon{background:transparent;border:1px solid var(--bd);color:var(--tx2);
+  width:34px;height:34px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .tbtn-icon:hover{border-color:var(--am);color:var(--am)}
-.tbtn-out{background:transparent;border:1px solid var(--bd);color:var(--tx2);font-size:11px;padding:5px 12px;border-radius:8px;cursor:pointer;font-weight:700}
+.tbtn-out{background:transparent;border:1px solid var(--bd);color:var(--tx2);
+  font-size:11px;padding:5px 12px;border-radius:8px;cursor:pointer;font-weight:700;
+  display:flex;align-items:center;gap:5px;height:34px}
 .tbtn-out:hover{border-color:var(--rd);color:var(--rd)}
+
+/* ONLINE BADGE */
+.online-bar{padding:8px 16px;background:var(--s1);border-bottom:1px solid var(--bd);
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex-shrink:0}
+.online-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu)}
+.online-op{display:flex;align-items:center;gap:6px;background:var(--s2);border:1px solid var(--bd);
+  border-radius:99px;padding:4px 12px 4px 8px;font-size:12px;font-weight:700;color:var(--tx2)}
+.online-dot{width:8px;height:8px;border-radius:50%;background:var(--gr);flex-shrink:0;animation:blink 2s infinite}
 
 /* PAINEL FONTE */
 .font-panel{padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
@@ -73,10 +109,9 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
   color:var(--tx2);font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans';transition:all .15s}
 .font-btn:hover{border-color:var(--am);color:var(--am)}
 .font-btn.ativo{background:var(--am);border-color:var(--am);color:#000}
-.font-preview{font-family:'Bebas Neue';color:var(--am);opacity:.3;margin-left:auto;
-  white-space:nowrap;overflow:hidden;line-height:1}
+.font-preview{font-family:'Bebas Neue';color:var(--am);opacity:.3;margin-left:auto;white-space:nowrap;overflow:hidden;line-height:1}
 
-/* FILTRO DE RUA */
+/* FILTRO */
 .filtro-bar{display:flex;gap:6px;padding:10px 16px;background:var(--s1-op);
   border-bottom:1px solid var(--bd-op);overflow-x:auto;scrollbar-width:none;flex-shrink:0}
 .filtro-bar::-webkit-scrollbar{display:none}
@@ -87,12 +122,26 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
 .filtro-ativo{background:var(--am)!important;border-color:var(--am)!important;color:#000!important}
 .filtro-n{background:rgba(0,0,0,0.2);border-radius:99px;font-size:10px;padding:1px 6px;font-weight:800}
 
-/* STAT CARDS */
+/* STAT */
 .stat-row{display:flex;gap:8px;margin-bottom:14px}
 .stat-card{flex:1;border:1px solid var(--bd);border-radius:12px;padding:12px 8px;text-align:center;background:var(--s1)}
 .stat-card-op{background:var(--s1-op);border-color:var(--bd-op)}
 .stat-num{font-family:'Bebas Neue';font-size:28px;letter-spacing:1px;line-height:1;margin-bottom:3px}
 .stat-lbl{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu)}
+
+/* CÂMARA SELECTOR */
+.camara-sel{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.camara-btn{padding:8px 14px;border-radius:10px;border:1px solid var(--bd);background:var(--s2);
+  color:var(--tx2);font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans';
+  transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:52px}
+.camara-btn:hover{transform:translateY(-1px)}
+.camara-btn.ativa{color:#000;border-color:transparent}
+.camara-letra{font-family:'Bebas Neue';font-size:22px;letter-spacing:1px;line-height:1}
+.camara-nome{font-size:9px;letter-spacing:.5px;opacity:.85}
+.atrib-select{width:100%;background:var(--s2);border:1px solid var(--bd);color:var(--tx);
+  font-size:13px;font-weight:600;padding:10px 13px;border-radius:10px;outline:none;
+  font-family:'DM Sans';transition:border-color .15s;margin-top:4px;cursor:pointer}
+.atrib-select:focus{border-color:var(--am)}
 
 /* MAIN */
 .main{flex:1;overflow-y:auto;padding:16px;background:var(--bg)}
@@ -100,8 +149,10 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
 
 /* FORM */
 .formcard{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:20px;margin-bottom:14px}
-.ftitle{font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;color:var(--am);margin-bottom:14px}
-.lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);margin-bottom:6px;display:block;margin-top:12px}
+.ftitle{font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;color:var(--am);margin-bottom:14px;
+  display:flex;align-items:center;gap:8px}
+.lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);
+  margin-bottom:6px;display:block;margin-top:12px}
 .lbl:first-child{margin-top:0}
 .lbl small{font-size:9px;color:var(--mu);text-transform:none;letter-spacing:0;font-weight:400}
 .inp{width:100%;background:var(--s2);border:1px solid var(--bd);color:var(--tx);font-size:14px;
@@ -115,17 +166,20 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
 .pfull{font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;color:var(--gr);line-height:1}
 .pdet{font-size:10px;color:var(--tx2);margin-top:2px}
 .aviso-dup{background:#f59e0b14;border:1px solid #f59e0b50;border-radius:8px;padding:10px 13px;
-  margin-top:7px;font-size:12px;color:var(--am);line-height:1.6}
+  margin-top:7px;font-size:12px;color:var(--am);line-height:1.6;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .aviso-dup.hidden{display:none}
 .aviso-dup b{color:#fff}
 .btndup{background:var(--am);border:none;color:#000;font-size:11px;font-weight:700;
-  padding:4px 12px;border-radius:6px;cursor:pointer;margin-left:8px;font-family:'DM Sans'}
+  padding:5px 14px;border-radius:6px;cursor:pointer;font-family:'DM Sans'}
 .toggle{display:flex;gap:8px;margin-top:4px}
-.tbtn{flex:1;padding:10px;border-radius:10px;border:1px solid var(--bd);background:var(--s2);
-  color:var(--tx2);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;font-family:'DM Sans'}
+.tbtn{flex:1;padding:10px 8px;border-radius:10px;border:1px solid var(--bd);background:var(--s2);
+  color:var(--tx2);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;font-family:'DM Sans';
+  display:flex;align-items:center;justify-content:center;gap:6px}
 .tbtn.active{background:var(--am);border-color:var(--am);color:#000}
+.tbtn.active svg{stroke:#000}
 .btn-send{width:100%;padding:14px;background:var(--am);border:none;color:#000;
-  font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;border-radius:10px;cursor:pointer;margin-top:16px}
+  font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;border-radius:10px;cursor:pointer;margin-top:16px;
+  display:flex;align-items:center;justify-content:center;gap:10px}
 .btn-send:hover{filter:brightness(1.1)}
 
 /* SECAO */
@@ -140,22 +194,56 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
 .crep-addr{font-family:'Bebas Neue';font-size:20px;letter-spacing:2px;flex:1}
 .crep-prod{font-size:13px;font-weight:700;color:var(--tx);margin-bottom:4px}
 .crep-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
-.chip{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:99px;border:1px solid}
-.tbadge{font-size:10px;font-weight:800;letter-spacing:1px;padding:3px 10px;border-radius:99px;border:1px solid}
-.btn-rem{background:transparent;border:none;color:var(--mu);cursor:pointer;font-size:14px;padding:0 4px;transition:color .15s}
-.btn-rem:hover{color:var(--rd)}
+.chip{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+  padding:3px 8px;border-radius:99px;border:1px solid;display:inline-flex;align-items:center;gap:4px}
+.tbadge{font-size:10px;font-weight:800;letter-spacing:1px;padding:3px 10px;border-radius:99px;border:1px solid;
+  display:inline-flex;align-items:center;gap:5px}
+.btn-rem{background:transparent;border:none;color:var(--mu);cursor:pointer;padding:4px;
+  display:flex;align-items:center;justify-content:center;border-radius:6px;transition:all .15s}
+.btn-rem:hover{color:var(--rd);background:#ef444415}
 .btn-limpar{width:100%;padding:10px;background:transparent;border:1px solid var(--bd);
-  color:var(--mu);border-radius:10px;cursor:pointer;font-size:12px;font-weight:700;margin-top:6px}
+  color:var(--mu);border-radius:10px;cursor:pointer;font-size:12px;font-weight:700;margin-top:6px;
+  display:flex;align-items:center;justify-content:center;gap:6px}
 .btn-limpar:hover{border-color:var(--rd);color:var(--rd)}
 
+/* OPERADOR BADGE no card */
+.op-tag{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;
+  padding:3px 9px;border-radius:99px;border:1px solid #8b5cf640;background:#8b5cf615;color:#a78bfa}
+.btn-transfer{background:transparent;border:1px solid var(--bd);color:var(--tx2);cursor:pointer;
+  padding:4px 8px;display:flex;align-items:center;gap:4px;border-radius:6px;
+  font-size:10px;font-weight:700;transition:all .15s;white-space:nowrap}
+.btn-transfer:hover{border-color:var(--pu);color:#a78bfa;background:#8b5cf615}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;
+  display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .15s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--s1);border:1px solid var(--bd);border-radius:18px;
+  padding:24px;width:100%;max-width:340px;animation:slideUp .2s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.modal-title{font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;color:var(--tx);
+  margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.modal-sub{font-size:12px;color:var(--tx2);margin-bottom:18px;line-height:1.5}
+.modal-ops{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+.modal-op-btn{background:var(--s2);border:1px solid var(--bd);border-radius:10px;
+  padding:12px 14px;cursor:pointer;transition:all .15s;text-align:left;
+  display:flex;align-items:center;gap:10px;color:var(--tx)}
+.modal-op-btn:hover{border-color:var(--pu);background:#8b5cf610}
+.modal-op-nome{font-size:14px;font-weight:700}
+.modal-op-info{font-size:11px;color:var(--tx2);margin-top:2px}
+.modal-cancel{width:100%;padding:10px;background:transparent;border:1px solid var(--bd);
+  color:var(--tx2);border-radius:10px;cursor:pointer;font-size:13px;font-weight:700;font-family:'DM Sans'}
+
 /* ALERTAS */
-.alerta{background:#ef444414;border:1px solid #ef444440;border-radius:10px;padding:12px 14px;
-  margin:10px 16px 0;display:flex;align-items:flex-start;gap:10px;animation:si .2s ease}
+.alerta{background:#ef444414;border:1px solid #ef444440;border-left:3px solid var(--rd);
+  border-radius:10px;padding:12px 14px;margin:10px 16px 0;
+  display:flex;align-items:flex-start;gap:10px;animation:si .2s ease}
 .adot{width:8px;height:8px;border-radius:50%;background:var(--rd);flex-shrink:0;margin-top:4px;animation:blink 1s infinite}
 .alerta b{font-size:13px}
 .alerta span{font-size:12px;color:var(--tx2)}
 .alerta small{font-size:10px;color:var(--mu)}
-.alerta button{background:transparent;border:none;color:var(--mu);cursor:pointer;font-size:16px;flex-shrink:0}
+.alerta-close{background:transparent;border:none;color:var(--mu);cursor:pointer;
+  display:flex;align-items:center;padding:2px;flex-shrink:0}
 
 /* CARD OPERADOR PRINCIPAL */
 .cop-main{background:var(--s1-op);border:2px solid var(--am);border-radius:18px;padding:22px 20px;
@@ -163,26 +251,28 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
   animation:si .2s ease;touch-action:pan-y}
 .swipe-hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
   font-family:'Bebas Neue';font-size:24px;letter-spacing:2px;opacity:0;pointer-events:none;white-space:nowrap;color:var(--gr)}
-.tipo-main{font-family:'Bebas Neue';font-size:28px;letter-spacing:3px}
+.tipo-main{font-family:'Bebas Neue';font-size:24px;letter-spacing:3px;display:flex;align-items:center;gap:10px}
 .addr-main{font-family:'Bebas Neue';font-size:var(--addr-size);letter-spacing:var(--addr-sp);
   color:var(--am);line-height:1;margin:10px 0 12px;word-break:break-all}
 .desc-main{font-size:16px;font-weight:700;color:var(--tx-op);margin-bottom:3px}
 .cod-main{font-size:13px;color:var(--tx2-op);margin-bottom:8px}
 .op-btns{display:flex;gap:8px;margin-top:16px}
-.abtn{flex:1;padding:14px 6px;border-radius:10px;border:none;font-family:'Bebas Neue';
-  font-size:17px;letter-spacing:1.5px;cursor:pointer;transition:all .15s}
+.abtn{flex:1;padding:14px 6px;border-radius:10px;border:none;font-family:'DM Sans';
+  font-size:13px;font-weight:700;letter-spacing:.5px;cursor:pointer;transition:all .15s;
+  display:flex;align-items:center;justify-content:center;gap:7px}
 .abtn:active{filter:brightness(.9);transform:scale(.98)}
 .abtn-blue{background:var(--bl);color:#fff}
 .abtn-green{background:var(--gr);color:#000}
 .abtn-red{background:var(--rd);color:#fff}
 .abtn-gray{background:#1a2040;color:#6b7aa0;border:1px solid #2a3060}
-.sdica2{text-align:center;font-size:10px;color:var(--mu-op);margin-top:10px}
+.sdica2{text-align:center;font-size:10px;color:var(--mu-op);margin-top:10px;
+  display:flex;align-items:center;justify-content:center;gap:6px}
 
-/* CARD OPERADOR SECUNDÁRIO */
+/* CARD SEC */
 .cop-sec{background:var(--s2-op);border:1px solid var(--bd-op);border-radius:12px;
   padding:13px 14px;margin-bottom:8px;opacity:.5;position:relative;overflow:hidden;touch-action:pan-y}
 
-/* HISTORICO */
+/* HIST */
 .chist{background:var(--s2-op);border:1px solid var(--bd-op);border-left:3px solid;
   border-radius:10px;padding:10px 12px;margin-bottom:7px;display:flex;align-items:center;gap:8px;opacity:.6}
 
@@ -193,7 +283,8 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
 
 /* EMPTY */
 .empty{text-align:center;padding:60px 20px;color:var(--mu-op)}
-.empty-icon{font-size:44px;margin-bottom:12px;opacity:.4}
+.empty-icon-wrap{width:64px;height:64px;border-radius:50%;background:var(--s2-op);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
 .empty-title{font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;margin-bottom:6px;color:var(--tx2-op)}
 .empty-sub{font-size:12px;line-height:1.7}
 </style>
@@ -202,10 +293,10 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans'
 <div id="app"></div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getDatabase, ref, push, onValue, remove, update }
+import { getDatabase, ref, push, onValue, remove, update, set, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-const APP_VERSION = "v2.0";
+const APP_VERSION = "v2.6";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -217,116 +308,177 @@ const firebaseConfig = {
   appId:             "1:151491743077:web:06aa81e8ce4c4e032f258c"
 };
 
-const fbApp = initializeApp(firebaseConfig);
-const db = getDatabase(fbApp);
-const tasksRef = ref(db, "tarefas");
+const fbApp   = initializeApp(firebaseConfig);
+const db      = getDatabase(fbApp);
+const tasksRef    = ref(db, "tarefas");
+const operadoresRef = ref(db, "operadores");
+
+// ── ÍCONES ───────────────────────────────────────────────────────────────────
+const I = {
+  clipboard:  `<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>`,
+  forklift:   `<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V9l4-5h6v5l4 3v5"/><path d="M4 17H2"/><path d="M22 17h-8"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/><path d="M14 9V4"/></svg>`,
+  package:    `<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 21H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/><path d="m12 2 4 4-4 4"/><path d="M16 6H8"/><rect x="12" y="12" width="10" height="10" rx="1"/><path d="m16 12 2 2-2 2"/></svg>`,
+  layers:     `<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
+  send:       `<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>`,
+  check:      `<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>`,
+  checkCircle:`<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>`,
+  alert:      `<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>`,
+  skip:       `<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" x2="19" y1="5" y2="19"/></svg>`,
+  receive:    `<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg>`,
+  settings:   `<svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34L5 7h14l-1.93-3.41A10 10 0 0 0 19.07 4.93z"/><path d="M5 7H3a10 10 0 0 0 2.5 11.5L7 17H5V7z"/><path d="M21 7h-2v10h-2l1.5 1.5A10 10 0 0 0 21 7z"/></svg>`,
+  logout:     `<svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>`,
+  trash:      `<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>`,
+  x:          `<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`,
+  clock:      `<svg class="icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+  swipe:      `<svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>`,
+  tap:        `<svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V6a3 3 0 0 1 6 0v5"/><path d="M14.5 9.5a3 3 0 0 1 3 3v1.5a6 6 0 0 1-6 6h-2a6 6 0 0 1-6-6v-3a3 3 0 0 1 3-3h.5"/></svg>`,
+  map:        `<svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>`,
+  search:     `<svg class="icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>`,
+  inbox:      `<svg class="icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>`,
+  user:       `<svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+  users:      `<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  smartphone: `<svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>`,
+  arrowRight: `<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>`,
+  transfer:   `<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3L21 7L17 11"/><path d="M21 7H3"/><path d="M7 21L3 17L7 13"/><path d="M3 17H21"/></svg>`,
+};
 
 // ── ESTADO ───────────────────────────────────────────────────────────────────
-let perfil    = null;
-let tarefas   = [];
-let tipoAtual = "picking";
-let prevIds   = null;
-let showFont  = false;
-let filtroRua = "todas";
+let perfil      = null;
+let nomeOperador= null;   // nome do operador logado
+let opId        = null;
+let tarefas     = [];
+let operadores  = {};
+let tipoAtual   = "picking";
+let atribPara   = "qualquer";
+let prevIds     = null;
+let showFont    = false;
+let filtroRua   = "todas";
+let camaraAtual = "B";
+
+// ── CÂMARAS ───────────────────────────────────────────────────────────────────
+const CAMARAS = {
+  B: { nome:"Batavo",      cor:"#3b82f6", bg:"#3b82f615", bd:"#3b82f640" },
+  A: { nome:"Itambé",      cor:"#ef4444", bg:"#ef444415", bd:"#ef444440" },
+  E: { nome:"DPA",         cor:"#8b5cf6", bg:"#8b5cf615", bd:"#8b5cf640" },
+  C: { nome:"Área Seca",   cor:"#f59e0b", bg:"#f59e0b15", bd:"#f59e0b40" },
+  D: { nome:"Área Seca 2", cor:"#f97316", bg:"#f9731615", bd:"#f9731640" },
+  F: { nome:"Câmara F",    cor:"#22c55e", bg:"#22c55e15", bd:"#22c55e40", especial:true },
+};
 
 // ── FONTE ────────────────────────────────────────────────────────────────────
 const FONT_SIZES = { P:42, M:56, G:72, GG:92 };
-
-function fontKey()    { return "repoapp-font-" + (perfil||"op"); }
+function fontKey()    { return "repoapp-font-"+(perfil||"op"); }
 function fontPreset() { const s=localStorage.getItem(fontKey()); return (s&&FONT_SIZES[s])?s:"Auto"; }
 function fontPx() {
-  const p = fontPreset();
-  if (p==="Auto") {
-    const w = window.innerWidth;
-    if (w<=360) return 48; if (w<=414) return 58; if (w<=768) return 68; return 80;
-  }
+  const p=fontPreset();
+  if(p==="Auto"){const w=window.innerWidth;if(w<=360)return 48;if(w<=414)return 58;if(w<=768)return 68;return 80;}
   return FONT_SIZES[p];
 }
 function applyFont() {
-  const px = fontPx();
-  document.documentElement.style.setProperty("--addr-size", px+"px");
-  document.documentElement.style.setProperty("--addr-sp", Math.max(2,Math.round(px*.07))+"px");
+  const px=fontPx();
+  document.documentElement.style.setProperty("--addr-size",px+"px");
+  document.documentElement.style.setProperty("--addr-sp",Math.max(2,Math.round(px*.07))+"px");
 }
-window.addEventListener("resize", () => { if (fontPreset()==="Auto") applyFont(); });
+window.addEventListener("resize",()=>{if(fontPreset()==="Auto")applyFont();});
 
 // ── UTILS ────────────────────────────────────────────────────────────────────
-const fmtHora = ts => ts ? new Date(ts).toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}) : "";
-
-function tempoFila(ts) {
-  const m = Math.floor((Date.now()-ts)/60000);
-  if (m<1) return "agora"; if (m<60) return m+"min";
-  const h=Math.floor(m/60), r=m%60; return r?h+"h "+r+"min":h+"h";
-}
-function corTempo(ts) {
-  const m = Math.floor((Date.now()-ts)/60000);
-  return m<5?"var(--gr)":m<15?"var(--am)":"var(--rd)";
-}
+const fmtHora = ts=>ts?new Date(ts).toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}):"";
+function tempoFila(ts){const m=Math.floor((Date.now()-ts)/60000);if(m<1)return "agora";if(m<60)return m+"min";const h=Math.floor(m/60),r=m%60;return r?h+"h "+r+"min":h+"h";}
+function corTempo(ts){const m=Math.floor((Date.now()-ts)/60000);return m<5?"var(--gr)":m<15?"var(--am)":"var(--rd)";}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
 
 // ── PARSER ───────────────────────────────────────────────────────────────────
-function parseEnd(s) {
-  s=(s||"").trim();
-  if (!s) return {valido:false,erro:""};
-  if (/^B\s+\d{3}\s+\d{4}\s+\d{2}$/i.test(s)) return {valido:true,completo:s.toUpperCase(),erro:""};
-  const p=s.split(/[-\/\s]+/).filter(Boolean);
-  if (p.length!==3) return {valido:false,erro:'Use: RUA-POS-NÍVEL  ex: "4-56-2"'};
-  const rua=+p[0],pos=+p[1],nivel=+p[2];
-  if (isNaN(rua)||isNaN(pos)||isNaN(nivel)) return {valido:false,erro:"Apenas números"};
-  if (rua<1||rua>4)    return {valido:false,erro:"Rua: 1 a 4"};
-  if (pos<1||pos>88)   return {valido:false,erro:"Posição: 1 a 88"};
-  if (nivel<1||nivel>5) return {valido:false,erro:"Nível: 1–5"};
-  const label=["","Picking","2º nível","3º nível","4º nível","5º nível"][nivel];
-  const completo=`B ${String(rua).padStart(3,"0")} ${String(pos).padStart(4,"0")} ${String(nivel*10).padStart(2,"0")}`;
-  return {valido:true,completo,erro:"",rua,pos,nivel,label};
+function isPickingEnd(endCompleto){
+  // Nível 10 = chão = não precisa de operador
+  // Câmara F = sempre chão = não precisa de operador
+  const s = (endCompleto||"").trim().toUpperCase();
+  if(s.startsWith("F ")) return true;
+  return /\s10$/i.test(s);
+}
+
+function parseEnd(s, camara){
+  camara = (camara||camaraAtual||"B").toUpperCase();
+  s = (s||"").trim();
+  if(!s) return {valido:false,erro:""};
+
+  const cam = CAMARAS[camara];
+  if(!cam) return {valido:false,erro:"Câmara inválida"};
+
+  // ── CÂMARA F — formato especial: só RUA e POSIÇÃO ─────────────────────────
+  if(cam.especial){
+    // Aceita: "1-2" | "1 2" | "1/2"
+    const p = s.split(/[-\/\s]+/).filter(Boolean);
+    if(p.length !== 2) return {valido:false,erro:'Câmara F: use RUA-POSIÇÃO  ex: "1-2"'};
+    const rua=+p[0], pos=+p[1];
+    if(isNaN(rua)||isNaN(pos)) return {valido:false,erro:"Apenas números"};
+    if(rua<1||rua>9)  return {valido:false,erro:"Rua: 1 a 9"};
+    if(pos<1||pos>99) return {valido:false,erro:"Posição: 1 a 99"};
+    const completo = `F ${String(rua).padStart(2,"0")} ${String(pos).padStart(3,"0")}`;
+    return {valido:true,completo,erro:"",camara:"F",rua,pos,nivel:null,
+      label:`Câmara F · Rua ${rua} · Posição ${pos}`,isPicking:true};
+  }
+
+  // ── CÂMARAS PADRÃO: RUA POS NÍVEL ─────────────────────────────────────────
+  // Aceita formato já completo: "B 004 0056 20" (qualquer câmara)
+  const reCompleto = /^([A-F])\s+(\d{2,3})\s+(\d{3,4})\s+(\d{2})$/i;
+  const mC = s.match(reCompleto);
+  if(mC){
+    const [,letra,rua,pos,nivel] = mC;
+    const isPicking = nivel==="10";
+    return {valido:true,completo:`${letra.toUpperCase()} ${rua.padStart(3,"0")} ${pos.padStart(4,"0")} ${nivel}`,
+      erro:"",camara:letra.toUpperCase(),rua:+rua,pos:+pos,nivel:+nivel/10,
+      label:`${CAMARAS[letra.toUpperCase()]?.nome||letra} · Rua ${+rua} · Pos ${+pos} · ${nivel}`,isPicking};
+  }
+
+  // Aceita simplificado: "4-56-2" | "4 56 2" | "4/56/2"
+  // Também aceita com letra no início: "B 4 56 2" ou "b4-56-2"
+  let input = s;
+  // Remove a letra da câmara no início se digitada junto
+  const mLetra = input.match(/^([A-F])\s*[-\/\s]?(.*)/i);
+  if(mLetra) input = mLetra[2];
+
+  const p = input.split(/[-\/\s]+/).filter(Boolean);
+  if(p.length !== 3) return {valido:false,erro:'Use: RUA-POSIÇÃO-NÍVEL  ex: "4-56-2"'};
+  const rua=+p[0], pos=+p[1], nivel=+p[2];
+  if(isNaN(rua)||isNaN(pos)||isNaN(nivel)) return {valido:false,erro:"Apenas números"};
+  if(rua<1||rua>9)   return {valido:false,erro:"Rua: 1 a 9"};
+  if(pos<1||pos>99)  return {valido:false,erro:"Posição: 1 a 99"};
+  if(nivel<1||nivel>5) return {valido:false,erro:"Nível: 1–5"};
+  const nivelLabel=["","Nível 10 — chão","2º nível","3º nível","4º nível","5º nível"][nivel];
+  const completo=`${camara} ${String(rua).padStart(3,"0")} ${String(pos).padStart(4,"0")} ${String(nivel*10).padStart(2,"0")}`;
+  const isPicking = nivel===1;
+  return {valido:true,completo,erro:"",camara,rua,pos,nivel,
+    label:`${cam.nome} · Rua ${rua} · Pos ${pos} · ${nivelLabel}`,isPicking};
 }
 
 // ── SOM ──────────────────────────────────────────────────────────────────────
-function beep() {
-  try {
-    const ctx=new(window.AudioContext||window.webkitAudioContext)();
-    [0,.18].forEach(d=>{
-      const o=ctx.createOscillator(),g=ctx.createGain();
-      o.connect(g);g.connect(ctx.destination);
-      o.frequency.value=880;o.type="sine";
-      g.gain.setValueAtTime(0,ctx.currentTime+d);
-      g.gain.linearRampToValueAtTime(.4,ctx.currentTime+d+.01);
-      g.gain.linearRampToValueAtTime(0,ctx.currentTime+d+.12);
-      o.start(ctx.currentTime+d);o.stop(ctx.currentTime+d+.15);
-    });
-  } catch{}
-}
+function beep(freq=880,times=2){try{const ctx=new(window.AudioContext||window.webkitAudioContext)();Array.from({length:times},(_,i)=>i*.18).forEach(d=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=freq;o.type="sine";g.gain.setValueAtTime(0,ctx.currentTime+d);g.gain.linearRampToValueAtTime(.4,ctx.currentTime+d+.01);g.gain.linearRampToValueAtTime(0,ctx.currentTime+d+.12);o.start(ctx.currentTime+d);o.stop(ctx.currentTime+d+.15);});}catch{}}
 
 // ── SWIPE ────────────────────────────────────────────────────────────────────
-function initSwipe(el, onRight) {
+function initSwipe(el,onRight){
   let sx=0,sy=0,dx=0,moving=false;
   el.addEventListener("touchstart",e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;dx=0;moving=false;},{passive:true});
   el.addEventListener("touchmove",e=>{
-    dx=e.touches[0].clientX-sx;
-    const dy=e.touches[0].clientY-sy;
-    if (Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>10) {
-      moving=true;
-      if (dx>0) {
-        el.style.transform=`translateX(${dx}px)`;
-        el.style.opacity=`${1-Math.min(dx/200,.4)}`;
-        const h=el.querySelector(".swipe-hint");
-        if(h){h.textContent="✅ CONCLUÍDO";h.style.opacity=Math.min(dx/80,1);}
-      }
+    dx=e.touches[0].clientX-sx;const dy=e.touches[0].clientY-sy;
+    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>10){
+      moving=true;if(dx>0){el.style.transform=`translateX(${dx}px)`;el.style.opacity=`${1-Math.min(dx/200,.4)}`;
+      const h=el.querySelector(".swipe-hint");if(h){h.textContent="CONCLUÍDO";h.style.opacity=Math.min(dx/80,1);}}
     }
   },{passive:true});
   el.addEventListener("touchend",()=>{
     if(moving&&dx>80){onRight();return;}
     el.style.transform="";el.style.opacity="";
-    const h=el.querySelector(".swipe-hint");
-    if(h){h.textContent="";h.style.opacity=0;}
+    const h=el.querySelector(".swipe-hint");if(h){h.textContent="";h.style.opacity=0;}
   });
 }
 
 // ── PAINEL FONTE ─────────────────────────────────────────────────────────────
-function fontPanelHTML(isOp) {
-  if (!showFont) return "";
-  const cur=fontPreset(), px=fontPx(), sp=Math.max(2,Math.round(px*.07));
+function fontPanelHTML(isOp){
+  if(!showFont)return"";
+  const cur=fontPreset(),px=fontPx(),sp=Math.max(2,Math.round(px*.07));
   const cls=isOp?"font-panel-op":"font-panel";
   const btns=["P","M","G","GG","Auto"].map(k=>
-    `<button class="font-btn${cur===k?" ativo":""}" data-preset="${k}" onclick="window.setFont('${k}')">${k}${k==="Auto"?" 📱":""}</button>`
+    `<button class="font-btn${cur===k?" ativo":""}" data-preset="${k}" onclick="window.setFont('${k}')">${k}${k==="Auto"?` ${I.smartphone}`:""}</button>`
   ).join("");
   return `<div class="${cls}" id="fontPanel">
     <span class="font-label">Tamanho do endereço</span>
@@ -335,377 +487,618 @@ function fontPanelHTML(isOp) {
   </div>`;
 }
 
+// ── OPERADORES ONLINE HTML ────────────────────────────────────────────────────
+function onlineBarHTML(){
+  const lista = Object.entries(operadores);
+  if(lista.length===0)return"";
+  return `<div class="online-bar">
+    <span class="online-label">${I.users} Online</span>
+    ${lista.map(([id,op])=>`
+      <div class="online-op">
+        <span class="online-dot"></span>
+        ${op.nome}
+      </div>`).join("")}
+  </div>`;
+}
+
+// ── SELECT DE ATRIBUIÇÃO ──────────────────────────────────────────────────────
+function atribSelectHTML(){
+  const lista = Object.entries(operadores);
+  if(lista.length===0){
+    return `<select class="atrib-select" id="atribSelect" disabled>
+      <option value="qualquer">Nenhum operador online</option>
+    </select>`;
+  }
+  return `<select class="atrib-select" id="atribSelect" onchange="window.setAtrib(this.value)">
+    <option value="qualquer"${atribPara==="qualquer"?" selected":""}>Qualquer operador disponível</option>
+    ${lista.map(([id,op])=>`
+      <option value="${id}"${atribPara===id?" selected":""}>${op.nome}</option>`).join("")}
+  </select>`;
+}
+
 // ── RENDER LOGIN ──────────────────────────────────────────────────────────────
-function renderLogin() {
+function renderLogin(){
   document.getElementById("app").innerHTML=`
     <div class="login">
-      <div class="logo">R</div>
+      <div class="logo"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><text x="6" y="32" font-family="'Bebas Neue', sans-serif" font-size="34" fill="#0b0e17">R</text></svg></div>
       <h1>REPOAPP</h1>
-      <p class="login-sub">Reposição de Picking</p>
+      <p class="login-sub">Sistema de Reposição de Picking</p>
       <p class="login-ver">${APP_VERSION}</p>
       <div class="lcards">
         <button class="lcard" onclick="window.escolher('repositor')">
-          <span class="lcard-icon">📋</span>
+          <div class="lcard-icon" style="background:#f59e0b22">${I.clipboard.replace('width="20" height="20"','width="24" height="24"').replace('stroke="currentColor"','stroke="#f59e0b"')}</div>
           <span class="lcard-title">REPOSITOR</span>
-          <span class="lcard-desc">Enviar endereço ao operador</span>
+          <span class="lcard-desc">Cadastrar e enviar tarefas</span>
         </button>
         <button class="lcard" onclick="window.escolher('operador')">
-          <span class="lcard-icon">🏗️</span>
+          <div class="lcard-icon" style="background:#3b82f622">${I.forklift.replace('width="20" height="20"','width="24" height="24"').replace('stroke="currentColor"','stroke="#3b82f6"')}</div>
           <span class="lcard-title">OPERADOR</span>
-          <span class="lcard-desc">Ver fila de reposições</span>
+          <span class="lcard-desc">Executar reposições</span>
         </button>
       </div>
     </div>`;
 }
 
-// ── RENDER REPOSITOR ──────────────────────────────────────────────────────────
-function renderRepositor() {
-  const fila = tarefas.filter(t=>["pendente","andamento","pulado"].includes(t.status));
-  const hist = tarefas.filter(t=>["concluido","vazio"].includes(t.status));
-  const alts = tarefas.filter(t=>t.status==="vazio"&&!t.alertaVisto);
+// ── TELA NOME DO OPERADOR ─────────────────────────────────────────────────────
+function renderNomeOperador(){
+  document.getElementById("app").innerHTML=`
+    <div class="op-name-screen">
+      <div class="op-name-box">
+        <div class="op-name-icon">${I.user.replace('stroke="currentColor"','stroke="#3b82f6"')}</div>
+        <div class="op-name-title">IDENTIFICAÇÃO</div>
+        <p class="op-name-sub">Digite seu nome para entrar na fila de tarefas. Isso ajuda o repositor a atribuir tarefas diretamente para você.</p>
+        <input id="inputNome" class="op-name-input" placeholder="Seu nome ou apelido"
+          maxlength="20" oninput="document.getElementById('btnEntrar').disabled=!this.value.trim()"
+          onkeydown="if(event.key==='Enter')window.confirmarNome()"/>
+        <button id="btnEntrar" class="op-name-btn" onclick="window.confirmarNome()" disabled>
+          ${I.arrowRight} ENTRAR
+        </button>
+      </div>
+    </div>`;
+  setTimeout(()=>document.getElementById("inputNome")?.focus(),100);
+}
 
-  const statsHTML = fila.length>0 ? `
+// ── RENDER REPOSITOR ──────────────────────────────────────────────────────────
+function renderRepositor(){
+  const fila=tarefas.filter(t=>["pendente","andamento","pulado"].includes(t.status));
+  const hist=tarefas.filter(t=>["concluido","vazio"].includes(t.status));
+  const alts=tarefas.filter(t=>t.status==="vazio"&&!t.alertaVisto);
+
+  const statsHTML=fila.length>0?`
     <div class="stat-row">
       <div class="stat-card"><div class="stat-num" style="color:var(--am)">${fila.length}</div><div class="stat-lbl">Na fila</div></div>
       <div class="stat-card"><div class="stat-num" style="color:var(--bl)">${fila.filter(t=>t.tipo==="palete").length}</div><div class="stat-lbl">Paletes</div></div>
       <div class="stat-card"><div class="stat-num" style="color:var(--am)">${fila.filter(t=>t.tipo==="picking").length}</div><div class="stat-lbl">Pickings</div></div>
       <div class="stat-card"><div class="stat-num" style="color:var(--gr)">${hist.filter(t=>t.status==="concluido").length}</div><div class="stat-lbl">Feitos hoje</div></div>
-    </div>` : "";
+    </div>`:"";
 
   document.getElementById("app").innerHTML=`
     <div class="topbar">
       <span class="tlogo">REPO</span>
-      <span class="trole rep">📋 Repositor</span>
+      <span class="trole rep">${I.clipboard} Repositor</span>
       <span class="tsp"></span>
       <span class="tlive"><span class="dot"></span>ao vivo</span>
       <span class="tver">${APP_VERSION}</span>
-      <button class="tbtn-icon" onclick="window.toggleFont()">⚙️</button>
-      <button class="tbtn-out" onclick="window.sair()">Trocar</button>
+      <button class="tbtn-icon" onclick="window.toggleFont()">${I.settings}</button>
+      <button class="tbtn-out" onclick="window.sair()">${I.logout} Sair</button>
     </div>
     ${fontPanelHTML(false)}
+    ${onlineBarHTML()}
     ${alts.map(t=>`
       <div class="alerta" id="al-${t.id}">
         <span class="adot"></span>
-        <div style="flex:1"><b>⚠️ Endereço vazio!</b><br>
-          <span>${t.endereco}${t.descricao?" — "+t.descricao:""}</span><br>
+        <div style="flex:1"><b>Endereço vazio reportado</b><br>
+          <span>${t.endereco}${t.descricao?" — "+t.descricao:""}${t.opNome?` · por ${t.opNome}`:""}</span><br>
           <small>Consulte o Basic e envie novo endereço.</small>
         </div>
-        <button onclick="window.fecharAlerta('${t.id}')">✕</button>
+        <button class="alerta-close" onclick="window.fecharAlerta('${t.id}')">${I.x}</button>
       </div>`).join("")}
     <div class="main">
       <div class="formcard">
-        <div class="ftitle">📦 Nova Reposição</div>
-        <label class="lbl">Endereço <small>ex: 4-56-2</small></label>
-        <input id="fEnd" class="inp" placeholder="4-56-2" oninput="window.onEnd(this.value)"/>
+        <div class="ftitle">${I.package.replace('width="16" height="16"','width="18" height="18"')} Nova Reposição</div>
+        <label class="lbl">Câmara</label>
+        <div class="camara-sel" id="camaraSel">
+          ${Object.entries(CAMARAS).map(([k,c])=>`
+            <button class="camara-btn${camaraAtual===k?" ativa":""}"
+              style="${camaraAtual===k?`background:${c.cor};border-color:${c.cor}`:`border-color:${c.bd}`}"
+              onclick="window.setCamara('${k}')">
+              <span class="camara-letra" style="${camaraAtual===k?"color:#000":`color:${c.cor}`}">${k}</span>
+              <span class="camara-nome" style="${camaraAtual===k?"color:#000":""}">${c.nome}</span>
+            </button>`).join("")}
+        </div>
+        <label class="lbl" style="margin-top:14px">
+          Endereço
+          <small>— ${CAMARAS[camaraAtual]?.especial ? 'ex: 1-2 (rua-posição)' : 'ex: 4-56-2 (rua-posição-nível)'}</small>
+        </label>
+        <input id="fEnd" class="inp" placeholder="${CAMARAS[camaraAtual]?.especial ? '1-2' : '4-56-2'}" oninput="window.onEnd(this.value)"/>
         <div id="prevEnd" class="prev-end hidden"></div>
         <div id="avisoEnd" class="aviso-dup hidden"></div>
         <label class="lbl">Código <small>opcional</small></label>
-        <input id="fCod" class="inp" placeholder="Código do produto (opcional)"/>
+        <input id="fCod" class="inp" placeholder="Código do produto"/>
         <label class="lbl">Descrição <small>opcional</small></label>
-        <input id="fDesc" class="inp" placeholder="Nome do produto (opcional)"/>
+        <input id="fDesc" class="inp" placeholder="Nome do produto"/>
         <label class="lbl">Tipo</label>
         <div class="toggle">
-          <button class="tbtn active" id="tPick" onclick="window.setTipo('picking')">📦 PICKING</button>
-          <button class="tbtn" id="tPal" onclick="window.setTipo('palete')">🏗️ PALETE FECHADO</button>
+          <button class="tbtn active" id="tPick" onclick="window.setTipo('picking')">${I.package} Picking</button>
+          <button class="tbtn" id="tPal" onclick="window.setTipo('palete')">${I.layers} Palete Fechado</button>
         </div>
-        <button class="btn-send" onclick="window.enviar()">ENVIAR AO OPERADOR →</button>
+        <label class="lbl">${I.users} Atribuir para <small>— opcional</small></label>
+        ${atribSelectHTML()}
+        <button class="btn-send" onclick="window.enviar()">${I.send} ENVIAR AO OPERADOR</button>
       </div>
       ${statsHTML}
-      ${fila.length>0 ? `<div class="secao">FILA (${fila.length})</div>${fila.map(cardRep).join("")}` : ""}
-      ${hist.length>0 ? `
+      ${fila.length>0?`<div class="secao">FILA (${fila.length})</div>${fila.map(cardRep).join("")}`:""}
+      ${hist.length>0?`
         <div class="secao">HISTÓRICO HOJE (${hist.length})</div>
         ${hist.map(cardRep).join("")}
-        <button class="btn-limpar" onclick="window.limparTudo()">🗑️ Limpar tudo</button>` : ""}
+        <button class="btn-limpar" onclick="window.limparTudo()">${I.trash} Limpar tudo</button>`:""}
     </div>`;
 
-  if (window._fs) {
+  if(window._fs){
+    if(window._fs.camara) camaraAtual=window._fs.camara;
     const e=document.getElementById("fEnd"),c=document.getElementById("fCod"),d=document.getElementById("fDesc");
-    if(e) e.value=window._fs.end||"";
-    if(c) c.value=window._fs.cod||"";
-    if(d) d.value=window._fs.desc||"";
-    if(window._fs.tipo==="palete") window.setTipo("palete");
-    if(window._fs.end) window.onEnd(window._fs.end);
+    if(e)e.value=window._fs.end||"";if(c)c.value=window._fs.cod||"";if(d)d.value=window._fs.desc||"";
+    if(window._fs.tipo==="palete")window.setTipo("palete");
+    if(window._fs.end)window.onEnd(window._fs.end);
   }
 }
 
-function cardRep(t) {
+function cardRep(t){
   const cor={pendente:"#f59e0b",andamento:"#3b82f6",concluido:"#22c55e",vazio:"#ef4444",pulado:"#8892b0"}[t.status];
-  const lbl={pendente:"PENDENTE",andamento:"EM ANDAMENTO",concluido:"CONCLUÍDO",vazio:"END. VAZIO",pulado:"PULADO"}[t.status];
+  const lbl={pendente:"Pendente",andamento:"Em andamento",concluido:"Concluído",vazio:"End. vazio",pulado:"Pulado"}[t.status];
   const isHist=["concluido","vazio"].includes(t.status);
   return `
     <div class="crep" style="border-left-color:${cor}${isHist?";opacity:.6":""}">
       <div class="crep-top">
         <span class="crep-addr" style="color:${cor}">${t.endereco}</span>
         <span class="chip" style="color:${cor};border-color:${cor}40;background:${cor}15">${lbl}</span>
-        ${!isHist?`<button class="btn-rem" onclick="window.remover('${t.id}')">✕</button>`:""}
+        ${!isHist&&Object.keys(operadores).length>1?`<button class="btn-transfer" onclick="window.abrirRepassar('${t.id}')" title="Repassar para outro operador">${I.transfer} Repassar</button>`:""}
+        ${!isHist?`<button class="btn-rem" onclick="window.remover('${t.id}')">${I.x}</button>`:""}
       </div>
       ${t.descricao?`<div class="crep-prod">${t.descricao}</div>`:""}
       <div class="crep-meta">
-        <span class="tbadge" style="color:${t.tipo==="picking"?"#f59e0b":"#3b82f6"};background:${t.tipo==="picking"?"#f59e0b22":"#3b82f622"};border-color:${t.tipo==="picking"?"#f59e0b44":"#3b82f644"}">${t.tipo==="picking"?"📦 PICKING":"🏗️ PALETE FECHADO"}</span>
+        <span class="tbadge" style="color:${t.tipo==="picking"?"#f59e0b":"#3b82f6"};background:${t.tipo==="picking"?"#f59e0b22":"#3b82f622"};border-color:${t.tipo==="picking"?"#f59e0b44":"#3b82f644"}">${t.tipo==="picking"?I.package:I.layers} ${t.tipo==="picking"?"Picking":"Palete"}</span>
+        ${t.atribNome?`<span class="op-tag">${I.user.replace('width="22" height="22"','width="11" height="11"')} ${t.atribNome}</span>`:""}
+        ${t.opNome&&t.status!=="pendente"?`<span class="chip" style="color:#a78bfa;border-color:#8b5cf640;background:#8b5cf615">${I.forklift.replace('width="20" height="20"','width="11" height="11"')} ${t.opNome}</span>`:""}
         <span style="color:var(--mu);font-size:10px">${fmtHora(t.ts)}</span>
-        ${!isHist?`<span style="color:${corTempo(t.ts)};font-size:10px;font-weight:700">⏱ ${tempoFila(t.ts)}</span>`:""}
+        ${!isHist?`<span style="color:${corTempo(t.ts)};font-size:10px;font-weight:700;display:inline-flex;align-items:center;gap:3px">${I.clock} ${tempoFila(t.ts)}</span>`:""}
       </div>
     </div>`;
 }
 
 // ── RENDER OPERADOR ───────────────────────────────────────────────────────────
-function renderOperador() {
-  const ativos  = tarefas.filter(t=>t.status==="pendente"||t.status==="andamento").sort((a,b)=>a.ts-b.ts);
-  const pulados = tarefas.filter(t=>t.status==="pulado").sort((a,b)=>a.ts-b.ts);
+function renderOperador(){
+  // Mostra tarefas atribuídas a este operador + não atribuídas
+  // Exclui tarefas em andamento por OUTRO operador (evita conflito de fila)
+  const minhasFila = tarefas.filter(t=>{
+    if(!["pendente","andamento","pulado"].includes(t.status)) return false;
+    if(t.atribId && t.atribId!==opId) return false; // atribuída a outro
+    if(t.status==="andamento" && t.opId && t.opId!==opId) return false; // sendo executada por outro
+    return true;
+  });
+  const ativos  = minhasFila.filter(t=>t.status==="pendente"||t.status==="andamento").sort((a,b)=>a.ts-b.ts);
+  const pulados = minhasFila.filter(t=>t.status==="pulado").sort((a,b)=>a.ts-b.ts);
   const fila    = [...ativos,...pulados];
   const hist    = tarefas.filter(t=>t.status==="concluido"||t.status==="vazio");
 
-  const getRua  = t => { const m=t.endereco.match(/B\s+0*(\d+)/); return m?m[1]:null; };
-  const ruasNaFila = [...new Set(fila.map(getRua).filter(Boolean))].sort();
-  const filaFiltrada = filtroRua==="todas" ? fila : fila.filter(t=>getRua(t)===filtroRua);
+  const getRua =t=>{const m=t.endereco.match(/B\s+0*(\d+)/);return m?m[1]:null;};
+  const ruasNaFila=[...new Set(fila.map(getRua).filter(Boolean))].sort();
+  const filaFiltrada=filtroRua==="todas"?fila:fila.filter(t=>getRua(t)===filtroRua);
 
-  const filtroBarHTML = ruasNaFila.length>1 ? `
+  const filtroBarHTML=ruasNaFila.length>1?`
     <div class="filtro-bar">
-      <button class="filtro-btn${filtroRua==="todas"?" filtro-ativo":""}" onclick="window.setFiltroRua('todas')">Todas</button>
+      <button class="filtro-btn${filtroRua==="todas"?" filtro-ativo":""}" onclick="window.setFiltroRua('todas')">${I.map} Todas</button>
       ${ruasNaFila.map(r=>`
         <button class="filtro-btn${filtroRua===r?" filtro-ativo":""}" onclick="window.setFiltroRua('${r}')">
           Rua ${r}<span class="filtro-n">${fila.filter(t=>getRua(t)===r).length}</span>
         </button>`).join("")}
-    </div>` : "";
+    </div>`:"";
 
-  const statsHTML = fila.length>0 ? `
+  const statsHTML=fila.length>0?`
     <div class="stat-row">
-      <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--am)">${fila.length}</div><div class="stat-lbl">Na fila</div></div>
+      <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--am)">${fila.length}</div><div class="stat-lbl">Minha fila</div></div>
       <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--bl)">${fila.filter(t=>t.tipo==="palete").length}</div><div class="stat-lbl">Paletes</div></div>
       <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--am)">${fila.filter(t=>t.tipo==="picking").length}</div><div class="stat-lbl">Pickings</div></div>
-      <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--gr)">${hist.filter(t=>t.status==="concluido").length}</div><div class="stat-lbl">Feitos hoje</div></div>
-    </div>` : "";
+      <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--gr)">${hist.filter(t=>t.status==="concluido"&&t.opId===opId).length}</div><div class="stat-lbl">Fiz hoje</div></div>
+    </div>`:"";
 
-  const filaHTML = fila.length===0
-    ? `<div class="empty"><div class="empty-icon">🟢</div><div class="empty-title">Sem tarefas</div><div class="empty-sub">Aguardando reposições.<br>A tela atualiza sozinha.</div></div>`
-    : statsHTML + (filaFiltrada.length===0
-        ? `<div class="empty" style="padding:30px 20px"><div class="empty-icon" style="font-size:28px">🔍</div><div class="empty-title">Nenhum na Rua ${filtroRua}</div><div class="empty-sub">Selecione outra rua ou "Todas".</div></div>`
-        : filaFiltrada.map((t,i)=>cardOp(t,i)).join(""));
+  const filaHTML=fila.length===0
+    ?`<div class="empty"><div class="empty-icon-wrap">${I.inbox.replace('stroke="currentColor"','stroke="var(--mu-op)"')}</div><div class="empty-title">Sem tarefas</div><div class="empty-sub">Aguardando reposições atribuídas a você<br>ou disponíveis para qualquer operador.</div></div>`
+    :statsHTML+(filaFiltrada.length===0
+      ?`<div class="empty" style="padding:30px 20px"><div class="empty-icon-wrap">${I.search.replace('stroke="currentColor"','stroke="var(--mu-op)"')}</div><div class="empty-title">Nenhum na Rua ${filtroRua}</div><div class="empty-sub">Selecione outra rua ou "Todas".</div></div>`
+      :filaFiltrada.map((t,i)=>cardOp(t,i)).join(""));
 
   document.getElementById("app").innerHTML=`
     <div class="topbar-op">
       <span class="tlogo">REPO</span>
-      <span class="trole oper">🏗️ Operador</span>
+      <span class="trole oper">${I.forklift} Operador</span>
+      <span class="op-nome-badge">${nomeOperador}</span>
       <span class="tsp"></span>
       <span class="tlive"><span class="dot"></span>ao vivo</span>
       <span class="tver">${APP_VERSION}</span>
-      <button class="tbtn-icon" onclick="window.toggleFont()">⚙️</button>
-      <button class="tbtn-out" onclick="window.sair()">Trocar</button>
+      <button class="tbtn-icon" onclick="window.toggleFont()">${I.settings}</button>
+      <button class="tbtn-out" onclick="window.sair()">${I.logout} Sair</button>
     </div>
     ${fontPanelHTML(true)}
     ${filtroBarHTML}
     <div class="main-op">
       ${filaHTML}
-      ${filaFiltrada.length>0?`<div class="sdica">👉 Arraste para direita para <b>concluir</b> · 👆 Ou toque em <b>✅ CONCLUÍDO</b></div>`:""}
+      ${filaFiltrada.length>0?`<div class="sdica">${I.swipe} Arraste para direita para <b>concluir</b> &nbsp;·&nbsp; ${I.tap} Toque em <b>Concluído</b></div>`:""}
       ${hist.length>0?`
-        <div class="secao">CONCLUÍDAS HOJE (${hist.length})</div>
+        <div class="secao">Concluídas hoje (${hist.length})</div>
         ${hist.map(t=>`
-          <div class="chist" style="border-left-color:${t.status==="concluido"?"#22c55e":"#ef4444"}">
-            <span style="font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;color:${t.status==="concluido"?"#22c55e":"#ef4444"}">${t.endereco}</span>
-            <span style="margin-left:auto;font-size:10px;color:var(--mu-op)">${t.status==="concluido"?"✅ FEITO":"⚠️ VAZIO"} · ${fmtHora(t.ts)}</span>
+          <div class="chist" style="border-left-color:${t.status==="concluido"?"var(--gr)":"var(--rd)"}">
+            <span style="font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;color:${t.status==="concluido"?"var(--gr)":"var(--rd)"}">${t.endereco}</span>
+            <span style="margin-left:auto;display:flex;align-items:center;gap:5px;font-size:10px;color:var(--mu-op)">
+              ${t.opNome?`<span style="color:#a78bfa">${t.opNome}</span> ·`:""} 
+              ${t.status==="concluido"?I.checkCircle.replace('stroke="currentColor"','stroke="var(--gr)"'):I.alert.replace('stroke="currentColor"','stroke="var(--rd)"')} 
+              ${fmtHora(t.ts)}
+            </span>
           </div>`).join("")}`:""}
     </div>`;
 
   filaFiltrada.forEach(t=>{
     const el=document.getElementById("op-"+t.id);
-    if(el) initSwipe(el,()=>window.acao(t.id,"concluido"));
+    if(el)initSwipe(el,()=>window.acao(t.id,"concluido"));
   });
-
   clearInterval(window._timerOp);
   window._timerOp=setInterval(()=>{
     document.querySelectorAll(".tempo-op").forEach(el=>{
-      const ts=+el.dataset.ts;
-      if(ts){el.textContent="⏱ "+tempoFila(ts);el.style.color=corTempo(ts);}
+      const ts=+el.dataset.ts;if(ts){el.textContent=tempoFila(ts);el.style.color=corTempo(ts);}
     });
   },30000);
 }
 
-function cardOp(t, i) {
-  const isFirst  = i===0;
-  const isPulado = t.status==="pulado";
-  const tipoCor  = t.tipo==="picking"?"#f59e0b":"#3b82f6";
-  const tipoTxt  = t.tipo==="picking"?"📦 PICKING":"🏗️ PALETE FECHADO";
+function cardOp(t,i){
+  const isFirst=i===0,isPulado=t.status==="pulado";
+  const tipoCor=t.tipo==="picking"?"#f59e0b":"#3b82f6";
+  const tipoIcon=t.tipo==="picking"?I.package:I.layers;
+  const tipoTxt=t.tipo==="picking"?"PICKING":"PALETE FECHADO";
+  const foiAtrib=t.atribId===opId; // foi atribuída especificamente para este operador
 
-  if (isFirst) {
-    const pulLabel = isPulado ? `<div style="margin-bottom:6px"><span class="chip" style="color:#8892b0;border-color:#8892b040;background:#8892b015">PULADO — RETOMANDO</span></div>` : "";
-    const addrCor  = isPulado ? "#8892b0" : "var(--am)";
-    const borderCor= isPulado ? "#8892b0" : "var(--am)";
+  if(isFirst){
+    const addrCor=isPulado?"#8892b0":"var(--am)";
+    const borderCor=isPulado?"#8892b0":foiAtrib?"var(--pu)":"var(--am)";
     return `
       <div class="cop-main" id="op-${t.id}" style="border-color:${borderCor}">
         <div class="swipe-hint"></div>
-        ${pulLabel}
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
+          ${isPulado?`<span class="chip" style="color:#8892b0;border-color:#8892b040;background:#8892b015">Retomando</span>`:""}
+          ${foiAtrib?`<span class="chip" style="color:#a78bfa;border-color:#8b5cf640;background:#8b5cf615">${I.user.replace('width="22" height="22"','width="11" height="11"')} Para você</span>`:""}
+        </div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-          <div class="tipo-main" style="color:${tipoCor}">${tipoTxt}</div>
-          <span class="tempo-op" data-ts="${t.ts}" style="color:${corTempo(t.ts)};font-size:13px;font-weight:700">⏱ ${tempoFila(t.ts)}</span>
+          <div class="tipo-main" style="color:${tipoCor}">${tipoIcon.replace('width="16" height="16"','width="22" height="22"')}</div>
+          <span class="tempo-op" data-ts="${t.ts}" style="color:${corTempo(t.ts)};font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px">${I.clock} ${tempoFila(t.ts)}</span>
         </div>
         <div class="addr-main" style="color:${addrCor}">${t.endereco}</div>
         ${t.descricao?`<div class="desc-main">${t.descricao}</div>`:""}
         ${t.codigo?`<div class="cod-main">Cód: ${t.codigo}</div>`:""}
         <div class="op-btns">
           ${t.status==="pendente"||t.status==="pulado"
-            ? `<button class="abtn abtn-blue" onclick="window.acao('${t.id}','andamento')">✊ RECEBI — VOU AGORA</button>`
-            : `<button class="abtn abtn-green" onclick="window.acao('${t.id}','concluido')">✅ CONCLUÍDO</button>
-               <button class="abtn abtn-red" onclick="window.acao('${t.id}','vazio')">⚠️ VAZIO</button>`}
-          <button class="abtn abtn-gray" onclick="window.pular('${t.id}')">⏭ PULAR</button>
+            ?`<button class="abtn abtn-blue" onclick="window.acao('${t.id}','andamento')">${I.receive} Recebi — Vou agora</button>`
+            :`<button class="abtn abtn-green" onclick="window.acao('${t.id}','concluido')">${I.checkCircle} Concluído</button>
+              <button class="abtn abtn-red" onclick="window.acao('${t.id}','vazio')">${I.alert} Vazio</button>`}
+          <button class="abtn abtn-gray" onclick="window.pular('${t.id}')" style="flex:.5">${I.skip}</button>
         </div>
-        <div class="sdica2">← Arraste para direita para concluir →</div>
+        <div class="sdica2">${I.swipe} Arraste para a direita para concluir</div>
       </div>`;
   }
 
-  const cor = isPulado?"#8892b0":"#3b82f6";
+  const cor=isPulado?"#8892b0":"#3b82f6";
   return `
     <div class="cop-sec" id="op-${t.id}">
       <div style="display:flex;align-items:center;gap:10px">
         <div>
-          <div style="font-family:'Bebas Neue';font-size:13px;letter-spacing:2px;color:${tipoCor};margin-bottom:2px">${tipoTxt}</div>
+          ${foiAtrib?`<span class="chip" style="color:#a78bfa;border-color:#8b5cf640;background:#8b5cf615;margin-bottom:4px;display:inline-flex">${I.user.replace('width="22" height="22"','width="11" height="11"')} Para você</span><br>`:""}
+          <div style="font-family:'Bebas Neue';font-size:12px;letter-spacing:2px;color:${tipoCor};margin-bottom:2px;display:flex;align-items:center;gap:5px">${tipoIcon} ${tipoTxt}</div>
           <div style="font-family:'Bebas Neue';font-size:28px;letter-spacing:3px;color:${cor};line-height:1">${t.endereco}</div>
           ${t.descricao?`<div style="font-size:11px;color:var(--tx2-op);margin-top:3px">${t.descricao}</div>`:""}
         </div>
         <div style="margin-left:auto;text-align:right;flex-shrink:0">
-          ${isPulado?`<span class="chip" style="color:#8892b0;border-color:#8892b040;background:#8892b015;display:block;margin-bottom:4px">PULADO</span>`:""}
-          <span class="tempo-op" data-ts="${t.ts}" style="color:${corTempo(t.ts)};font-size:10px;font-weight:700;display:block">⏱ ${tempoFila(t.ts)}</span>
+          ${isPulado?`<span class="chip" style="color:#8892b0;border-color:#8892b040;background:#8892b015;display:block;margin-bottom:4px">Pulado</span>`:""}
+          <span class="tempo-op" data-ts="${t.ts}" style="color:${corTempo(t.ts)};font-size:10px;font-weight:700;display:flex;align-items:center;gap:3px;justify-content:flex-end">${I.clock} ${tempoFila(t.ts)}</span>
           <span style="font-size:10px;color:var(--mu-op)">${fmtHora(t.ts)}</span>
         </div>
       </div>
     </div>`;
 }
 
-// ── RENDER PRINCIPAL ──────────────────────────────────────────────────────────
-function render() {
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function render(){
   applyFont();
-  if (!perfil)                  renderLogin();
-  else if(perfil==="repositor") renderRepositor();
-  else                          renderOperador();
+  if(!perfil)                       renderLogin();
+  else if(perfil==="repositor")     renderRepositor();
+  else if(!nomeOperador)            renderNomeOperador();
+  else                              renderOperador();
+}
+
+// ── PRESENÇA DO OPERADOR ──────────────────────────────────────────────────────
+function registrarOperador(){
+  if(!opId||!nomeOperador)return;
+  const opRef=ref(db,`operadores/${opId}`);
+  set(opRef,{nome:nomeOperador,ts:Date.now()});
+  // Remove do Firebase quando sair
+  window._opRef=opRef;
+}
+
+function removerOperador(){
+  if(window._opRef)remove(window._opRef).catch(()=>{});
 }
 
 // ── AÇÕES ─────────────────────────────────────────────────────────────────────
-window.escolher = p => { perfil=p; showFont=false; prevIds=null; filtroRua="todas"; render(); };
-window.sair     = () => { clearInterval(window._timerOp); perfil=null; showFont=false; render(); };
-
-window.setFiltroRua = r => { filtroRua=r; render(); };
-
-window.toggleFont = () => { showFont=!showFont; render(); };
-
-window.setFont = preset => {
-  localStorage.setItem(fontKey(), preset);
-  applyFont();
-  document.querySelectorAll(".font-btn").forEach(b=>b.classList.toggle("ativo",b.dataset.preset===preset));
-  const prev=document.getElementById("fontPreview");
-  if(prev){ const px=fontPx(),sp=Math.max(2,Math.round(px*.07)); prev.style.fontSize=px+"px"; prev.style.letterSpacing=sp+"px"; }
+window.escolher=p=>{
+  perfil=p; showFont=false; prevIds=null; filtroRua="todas";
+  if(p==="repositor"){nomeOperador=null;opId=null;}
+  render();
 };
 
-window.setTipo = t => {
+window.confirmarNome=()=>{
+  const nome=document.getElementById("inputNome")?.value.trim();
+  if(!nome)return;
+  nomeOperador=nome;
+  opId=uid();
+  registrarOperador();
+  render();
+};
+
+window.sair=()=>{
+  clearInterval(window._timerOp);
+  if(perfil==="operador")removerOperador();
+  perfil=null;nomeOperador=null;opId=null;showFont=false;
+  render();
+};
+
+window.setFiltroRua=r=>{filtroRua=r;render();};
+window.toggleFont=()=>{showFont=!showFont;render();};
+window.setAtrib=v=>{atribPara=v;};
+
+window.setCamara=c=>{
+  camaraAtual=c;
+  // Atualiza visual dos botões sem re-render completo
+  document.querySelectorAll(".camara-btn").forEach(btn=>{
+    const k=btn.dataset.cam||btn.querySelector(".camara-letra")?.textContent?.trim();
+    const cam=CAMARAS[k];
+    if(!cam)return;
+    if(k===c){
+      btn.classList.add("ativa");
+      btn.style.background=cam.cor;btn.style.borderColor=cam.cor;
+      btn.querySelector(".camara-letra").style.color="#000";
+      btn.querySelector(".camara-nome").style.color="#000";
+    } else {
+      btn.classList.remove("ativa");
+      btn.style.background="";btn.style.borderColor=cam.bd;
+      btn.querySelector(".camara-letra").style.color=cam.cor;
+      btn.querySelector(".camara-nome").style.color="";
+    }
+  });
+  // Atualiza placeholder e label
+  const fEnd=document.getElementById("fEnd");
+  if(fEnd){
+    fEnd.placeholder=CAMARAS[c]?.especial?"1-2":"4-56-2";
+    fEnd.value="";
+  }
+  const lbl=document.querySelector("label[for='fEnd'], .lbl-end");
+  // Limpa preview
+  const elP=document.getElementById("prevEnd"),elA=document.getElementById("avisoEnd");
+  if(elP)elP.className="prev-end hidden";
+  if(elA)elA.className="aviso-dup hidden";
+  window._endForcar=null;
+};
+
+window.setFont=preset=>{
+  localStorage.setItem(fontKey(),preset);applyFont();
+  document.querySelectorAll(".font-btn").forEach(b=>b.classList.toggle("ativo",b.dataset.preset===preset));
+  const prev=document.getElementById("fontPreview");
+  if(prev){const px=fontPx(),sp=Math.max(2,Math.round(px*.07));prev.style.fontSize=px+"px";prev.style.letterSpacing=sp+"px";}
+};
+
+window.setTipo=t=>{
   tipoAtual=t;
   document.getElementById("tPick")?.classList.toggle("active",t==="picking");
   document.getElementById("tPal") ?.classList.toggle("active",t==="palete");
 };
 
-window.onEnd = v => {
-  const elP=document.getElementById("prevEnd");
-  const elA=document.getElementById("avisoEnd");
-  if(!elP) return;
+window.onEnd=v=>{
+  const elP=document.getElementById("prevEnd"),elA=document.getElementById("avisoEnd");
+  if(!elP)return;
   if(!v.trim()){
     elP.className="prev-end hidden";
-    if(elA) elA.className="aviso-dup hidden";
+    if(elA)elA.className="aviso-dup hidden";
     return;
   }
-  const r=parseEnd(v);
+  const r=parseEnd(v, camaraAtual);
+  const cam=CAMARAS[camaraAtual]||CAMARAS.B;
   if(r.valido){
+    // Nível 10 ou câmara F = chão = bloqueia
+    if(r.isPicking){
+      elP.className="prev-end err";
+      elP.innerHTML=`
+        <span style="color:var(--am)">${I.alert}</span>
+        <div>
+          <div class="pfull" style="color:var(--am)">${r.completo}</div>
+          <div class="pdet" style="color:var(--am);font-weight:700;margin-top:4px">
+            ${cam.especial?"Câmara F — nível de chão":"Nível 10 — picking de chão"}
+          </div>
+          <div class="pdet" style="margin-top:3px">
+            Este endereço já está acessível no chão.<br>
+            O operador de empilhadeira não é necessário.
+          </div>
+        </div>`;
+      if(elA)elA.className="aviso-dup hidden";
+      window._endForcar=null;
+      return;
+    }
     elP.className="prev-end ok";
-    elP.innerHTML=`<span style="color:var(--gr)">✓</span><div><div class="pfull">${r.completo}</div>${r.label?`<div class="pdet">Rua ${r.rua} · Pos ${r.pos} · ${r.label}</div>`:""}</div>`;
+    elP.innerHTML=`
+      <span style="color:var(--gr)">${I.check}</span>
+      <div>
+        <div class="pfull" style="color:${cam.cor}">${r.completo}</div>
+        ${r.label?`<div class="pdet" style="margin-top:3px">${r.label}</div>`:""}
+      </div>`;
     const dup=tarefas.find(t=>t.endereco===r.completo&&["pendente","andamento","pulado"].includes(t.status));
     if(elA){
       if(dup){
-        const lbl={pendente:"PENDENTE",andamento:"EM ANDAMENTO",pulado:"PULADO"}[dup.status];
         elA.className="aviso-dup";
-        elA.innerHTML=`⚠️ Endereço já está na fila como <b>${lbl}</b>. Deseja enviar mesmo assim? <button class="btndup" onclick="window.enviarForcar()">Sim, enviar</button>`;
+        elA.innerHTML=`${I.alert} Endereço já na fila como <b>${{pendente:"Pendente",andamento:"Em andamento",pulado:"Pulado"}[dup.status]}</b>. <button class="btndup" onclick="window.enviarForcar()">Enviar mesmo assim</button>`;
         window._endForcar=r.completo;
-      } else {
-        elA.className="aviso-dup hidden";
-        window._endForcar=null;
-      }
+      } else {elA.className="aviso-dup hidden";window._endForcar=null;}
     }
   } else {
     elP.className="prev-end err";
-    elP.innerHTML=`<span style="color:var(--rd)">✕</span><span style="font-size:11px;color:var(--rd)">${r.erro}</span>`;
-    if(elA) elA.className="aviso-dup hidden";
+    elP.innerHTML=`<span style="color:var(--rd)">${I.x}</span><span style="font-size:11px;color:var(--rd)">${r.erro}</span>`;
+    if(elA)elA.className="aviso-dup hidden";
   }
 };
 
-async function doPush(endCompleto) {
-  const cod  = (document.getElementById("fCod")?.value||"").trim();
-  const desc = (document.getElementById("fDesc")?.value||"").trim();
-  window._fs=null; window._endForcar=null;
-  await push(tasksRef,{endereco:endCompleto,codigo:cod,descricao:desc,tipo:tipoAtual,status:"pendente",ts:Date.now()});
+async function doPush(endCompleto){
+  const cod =(document.getElementById("fCod")?.value||"").trim();
+  const desc=(document.getElementById("fDesc")?.value||"").trim();
+  const sel =document.getElementById("atribSelect");
+  const atrib=sel?sel.value:"qualquer";
+  const atribNome=atrib!=="qualquer"?(operadores[atrib]?.nome||null):null;
+  window._fs=null;window._endForcar=null;
+  await push(tasksRef,{
+    endereco:endCompleto,codigo:cod,descricao:desc,tipo:tipoAtual,
+    status:"pendente",ts:Date.now(),
+    atribId:atrib!=="qualquer"?atrib:null,
+    atribNome,
+  });
 }
 
-window.enviar = async () => {
-  const r=parseEnd(document.getElementById("fEnd")?.value||"");
+window.enviar=async()=>{
+  const r=parseEnd(document.getElementById("fEnd")?.value||"", camaraAtual);
   if(!r.valido){alert(r.erro||"Endereço inválido");return;}
+  if(r.isPicking){alert("Endereço de chão — o operador não é necessário.");return;}
   const elA=document.getElementById("avisoEnd");
-  if(elA&&!elA.classList.contains("hidden")&&window._endForcar) return;
+  if(elA&&!elA.classList.contains("hidden")&&window._endForcar)return;
   await doPush(r.completo);
 };
+window.enviarForcar=async()=>{const r=parseEnd(document.getElementById("fEnd")?.value||"",camaraAtual);if(r.valido&&!r.isPicking)await doPush(r.completo);};
 
-window.enviarForcar = async () => {
-  const r=parseEnd(document.getElementById("fEnd")?.value||"");
-  if(r.valido) await doPush(r.completo);
+window.acao=async(id,status)=>{
+  try{
+    const updates={status};
+    if(status==="andamento"){updates.opId=opId;updates.opNome=nomeOperador;}
+    await update(ref(db,`tarefas/${id}`),updates);
+  }catch(e){alert("Erro: "+e.message);}
+};
+window.pular=async id=>{try{await update(ref(db,`tarefas/${id}`),{status:"pulado",ts:Date.now()});}catch(e){alert("Erro: "+e.message);}};
+window.remover=async id=>{if(!confirm("Remover esta tarefa?"))return;try{await remove(ref(db,`tarefas/${id}`));}catch(e){alert("Erro: "+e.message);}};
+window.fecharAlerta=async id=>{try{await update(ref(db,`tarefas/${id}`),{alertaVisto:true});}catch{}document.getElementById("al-"+id)?.remove();};
+window.limparTudo=async()=>{if(!confirm("Limpar todas as tarefas?"))return;try{await remove(tasksRef);}catch(e){alert("Erro: "+e.message);}};
+
+// ── MODAL REPASSAR ────────────────────────────────────────────────────────────
+window.abrirRepassar=taskId=>{
+  const task=tarefas.find(t=>t.id===taskId);
+  if(!task)return;
+
+  // Operadores disponíveis exceto o atual dono
+  const disponiveis=Object.entries(operadores).filter(([id])=>id!==task.atribId);
+  if(disponiveis.length===0){
+    alert("Não há outros operadores online para repassar.");
+    return;
+  }
+
+  // Contar tarefas de cada operador para mostrar carga
+  const carga=id=>tarefas.filter(t=>
+    ["pendente","andamento","pulado"].includes(t.status)&&(t.atribId===id||(!t.atribId&&id==="livre"))
+  ).length;
+
+  const overlay=document.createElement("div");
+  overlay.className="modal-overlay";
+  overlay.id="modalRepassar";
+  overlay.innerHTML=`
+    <div class="modal">
+      <div class="modal-title">${I.transfer} Repassar Tarefa</div>
+      <div class="modal-sub">
+        <b style="color:var(--am)">${task.endereco}</b><br>
+        ${task.descricao||"Sem descrição"} · ${task.tipo==="picking"?"Picking":"Palete"}
+      </div>
+      <div class="modal-ops">
+        ${disponiveis.map(([id,op])=>{
+          const n=carga(id);
+          return `<button class="modal-op-btn" onclick="window.confirmarRepassar('${taskId}','${id}','${op.nome}')">
+            <div style="width:36px;height:36px;border-radius:10px;background:#3b82f622;border:1px solid #3b82f644;
+              display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              ${I.forklift.replace('width="20" height="20"','width="18" height="18"').replace('stroke="currentColor"','stroke="#3b82f6"')}
+            </div>
+            <div>
+              <div class="modal-op-nome">${op.nome}</div>
+              <div class="modal-op-info">${n===0?"Fila livre":n===1?"1 tarefa na fila":`${n} tarefas na fila`}</div>
+            </div>
+            <div style="margin-left:auto;color:${n===0?"var(--gr)":n<=2?"var(--am)":"var(--rd)"};font-family:'Bebas Neue';font-size:22px">${n}</div>
+          </button>`;
+        }).join("")}
+        ${task.atribId?`<button class="modal-op-btn" onclick="window.confirmarRepassar('${taskId}','qualquer','')">
+          <div style="width:36px;height:36px;border-radius:10px;background:#4b588220;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            ${I.users.replace('stroke="currentColor"','stroke="#8892b0"')}
+          </div>
+          <div>
+            <div class="modal-op-nome" style="color:var(--tx2)">Qualquer operador</div>
+            <div class="modal-op-info">Remover atribuição específica</div>
+          </div>
+        </button>`:""}
+      </div>
+      <button class="modal-cancel" onclick="window.fecharModal()">Cancelar</button>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener("click",e=>{if(e.target===overlay)window.fecharModal();});
 };
 
-window.acao = async (id,status) => {
-  try{ await update(ref(db,`tarefas/${id}`),{status}); }
-  catch(e){ alert("Erro: "+e.message); }
+window.fecharModal=()=>{
+  document.getElementById("modalRepassar")?.remove();
 };
 
-window.pular = async id => {
-  try{ await update(ref(db,`tarefas/${id}`),{status:"pulado",ts:Date.now()}); }
-  catch(e){ alert("Erro: "+e.message); }
+window.confirmarRepassar=async(taskId,novoOpId,novoOpNome)=>{
+  window.fecharModal();
+  try{
+    const updates=novoOpId==="qualquer"
+      ?{atribId:null,atribNome:null}
+      :{atribId:novoOpId,atribNome:novoOpNome};
+    await update(ref(db,`tarefas/${taskId}`),updates);
+  }catch(e){alert("Erro ao repassar: "+e.message);}
 };
-
-window.remover = async id => {
-  if(!confirm("Remover esta tarefa?")) return;
-  try{ await remove(ref(db,`tarefas/${id}`)); }
-  catch(e){ alert("Erro: "+e.message); }
-};
-
-window.fecharAlerta = async id => {
-  try{ await update(ref(db,`tarefas/${id}`),{alertaVisto:true}); } catch{}
-  document.getElementById("al-"+id)?.remove();
-};
-
-window.limparTudo = async () => {
-  if(!confirm("Limpar todas as tarefas?")) return;
-  try{ await remove(tasksRef); } catch(e){ alert("Erro: "+e.message); }
-};
-
-// ── FIREBASE ──────────────────────────────────────────────────────────────────
-onValue(tasksRef, snap => {
+onValue(tasksRef,snap=>{
   if(perfil==="repositor"){
     window._fs={
-      end: document.getElementById("fEnd")?.value,
-      cod: document.getElementById("fCod")?.value,
+      end:document.getElementById("fEnd")?.value,
+      cod:document.getElementById("fCod")?.value,
       desc:document.getElementById("fDesc")?.value,
       tipo:tipoAtual,
+      camara:camaraAtual,
     };
   }
   const data=snap.val()||{};
   const novo=Object.entries(data).map(([id,v])=>({id,...v})).sort((a,b)=>a.ts-b.ts);
 
-  if(perfil==="operador"&&prevIds!==null){
-    const ids=novo.filter(t=>t.status==="pendente").map(t=>t.id);
-    if(ids.some(id=>!prevIds.includes(id))) beep();
+  // Som para operador — só toca se a tarefa for para ele ou para qualquer um
+  if(perfil==="operador"&&nomeOperador&&prevIds!==null){
+    const minhasNovas=novo.filter(t=>
+      t.status==="pendente"&&
+      (!t.atribId||t.atribId===opId)&&
+      !prevIds.includes(t.id)
+    );
+    if(minhasNovas.length>0)beep();
   }
-  if(perfil==="operador") prevIds=novo.filter(t=>t.status==="pendente").map(t=>t.id);
+  if(perfil==="operador"&&nomeOperador){
+    prevIds=novo.filter(t=>t.status==="pendente"&&(!t.atribId||t.atribId===opId)).map(t=>t.id);
+  }
 
   tarefas=novo;
   render();
 });
 
-render();
+// Listener de operadores online
+onValue(operadoresRef,snap=>{
+  operadores=snap.val()||{};
+  if(perfil==="repositor")render();
+});
 
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js").catch(()=>{});
-}
+// Limpar presença ao fechar a aba
+window.addEventListener("beforeunload",()=>{if(perfil==="operador")removerOperador();});
+
+render();
+if("serviceWorker"in navigator){navigator.serviceWorker.register("sw.js").catch(()=>{});}
 </script>
 </body>
 </html>
