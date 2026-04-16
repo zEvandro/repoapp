@@ -21,6 +21,10 @@
   --tx:#dde3f5;--tx2:#8892b0;--mu:#4b5882;
   --bg-op:#020305;--s1-op:#0a0d14;--s2-op:#0e1119;--bd-op:#1a2040;
   --tx-op:#f0f4ff;--tx2-op:#6b7aa0;--mu-op:#3a4460;
+  --bg-exp:#030a06;--s1-exp:#0a140d;--s2-exp:#0e1a10;--bd-exp:#1a3020;
+  --tx-exp:#e8f5ea;--tx2-exp:#6b9a70;--mu-exp:#3a5c40;
+  --bg-man:#07030f;--s1-man:#0e0a1a;--s2-man:#130f22;--bd-man:#261a40;
+  --tx-man:#f0eeff;--tx2-man:#8875b0;--mu-man:#4a3868;
   --addr-size:68px;--addr-sp:5px;
 }
 html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif;overflow-x:hidden}
@@ -35,8 +39,11 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
   justify-content:center;margin-bottom:20px;box-shadow:0 0 40px #f59e0b44}
 .login h1{font-family:'Bebas Neue';font-size:44px;letter-spacing:3px;color:#fff}
 .login-sub{font-size:12px;color:var(--tx2);letter-spacing:2px;text-transform:uppercase;margin-top:4px}
-.login-ver{font-size:11px;color:var(--mu);letter-spacing:2px;margin-bottom:36px;margin-top:8px}
-.lcards{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:0}
+.login-ver{font-size:11px;color:var(--mu);letter-spacing:2px;margin-bottom:28px;margin-top:8px}
+.login-section{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;
+  color:var(--mu);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.login-section::before,.login-section::after{content:"";flex:1;height:1px;background:var(--bd)}
+.lcards{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:20px}
 .lcard{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:28px 20px;
   cursor:pointer;transition:all .2s;width:150px;display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--tx)}
 .lcard:hover{border-color:var(--am);background:var(--s2);transform:translateY(-2px)}
@@ -47,35 +54,63 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 /* NOME DO OPERADOR */
 .op-name-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
   padding:24px;background:radial-gradient(ellipse 80% 60% at 50% 0%,#0a1428,var(--bg-op) 70%)}
+.op-name-screen-man{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px;background:radial-gradient(ellipse 80% 60% at 50% 0%,#12082a,var(--bg-man) 70%)}
 .op-name-box{background:var(--s1-op);border:1px solid var(--bd-op);border-radius:20px;
+  padding:32px 28px;width:100%;max-width:360px;text-align:center}
+.op-name-box-man{background:var(--s1-man);border:1px solid var(--bd-man);border-radius:20px;
   padding:32px 28px;width:100%;max-width:360px;text-align:center}
 .op-name-icon{width:64px;height:64px;border-radius:16px;background:#3b82f622;border:1px solid #3b82f644;
   display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
 .op-name-title{font-family:'Bebas Neue';font-size:28px;letter-spacing:2px;color:var(--tx-op);margin-bottom:6px}
+.op-name-title-man{font-family:'Bebas Neue';font-size:28px;letter-spacing:2px;color:var(--tx-man);margin-bottom:6px}
 .op-name-sub{font-size:13px;color:var(--tx2-op);margin-bottom:24px;line-height:1.5}
+.op-name-sub-man{font-size:13px;color:var(--tx2-man);margin-bottom:20px;line-height:1.5}
 .op-name-input{width:100%;background:var(--s2-op);border:1px solid var(--bd-op);color:var(--tx-op);
   font-size:18px;font-weight:700;padding:14px 16px;border-radius:12px;outline:none;
   font-family:'DM Sans';text-align:center;transition:border-color .15s;margin-bottom:14px}
 .op-name-input:focus{border-color:var(--bl)}
+.op-name-input-man{width:100%;background:var(--s2-man);border:1px solid var(--bd-man);color:var(--tx-man);
+  font-size:18px;font-weight:700;padding:14px 16px;border-radius:12px;outline:none;
+  font-family:'DM Sans';text-align:center;transition:border-color .15s;margin-bottom:14px}
+.op-name-input-man:focus{border-color:var(--pu)}
 .op-name-input::placeholder{color:var(--mu-op);font-weight:400;font-size:14px}
+.op-name-input-man::placeholder{color:var(--mu-man);font-weight:400;font-size:14px}
 .op-name-btn{width:100%;padding:14px;background:var(--bl);border:none;color:#fff;
   font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;border-radius:12px;cursor:pointer;
   display:flex;align-items:center;justify-content:center;gap:10px}
 .op-name-btn:hover{filter:brightness(1.1)}
 .op-name-btn:disabled{opacity:.4;cursor:not-allowed}
+.man-name-pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
+.man-name-pill{background:var(--s2-man);border:1px solid var(--bd-man);color:var(--tx-man);
+  font-size:13px;font-weight:700;padding:10px 16px;border-radius:10px;cursor:pointer;
+  font-family:'DM Sans';transition:all .15s;display:flex;align-items:center;gap:6px}
+.man-name-pill:hover{border-color:var(--pu);background:#8b5cf615;color:#c4b5fd}
+.man-name-pill.online{border-color:#22c55e44;background:#22c55e10;color:#6ee7b7}
 
 /* TOPBARS */
 .topbar{background:var(--s1);border-bottom:1px solid var(--bd);padding:0 14px;height:52px;
   display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:50;flex-shrink:0}
 .topbar-op{background:var(--s1-op);border-bottom:1px solid var(--bd-op);padding:0 14px;height:52px;
   display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:50;flex-shrink:0}
+.topbar-exp{background:var(--s1-exp);border-bottom:1px solid var(--bd-exp);padding:0 14px;height:52px;
+  display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:50;flex-shrink:0}
+.topbar-man{background:var(--s1-man);border-bottom:1px solid var(--bd-man);padding:0 14px;height:52px;
+  display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:50;flex-shrink:0}
 .tlogo{font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;color:var(--am)}
+.tlogo-exp{font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;color:var(--gr)}
+.tlogo-man{font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;color:var(--pu)}
 .trole{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
   padding:3px 10px;border-radius:20px;display:flex;align-items:center;gap:5px}
 .rep{background:#f59e0b22;color:var(--am);border:1px solid #f59e0b44}
 .oper{background:#3b82f622;color:var(--bl);border:1px solid #3b82f644}
+.expe{background:#22c55e22;color:var(--gr);border:1px solid #22c55e44}
+.manob{background:#8b5cf622;color:var(--pu);border:1px solid #8b5cf644}
 .op-nome-badge{font-size:11px;font-weight:700;color:var(--bl);background:#3b82f615;
   border:1px solid #3b82f630;padding:3px 10px;border-radius:99px;max-width:120px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.man-nome-badge{font-size:11px;font-weight:700;color:var(--pu);background:#8b5cf615;
+  border:1px solid #8b5cf630;padding:3px 10px;border-radius:99px;max-width:120px;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tsp{flex:1}
 .tlive{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--mu)}
@@ -93,9 +128,14 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 /* ONLINE BADGE */
 .online-bar{padding:8px 16px;background:var(--s1);border-bottom:1px solid var(--bd);
   display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex-shrink:0}
+.online-bar-exp{padding:8px 16px;background:var(--s1-exp);border-bottom:1px solid var(--bd-exp);
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex-shrink:0}
 .online-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu)}
+.online-label-exp{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu-exp)}
 .online-op{display:flex;align-items:center;gap:6px;background:var(--s2);border:1px solid var(--bd);
   border-radius:99px;padding:4px 12px 4px 8px;font-size:12px;font-weight:700;color:var(--tx2)}
+.online-op-man{display:flex;align-items:center;gap:6px;background:var(--s2-exp);border:1px solid var(--bd-exp);
+  border-radius:99px;padding:4px 12px 4px 8px;font-size:12px;font-weight:700;color:var(--tx2-exp)}
 .online-dot{width:8px;height:8px;border-radius:50%;background:var(--gr);flex-shrink:0;animation:blink 2s infinite}
 
 /* PAINEL FONTE */
@@ -146,19 +186,32 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 /* MAIN */
 .main{flex:1;overflow-y:auto;padding:16px;background:var(--bg)}
 .main-op{flex:1;overflow-y:auto;padding:16px;background:var(--bg-op)}
+.main-exp{flex:1;overflow-y:auto;padding:16px;background:var(--bg-exp)}
+.main-man{flex:1;overflow-y:auto;padding:16px;background:var(--bg-man)}
 
 /* FORM */
 .formcard{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:20px;margin-bottom:14px}
+.formcard-exp{background:var(--s1-exp);border:1px solid var(--bd-exp);border-radius:16px;padding:20px;margin-bottom:14px}
 .ftitle{font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;color:var(--am);margin-bottom:14px;
+  display:flex;align-items:center;gap:8px}
+.ftitle-exp{font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;color:var(--gr);margin-bottom:14px;
   display:flex;align-items:center;gap:8px}
 .lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);
   margin-bottom:6px;display:block;margin-top:12px}
 .lbl:first-child{margin-top:0}
+.lbl-exp{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu-exp);
+  margin-bottom:6px;display:block;margin-top:12px}
+.lbl-exp:first-child{margin-top:0}
 .lbl small{font-size:9px;color:var(--mu);text-transform:none;letter-spacing:0;font-weight:400}
 .inp{width:100%;background:var(--s2);border:1px solid var(--bd);color:var(--tx);font-size:14px;
   font-weight:600;padding:11px 13px;border-radius:10px;outline:none;font-family:'DM Sans';transition:border-color .15s}
 .inp:focus{border-color:var(--am)}
 .inp::placeholder{color:var(--mu);font-weight:400}
+.inp-exp{width:100%;background:var(--s2-exp);border:1px solid var(--bd-exp);color:var(--tx-exp);font-size:14px;
+  font-weight:600;padding:11px 13px;border-radius:10px;outline:none;font-family:'DM Sans';transition:border-color .15s}
+.inp-exp:focus{border-color:var(--gr)}
+.inp-exp::placeholder{color:var(--mu-exp);font-weight:400}
+.inp-exp-placa{font-size:22px;font-weight:800;letter-spacing:4px;text-transform:uppercase}
 .prev-end{margin-top:7px;padding:8px 12px;border-radius:8px;display:flex;align-items:center;gap:8px}
 .prev-end.hidden{display:none}
 .prev-end.ok{background:#22c55e12;border:1px solid #22c55e40}
@@ -181,10 +234,55 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
   font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;border-radius:10px;cursor:pointer;margin-top:16px;
   display:flex;align-items:center;justify-content:center;gap:10px}
 .btn-send:hover{filter:brightness(1.1)}
+.btn-send-exp{width:100%;padding:14px;background:var(--gr);border:none;color:#000;
+  font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;border-radius:10px;cursor:pointer;margin-top:16px;
+  display:flex;align-items:center;justify-content:center;gap:10px}
+.btn-send-exp:hover{filter:brightness(1.1)}
+
+/* ATRIBUIÇÃO PILLS (expedição) */
+.atrib-pills-exp{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.atrib-pill-exp{padding:7px 14px;border-radius:99px;border:1px solid var(--bd-exp);background:var(--s2-exp);
+  color:var(--tx2-exp);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;
+  font-family:'DM Sans';transition:all .15s;display:flex;align-items:center;gap:5px}
+.atrib-pill-exp:hover{border-color:var(--gr);color:var(--gr)}
+.atrib-pill-exp.ativo{background:var(--gr)!important;border-color:var(--gr)!important;color:#000!important}
+.atrib-pill-exp.online::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--gr);display:inline-block}
+
+/* GERENCIAR MANOBRISTAS */
+.mgmt-card{background:var(--s1-exp);border:1px solid var(--bd-exp);border-radius:14px;padding:14px;margin-bottom:14px}
+.mgmt-header{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.mgmt-title{font-family:'Bebas Neue';font-size:15px;letter-spacing:2px;color:var(--gr);display:flex;align-items:center;gap:6px;flex:1}
+.mgmt-toggle{font-size:12px;color:var(--mu-exp);transition:transform .2s}
+.mgmt-toggle.open{transform:rotate(90deg)}
+.mgmt-body{display:none;margin-top:12px}
+.mgmt-body.open{display:block}
+.mgmt-list{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
+.mgmt-item{display:flex;align-items:center;gap:8px;background:var(--s2-exp);border:1px solid var(--bd-exp);border-radius:8px;padding:7px 10px}
+.mgmt-nome{flex:1;font-size:13px;font-weight:700;color:var(--tx-exp)}
+.mgmt-online{width:7px;height:7px;border-radius:50%;background:var(--gr);animation:blink 2s infinite;flex-shrink:0}
+.mgmt-add{display:flex;gap:6px;margin-top:6px}
+.mgmt-inp{flex:1;background:var(--s2-exp);border:1px solid var(--bd-exp);color:var(--tx-exp);
+  font-size:13px;font-weight:600;padding:9px 12px;border-radius:8px;outline:none;
+  font-family:'DM Sans';transition:border-color .15s}
+.mgmt-inp:focus{border-color:var(--gr)}
+.mgmt-inp::placeholder{color:var(--mu-exp);font-weight:400}
+.mgmt-btn-add{background:var(--gr);border:none;color:#000;font-family:'Bebas Neue';font-size:15px;
+  letter-spacing:1px;padding:9px 16px;border-radius:8px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px}
+.mgmt-btn-add:disabled{opacity:.4;cursor:not-allowed}
 
 /* SECAO */
 .secao{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
   color:var(--mu);margin:16px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--bd)}
+.secao-exp{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--mu-exp);margin:16px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--bd-exp)}
+
+/* TRANSPORTADORA GROUP */
+.transp-grp{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gr);margin:14px 0 8px;padding:6px 10px;border-radius:8px;
+  background:var(--s2-exp);border:1px solid var(--bd-exp);
+  display:flex;align-items:center;gap:8px}
+.transp-count{background:#22c55e22;border:1px solid #22c55e44;color:var(--gr);
+  border-radius:99px;font-size:10px;padding:1px 8px;margin-left:auto}
 
 /* CARDS REPOSITOR */
 .crep{background:var(--s1);border:1px solid var(--bd);border-left:3px solid;border-radius:14px;
@@ -205,6 +303,10 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
   color:var(--mu);border-radius:10px;cursor:pointer;font-size:12px;font-weight:700;margin-top:6px;
   display:flex;align-items:center;justify-content:center;gap:6px}
 .btn-limpar:hover{border-color:var(--rd);color:var(--rd)}
+.btn-limpar-exp{width:100%;padding:10px;background:transparent;border:1px solid var(--bd-exp);
+  color:var(--mu-exp);border-radius:10px;cursor:pointer;font-size:12px;font-weight:700;margin-top:6px;
+  display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-limpar-exp:hover{border-color:var(--rd);color:var(--rd)}
 
 /* OPERADOR BADGE no card */
 .op-tag{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;
@@ -213,6 +315,17 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
   padding:4px 8px;display:flex;align-items:center;gap:4px;border-radius:6px;
   font-size:10px;font-weight:700;transition:all .15s;white-space:nowrap}
 .btn-transfer:hover{border-color:var(--pu);color:#a78bfa;background:#8b5cf615}
+
+/* CARD EXPEDIÇÃO */
+.cexp{background:var(--s1-exp);border:1px solid var(--bd-exp);border-left:3px solid;border-radius:14px;
+  padding:13px;margin-bottom:9px;animation:si .2s ease}
+.cexp-placa{font-family:'Bebas Neue';font-size:24px;letter-spacing:3px;flex:1}
+.cexp-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
+.btn-liberar{background:var(--gr);border:none;color:#000;font-family:'DM Sans';font-size:11px;font-weight:800;
+  padding:6px 12px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:filter .15s}
+.btn-liberar:hover{filter:brightness(1.1)}
+.man-tag{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;
+  padding:3px 9px;border-radius:99px;border:1px solid #22c55e40;background:#22c55e15;color:#6ee7b7}
 
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;
@@ -268,25 +381,59 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .sdica2{text-align:center;font-size:10px;color:var(--mu-op);margin-top:10px;
   display:flex;align-items:center;justify-content:center;gap:6px}
 
+/* CARD MANOBRISTA PRINCIPAL */
+.cman-main{background:var(--s1-man);border:2px solid var(--pu);border-radius:18px;padding:22px 20px;
+  margin-bottom:12px;position:relative;overflow:hidden;transition:transform .15s,opacity .15s;
+  animation:si .2s ease;touch-action:pan-y}
+.cman-main.liberado{border-color:var(--gr);animation:si .2s ease, pulsar 1.5s ease-in-out infinite}
+@keyframes pulsar{0%,100%{box-shadow:0 0 0 0 #22c55e30}50%{box-shadow:0 0 0 8px #22c55e10}}
+.cman-main.encostado{border-color:var(--bl)}
+.placa-main{font-family:'Bebas Neue';font-size:var(--addr-size);letter-spacing:var(--addr-sp);
+  color:var(--pu);line-height:1;margin:8px 0 12px;word-break:break-all}
+.placa-main.liberado{color:var(--gr)}
+.placa-main.encostado{color:var(--bl)}
+.doca-main{font-size:18px;font-weight:700;color:var(--tx-man);margin-bottom:3px}
+.transp-main{font-size:13px;color:var(--tx2-man);margin-bottom:8px}
+.liberado-banner{background:#22c55e15;border:1px solid #22c55e40;border-radius:12px;
+  padding:14px;text-align:center;margin:10px 0}
+.liberado-title{font-family:'Bebas Neue';font-size:28px;letter-spacing:3px;color:var(--gr)}
+.liberado-sub{font-size:11px;color:#22c55e80;margin-top:4px}
+.aguardando-banner{background:#3b82f615;border:1px solid #3b82f640;border-radius:10px;
+  padding:10px 14px;text-align:center;margin-bottom:10px}
+
 /* CARD SEC */
 .cop-sec{background:var(--s2-op);border:1px solid var(--bd-op);border-radius:12px;
   padding:13px 14px;margin-bottom:8px;opacity:.5;position:relative;overflow:hidden;touch-action:pan-y}
+.cman-sec{background:var(--s2-man);border:1px solid var(--bd-man);border-radius:12px;
+  padding:13px 14px;margin-bottom:8px;opacity:.5;position:relative;overflow:hidden}
 
 /* HIST */
 .chist{background:var(--s2-op);border:1px solid var(--bd-op);border-left:3px solid;
+  border-radius:10px;padding:10px 12px;margin-bottom:7px;display:flex;align-items:center;gap:8px;opacity:.6}
+.chist-exp{background:var(--s2-exp);border:1px solid var(--bd-exp);border-left:3px solid;
   border-radius:10px;padding:10px 12px;margin-bottom:7px;display:flex;align-items:center;gap:8px;opacity:.6}
 
 /* DICA */
 .sdica{background:var(--s1-op);border:1px solid var(--bd-op);border-radius:10px;
   padding:10px 14px;margin-bottom:14px;font-size:11px;color:var(--tx2-op);line-height:1.8;text-align:center}
 .sdica b{color:var(--tx-op)}
+.sdica-man{background:var(--s1-man);border:1px solid var(--bd-man);border-radius:10px;
+  padding:10px 14px;margin-bottom:14px;font-size:11px;color:var(--tx2-man);line-height:1.8;text-align:center}
+.sdica-man b{color:var(--tx-man)}
 
 /* EMPTY */
 .empty{text-align:center;padding:60px 20px;color:var(--mu-op)}
+.empty-exp{text-align:center;padding:60px 20px;color:var(--mu-exp)}
+.empty-man{text-align:center;padding:60px 20px;color:var(--mu-man)}
 .empty-icon-wrap{width:64px;height:64px;border-radius:50%;background:var(--s2-op);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.empty-icon-wrap-exp{width:64px;height:64px;border-radius:50%;background:var(--s2-exp);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.empty-icon-wrap-man{width:64px;height:64px;border-radius:50%;background:var(--s2-man);
   display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
 .empty-title{font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;margin-bottom:6px;color:var(--tx2-op)}
 .empty-sub{font-size:12px;line-height:1.7}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
@@ -296,7 +443,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getDatabase, ref, push, onValue, remove, update, set, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-const APP_VERSION = "v2.6";
+const APP_VERSION = "v3.0";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -308,15 +455,21 @@ const firebaseConfig = {
   appId:             "1:151491743077:web:06aa81e8ce4c4e032f258c"
 };
 
-const fbApp   = initializeApp(firebaseConfig);
-const db      = getDatabase(fbApp);
-const tasksRef    = ref(db, "tarefas");
-const operadoresRef = ref(db, "operadores");
+const fbApp = initializeApp(firebaseConfig);
+const db    = getDatabase(fbApp);
+
+// ── REFS ─────────────────────────────────────────────────────────────────────
+const tasksRef        = ref(db, "tarefas");
+const operadoresRef   = ref(db, "operadores");
+const carregRef       = ref(db, "carregamentos");
+const manoOnlineRef   = ref(db, "manobristas");
+const nomesManobRef   = ref(db, "nomesManobristas");
 
 // ── ÍCONES ───────────────────────────────────────────────────────────────────
 const I = {
   clipboard:  `<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>`,
   forklift:   `<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V9l4-5h6v5l4 3v5"/><path d="M4 17H2"/><path d="M22 17h-8"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/><path d="M14 9V4"/></svg>`,
+  truck:      `<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3"/><rect x="9" y="11" width="14" height="10" rx="2"/><circle cx="12" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg>`,
   package:    `<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 21H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/><path d="m12 2 4 4-4 4"/><path d="M16 6H8"/><rect x="12" y="12" width="10" height="10" rx="1"/><path d="m16 12 2 2-2 2"/></svg>`,
   layers:     `<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
   send:       `<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>`,
@@ -340,20 +493,33 @@ const I = {
   smartphone: `<svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>`,
   arrowRight: `<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>`,
   transfer:   `<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3L21 7L17 11"/><path d="M21 7H3"/><path d="M7 21L3 17L7 13"/><path d="M3 17H21"/></svg>`,
+  plus:       `<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>`,
+  flag:       `<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>`,
 };
 
 // ── ESTADO ───────────────────────────────────────────────────────────────────
-let perfil      = null;
-let nomeOperador= null;   // nome do operador logado
-let opId        = null;
-let tarefas     = [];
-let operadores  = {};
-let tipoAtual   = "picking";
-let atribPara   = "qualquer";
-let prevIds     = null;
-let showFont    = false;
-let filtroRua   = "todas";
-let camaraAtual = "B";
+// Picking
+let perfil       = null;
+let nomeOperador = null;
+let opId         = null;
+let tarefas      = [];
+let operadores   = {};
+let tipoAtual    = "picking";
+let atribPara    = "qualquer";
+let prevIds      = null;
+let showFont     = false;
+let filtroRua    = "todas";
+let camaraAtual  = "B";
+// Expedição / Manobrista
+let nomeManob    = null;
+let manobId      = null;
+let carregamentos = [];
+let manobristas  = {};       // presença online
+let nomesManobristas = {};   // cadastro permanente
+let atribManob   = "qualquer"; // nome do manobrista atribuído
+let prevCarrIds  = null;
+let prevLibIds   = [];
+let mgmtOpen     = false;
 
 // ── CÂMARAS ───────────────────────────────────────────────────────────────────
 const CAMARAS = {
@@ -389,70 +555,52 @@ function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2
 
 // ── PARSER ───────────────────────────────────────────────────────────────────
 function isPickingEnd(endCompleto){
-  // Nível 10 = chão = não precisa de operador
-  // Câmara F = sempre chão = não precisa de operador
-  const s = (endCompleto||"").trim().toUpperCase();
-  if(s.startsWith("F ")) return true;
+  const s=(endCompleto||"").trim().toUpperCase();
+  if(s.startsWith("F "))return true;
   return /\s10$/i.test(s);
 }
-
-function parseEnd(s, camara){
-  camara = (camara||camaraAtual||"B").toUpperCase();
-  s = (s||"").trim();
-  if(!s) return {valido:false,erro:""};
-
-  const cam = CAMARAS[camara];
-  if(!cam) return {valido:false,erro:"Câmara inválida"};
-
-  // ── CÂMARA F — formato especial: só RUA e POSIÇÃO ─────────────────────────
+function parseEnd(s,camara){
+  camara=(camara||camaraAtual||"B").toUpperCase();
+  s=(s||"").trim();
+  if(!s)return{valido:false,erro:""};
+  const cam=CAMARAS[camara];
+  if(!cam)return{valido:false,erro:"Câmara inválida"};
   if(cam.especial){
-    // Aceita: "1-2" | "1 2" | "1/2"
-    const p = s.split(/[-\/\s]+/).filter(Boolean);
-    if(p.length !== 2) return {valido:false,erro:'Câmara F: use RUA-POSIÇÃO  ex: "1-2"'};
-    const rua=+p[0], pos=+p[1];
-    if(isNaN(rua)||isNaN(pos)) return {valido:false,erro:"Apenas números"};
-    if(rua<1||rua>9)  return {valido:false,erro:"Rua: 1 a 9"};
-    if(pos<1||pos>99) return {valido:false,erro:"Posição: 1 a 99"};
-    const completo = `F ${String(rua).padStart(2,"0")} ${String(pos).padStart(3,"0")}`;
-    return {valido:true,completo,erro:"",camara:"F",rua,pos,nivel:null,
-      label:`Câmara F · Rua ${rua} · Posição ${pos}`,isPicking:true};
+    const p=s.split(/[-\/\s]+/).filter(Boolean);
+    if(p.length!==2)return{valido:false,erro:'Câmara F: use RUA-POSIÇÃO  ex: "1-2"'};
+    const rua=+p[0],pos=+p[1];
+    if(isNaN(rua)||isNaN(pos))return{valido:false,erro:"Apenas números"};
+    if(rua<1||rua>9)return{valido:false,erro:"Rua: 1 a 9"};
+    if(pos<1||pos>99)return{valido:false,erro:"Posição: 1 a 99"};
+    const completo=`F ${String(rua).padStart(2,"0")} ${String(pos).padStart(3,"0")}`;
+    return{valido:true,completo,erro:"",camara:"F",rua,pos,nivel:null,label:`Câmara F · Rua ${rua} · Posição ${pos}`,isPicking:true};
   }
-
-  // ── CÂMARAS PADRÃO: RUA POS NÍVEL ─────────────────────────────────────────
-  // Aceita formato já completo: "B 004 0056 20" (qualquer câmara)
-  const reCompleto = /^([A-F])\s+(\d{2,3})\s+(\d{3,4})\s+(\d{2})$/i;
-  const mC = s.match(reCompleto);
+  const reCompleto=/^([A-F])\s+(\d{2,3})\s+(\d{3,4})\s+(\d{2})$/i;
+  const mC=s.match(reCompleto);
   if(mC){
-    const [,letra,rua,pos,nivel] = mC;
-    const isPicking = nivel==="10";
-    return {valido:true,completo:`${letra.toUpperCase()} ${rua.padStart(3,"0")} ${pos.padStart(4,"0")} ${nivel}`,
-      erro:"",camara:letra.toUpperCase(),rua:+rua,pos:+pos,nivel:+nivel/10,
-      label:`${CAMARAS[letra.toUpperCase()]?.nome||letra} · Rua ${+rua} · Pos ${+pos} · ${nivel}`,isPicking};
+    const[,letra,rua,pos,nivel]=mC;
+    const isPicking=nivel==="10";
+    return{valido:true,completo:`${letra.toUpperCase()} ${rua.padStart(3,"0")} ${pos.padStart(4,"0")} ${nivel}`,erro:"",camara:letra.toUpperCase(),rua:+rua,pos:+pos,nivel:+nivel/10,label:`${CAMARAS[letra.toUpperCase()]?.nome||letra} · Rua ${+rua} · Pos ${+pos} · ${nivel}`,isPicking};
   }
-
-  // Aceita simplificado: "4-56-2" | "4 56 2" | "4/56/2"
-  // Também aceita com letra no início: "B 4 56 2" ou "b4-56-2"
-  let input = s;
-  // Remove a letra da câmara no início se digitada junto
-  const mLetra = input.match(/^([A-F])\s*[-\/\s]?(.*)/i);
-  if(mLetra) input = mLetra[2];
-
-  const p = input.split(/[-\/\s]+/).filter(Boolean);
-  if(p.length !== 3) return {valido:false,erro:'Use: RUA-POSIÇÃO-NÍVEL  ex: "4-56-2"'};
-  const rua=+p[0], pos=+p[1], nivel=+p[2];
-  if(isNaN(rua)||isNaN(pos)||isNaN(nivel)) return {valido:false,erro:"Apenas números"};
-  if(rua<1||rua>9)   return {valido:false,erro:"Rua: 1 a 9"};
-  if(pos<1||pos>99)  return {valido:false,erro:"Posição: 1 a 99"};
-  if(nivel<1||nivel>5) return {valido:false,erro:"Nível: 1–5"};
+  let input=s;
+  const mLetra=input.match(/^([A-F])\s*[-\/\s]?(.*)/i);
+  if(mLetra)input=mLetra[2];
+  const p=input.split(/[-\/\s]+/).filter(Boolean);
+  if(p.length!==3)return{valido:false,erro:'Use: RUA-POSIÇÃO-NÍVEL  ex: "4-56-2"'};
+  const rua=+p[0],pos=+p[1],nivel=+p[2];
+  if(isNaN(rua)||isNaN(pos)||isNaN(nivel))return{valido:false,erro:"Apenas números"};
+  if(rua<1||rua>9)return{valido:false,erro:"Rua: 1 a 9"};
+  if(pos<1||pos>99)return{valido:false,erro:"Posição: 1 a 99"};
+  if(nivel<1||nivel>5)return{valido:false,erro:"Nível: 1–5"};
   const nivelLabel=["","Nível 10 — chão","2º nível","3º nível","4º nível","5º nível"][nivel];
   const completo=`${camara} ${String(rua).padStart(3,"0")} ${String(pos).padStart(4,"0")} ${String(nivel*10).padStart(2,"0")}`;
-  const isPicking = nivel===1;
-  return {valido:true,completo,erro:"",camara,rua,pos,nivel,
-    label:`${cam.nome} · Rua ${rua} · Pos ${pos} · ${nivelLabel}`,isPicking};
+  const isPicking=nivel===1;
+  return{valido:true,completo,erro:"",camara,rua,pos,nivel,label:`${cam.nome} · Rua ${rua} · Pos ${pos} · ${nivelLabel}`,isPicking};
 }
 
 // ── SOM ──────────────────────────────────────────────────────────────────────
 function beep(freq=880,times=2){try{const ctx=new(window.AudioContext||window.webkitAudioContext)();Array.from({length:times},(_,i)=>i*.18).forEach(d=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=freq;o.type="sine";g.gain.setValueAtTime(0,ctx.currentTime+d);g.gain.linearRampToValueAtTime(.4,ctx.currentTime+d+.01);g.gain.linearRampToValueAtTime(0,ctx.currentTime+d+.12);o.start(ctx.currentTime+d);o.stop(ctx.currentTime+d+.15);});}catch{}}
+function beepLib(){try{const ctx=new(window.AudioContext||window.webkitAudioContext)();[[880,.0],[1047,.2],[1319,.4]].forEach(([freq,d])=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=freq;o.type="sine";g.gain.setValueAtTime(0,ctx.currentTime+d);g.gain.linearRampToValueAtTime(.4,ctx.currentTime+d+.01);g.gain.linearRampToValueAtTime(0,ctx.currentTime+d+.18);o.start(ctx.currentTime+d);o.stop(ctx.currentTime+d+.22);});}catch{}}
 
 // ── SWIPE ────────────────────────────────────────────────────────────────────
 function initSwipe(el,onRight){
@@ -489,21 +637,27 @@ function fontPanelHTML(isOp){
 
 // ── OPERADORES ONLINE HTML ────────────────────────────────────────────────────
 function onlineBarHTML(){
-  const lista = Object.entries(operadores);
+  const lista=Object.entries(operadores);
   if(lista.length===0)return"";
   return `<div class="online-bar">
     <span class="online-label">${I.users} Online</span>
-    ${lista.map(([id,op])=>`
-      <div class="online-op">
-        <span class="online-dot"></span>
-        ${op.nome}
-      </div>`).join("")}
+    ${lista.map(([id,op])=>`<div class="online-op"><span class="online-dot"></span>${op.nome}</div>`).join("")}
   </div>`;
 }
 
-// ── SELECT DE ATRIBUIÇÃO ──────────────────────────────────────────────────────
+// ── MANOBRISTAS ONLINE HTML ───────────────────────────────────────────────────
+function manoOnlineBarHTML(){
+  const lista=Object.entries(manobristas);
+  if(lista.length===0)return"";
+  return `<div class="online-bar-exp">
+    <span class="online-label-exp">${I.truck} Online</span>
+    ${lista.map(([id,m])=>`<div class="online-op-man"><span class="online-dot"></span>${m.nome}</div>`).join("")}
+  </div>`;
+}
+
+// ── SELECT DE ATRIBUIÇÃO (picking) ───────────────────────────────────────────
 function atribSelectHTML(){
-  const lista = Object.entries(operadores);
+  const lista=Object.entries(operadores);
   if(lista.length===0){
     return `<select class="atrib-select" id="atribSelect" disabled>
       <option value="qualquer">Nenhum operador online</option>
@@ -511,9 +665,61 @@ function atribSelectHTML(){
   }
   return `<select class="atrib-select" id="atribSelect" onchange="window.setAtrib(this.value)">
     <option value="qualquer"${atribPara==="qualquer"?" selected":""}>Qualquer operador disponível</option>
-    ${lista.map(([id,op])=>`
-      <option value="${id}"${atribPara===id?" selected":""}>${op.nome}</option>`).join("")}
+    ${lista.map(([id,op])=>`<option value="${id}"${atribPara===id?" selected":""}>${op.nome}</option>`).join("")}
   </select>`;
+}
+
+// ── PILLS DE ATRIBUIÇÃO (expedição) ──────────────────────────────────────────
+function atribPillsExpHTML(){
+  const manoOnlineNames=Object.values(manobristas).map(m=>m.nome);
+  const nomes=Object.entries(nomesManobristas);
+  const qualquerAtivo=atribManob==="qualquer";
+  return `<div class="atrib-pills-exp">
+    <button class="atrib-pill-exp${qualquerAtivo?" ativo":""}" onclick="window.setAtribManob('qualquer')">
+      ${I.users} Qualquer
+    </button>
+    ${nomes.map(([id,nome])=>{
+      const online=manoOnlineNames.includes(nome);
+      return `<button class="atrib-pill-exp${atribManob===nome?" ativo":""}${online?" online":""}" onclick="window.setAtribManob('${nome}')">
+        ${online?`<span class="online-dot" style="width:6px;height:6px;animation:none;flex-shrink:0"></span>`:""}${nome}
+      </button>`;
+    }).join("")}
+    ${nomes.length===0?`<span style="font-size:10px;color:var(--mu-exp);align-self:center">Cadastre manobristas abaixo</span>`:""}
+  </div>`;
+}
+
+// ── GERENCIAR MANOBRISTAS HTML ────────────────────────────────────────────────
+function mgmtHTML(){
+  const manoOnlineNames=Object.values(manobristas).map(m=>m.nome);
+  const nomes=Object.entries(nomesManobristas);
+  return `<div class="mgmt-card">
+    <div class="mgmt-header" onclick="window.toggleMgmt()">
+      <div class="mgmt-title">${I.users} Manobristas Cadastrados <span style="font-size:12px;color:var(--mu-exp);font-family:'DM Sans';font-weight:700;letter-spacing:0">(${nomes.length})</span></div>
+      <span class="mgmt-toggle${mgmtOpen?" open":""}">▸</span>
+    </div>
+    <div class="mgmt-body${mgmtOpen?" open":""}">
+      <div class="mgmt-list">
+        ${nomes.length===0?`<div style="font-size:11px;color:var(--mu-exp);text-align:center;padding:6px 0;">Nenhum manobrista cadastrado ainda.</div>`:""}
+        ${nomes.map(([id,nome])=>{
+          const online=manoOnlineNames.includes(nome);
+          return `<div class="mgmt-item">
+            ${online?`<span class="mgmt-online"></span>`:""}
+            <span class="mgmt-nome">${nome}</span>
+            ${online?`<span style="font-size:9px;color:var(--gr);font-weight:700;letter-spacing:1px">ONLINE</span>`:""}
+            <button class="btn-rem" onclick="window.removerManobNome('${id}')">${I.x}</button>
+          </div>`;
+        }).join("")}
+      </div>
+      <div class="mgmt-add">
+        <input id="inputNovoManob" class="mgmt-inp" placeholder="Nome do manobrista" maxlength="20"
+          oninput="document.getElementById('btnAddManob').disabled=!this.value.trim()"
+          onkeydown="if(event.key==='Enter')window.adicionarManob()"/>
+        <button id="btnAddManob" class="mgmt-btn-add" onclick="window.adicionarManob()" disabled>
+          ${I.plus} ADD
+        </button>
+      </div>
+    </div>
+  </div>`;
 }
 
 // ── RENDER LOGIN ──────────────────────────────────────────────────────────────
@@ -522,13 +728,14 @@ function renderLogin(){
     <div class="login">
       <div class="logo"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><text x="6" y="32" font-family="'Bebas Neue', sans-serif" font-size="34" fill="#0b0e17">R</text></svg></div>
       <h1>REPOAPP</h1>
-      <p class="login-sub">Sistema de Reposição de Picking</p>
+      <p class="login-sub">Sistema de Operações de Armazém</p>
       <p class="login-ver">${APP_VERSION}</p>
-      <div class="lcards">
+      <div class="login-section">REPOSIÇÃO DE PICKING</div>
+      <div class="lcards" style="margin-bottom:0">
         <button class="lcard" onclick="window.escolher('repositor')">
           <div class="lcard-icon" style="background:#f59e0b22">${I.clipboard.replace('width="20" height="20"','width="24" height="24"').replace('stroke="currentColor"','stroke="#f59e0b"')}</div>
           <span class="lcard-title">REPOSITOR</span>
-          <span class="lcard-desc">Cadastrar e enviar tarefas</span>
+          <span class="lcard-desc">Enviar tarefas de reposição</span>
         </button>
         <button class="lcard" onclick="window.escolher('operador')">
           <div class="lcard-icon" style="background:#3b82f622">${I.forklift.replace('width="20" height="20"','width="24" height="24"').replace('stroke="currentColor"','stroke="#3b82f6"')}</div>
@@ -536,10 +743,23 @@ function renderLogin(){
           <span class="lcard-desc">Executar reposições</span>
         </button>
       </div>
+      <div class="login-section" style="margin-top:20px">EXPEDIÇÃO DE CARGA</div>
+      <div class="lcards">
+        <button class="lcard" onclick="window.escolher('expedicao')" style="border-color:#22c55e30">
+          <div class="lcard-icon" style="background:#22c55e22">${I.clipboard.replace('width="20" height="20"','width="24" height="24"').replace('stroke="currentColor"','stroke="#22c55e"')}</div>
+          <span class="lcard-title" style="color:#22c55e">EXPEDIÇÃO</span>
+          <span class="lcard-desc">Enviar placas e docas</span>
+        </button>
+        <button class="lcard" onclick="window.escolher('manobrista')" style="border-color:#8b5cf630">
+          <div class="lcard-icon" style="background:#8b5cf622">${I.truck.replace('width="20" height="20"','width="24" height="24"').replace('stroke="currentColor"','stroke="#8b5cf6"')}</div>
+          <span class="lcard-title" style="color:#8b5cf6">MANOBRISTA</span>
+          <span class="lcard-desc">Receber e encostar veículos</span>
+        </button>
+      </div>
     </div>`;
 }
 
-// ── TELA NOME DO OPERADOR ─────────────────────────────────────────────────────
+// ── TELA NOME DO OPERADOR (picking) ───────────────────────────────────────────
 function renderNomeOperador(){
   document.getElementById("app").innerHTML=`
     <div class="op-name-screen">
@@ -558,12 +778,45 @@ function renderNomeOperador(){
   setTimeout(()=>document.getElementById("inputNome")?.focus(),100);
 }
 
+// ── TELA NOME DO MANOBRISTA ───────────────────────────────────────────────────
+function renderNomeManob(){
+  const manoOnlineNames=Object.values(manobristas).map(m=>m.nome);
+  const nomes=Object.entries(nomesManobristas);
+  document.getElementById("app").innerHTML=`
+    <div class="op-name-screen-man">
+      <div class="op-name-box-man">
+        <div class="op-name-icon" style="background:#8b5cf622;border:1px solid #8b5cf644">
+          ${I.truck.replace('stroke="currentColor"','stroke="#8b5cf6"')}
+        </div>
+        <div class="op-name-title-man">IDENTIFICAÇÃO</div>
+        <p class="op-name-sub-man">Selecione seu nome na lista ou digite abaixo.</p>
+        ${nomes.length>0?`
+          <div class="man-name-pills">
+            ${nomes.map(([id,nome])=>{
+              const online=manoOnlineNames.includes(nome);
+              return `<button class="man-name-pill${online?" online":""}" onclick="window.selecionarNomeManob('${nome}')">
+                ${online?`<span class="online-dot" style="width:6px;height:6px;animation:none;flex-shrink:0"></span>`:""}${nome}
+              </button>`;
+            }).join("")}
+          </div>
+          <div style="text-align:center;font-size:10px;color:var(--mu-man);margin-bottom:12px">ou digite manualmente</div>
+        `:""}
+        <input id="inputNomeManob" class="op-name-input-man" placeholder="Seu nome"
+          maxlength="20" oninput="document.getElementById('btnEntrarManob').disabled=!this.value.trim()"
+          onkeydown="if(event.key==='Enter')window.confirmarNomeManob()"/>
+        <button id="btnEntrarManob" class="op-name-btn" style="background:var(--pu)" onclick="window.confirmarNomeManob()" disabled>
+          ${I.arrowRight} ENTRAR
+        </button>
+      </div>
+    </div>`;
+  setTimeout(()=>document.getElementById("inputNomeManob")?.focus(),100);
+}
+
 // ── RENDER REPOSITOR ──────────────────────────────────────────────────────────
 function renderRepositor(){
   const fila=tarefas.filter(t=>["pendente","andamento","pulado"].includes(t.status));
   const hist=tarefas.filter(t=>["concluido","vazio"].includes(t.status));
   const alts=tarefas.filter(t=>t.status==="vazio"&&!t.alertaVisto);
-
   const statsHTML=fila.length>0?`
     <div class="stat-row">
       <div class="stat-card"><div class="stat-num" style="color:var(--am)">${fila.length}</div><div class="stat-lbl">Na fila</div></div>
@@ -571,7 +824,6 @@ function renderRepositor(){
       <div class="stat-card"><div class="stat-num" style="color:var(--am)">${fila.filter(t=>t.tipo==="picking").length}</div><div class="stat-lbl">Pickings</div></div>
       <div class="stat-card"><div class="stat-num" style="color:var(--gr)">${hist.filter(t=>t.status==="concluido").length}</div><div class="stat-lbl">Feitos hoje</div></div>
     </div>`:"";
-
   document.getElementById("app").innerHTML=`
     <div class="topbar">
       <span class="tlogo">REPO</span>
@@ -633,9 +885,8 @@ function renderRepositor(){
         ${hist.map(cardRep).join("")}
         <button class="btn-limpar" onclick="window.limparTudo()">${I.trash} Limpar tudo</button>`:""}
     </div>`;
-
   if(window._fs){
-    if(window._fs.camara) camaraAtual=window._fs.camara;
+    if(window._fs.camara)camaraAtual=window._fs.camara;
     const e=document.getElementById("fEnd"),c=document.getElementById("fCod"),d=document.getElementById("fDesc");
     if(e)e.value=window._fs.end||"";if(c)c.value=window._fs.cod||"";if(d)d.value=window._fs.desc||"";
     if(window._fs.tipo==="palete")window.setTipo("palete");
@@ -652,7 +903,7 @@ function cardRep(t){
       <div class="crep-top">
         <span class="crep-addr" style="color:${cor}">${t.endereco}</span>
         <span class="chip" style="color:${cor};border-color:${cor}40;background:${cor}15">${lbl}</span>
-        ${!isHist&&Object.keys(operadores).length>1?`<button class="btn-transfer" onclick="window.abrirRepassar('${t.id}')" title="Repassar para outro operador">${I.transfer} Repassar</button>`:""}
+        ${!isHist&&Object.keys(operadores).length>1?`<button class="btn-transfer" onclick="window.abrirRepassar('${t.id}')" title="Repassar">${I.transfer} Repassar</button>`:""}
         ${!isHist?`<button class="btn-rem" onclick="window.remover('${t.id}')">${I.x}</button>`:""}
       </div>
       ${t.descricao?`<div class="crep-prod">${t.descricao}</div>`:""}
@@ -668,23 +919,19 @@ function cardRep(t){
 
 // ── RENDER OPERADOR ───────────────────────────────────────────────────────────
 function renderOperador(){
-  // Mostra tarefas atribuídas a este operador + não atribuídas
-  // Exclui tarefas em andamento por OUTRO operador (evita conflito de fila)
-  const minhasFila = tarefas.filter(t=>{
-    if(!["pendente","andamento","pulado"].includes(t.status)) return false;
-    if(t.atribId && t.atribId!==opId) return false; // atribuída a outro
-    if(t.status==="andamento" && t.opId && t.opId!==opId) return false; // sendo executada por outro
+  const minhasFila=tarefas.filter(t=>{
+    if(!["pendente","andamento","pulado"].includes(t.status))return false;
+    if(t.atribId&&t.atribId!==opId)return false;
+    if(t.status==="andamento"&&t.opId&&t.opId!==opId)return false;
     return true;
   });
-  const ativos  = minhasFila.filter(t=>t.status==="pendente"||t.status==="andamento").sort((a,b)=>a.ts-b.ts);
-  const pulados = minhasFila.filter(t=>t.status==="pulado").sort((a,b)=>a.ts-b.ts);
-  const fila    = [...ativos,...pulados];
-  const hist    = tarefas.filter(t=>t.status==="concluido"||t.status==="vazio");
-
-  const getRua =t=>{const m=t.endereco.match(/B\s+0*(\d+)/);return m?m[1]:null;};
+  const ativos=minhasFila.filter(t=>t.status==="pendente"||t.status==="andamento").sort((a,b)=>a.ts-b.ts);
+  const pulados=minhasFila.filter(t=>t.status==="pulado").sort((a,b)=>a.ts-b.ts);
+  const fila=[...ativos,...pulados];
+  const hist=tarefas.filter(t=>t.status==="concluido"||t.status==="vazio");
+  const getRua=t=>{const m=t.endereco.match(/B\s+0*(\d+)/);return m?m[1]:null;};
   const ruasNaFila=[...new Set(fila.map(getRua).filter(Boolean))].sort();
   const filaFiltrada=filtroRua==="todas"?fila:fila.filter(t=>getRua(t)===filtroRua);
-
   const filtroBarHTML=ruasNaFila.length>1?`
     <div class="filtro-bar">
       <button class="filtro-btn${filtroRua==="todas"?" filtro-ativo":""}" onclick="window.setFiltroRua('todas')">${I.map} Todas</button>
@@ -693,7 +940,6 @@ function renderOperador(){
           Rua ${r}<span class="filtro-n">${fila.filter(t=>getRua(t)===r).length}</span>
         </button>`).join("")}
     </div>`:"";
-
   const statsHTML=fila.length>0?`
     <div class="stat-row">
       <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--am)">${fila.length}</div><div class="stat-lbl">Minha fila</div></div>
@@ -701,13 +947,11 @@ function renderOperador(){
       <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--am)">${fila.filter(t=>t.tipo==="picking").length}</div><div class="stat-lbl">Pickings</div></div>
       <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--gr)">${hist.filter(t=>t.status==="concluido"&&t.opId===opId).length}</div><div class="stat-lbl">Fiz hoje</div></div>
     </div>`:"";
-
   const filaHTML=fila.length===0
     ?`<div class="empty"><div class="empty-icon-wrap">${I.inbox.replace('stroke="currentColor"','stroke="var(--mu-op)"')}</div><div class="empty-title">Sem tarefas</div><div class="empty-sub">Aguardando reposições atribuídas a você<br>ou disponíveis para qualquer operador.</div></div>`
     :statsHTML+(filaFiltrada.length===0
       ?`<div class="empty" style="padding:30px 20px"><div class="empty-icon-wrap">${I.search.replace('stroke="currentColor"','stroke="var(--mu-op)"')}</div><div class="empty-title">Nenhum na Rua ${filtroRua}</div><div class="empty-sub">Selecione outra rua ou "Todas".</div></div>`
       :filaFiltrada.map((t,i)=>cardOp(t,i)).join(""));
-
   document.getElementById("app").innerHTML=`
     <div class="topbar-op">
       <span class="tlogo">REPO</span>
@@ -730,13 +974,12 @@ function renderOperador(){
           <div class="chist" style="border-left-color:${t.status==="concluido"?"var(--gr)":"var(--rd)"}">
             <span style="font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;color:${t.status==="concluido"?"var(--gr)":"var(--rd)"}">${t.endereco}</span>
             <span style="margin-left:auto;display:flex;align-items:center;gap:5px;font-size:10px;color:var(--mu-op)">
-              ${t.opNome?`<span style="color:#a78bfa">${t.opNome}</span> ·`:""} 
-              ${t.status==="concluido"?I.checkCircle.replace('stroke="currentColor"','stroke="var(--gr)"'):I.alert.replace('stroke="currentColor"','stroke="var(--rd)"')} 
+              ${t.opNome?`<span style="color:#a78bfa">${t.opNome}</span> ·`:""}
+              ${t.status==="concluido"?I.checkCircle.replace('stroke="currentColor"','stroke="var(--gr)"'):I.alert.replace('stroke="currentColor"','stroke="var(--rd)"')}
               ${fmtHora(t.ts)}
             </span>
           </div>`).join("")}`:""}
     </div>`;
-
   filaFiltrada.forEach(t=>{
     const el=document.getElementById("op-"+t.id);
     if(el)initSwipe(el,()=>window.acao(t.id,"concluido"));
@@ -754,134 +997,327 @@ function cardOp(t,i){
   const tipoCor=t.tipo==="picking"?"#f59e0b":"#3b82f6";
   const tipoIcon=t.tipo==="picking"?I.package:I.layers;
   const tipoTxt=t.tipo==="picking"?"PICKING":"PALETE FECHADO";
-  const foiAtrib=t.atribId===opId; // foi atribuída especificamente para este operador
-
+  const foiAtrib=t.atribId===opId;
   if(isFirst){
     const addrCor=isPulado?"#8892b0":"var(--am)";
-    const borderCor=isPulado?"#8892b0":foiAtrib?"var(--pu)":"var(--am)";
     return `
-      <div class="cop-main" id="op-${t.id}" style="border-color:${borderCor}">
+      <div id="op-${t.id}" class="cop-main" style="${isPulado?"border-color:#8892b0;opacity:.7":""}">
         <div class="swipe-hint"></div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
-          ${isPulado?`<span class="chip" style="color:#8892b0;border-color:#8892b040;background:#8892b015">Retomando</span>`:""}
-          ${foiAtrib?`<span class="chip" style="color:#a78bfa;border-color:#8b5cf640;background:#8b5cf615">${I.user.replace('width="22" height="22"','width="11" height="11"')} Para você</span>`:""}
-        </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-          <div class="tipo-main" style="color:${tipoCor}">${tipoIcon.replace('width="16" height="16"','width="22" height="22"')}</div>
-          <span class="tempo-op" data-ts="${t.ts}" style="color:${corTempo(t.ts)};font-size:12px;font-weight:700;display:flex;align-items:center;gap:4px">${I.clock} ${tempoFila(t.ts)}</span>
-        </div>
+        <div class="tipo-main" style="color:${tipoCor}">${tipoIcon} ${tipoTxt}${foiAtrib?` <span style="font-size:11px;color:#a78bfa;background:#8b5cf615;border:1px solid #8b5cf640;border-radius:99px;padding:2px 8px;font-family:'DM Sans';font-weight:700;letter-spacing:0">Para você</span>`:""}</div>
         <div class="addr-main" style="color:${addrCor}">${t.endereco}</div>
         ${t.descricao?`<div class="desc-main">${t.descricao}</div>`:""}
-        ${t.codigo?`<div class="cod-main">Cód: ${t.codigo}</div>`:""}
+        ${t.codigo?`<div class="cod-main">${t.codigo}</div>`:""}
         <div class="op-btns">
-          ${t.status==="pendente"||t.status==="pulado"
-            ?`<button class="abtn abtn-blue" onclick="window.acao('${t.id}','andamento')">${I.receive} Recebi — Vou agora</button>`
-            :`<button class="abtn abtn-green" onclick="window.acao('${t.id}','concluido')">${I.checkCircle} Concluído</button>
-              <button class="abtn abtn-red" onclick="window.acao('${t.id}','vazio')">${I.alert} Vazio</button>`}
-          <button class="abtn abtn-gray" onclick="window.pular('${t.id}')" style="flex:.5">${I.skip}</button>
+          ${t.status==="andamento"&&t.opId===opId
+            ?`<button class="abtn abtn-green" onclick="window.acao('${t.id}','concluido')">${I.check} Concluído</button>
+               <button class="abtn abtn-red" onclick="window.acao('${t.id}','vazio')">${I.alert} Vazio</button>
+               <button class="abtn abtn-gray" onclick="window.pular('${t.id}')">${I.skip}</button>`
+            :`<button class="abtn abtn-blue" onclick="window.acao('${t.id}','andamento')">${I.receive} Pegar</button>
+               <button class="abtn abtn-gray" onclick="window.pular('${t.id}')">${I.skip} Pular</button>`}
         </div>
-        <div class="sdica2">${I.swipe} Arraste para a direita para concluir</div>
+        <div class="sdica2">${I.swipe} Deslize para concluir</div>
       </div>`;
   }
-
-  const cor=isPulado?"#8892b0":"#3b82f6";
   return `
-    <div class="cop-sec" id="op-${t.id}">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div>
-          ${foiAtrib?`<span class="chip" style="color:#a78bfa;border-color:#8b5cf640;background:#8b5cf615;margin-bottom:4px;display:inline-flex">${I.user.replace('width="22" height="22"','width="11" height="11"')} Para você</span><br>`:""}
-          <div style="font-family:'Bebas Neue';font-size:12px;letter-spacing:2px;color:${tipoCor};margin-bottom:2px;display:flex;align-items:center;gap:5px">${tipoIcon} ${tipoTxt}</div>
-          <div style="font-family:'Bebas Neue';font-size:28px;letter-spacing:3px;color:${cor};line-height:1">${t.endereco}</div>
-          ${t.descricao?`<div style="font-size:11px;color:var(--tx2-op);margin-top:3px">${t.descricao}</div>`:""}
-        </div>
-        <div style="margin-left:auto;text-align:right;flex-shrink:0">
-          ${isPulado?`<span class="chip" style="color:#8892b0;border-color:#8892b040;background:#8892b015;display:block;margin-bottom:4px">Pulado</span>`:""}
-          <span class="tempo-op" data-ts="${t.ts}" style="color:${corTempo(t.ts)};font-size:10px;font-weight:700;display:flex;align-items:center;gap:3px;justify-content:flex-end">${I.clock} ${tempoFila(t.ts)}</span>
-          <span style="font-size:10px;color:var(--mu-op)">${fmtHora(t.ts)}</span>
-        </div>
+    <div id="op-${t.id}" class="cop-sec">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;color:var(--mu-op)">${t.endereco}</span>
+        <span style="font-size:9px;font-weight:700;color:${tipoCor}">${t.tipo==="picking"?"PICK":"PAL"}</span>
+        <span class="tempo-op" data-ts="${t.ts}" style="margin-left:auto;font-size:10px;font-weight:700;color:${corTempo(t.ts)}">${tempoFila(t.ts)}</span>
       </div>
+      ${t.descricao?`<div style="font-size:11px;color:var(--mu-op);margin-top:3px">${t.descricao}</div>`:""}
+    </div>`;
+}
+
+// ── RENDER EXPEDIÇÃO ──────────────────────────────────────────────────────────
+function renderExpedicao(){
+  const fila=carregamentos.filter(c=>!["concluido","problema"].includes(c.status));
+  const hist=carregamentos.filter(c=>["concluido","problema"].includes(c.status));
+
+  // Agrupar por transportadora
+  const groups={};
+  fila.forEach(c=>{
+    const t=c.transportadora||"Sem transportadora";
+    if(!groups[t])groups[t]=[];
+    groups[t].push(c);
+  });
+
+  const statsHTML=fila.length>0?`
+    <div class="stat-row">
+      <div class="stat-card" style="background:var(--s1-exp);border-color:var(--bd-exp)"><div class="stat-num" style="color:var(--am)">${fila.filter(c=>c.status==="pendente").length}</div><div class="stat-lbl">Aguardando</div></div>
+      <div class="stat-card" style="background:var(--s1-exp);border-color:var(--bd-exp)"><div class="stat-num" style="color:var(--bl)">${fila.filter(c=>c.status==="encostado").length}</div><div class="stat-lbl">Encostados</div></div>
+      <div class="stat-card" style="background:var(--s1-exp);border-color:var(--bd-exp)"><div class="stat-num" style="color:var(--gr)">${fila.filter(c=>c.status==="liberado").length}</div><div class="stat-lbl">Liberados</div></div>
+      <div class="stat-card" style="background:var(--s1-exp);border-color:var(--bd-exp)"><div class="stat-num" style="color:var(--gr)">${hist.filter(c=>c.status==="concluido").length}</div><div class="stat-lbl">Concluídos</div></div>
+    </div>`:"";
+
+  const filaHTML=fila.length===0
+    ?`<div class="empty-exp"><div class="empty-icon-wrap-exp">${I.truck.replace('width="20" height="20"','width="28" height="28"').replace('stroke="currentColor"','stroke="var(--mu-exp)"')}</div><div class="empty-title" style="color:var(--tx2-exp)">Nenhum veículo</div><div class="empty-sub">Envie uma placa para iniciar.</div></div>`
+    :statsHTML+Object.entries(groups).map(([transp,cards])=>`
+      <div class="transp-grp">
+        ${I.flag.replace('stroke="currentColor"','stroke="#22c55e"')} ${transp}
+        <span class="transp-count">${cards.length}</span>
+      </div>
+      ${cards.map(cardExp).join("")}`).join("");
+
+  document.getElementById("app").innerHTML=`
+    <div class="topbar-exp">
+      <span class="tlogo-exp">EXPO</span>
+      <span class="trole expe">${I.clipboard} Expedição</span>
+      <span class="tsp"></span>
+      <span class="tlive"><span class="dot"></span>ao vivo</span>
+      <span class="tver">${APP_VERSION}</span>
+      <button class="tbtn-out" onclick="window.sair()">${I.logout} Sair</button>
+    </div>
+    ${manoOnlineBarHTML()}
+    <div class="main-exp">
+      <div class="formcard-exp">
+        <div class="ftitle-exp">${I.truck.replace('stroke="currentColor"','stroke="#22c55e"')} Novo Veículo</div>
+        <label class="lbl-exp">Placa</label>
+        <input id="fPlaca" class="inp-exp inp-exp-placa" placeholder="ABC-1234"
+          oninput="this.value=this.value.toUpperCase()"/>
+        <div style="display:flex;gap:8px;margin-top:0">
+          <div style="flex:1">
+            <label class="lbl-exp">Doca</label>
+            <input id="fDoca" class="inp-exp" placeholder="Ex: Doca 3"/>
+          </div>
+          <div style="flex:1">
+            <label class="lbl-exp">Transportadora</label>
+            <input id="fTransp" class="inp-exp" placeholder="Ex: JBS"/>
+          </div>
+        </div>
+        <label class="lbl-exp">${I.truck} Manobrista <small style="color:var(--mu-exp);font-size:9px;text-transform:none;letter-spacing:0">— opcional</small></label>
+        ${atribPillsExpHTML()}
+        <button class="btn-send-exp" onclick="window.enviarCarreg()">${I.send} ENVIAR AO MANOBRISTA</button>
+      </div>
+      ${mgmtHTML()}
+      ${filaHTML}
+      ${hist.length>0?`
+        <div class="secao-exp">HISTÓRICO (${hist.length})</div>
+        ${hist.map(c=>`
+          <div class="chist-exp" style="border-left-color:${c.status==="concluido"?"var(--gr)":"var(--rd)"}">
+            <span style="font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;color:${c.status==="concluido"?"var(--gr)":"var(--rd)"}">${c.placa}</span>
+            <span style="font-size:11px;color:var(--tx2-exp);margin-left:4px">Doca ${c.doca}</span>
+            <span style="margin-left:auto;display:flex;align-items:center;gap:5px;font-size:10px;color:var(--mu-exp)">
+              ${c.manobNome?`<span style="color:#6ee7b7">${c.manobNome}</span> ·`:""}
+              ${fmtHora(c.ts)}
+            </span>
+          </div>`).join("")}
+        <button class="btn-limpar-exp" onclick="window.limparCarreg()">${I.trash} Limpar histórico</button>`:""}
+    </div>`;
+}
+
+function cardExp(c){
+  const cor={pendente:"#f59e0b",encostado:"#3b82f6",liberado:"#22c55e",concluido:"#22c55e",problema:"#ef4444"}[c.status]||"#f59e0b";
+  const lbl={pendente:"Aguardando",encostado:"Encostado",liberado:"Liberado",concluido:"Concluído",problema:"Problema"}[c.status];
+  return `
+    <div class="cexp" style="border-left-color:${cor}">
+      <div class="crep-top">
+        <span class="cexp-placa" style="color:${cor}">${c.placa}</span>
+        <span class="chip" style="color:${cor};border-color:${cor}40;background:${cor}15">${lbl}</span>
+        ${c.status==="encostado"?`<button class="btn-liberar" onclick="window.liberarCarreg('${c.id}')">${I.flag} LIBERAR</button>`:""}
+        ${c.status==="pendente"?`<button class="btn-liberar" onclick="window.liberarCarreg('${c.id}')" style="background:var(--am)">${I.flag} LIBERAR</button>`:""}
+        <button class="btn-rem" onclick="window.removerCarreg('${c.id}')">${I.x}</button>
+      </div>
+      <div style="font-size:12px;color:var(--tx2-exp);margin:3px 0">Doca ${c.doca||"—"}</div>
+      <div class="cexp-meta">
+        ${c.manobNome?`<span class="man-tag">${I.truck.replace('width="20" height="20"','width="11" height="11"')} ${c.manobNome}</span>`:`<span style="font-size:9px;color:var(--mu-exp)">Qualquer manobrista</span>`}
+        <span style="color:var(--mu-exp);font-size:10px">${fmtHora(c.ts)}</span>
+        <span style="color:${corTempo(c.ts)};font-size:10px;font-weight:700;display:inline-flex;align-items:center;gap:3px">${I.clock} ${tempoFila(c.ts)}</span>
+      </div>
+    </div>`;
+}
+
+// ── RENDER MANOBRISTA ─────────────────────────────────────────────────────────
+function renderManobrista(){
+  const minhaFila=carregamentos.filter(c=>{
+    if(["concluido","problema"].includes(c.status))return false;
+    if(c.manobNome&&c.manobNome!==nomeManob)return false;
+    return true;
+  }).sort((a,b)=>a.ts-b.ts);
+
+  const hist=carregamentos.filter(c=>
+    ["concluido","problema"].includes(c.status)&&c.manobNomeAcao===nomeManob
+  );
+
+  const primeiro=minhaFila[0];
+  const resto=minhaFila.slice(1);
+
+  const emptyHTML=`<div class="empty-man">
+    <div class="empty-icon-wrap-man">${I.truck.replace('width="20" height="20"','width="28" height="28"').replace('stroke="currentColor"','stroke="var(--mu-man)"')}</div>
+    <div class="empty-title" style="color:var(--tx2-man)">Sem veículos</div>
+    <div class="empty-sub" style="color:var(--mu-man)">Aguardando a expedição enviar<br>uma placa para você.</div>
+  </div>`;
+
+  document.getElementById("app").innerHTML=`
+    <div class="topbar-man">
+      <span class="tlogo-man">EXPO</span>
+      <span class="trole manob">${I.truck} Manobrista</span>
+      <span class="man-nome-badge">${nomeManob}</span>
+      <span class="tsp"></span>
+      <span class="tlive"><span class="dot"></span>ao vivo</span>
+      <span class="tver">${APP_VERSION}</span>
+      <button class="tbtn-out" onclick="window.sair()">${I.logout} Sair</button>
+    </div>
+    <div class="main-man">
+      ${primeiro?cardManMain(primeiro):emptyHTML}
+      ${resto.map(cardManSec).join("")}
+      ${minhaFila.length>0&&primeiro?.status==="liberado"?`<div class="sdica-man">${I.swipe} Arraste para direita para <b>concluir</b></div>`:""}
+      ${hist.length>0?`
+        <div class="secao" style="color:var(--mu-man);border-color:var(--bd-man)">Concluídos hoje (${hist.length})</div>
+        ${hist.map(c=>`
+          <div class="chist-exp" style="border-left-color:${c.status==="concluido"?"var(--gr)":"var(--rd)"}">
+            <span style="font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;color:${c.status==="concluido"?"var(--gr)":"var(--rd)"}">${c.placa}</span>
+            <span style="font-size:11px;color:var(--tx2-exp);margin-left:6px">Doca ${c.doca||"—"}</span>
+            <span style="margin-left:auto;font-size:10px;color:var(--mu-man)">${fmtHora(c.ts)}</span>
+          </div>`).join("")}`:""}
+    </div>`;
+
+  if(primeiro&&primeiro.status==="liberado"){
+    const el=document.getElementById("man-"+primeiro.id);
+    if(el)initSwipe(el,()=>window.acaoCarreg(primeiro.id,"concluido"));
+  }
+}
+
+function cardManMain(c){
+  const isLib=c.status==="liberado";
+  const isEnc=c.status==="encostado";
+  const placaCor=isLib?"var(--gr)":isEnc?"var(--bl)":"var(--pu)";
+  const bordaCls=isLib?"liberado":isEnc?"encostado":"";
+  return `
+    <div id="man-${c.id}" class="cman-main ${bordaCls}">
+      ${isLib?`<div class="swipe-hint"></div>`:""}
+      <div style="font-family:'Bebas Neue';font-size:13px;letter-spacing:3px;color:${placaCor}">
+        ${isLib?"✓ LIBERADO — PODE PARTIR":isEnc?"AGUARDANDO CARREGAMENTO":"NOVO VEÍCULO"}
+      </div>
+      <div class="placa-main ${isLib?"liberado":isEnc?"encostado":""}">${c.placa}</div>
+      <div class="doca-main">Doca ${c.doca||"—"}</div>
+      <div class="transp-main">${c.transportadora||""}</div>
+      ${isLib?`
+        <div class="liberado-banner">
+          <div class="liberado-title">${I.flag.replace('stroke="currentColor"','stroke="#22c55e"')} LIBERADO!</div>
+          <div class="liberado-sub">A expedição autorizou a saída.</div>
+        </div>
+        <div class="op-btns">
+          <button class="abtn abtn-green" onclick="window.acaoCarreg('${c.id}','concluido')">
+            ${I.check} CONCLUÍDO
+          </button>
+        </div>
+      `:isEnc?`
+        <div class="aguardando-banner">
+          <div style="font-size:11px;color:#6b9cf6;">Aguardando autorização da expedição para partir...</div>
+        </div>
+        <div class="op-btns">
+          <button class="abtn abtn-red" onclick="window.acaoCarreg('${c.id}','problema')">
+            ${I.alert} PROBLEMA
+          </button>
+        </div>
+      `:`
+        <div class="op-btns">
+          <button class="abtn abtn-blue" onclick="window.acaoCarreg('${c.id}','encostado')">
+            ${I.check} ENCOSTEI
+          </button>
+          <button class="abtn abtn-red" onclick="window.acaoCarreg('${c.id}','problema')">
+            ${I.alert} PROBLEMA
+          </button>
+        </div>
+      `}
+    </div>`;
+}
+
+function cardManSec(c){
+  return `
+    <div class="cman-sec">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-family:'Bebas Neue';font-size:24px;letter-spacing:3px;color:var(--pu);opacity:.6">${c.placa}</span>
+        <span style="font-size:10px;color:var(--tx2-man)">Doca ${c.doca||"—"}</span>
+        <span class="tempo-op" data-ts="${c.ts}" style="margin-left:auto;font-size:10px;font-weight:700;color:${corTempo(c.ts)}">${tempoFila(c.ts)}</span>
+      </div>
+      ${c.transportadora?`<div style="font-size:10px;color:var(--mu-man);margin-top:2px">${c.transportadora}</div>`:""}
     </div>`;
 }
 
 // ── RENDER ────────────────────────────────────────────────────────────────────
 function render(){
   applyFont();
-  if(!perfil)                       renderLogin();
-  else if(perfil==="repositor")     renderRepositor();
-  else if(!nomeOperador)            renderNomeOperador();
-  else                              renderOperador();
+  if(!perfil)                                        renderLogin();
+  else if(perfil==="repositor")                      renderRepositor();
+  else if(perfil==="operador"&&!nomeOperador)        renderNomeOperador();
+  else if(perfil==="operador")                       renderOperador();
+  else if(perfil==="expedicao")                      renderExpedicao();
+  else if(perfil==="manobrista"&&!nomeManob)         renderNomeManob();
+  else if(perfil==="manobrista")                     renderManobrista();
 }
 
-// ── PRESENÇA DO OPERADOR ──────────────────────────────────────────────────────
+// ── PRESENÇA (picking) ────────────────────────────────────────────────────────
 function registrarOperador(){
   if(!opId||!nomeOperador)return;
   const opRef=ref(db,`operadores/${opId}`);
   set(opRef,{nome:nomeOperador,ts:Date.now()});
-  // Remove do Firebase quando sair
   window._opRef=opRef;
 }
+function removerOperador(){if(window._opRef)remove(window._opRef).catch(()=>{});}
 
-function removerOperador(){
-  if(window._opRef)remove(window._opRef).catch(()=>{});
+// ── PRESENÇA (manobrista) ─────────────────────────────────────────────────────
+function registrarManobrista(){
+  if(!manobId||!nomeManob)return;
+  const mRef=ref(db,`manobristas/${manobId}`);
+  set(mRef,{nome:nomeManob,ts:Date.now()});
+  window._manRef=mRef;
 }
+function removerManobrista(){if(window._manRef)remove(window._manRef).catch(()=>{});}
 
-// ── AÇÕES ─────────────────────────────────────────────────────────────────────
+// ── AÇÕES GERAIS ──────────────────────────────────────────────────────────────
 window.escolher=p=>{
-  perfil=p; showFont=false; prevIds=null; filtroRua="todas";
+  perfil=p;showFont=false;prevIds=null;filtroRua="todas";prevCarrIds=null;prevLibIds=[];
   if(p==="repositor"){nomeOperador=null;opId=null;}
+  if(p==="expedicao"){atribManob="qualquer";mgmtOpen=false;}
   render();
 };
 
 window.confirmarNome=()=>{
   const nome=document.getElementById("inputNome")?.value.trim();
   if(!nome)return;
-  nomeOperador=nome;
-  opId=uid();
-  registrarOperador();
-  render();
+  nomeOperador=nome;opId=uid();
+  registrarOperador();render();
+};
+
+window.confirmarNomeManob=()=>{
+  const nome=document.getElementById("inputNomeManob")?.value.trim();
+  if(!nome)return;
+  nomeManob=nome;manobId=uid();
+  registrarManobrista();render();
+};
+
+window.selecionarNomeManob=nome=>{
+  const inp=document.getElementById("inputNomeManob");
+  if(inp){inp.value=nome;document.getElementById("btnEntrarManob").disabled=false;}
 };
 
 window.sair=()=>{
   clearInterval(window._timerOp);
   if(perfil==="operador")removerOperador();
-  perfil=null;nomeOperador=null;opId=null;showFont=false;
+  if(perfil==="manobrista")removerManobrista();
+  perfil=null;nomeOperador=null;opId=null;nomeManob=null;manobId=null;showFont=false;
   render();
 };
 
+// ── AÇÕES PICKING ─────────────────────────────────────────────────────────────
 window.setFiltroRua=r=>{filtroRua=r;render();};
 window.toggleFont=()=>{showFont=!showFont;render();};
 window.setAtrib=v=>{atribPara=v;};
 
 window.setCamara=c=>{
   camaraAtual=c;
-  // Atualiza visual dos botões sem re-render completo
   document.querySelectorAll(".camara-btn").forEach(btn=>{
-    const k=btn.dataset.cam||btn.querySelector(".camara-letra")?.textContent?.trim();
-    const cam=CAMARAS[k];
-    if(!cam)return;
-    if(k===c){
-      btn.classList.add("ativa");
-      btn.style.background=cam.cor;btn.style.borderColor=cam.cor;
-      btn.querySelector(".camara-letra").style.color="#000";
-      btn.querySelector(".camara-nome").style.color="#000";
-    } else {
-      btn.classList.remove("ativa");
-      btn.style.background="";btn.style.borderColor=cam.bd;
-      btn.querySelector(".camara-letra").style.color=cam.cor;
-      btn.querySelector(".camara-nome").style.color="";
-    }
+    const k=btn.querySelector(".camara-letra")?.textContent?.trim();
+    const cam=CAMARAS[k];if(!cam)return;
+    if(k===c){btn.classList.add("ativa");btn.style.background=cam.cor;btn.style.borderColor=cam.cor;btn.querySelector(".camara-letra").style.color="#000";btn.querySelector(".camara-nome").style.color="#000";}
+    else{btn.classList.remove("ativa");btn.style.background="";btn.style.borderColor=cam.bd;btn.querySelector(".camara-letra").style.color=cam.cor;btn.querySelector(".camara-nome").style.color="";}
   });
-  // Atualiza placeholder e label
   const fEnd=document.getElementById("fEnd");
-  if(fEnd){
-    fEnd.placeholder=CAMARAS[c]?.especial?"1-2":"4-56-2";
-    fEnd.value="";
-  }
-  const lbl=document.querySelector("label[for='fEnd'], .lbl-end");
-  // Limpa preview
+  if(fEnd){fEnd.placeholder=CAMARAS[c]?.especial?"1-2":"4-56-2";fEnd.value="";}
   const elP=document.getElementById("prevEnd"),elA=document.getElementById("avisoEnd");
-  if(elP)elP.className="prev-end hidden";
-  if(elA)elA.className="aviso-dup hidden";
+  if(elP)elP.className="prev-end hidden";if(elA)elA.className="aviso-dup hidden";
   window._endForcar=null;
 };
 
@@ -895,55 +1331,29 @@ window.setFont=preset=>{
 window.setTipo=t=>{
   tipoAtual=t;
   document.getElementById("tPick")?.classList.toggle("active",t==="picking");
-  document.getElementById("tPal") ?.classList.toggle("active",t==="palete");
+  document.getElementById("tPal")?.classList.toggle("active",t==="palete");
 };
 
 window.onEnd=v=>{
   const elP=document.getElementById("prevEnd"),elA=document.getElementById("avisoEnd");
   if(!elP)return;
-  if(!v.trim()){
-    elP.className="prev-end hidden";
-    if(elA)elA.className="aviso-dup hidden";
-    return;
-  }
-  const r=parseEnd(v, camaraAtual);
+  if(!v.trim()){elP.className="prev-end hidden";if(elA)elA.className="aviso-dup hidden";return;}
+  const r=parseEnd(v,camaraAtual);
   const cam=CAMARAS[camaraAtual]||CAMARAS.B;
   if(r.valido){
-    // Nível 10 ou câmara F = chão = bloqueia
     if(r.isPicking){
       elP.className="prev-end err";
-      elP.innerHTML=`
-        <span style="color:var(--am)">${I.alert}</span>
-        <div>
-          <div class="pfull" style="color:var(--am)">${r.completo}</div>
-          <div class="pdet" style="color:var(--am);font-weight:700;margin-top:4px">
-            ${cam.especial?"Câmara F — nível de chão":"Nível 10 — picking de chão"}
-          </div>
-          <div class="pdet" style="margin-top:3px">
-            Este endereço já está acessível no chão.<br>
-            O operador de empilhadeira não é necessário.
-          </div>
-        </div>`;
-      if(elA)elA.className="aviso-dup hidden";
-      window._endForcar=null;
-      return;
+      elP.innerHTML=`<span style="color:var(--am)">${I.alert}</span><div><div class="pfull" style="color:var(--am)">${r.completo}</div><div class="pdet" style="color:var(--am);font-weight:700;margin-top:4px">${cam.especial?"Câmara F — nível de chão":"Nível 10 — picking de chão"}</div><div class="pdet" style="margin-top:3px">Este endereço já está acessível no chão.<br>O operador de empilhadeira não é necessário.</div></div>`;
+      if(elA)elA.className="aviso-dup hidden";window._endForcar=null;return;
     }
     elP.className="prev-end ok";
-    elP.innerHTML=`
-      <span style="color:var(--gr)">${I.check}</span>
-      <div>
-        <div class="pfull" style="color:${cam.cor}">${r.completo}</div>
-        ${r.label?`<div class="pdet" style="margin-top:3px">${r.label}</div>`:""}
-      </div>`;
+    elP.innerHTML=`<span style="color:var(--gr)">${I.check}</span><div><div class="pfull" style="color:${cam.cor}">${r.completo}</div>${r.label?`<div class="pdet" style="margin-top:3px">${r.label}</div>`:""}</div>`;
     const dup=tarefas.find(t=>t.endereco===r.completo&&["pendente","andamento","pulado"].includes(t.status));
     if(elA){
-      if(dup){
-        elA.className="aviso-dup";
-        elA.innerHTML=`${I.alert} Endereço já na fila como <b>${{pendente:"Pendente",andamento:"Em andamento",pulado:"Pulado"}[dup.status]}</b>. <button class="btndup" onclick="window.enviarForcar()">Enviar mesmo assim</button>`;
-        window._endForcar=r.completo;
-      } else {elA.className="aviso-dup hidden";window._endForcar=null;}
+      if(dup){elA.className="aviso-dup";elA.innerHTML=`${I.alert} Endereço já na fila como <b>${{pendente:"Pendente",andamento:"Em andamento",pulado:"Pulado"}[dup.status]}</b>. <button class="btndup" onclick="window.enviarForcar()">Enviar mesmo assim</button>`;window._endForcar=r.completo;}
+      else{elA.className="aviso-dup hidden";window._endForcar=null;}
     }
-  } else {
+  }else{
     elP.className="prev-end err";
     elP.innerHTML=`<span style="color:var(--rd)">${I.x}</span><span style="font-size:11px;color:var(--rd)">${r.erro}</span>`;
     if(elA)elA.className="aviso-dup hidden";
@@ -951,22 +1361,17 @@ window.onEnd=v=>{
 };
 
 async function doPush(endCompleto){
-  const cod =(document.getElementById("fCod")?.value||"").trim();
+  const cod=(document.getElementById("fCod")?.value||"").trim();
   const desc=(document.getElementById("fDesc")?.value||"").trim();
-  const sel =document.getElementById("atribSelect");
+  const sel=document.getElementById("atribSelect");
   const atrib=sel?sel.value:"qualquer";
   const atribNome=atrib!=="qualquer"?(operadores[atrib]?.nome||null):null;
   window._fs=null;window._endForcar=null;
-  await push(tasksRef,{
-    endereco:endCompleto,codigo:cod,descricao:desc,tipo:tipoAtual,
-    status:"pendente",ts:Date.now(),
-    atribId:atrib!=="qualquer"?atrib:null,
-    atribNome,
-  });
+  await push(tasksRef,{endereco:endCompleto,codigo:cod,descricao:desc,tipo:tipoAtual,status:"pendente",ts:Date.now(),atribId:atrib!=="qualquer"?atrib:null,atribNome});
 }
 
 window.enviar=async()=>{
-  const r=parseEnd(document.getElementById("fEnd")?.value||"", camaraAtual);
+  const r=parseEnd(document.getElementById("fEnd")?.value||"",camaraAtual);
   if(!r.valido){alert(r.erro||"Endereço inválido");return;}
   if(r.isPicking){alert("Endereço de chão — o operador não é necessário.");return;}
   const elA=document.getElementById("avisoEnd");
@@ -987,56 +1392,113 @@ window.remover=async id=>{if(!confirm("Remover esta tarefa?"))return;try{await r
 window.fecharAlerta=async id=>{try{await update(ref(db,`tarefas/${id}`),{alertaVisto:true});}catch{}document.getElementById("al-"+id)?.remove();};
 window.limparTudo=async()=>{if(!confirm("Limpar todas as tarefas?"))return;try{await remove(tasksRef);}catch(e){alert("Erro: "+e.message);}};
 
+// ── AÇÕES EXPEDIÇÃO ───────────────────────────────────────────────────────────
+window.setAtribManob=nome=>{
+  atribManob=nome;
+  document.querySelectorAll(".atrib-pill-exp").forEach(el=>{
+    const txt=el.textContent.trim().replace(/\s+/g," ");
+    el.classList.toggle("ativo",nome==="qualquer"?txt.includes("Qualquer"):txt.includes(nome));
+  });
+};
+
+window.toggleMgmt=()=>{
+  mgmtOpen=!mgmtOpen;
+  const body=document.querySelector(".mgmt-body");
+  const tog=document.querySelector(".mgmt-toggle");
+  if(body)body.classList.toggle("open",mgmtOpen);
+  if(tog)tog.classList.toggle("open",mgmtOpen);
+};
+
+window.adicionarManob=async()=>{
+  const nome=document.getElementById("inputNovoManob")?.value.trim();
+  if(!nome)return;
+  const jaExiste=Object.values(nomesManobristas).some(n=>n.toLowerCase()===nome.toLowerCase());
+  if(jaExiste){alert("Este nome já está cadastrado.");return;}
+  try{
+    await push(nomesManobRef,nome);
+    const inp=document.getElementById("inputNovoManob");
+    if(inp){inp.value="";document.getElementById("btnAddManob").disabled=true;}
+  }catch(e){alert("Erro: "+e.message);}
+};
+
+window.removerManobNome=async id=>{
+  if(!confirm("Remover este manobrista da lista?"))return;
+  try{await remove(ref(db,`nomesManobristas/${id}`));}catch(e){alert("Erro: "+e.message);}
+};
+
+window.enviarCarreg=async()=>{
+  const placa=(document.getElementById("fPlaca")?.value||"").trim().toUpperCase();
+  const doca=(document.getElementById("fDoca")?.value||"").trim();
+  const transp=(document.getElementById("fTransp")?.value||"").trim();
+  if(!placa){alert("Informe a placa do veículo.");return;}
+  if(!doca){alert("Informe a doca.");return;}
+  try{
+    await push(carregRef,{
+      placa,doca,transportadora:transp||"Sem transportadora",
+      status:"pendente",ts:Date.now(),
+      manobNome:atribManob!=="qualquer"?atribManob:null,
+    });
+    document.getElementById("fPlaca").value="";
+    document.getElementById("fDoca").value="";
+    document.getElementById("fTransp").value="";
+    atribManob="qualquer";
+    document.querySelectorAll(".atrib-pill-exp").forEach((el,i)=>el.classList.toggle("ativo",i===0));
+  }catch(e){alert("Erro: "+e.message);}
+};
+
+window.liberarCarreg=async id=>{
+  try{await update(ref(db,`carregamentos/${id}`),{status:"liberado"});}catch(e){alert("Erro: "+e.message);}
+};
+
+window.removerCarreg=async id=>{
+  if(!confirm("Remover este veículo?"))return;
+  try{await remove(ref(db,`carregamentos/${id}`));}catch(e){alert("Erro: "+e.message);}
+};
+
+window.limparCarreg=async()=>{
+  if(!confirm("Limpar histórico de carregamentos?"))return;
+  const conc=carregamentos.filter(c=>["concluido","problema"].includes(c.status));
+  try{await Promise.all(conc.map(c=>remove(ref(db,`carregamentos/${c.id}`))));}catch(e){alert("Erro: "+e.message);}
+};
+
+// ── AÇÕES MANOBRISTA ──────────────────────────────────────────────────────────
+window.acaoCarreg=async(id,status)=>{
+  try{
+    const updates={status};
+    if(status==="encostado"||status==="concluido"||status==="problema"){
+      updates.manobNomeAcao=nomeManob;
+    }
+    await update(ref(db,`carregamentos/${id}`),updates);
+  }catch(e){alert("Erro: "+e.message);}
+};
+
 // ── MODAL REPASSAR ────────────────────────────────────────────────────────────
 window.abrirRepassar=taskId=>{
   const task=tarefas.find(t=>t.id===taskId);
   if(!task)return;
-
-  // Operadores disponíveis exceto o atual dono
   const disponiveis=Object.entries(operadores).filter(([id])=>id!==task.atribId);
-  if(disponiveis.length===0){
-    alert("Não há outros operadores online para repassar.");
-    return;
-  }
-
-  // Contar tarefas de cada operador para mostrar carga
-  const carga=id=>tarefas.filter(t=>
-    ["pendente","andamento","pulado"].includes(t.status)&&(t.atribId===id||(!t.atribId&&id==="livre"))
-  ).length;
-
+  if(disponiveis.length===0){alert("Não há outros operadores online para repassar.");return;}
+  const carga=id=>tarefas.filter(t=>["pendente","andamento","pulado"].includes(t.status)&&(t.atribId===id||(!t.atribId&&id==="livre"))).length;
   const overlay=document.createElement("div");
-  overlay.className="modal-overlay";
-  overlay.id="modalRepassar";
+  overlay.className="modal-overlay";overlay.id="modalRepassar";
   overlay.innerHTML=`
     <div class="modal">
       <div class="modal-title">${I.transfer} Repassar Tarefa</div>
-      <div class="modal-sub">
-        <b style="color:var(--am)">${task.endereco}</b><br>
-        ${task.descricao||"Sem descrição"} · ${task.tipo==="picking"?"Picking":"Palete"}
-      </div>
+      <div class="modal-sub"><b style="color:var(--am)">${task.endereco}</b><br>${task.descricao||"Sem descrição"} · ${task.tipo==="picking"?"Picking":"Palete"}</div>
       <div class="modal-ops">
         ${disponiveis.map(([id,op])=>{
           const n=carga(id);
           return `<button class="modal-op-btn" onclick="window.confirmarRepassar('${taskId}','${id}','${op.nome}')">
-            <div style="width:36px;height:36px;border-radius:10px;background:#3b82f622;border:1px solid #3b82f644;
-              display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <div style="width:36px;height:36px;border-radius:10px;background:#3b82f622;border:1px solid #3b82f644;display:flex;align-items:center;justify-content:center;flex-shrink:0">
               ${I.forklift.replace('width="20" height="20"','width="18" height="18"').replace('stroke="currentColor"','stroke="#3b82f6"')}
             </div>
-            <div>
-              <div class="modal-op-nome">${op.nome}</div>
-              <div class="modal-op-info">${n===0?"Fila livre":n===1?"1 tarefa na fila":`${n} tarefas na fila`}</div>
-            </div>
+            <div><div class="modal-op-nome">${op.nome}</div><div class="modal-op-info">${n===0?"Fila livre":n===1?"1 tarefa na fila":`${n} tarefas na fila`}</div></div>
             <div style="margin-left:auto;color:${n===0?"var(--gr)":n<=2?"var(--am)":"var(--rd)"};font-family:'Bebas Neue';font-size:22px">${n}</div>
           </button>`;
         }).join("")}
         ${task.atribId?`<button class="modal-op-btn" onclick="window.confirmarRepassar('${taskId}','qualquer','')">
-          <div style="width:36px;height:36px;border-radius:10px;background:#4b588220;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            ${I.users.replace('stroke="currentColor"','stroke="#8892b0"')}
-          </div>
-          <div>
-            <div class="modal-op-nome" style="color:var(--tx2)">Qualquer operador</div>
-            <div class="modal-op-info">Remover atribuição específica</div>
-          </div>
+          <div style="width:36px;height:36px;border-radius:10px;background:#4b588220;display:flex;align-items:center;justify-content:center;flex-shrink:0">${I.users.replace('stroke="currentColor"','stroke="#8892b0"')}</div>
+          <div><div class="modal-op-nome" style="color:var(--tx2)">Qualquer operador</div><div class="modal-op-info">Remover atribuição específica</div></div>
         </button>`:""}
       </div>
       <button class="modal-cancel" onclick="window.fecharModal()">Cancelar</button>
@@ -1045,57 +1507,89 @@ window.abrirRepassar=taskId=>{
   overlay.addEventListener("click",e=>{if(e.target===overlay)window.fecharModal();});
 };
 
-window.fecharModal=()=>{
-  document.getElementById("modalRepassar")?.remove();
-};
+window.fecharModal=()=>{document.getElementById("modalRepassar")?.remove();};
 
 window.confirmarRepassar=async(taskId,novoOpId,novoOpNome)=>{
   window.fecharModal();
   try{
-    const updates=novoOpId==="qualquer"
-      ?{atribId:null,atribNome:null}
-      :{atribId:novoOpId,atribNome:novoOpNome};
+    const updates=novoOpId==="qualquer"?{atribId:null,atribNome:null}:{atribId:novoOpId,atribNome:novoOpNome};
     await update(ref(db,`tarefas/${taskId}`),updates);
   }catch(e){alert("Erro ao repassar: "+e.message);}
 };
+
+// ── FIREBASE LISTENERS ────────────────────────────────────────────────────────
 onValue(tasksRef,snap=>{
   if(perfil==="repositor"){
     window._fs={
       end:document.getElementById("fEnd")?.value,
       cod:document.getElementById("fCod")?.value,
       desc:document.getElementById("fDesc")?.value,
-      tipo:tipoAtual,
-      camara:camaraAtual,
+      tipo:tipoAtual,camara:camaraAtual,
     };
   }
   const data=snap.val()||{};
   const novo=Object.entries(data).map(([id,v])=>({id,...v})).sort((a,b)=>a.ts-b.ts);
-
-  // Som para operador — só toca se a tarefa for para ele ou para qualquer um
   if(perfil==="operador"&&nomeOperador&&prevIds!==null){
-    const minhasNovas=novo.filter(t=>
-      t.status==="pendente"&&
-      (!t.atribId||t.atribId===opId)&&
-      !prevIds.includes(t.id)
-    );
+    const minhasNovas=novo.filter(t=>t.status==="pendente"&&(!t.atribId||t.atribId===opId)&&!prevIds.includes(t.id));
     if(minhasNovas.length>0)beep();
   }
   if(perfil==="operador"&&nomeOperador){
     prevIds=novo.filter(t=>t.status==="pendente"&&(!t.atribId||t.atribId===opId)).map(t=>t.id);
   }
-
   tarefas=novo;
-  render();
+  if(["repositor","operador"].includes(perfil)||(perfil==="operador"&&!nomeOperador))render();
 });
 
-// Listener de operadores online
 onValue(operadoresRef,snap=>{
   operadores=snap.val()||{};
   if(perfil==="repositor")render();
 });
 
-// Limpar presença ao fechar a aba
-window.addEventListener("beforeunload",()=>{if(perfil==="operador")removerOperador();});
+onValue(carregRef,snap=>{
+  const data=snap.val()||{};
+  const novo=Object.entries(data).map(([id,v])=>({id,...v})).sort((a,b)=>a.ts-b.ts);
+
+  // Som para manobrista — nova placa atribuída
+  if(perfil==="manobrista"&&nomeManob&&prevCarrIds!==null){
+    const novas=novo.filter(c=>
+      c.status==="pendente"&&
+      (!c.manobNome||c.manobNome===nomeManob)&&
+      !prevCarrIds.includes(c.id)
+    );
+    if(novas.length>0)beep();
+
+    // Som de liberação
+    const liberadas=novo.filter(c=>
+      c.status==="liberado"&&
+      (c.manobNome===nomeManob||!c.manobNome)&&
+      !prevLibIds.includes(c.id)
+    );
+    if(liberadas.length>0)beepLib();
+  }
+
+  if(perfil==="manobrista"&&nomeManob){
+    prevCarrIds=novo.filter(c=>c.status==="pendente"&&(!c.manobNome||c.manobNome===nomeManob)).map(c=>c.id);
+    prevLibIds=novo.filter(c=>c.status==="liberado").map(c=>c.id);
+  }
+
+  carregamentos=novo;
+  if(perfil==="expedicao"||perfil==="manobrista")render();
+});
+
+onValue(manoOnlineRef,snap=>{
+  manobristas=snap.val()||{};
+  if(perfil==="expedicao")render();
+});
+
+onValue(nomesManobRef,snap=>{
+  nomesManobristas=snap.val()||{};
+  if(perfil==="expedicao"||(!nomeManob&&perfil==="manobrista"))render();
+});
+
+window.addEventListener("beforeunload",()=>{
+  if(perfil==="operador")removerOperador();
+  if(perfil==="manobrista")removerManobrista();
+});
 
 render();
 if("serviceWorker"in navigator){navigator.serviceWorker.register("sw.js").catch(()=>{});}
