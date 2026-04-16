@@ -169,19 +169,39 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .stat-num{font-family:'Bebas Neue';font-size:28px;letter-spacing:1px;line-height:1;margin-bottom:3px}
 .stat-lbl{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu)}
 
-/* CÂMARA SELECTOR */
-.camara-sel{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
-.camara-btn{padding:8px 14px;border-radius:10px;border:1px solid var(--bd);background:var(--s2);
-  color:var(--tx2);font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans';
-  transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:52px}
-.camara-btn:hover{transform:translateY(-1px)}
-.camara-btn.ativa{color:#000;border-color:transparent}
-.camara-letra{font-family:'Bebas Neue';font-size:22px;letter-spacing:1px;line-height:1}
-.camara-nome{font-size:9px;letter-spacing:.5px;opacity:.85}
-.atrib-select{width:100%;background:var(--s2);border:1px solid var(--bd);color:var(--tx);
-  font-size:13px;font-weight:600;padding:10px 13px;border-radius:10px;outline:none;
-  font-family:'DM Sans';transition:border-color .15s;margin-top:4px;cursor:pointer}
-.atrib-select:focus{border-color:var(--am)}
+/* CÂMARA TABS (repositor — scroll horizontal) */
+.cam-tab-bar{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;flex-shrink:0;
+  background:var(--s1);border-bottom:1px solid var(--bd);position:sticky;top:52px;z-index:40}
+.cam-tab-bar::-webkit-scrollbar{display:none}
+.cam-tab{flex:0 0 auto;padding:10px 16px;font-size:11px;font-weight:700;letter-spacing:.5px;
+  color:var(--tx2);cursor:pointer;border:none;background:transparent;font-family:'DM Sans';
+  border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap;
+  display:flex;align-items:center;gap:5px}
+.cam-tab:hover{color:var(--tx)}
+.cam-tab.ativa{border-bottom-color:currentColor}
+.cam-tab-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* STATS INLINE NO TOPBAR */
+.tstat{display:flex;align-items:center;gap:3px;background:var(--s2);border:1px solid var(--bd);
+  border-radius:99px;padding:3px 9px;cursor:default}
+.tstat-n{font-family:'Bebas Neue';font-size:15px;letter-spacing:.5px;line-height:1}
+.tstat-l{font-size:9px;font-weight:700;color:var(--mu);letter-spacing:.5px}
+
+/* ATRIB PILLS (repositor) */
+.atrib-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.atrib-pill{padding:7px 14px;border-radius:99px;border:1px solid var(--bd);background:var(--s2);
+  color:var(--tx2);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;
+  font-family:'DM Sans';transition:all .15s;display:flex;align-items:center;gap:5px;border:none;outline:none}
+.atrib-pill:hover{border:1px solid var(--am);color:var(--am)}
+.atrib-pill.ativo{background:var(--am);color:#000}
+.atrib-pill.ativo svg{stroke:#000}
+
+/* CÂMARA SELECTOR (legado — mantido para setCamara) */
+.camara-sel{display:none}
+.camara-btn{display:none}
+.camara-letra{display:none}
+.camara-nome{display:none}
+.atrib-select{display:none}
 
 /* MAIN */
 .main{flex:1;overflow-y:auto;padding:16px;background:var(--bg)}
@@ -813,34 +833,58 @@ function renderNomeManob(){
 }
 
 // ── RENDER REPOSITOR ──────────────────────────────────────────────────────────
+function atribPillsHTML(){
+  const lista=Object.entries(operadores);
+  const qualquerAtivo=atribPara==="qualquer";
+  return `<div class="atrib-pills">
+    <button class="atrib-pill${qualquerAtivo?" ativo":""}" onclick="window.setAtrib('qualquer')">
+      ${I.users} Qualquer
+    </button>
+    ${lista.map(([id,op])=>`
+      <button class="atrib-pill${atribPara===id?" ativo":""}" onclick="window.setAtrib('${id}')">
+        <span class="online-dot" style="width:6px;height:6px;animation:none;flex-shrink:0"></span>${op.nome}
+      </button>`).join("")}
+    ${lista.length===0?`<span style="font-size:10px;color:var(--mu);align-self:center">Nenhum operador online</span>`:""}
+  </div>`;
+}
+
+function camTabsHTML(){
+  return `<div class="cam-tab-bar" id="camTabBar">
+    ${Object.entries(CAMARAS).map(([k,c])=>`
+      <button class="cam-tab${camaraAtual===k?" ativa":""}"
+        style="${camaraAtual===k?`color:${c.cor}`:`color:var(--tx2)`}"
+        onclick="window.setCamara('${k}')">
+        <span class="cam-tab-dot" style="background:${c.cor}"></span>${k} — ${c.nome}
+      </button>`).join("")}
+  </div>`;
+}
+
 function renderRepositor(){
   const fila=tarefas.filter(t=>["pendente","andamento","pulado"].includes(t.status));
   const hist=tarefas.filter(t=>["concluido","vazio"].includes(t.status));
   const alts=tarefas.filter(t=>t.status==="vazio"&&!t.alertaVisto);
-  const statsHTML=fila.length>0?`
-    <div class="stat-row">
-      <div class="stat-card"><div class="stat-num" style="color:var(--am)">${fila.length}</div><div class="stat-lbl">Na fila</div></div>
-      <div class="stat-card"><div class="stat-num" style="color:var(--bl)">${fila.filter(t=>t.tipo==="palete").length}</div><div class="stat-lbl">Paletes</div></div>
-      <div class="stat-card"><div class="stat-num" style="color:var(--am)">${fila.filter(t=>t.tipo==="picking").length}</div><div class="stat-lbl">Pickings</div></div>
-      <div class="stat-card"><div class="stat-num" style="color:var(--gr)">${hist.filter(t=>t.status==="concluido").length}</div><div class="stat-lbl">Feitos hoje</div></div>
-    </div>`:"";
+  const nFila=fila.length, nFeito=hist.filter(t=>t.status==="concluido").length;
+  const cam=CAMARAS[camaraAtual];
+
   document.getElementById("app").innerHTML=`
     <div class="topbar">
       <span class="tlogo">REPO</span>
       <span class="trole rep">${I.clipboard} Repositor</span>
       <span class="tsp"></span>
-      <span class="tlive"><span class="dot"></span>ao vivo</span>
+      ${nFila>0?`<div class="tstat"><span class="tstat-n" style="color:var(--am)">${nFila}</span><span class="tstat-l">fila</span></div>`:""}
+      ${nFeito>0?`<div class="tstat"><span class="tstat-n" style="color:var(--gr)">${nFeito}</span><span class="tstat-l">feitos</span></div>`:""}
+      <span class="tlive"><span class="dot"></span></span>
       <span class="tver">${APP_VERSION}</span>
       <button class="tbtn-icon" onclick="window.toggleFont()">${I.settings}</button>
       <button class="tbtn-out" onclick="window.sair()">${I.logout} Sair</button>
     </div>
     ${fontPanelHTML(false)}
-    ${onlineBarHTML()}
+    ${camTabsHTML()}
     ${alts.map(t=>`
       <div class="alerta" id="al-${t.id}">
         <span class="adot"></span>
         <div style="flex:1"><b>Endereço vazio reportado</b><br>
-          <span>${t.endereco}${t.descricao?" — "+t.descricao:""}${t.opNome?` · por ${t.opNome}`:""}</span><br>
+          <span>${t.endereco}${t.opNome?` · por ${t.opNome}`:""}</span><br>
           <small>Consulte o Basic e envie novo endereço.</small>
         </div>
         <button class="alerta-close" onclick="window.fecharAlerta('${t.id}')">${I.x}</button>
@@ -848,71 +892,72 @@ function renderRepositor(){
     <div class="main">
       <div class="formcard">
         <div class="ftitle">${I.package.replace('width="16" height="16"','width="18" height="18"')} Nova Reposição</div>
-        <label class="lbl">Câmara</label>
-        <div class="camara-sel" id="camaraSel">
-          ${Object.entries(CAMARAS).map(([k,c])=>`
-            <button class="camara-btn${camaraAtual===k?" ativa":""}"
-              style="${camaraAtual===k?`background:${c.cor};border-color:${c.cor}`:`border-color:${c.bd}`}"
-              onclick="window.setCamara('${k}')">
-              <span class="camara-letra" style="${camaraAtual===k?"color:#000":`color:${c.cor}`}">${k}</span>
-              <span class="camara-nome" style="${camaraAtual===k?"color:#000":""}">${c.nome}</span>
-            </button>`).join("")}
-        </div>
-        <label class="lbl" style="margin-top:14px">
+        <label class="lbl">
           Endereço
-          <small>— ${CAMARAS[camaraAtual]?.especial ? 'ex: 1-2 (rua-posição)' : 'ex: 4-56-2 (rua-posição-nível)'}</small>
+          <small>— ${cam?.especial ? 'ex: 1-2 (rua-posição)' : 'ex: 4-56-2 (rua-posição-nível)'}</small>
         </label>
-        <input id="fEnd" class="inp" placeholder="${CAMARAS[camaraAtual]?.especial ? '1-2' : '4-56-2'}" oninput="window.onEnd(this.value)"/>
+        <input id="fEnd" class="inp" placeholder="${cam?.especial ? '1-2' : '4-56-2'}" oninput="window.onEnd(this.value)"
+          style="font-size:18px;font-weight:800;letter-spacing:2px"/>
         <div id="prevEnd" class="prev-end hidden"></div>
         <div id="avisoEnd" class="aviso-dup hidden"></div>
-        <label class="lbl">Código <small>opcional</small></label>
-        <input id="fCod" class="inp" placeholder="Código do produto"/>
-        <label class="lbl">Descrição <small>opcional</small></label>
-        <input id="fDesc" class="inp" placeholder="Nome do produto"/>
-        <label class="lbl">Tipo</label>
+        <label class="lbl" style="margin-top:14px">Tipo</label>
         <div class="toggle">
           <button class="tbtn active" id="tPick" onclick="window.setTipo('picking')">${I.package} Picking</button>
           <button class="tbtn" id="tPal" onclick="window.setTipo('palete')">${I.layers} Palete Fechado</button>
         </div>
-        <label class="lbl">${I.users} Atribuir para <small>— opcional</small></label>
-        ${atribSelectHTML()}
+        <label class="lbl" style="margin-top:14px">${I.users} Atribuir para</label>
+        ${atribPillsHTML()}
         <button class="btn-send" onclick="window.enviar()">${I.send} ENVIAR AO OPERADOR</button>
       </div>
-      ${statsHTML}
       ${fila.length>0?`<div class="secao">FILA (${fila.length})</div>${fila.map(cardRep).join("")}`:""}
       ${hist.length>0?`
         <div class="secao">HISTÓRICO HOJE (${hist.length})</div>
         ${hist.map(cardRep).join("")}
         <button class="btn-limpar" onclick="window.limparTudo()">${I.trash} Limpar tudo</button>`:""}
     </div>`;
+
   if(window._fs){
     if(window._fs.camara)camaraAtual=window._fs.camara;
-    const e=document.getElementById("fEnd"),c=document.getElementById("fCod"),d=document.getElementById("fDesc");
-    if(e)e.value=window._fs.end||"";if(c)c.value=window._fs.cod||"";if(d)d.value=window._fs.desc||"";
+    const e=document.getElementById("fEnd");
+    if(e)e.value=window._fs.end||"";
     if(window._fs.tipo==="palete")window.setTipo("palete");
     if(window._fs.end)window.onEnd(window._fs.end);
   }
+
+  // Scroll a aba ativa para o centro
+  setTimeout(()=>{
+    const bar=document.getElementById("camTabBar");
+    const ativa=bar?.querySelector(".cam-tab.ativa");
+    if(bar&&ativa)bar.scrollLeft=ativa.offsetLeft-(bar.clientWidth/2)+(ativa.clientWidth/2);
+  },50);
 }
 
 function cardRep(t){
   const cor={pendente:"#f59e0b",andamento:"#3b82f6",concluido:"#22c55e",vazio:"#ef4444",pulado:"#8892b0"}[t.status];
   const lbl={pendente:"Pendente",andamento:"Em andamento",concluido:"Concluído",vazio:"End. vazio",pulado:"Pulado"}[t.status];
   const isHist=["concluido","vazio"].includes(t.status);
+  const tipoCor=t.tipo==="picking"?"#f59e0b":"#3b82f6";
+  const tipoTxt=t.tipo==="picking"?"Pick":"Pal";
+  // Linha de meta compacta: tipo · atribuição/operador · hora · tempo
+  const metaParts=[
+    `<span style="font-size:9px;font-weight:800;color:${tipoCor}">${tipoTxt}</span>`,
+    t.atribNome&&t.status==="pendente"?`<span style="font-size:10px;color:#a78bfa">→ ${t.atribNome}</span>`:"",
+    t.opNome&&t.status!=="pendente"?`<span style="font-size:10px;color:#a78bfa">${t.opNome}</span>`:"",
+    `<span style="font-size:10px;color:var(--mu)">${fmtHora(t.ts)}</span>`,
+    !isHist?`<span style="font-size:10px;font-weight:700;color:${corTempo(t.ts)}">${tempoFila(t.ts)}</span>`:"",
+  ].filter(Boolean).join(`<span style="color:var(--mu);font-size:9px;margin:0 1px">·</span>`);
   return `
     <div class="crep" style="border-left-color:${cor}${isHist?";opacity:.6":""}">
-      <div class="crep-top">
-        <span class="crep-addr" style="color:${cor}">${t.endereco}</span>
-        <span class="chip" style="color:${cor};border-color:${cor}40;background:${cor}15">${lbl}</span>
-        ${!isHist&&Object.keys(operadores).length>1?`<button class="btn-transfer" onclick="window.abrirRepassar('${t.id}')" title="Repassar">${I.transfer} Repassar</button>`:""}
-        ${!isHist?`<button class="btn-rem" onclick="window.remover('${t.id}')">${I.x}</button>`:""}
-      </div>
-      ${t.descricao?`<div class="crep-prod">${t.descricao}</div>`:""}
-      <div class="crep-meta">
-        <span class="tbadge" style="color:${t.tipo==="picking"?"#f59e0b":"#3b82f6"};background:${t.tipo==="picking"?"#f59e0b22":"#3b82f622"};border-color:${t.tipo==="picking"?"#f59e0b44":"#3b82f644"}">${t.tipo==="picking"?I.package:I.layers} ${t.tipo==="picking"?"Picking":"Palete"}</span>
-        ${t.atribNome?`<span class="op-tag">${I.user.replace('width="22" height="22"','width="11" height="11"')} ${t.atribNome}</span>`:""}
-        ${t.opNome&&t.status!=="pendente"?`<span class="chip" style="color:#a78bfa;border-color:#8b5cf640;background:#8b5cf615">${I.forklift.replace('width="20" height="20"','width="11" height="11"')} ${t.opNome}</span>`:""}
-        <span style="color:var(--mu);font-size:10px">${fmtHora(t.ts)}</span>
-        ${!isHist?`<span style="color:${corTempo(t.ts)};font-size:10px;font-weight:700;display:inline-flex;align-items:center;gap:3px">${I.clock} ${tempoFila(t.ts)}</span>`:""}
+      <div style="display:flex;align-items:flex-start;gap:8px">
+        <div style="flex:1;min-width:0">
+          <div class="crep-addr" style="color:${cor};font-size:22px">${t.endereco}</div>
+          <div class="crep-meta" style="margin-top:5px;gap:4px">${metaParts}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;margin-top:2px">
+          <span class="chip" style="color:${cor};border-color:${cor}40;background:${cor}15">${lbl}</span>
+          ${!isHist&&Object.keys(operadores).length>1?`<button class="btn-transfer" onclick="window.abrirRepassar('${t.id}')">${I.transfer}</button>`:""}
+          ${!isHist?`<button class="btn-rem" onclick="window.remover('${t.id}')">${I.x}</button>`:""}
+        </div>
       </div>
     </div>`;
 }
@@ -1304,16 +1349,33 @@ window.sair=()=>{
 // ── AÇÕES PICKING ─────────────────────────────────────────────────────────────
 window.setFiltroRua=r=>{filtroRua=r;render();};
 window.toggleFont=()=>{showFont=!showFont;render();};
-window.setAtrib=v=>{atribPara=v;};
+window.setAtrib=v=>{
+  atribPara=v;
+  document.querySelectorAll(".atrib-pill").forEach(el=>{
+    const txt=el.textContent.trim();
+    const isQualquer=v==="qualquer"&&txt.includes("Qualquer");
+    const isOp=!isQualquer&&operadores[v]&&txt.includes(operadores[v].nome);
+    el.classList.toggle("ativo",isQualquer||isOp);
+  });
+};
 
 window.setCamara=c=>{
   camaraAtual=c;
-  document.querySelectorAll(".camara-btn").forEach(btn=>{
-    const k=btn.querySelector(".camara-letra")?.textContent?.trim();
+  // Atualiza tabs
+  document.querySelectorAll(".cam-tab").forEach(btn=>{
+    // Extrai letra da aba pelo texto (formato "X — Nome")
+    const txt=btn.textContent.trim();
+    const k=txt.split("—")[0].trim();
     const cam=CAMARAS[k];if(!cam)return;
-    if(k===c){btn.classList.add("ativa");btn.style.background=cam.cor;btn.style.borderColor=cam.cor;btn.querySelector(".camara-letra").style.color="#000";btn.querySelector(".camara-nome").style.color="#000";}
-    else{btn.classList.remove("ativa");btn.style.background="";btn.style.borderColor=cam.bd;btn.querySelector(".camara-letra").style.color=cam.cor;btn.querySelector(".camara-nome").style.color="";}
+    const isAtiva=k===c;
+    btn.classList.toggle("ativa",isAtiva);
+    btn.style.color=isAtiva?cam.cor:"var(--tx2)";
   });
+  // Scroll ativa para o centro
+  const bar=document.getElementById("camTabBar");
+  const ativa=bar?.querySelector(".cam-tab.ativa");
+  if(bar&&ativa)bar.scrollLeft=ativa.offsetLeft-(bar.clientWidth/2)+(ativa.clientWidth/2);
+  // Atualiza placeholder e label
   const fEnd=document.getElementById("fEnd");
   if(fEnd){fEnd.placeholder=CAMARAS[c]?.especial?"1-2":"4-56-2";fEnd.value="";}
   const elP=document.getElementById("prevEnd"),elA=document.getElementById("avisoEnd");
@@ -1361,13 +1423,11 @@ window.onEnd=v=>{
 };
 
 async function doPush(endCompleto){
-  const cod=(document.getElementById("fCod")?.value||"").trim();
-  const desc=(document.getElementById("fDesc")?.value||"").trim();
-  const sel=document.getElementById("atribSelect");
-  const atrib=sel?sel.value:"qualquer";
-  const atribNome=atrib!=="qualquer"?(operadores[atrib]?.nome||null):null;
   window._fs=null;window._endForcar=null;
-  await push(tasksRef,{endereco:endCompleto,codigo:cod,descricao:desc,tipo:tipoAtual,status:"pendente",ts:Date.now(),atribId:atrib!=="qualquer"?atrib:null,atribNome});
+  await push(tasksRef,{endereco:endCompleto,tipo:tipoAtual,status:"pendente",ts:Date.now(),
+    atribId:atribPara!=="qualquer"?atribPara:null,
+    atribNome:atribPara!=="qualquer"?(operadores[atribPara]?.nome||null):null,
+  });
 }
 
 window.enviar=async()=>{
@@ -1522,8 +1582,6 @@ onValue(tasksRef,snap=>{
   if(perfil==="repositor"){
     window._fs={
       end:document.getElementById("fEnd")?.value,
-      cod:document.getElementById("fCod")?.value,
-      desc:document.getElementById("fDesc")?.value,
       tipo:tipoAtual,camara:camaraAtual,
     };
   }
