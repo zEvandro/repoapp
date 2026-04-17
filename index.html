@@ -21,8 +21,8 @@
   --tx:#dde3f5;--tx2:#8892b0;--mu:#4b5882;
   --bg-op:#020305;--s1-op:#0a0d14;--s2-op:#0e1119;--bd-op:#1a2040;
   --tx-op:#f0f4ff;--tx2-op:#6b7aa0;--mu-op:#3a4460;
-  --bg-exp:#030a06;--s1-exp:#0a140d;--s2-exp:#0e1a10;--bd-exp:#1a3020;
-  --tx-exp:#e8f5ea;--tx2-exp:#6b9a70;--mu-exp:#3a5c40;
+  --bg-exp:#071410;--s1-exp:#0d1f18;--s2-exp:#122419;--bd-exp:#1e4030;
+  --tx-exp:#d4f5e4;--tx2-exp:#5db888;--mu-exp:#2e6b4a;
   --bg-man:#07030f;--s1-man:#0e0a1a;--s2-man:#130f22;--bd-man:#261a40;
   --tx-man:#f0eeff;--tx2-man:#8875b0;--mu-man:#4a3868;
   --addr-size:68px;--addr-sp:5px;
@@ -39,17 +39,83 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
   justify-content:center;margin-bottom:20px;box-shadow:0 0 40px #f59e0b44}
 .login h1{font-family:'Bebas Neue';font-size:44px;letter-spacing:3px;color:#fff}
 .login-sub{font-size:12px;color:var(--tx2);letter-spacing:2px;text-transform:uppercase;margin-top:4px}
-.login-ver{font-size:11px;color:var(--mu);letter-spacing:2px;margin-bottom:28px;margin-top:8px}
-.login-section{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;
-  color:var(--mu);margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.login-section::before,.login-section::after{content:"";flex:1;height:1px;background:var(--bd)}
-.lcards{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:20px}
-.lcard{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:28px 20px;
-  cursor:pointer;transition:all .2s;width:150px;display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--tx)}
-.lcard:hover{border-color:var(--am);background:var(--s2);transform:translateY(-2px)}
-.lcard-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center}
-.lcard-title{font-family:'Bebas Neue';font-size:20px;letter-spacing:2px}
-.lcard-desc{font-size:11px;color:var(--tx2);text-align:center;line-height:1.5}
+.login-ver{font-size:11px;color:var(--mu);letter-spacing:2px;margin-bottom:24px;margin-top:8px}
+/* Módulos do login */
+.mod-card{width:100%;border-radius:16px;overflow:hidden;border:1px solid var(--bd);
+  margin-bottom:12px;transition:border-color .2s}
+.mod-card-pick{border-color:#f59e0b30}
+.mod-card-exp{border-color:#22c55e30}
+.mod-header{padding:14px 16px;display:flex;align-items:center;gap:12px}
+.mod-header-pick{background:#0f1220}
+.mod-header-exp{background:#091510}
+.mod-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mod-title{font-family:'Bebas Neue';font-size:20px;letter-spacing:3px}
+.mod-desc{font-size:11px;opacity:.6;margin-top:1px}
+.mod-roles{display:flex;border-top:1px solid}
+.mod-roles-pick{border-color:#f59e0b20;background:#080b14}
+.mod-roles-exp{border-color:#22c55e20;background:#05100c}
+.mod-role{flex:1;padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;
+  cursor:pointer;border:none;background:transparent;transition:background .15s;color:inherit}
+.mod-role:hover{filter:brightness(1.15)}
+.mod-role:active{transform:scale(.98)}
+.mod-role+.mod-role{border-left:1px solid}
+.mod-role-pick+.mod-role-pick{border-color:#f59e0b20}
+.mod-role-exp+.mod-role-exp{border-color:#22c55e20}
+.mod-role-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.mod-role-name{font-family:'Bebas Neue';font-size:16px;letter-spacing:2px}
+.mod-role-desc{font-size:10px;opacity:.5;text-align:center;line-height:1.3}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(0);
+  padding:10px 20px;border-radius:99px;font-size:13px;font-weight:700;
+  display:flex;align-items:center;gap:8px;z-index:300;
+  animation:toastIn .2s ease,toastOut .3s ease 1.8s forwards;white-space:nowrap;
+  box-shadow:0 4px 20px rgba(0,0,0,.4)}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes toastOut{from{opacity:1;transform:translateX(-50%) translateY(0)}to{opacity:0;transform:translateX(-50%) translateY(8px)}}
+
+/* PIN SCREEN */
+.pin-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px;background:radial-gradient(ellipse 80% 60% at 50% 0%,#1a1428,var(--bg) 70%)}
+.pin-box{background:var(--s1);border:1px solid var(--bd);border-radius:20px;
+  padding:32px 28px;width:100%;max-width:320px;text-align:center}
+.pin-title{font-family:'Bebas Neue';font-size:26px;letter-spacing:2px;color:var(--tx);margin-bottom:6px}
+.pin-sub{font-size:12px;color:var(--tx2);margin-bottom:24px;line-height:1.5}
+.pin-dots{display:flex;gap:12px;justify-content:center;margin-bottom:20px}
+.pin-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--bd);transition:all .15s}
+.pin-dot.filled{background:var(--am);border-color:var(--am)}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pin-btn{padding:16px;border-radius:12px;border:1px solid var(--bd);background:var(--s2);
+  color:var(--tx);font-family:'Bebas Neue';font-size:24px;letter-spacing:1px;cursor:pointer;
+  transition:all .12s;display:flex;align-items:center;justify-content:center}
+.pin-btn:hover{border-color:var(--am);background:var(--s3)}
+.pin-btn:active{transform:scale(.94)}
+.pin-btn-del{font-size:16px;color:var(--tx2)}
+.pin-error{font-size:12px;color:var(--rd);margin-top:12px;min-height:18px;font-weight:700}
+.pin-back{background:transparent;border:none;color:var(--tx2);font-size:12px;cursor:pointer;
+  margin-top:12px;text-decoration:underline;font-family:'DM Sans'}
+
+/* MODAL PROBLEMA */
+.prob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;
+  display:flex;align-items:flex-end;justify-content:center;animation:fadeIn .15s ease}
+.prob-sheet{background:var(--s1-man);border:1px solid var(--bd-man);border-radius:20px 20px 0 0;
+  padding:20px 16px 32px;width:100%;max-width:440px;animation:slideUp .22s ease}
+.prob-title{font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;color:var(--rd);
+  margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.prob-sub{font-size:12px;color:var(--tx2-man);margin-bottom:16px}
+.prob-options{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.prob-btn{background:var(--s2-man);border:1px solid var(--bd-man);border-radius:10px;
+  padding:13px 16px;cursor:pointer;text-align:left;color:var(--tx-man);
+  font-size:14px;font-weight:700;font-family:'DM Sans';transition:all .15s;
+  display:flex;align-items:center;gap:10px}
+.prob-btn:hover{border-color:var(--rd);background:#ef444415}
+.prob-btn:active{transform:scale(.99)}
+.prob-cancel{width:100%;padding:12px;background:transparent;border:1px solid var(--bd-man);
+  color:var(--tx2-man);border-radius:10px;cursor:pointer;font-size:13px;font-weight:700;font-family:'DM Sans'}
+
+/* ATRASADO — card piscando vermelho quando pendente > 10 min */
+.crep-atrasado{border-left-color:#ef4444!important;animation:si .2s ease,pisca 2s ease-in-out infinite}
+@keyframes pisca{0%,100%{opacity:1}50%{opacity:.7}}
 
 /* NOME DO OPERADOR */
 .op-name-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -463,7 +529,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getDatabase, ref, push, onValue, remove, update, set, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-const APP_VERSION = "v3.0";
+const APP_VERSION = "v3.1";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -541,6 +607,65 @@ let prevCarrIds  = null;
 let prevLibIds   = [];
 let mgmtOpen     = false;
 
+// ── PIN ───────────────────────────────────────────────────────────────────────
+// PINs de acesso para perfis de gestão — altere conforme necessário
+const PINS = { repositor:"1234", expedicao:"5678" };
+let pinPerfil    = null; // perfil aguardando PIN
+let pinDigitos   = "";
+
+function renderPin(){
+  const cor=pinPerfil==="repositor"?"#f59e0b":"#22c55e";
+  const nome=pinPerfil==="repositor"?"REPOSITOR":"EXPEDIÇÃO";
+  document.getElementById("app").innerHTML=`
+    <div class="pin-screen">
+      <div class="pin-box">
+        <div class="pin-title" style="color:${cor}">🔒 ACESSO ${nome}</div>
+        <p class="pin-sub">Digite o PIN de 4 dígitos para entrar.</p>
+        <div class="pin-dots" id="pinDots">
+          <div class="pin-dot" id="pd0"></div>
+          <div class="pin-dot" id="pd1"></div>
+          <div class="pin-dot" id="pd2"></div>
+          <div class="pin-dot" id="pd3"></div>
+        </div>
+        <div class="pin-pad">
+          ${[1,2,3,4,5,6,7,8,9,"",0,"⌫"].map(n=>
+            n===""
+              ?`<div></div>`
+              :`<button class="pin-btn${n==="⌫"?" pin-btn-del":""}" onclick="window.pinDigito('${n}')">${n}</button>`
+          ).join("")}
+        </div>
+        <div class="pin-error" id="pinError"></div>
+        <button class="pin-back" onclick="window.pinVoltar()">← Voltar</button>
+      </div>
+    </div>`;
+}
+
+function pinAtualizar(){
+  for(let i=0;i<4;i++){
+    document.getElementById("pd"+i)?.classList.toggle("filled",i<pinDigitos.length);
+  }
+}
+
+window.pinDigito=d=>{
+  if(d==="⌫"){pinDigitos=pinDigitos.slice(0,-1);pinAtualizar();return;}
+  if(pinDigitos.length>=4)return;
+  pinDigitos+=d;
+  pinAtualizar();
+  if(pinDigitos.length===4){
+    if(pinDigitos===PINS[pinPerfil]){
+      perfil=pinPerfil;pinPerfil=null;pinDigitos="";
+      if(perfil==="expedicao"){atribManob="qualquer";mgmtOpen=false;}
+      render();
+    }else{
+      const el=document.getElementById("pinError");
+      if(el)el.textContent="PIN incorreto. Tente novamente.";
+      pinDigitos="";
+      setTimeout(()=>{if(el)el.textContent="";pinAtualizar();},1200);
+    }
+  }
+};
+window.pinVoltar=()=>{pinPerfil=null;pinDigitos="";render();};
+
 // ── CÂMARAS ───────────────────────────────────────────────────────────────────
 const CAMARAS = {
   B: { nome:"Batavo",      cor:"#3b82f6", bg:"#3b82f615", bd:"#3b82f640" },
@@ -616,6 +741,17 @@ function parseEnd(s,camara){
   const completo=`${camara} ${String(rua).padStart(3,"0")} ${String(pos).padStart(4,"0")} ${String(nivel*10).padStart(2,"0")}`;
   const isPicking=nivel===1;
   return{valido:true,completo,erro:"",camara,rua,pos,nivel,label:`${cam.nome} · Rua ${rua} · Pos ${pos} · ${nivelLabel}`,isPicking};
+}
+
+// ── TOAST ────────────────────────────────────────────────────────────────────
+function showToast(msg,{bg="#22c55e",color="#000"}={}){
+  document.getElementById("_toast")?.remove();
+  const el=document.createElement("div");
+  el.id="_toast";el.className="toast";
+  el.style.background=bg;el.style.color=color;
+  el.textContent=msg;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),2200);
 }
 
 // ── SOM ──────────────────────────────────────────────────────────────────────
@@ -744,37 +880,56 @@ function mgmtHTML(){
 
 // ── RENDER LOGIN ──────────────────────────────────────────────────────────────
 function renderLogin(){
+  const ic=(svg,size=24)=>svg.replace(/width="20" height="20"/g,`width="${size}" height="${size}"`);
   document.getElementById("app").innerHTML=`
     <div class="login">
       <div class="logo"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><text x="6" y="32" font-family="'Bebas Neue', sans-serif" font-size="34" fill="#0b0e17">R</text></svg></div>
       <h1>REPOAPP</h1>
       <p class="login-sub">Sistema de Operações de Armazém</p>
       <p class="login-ver">${APP_VERSION}</p>
-      <div class="login-section">REPOSIÇÃO DE PICKING</div>
-      <div class="lcards" style="margin-bottom:0">
-        <button class="lcard" onclick="window.escolher('repositor')">
-          <div class="lcard-icon" style="background:#f59e0b22">${I.clipboard.replace('width="20" height="20"','width="24" height="24"').replace('stroke="currentColor"','stroke="#f59e0b"')}</div>
-          <span class="lcard-title">REPOSITOR</span>
-          <span class="lcard-desc">Enviar tarefas de reposição</span>
-        </button>
-        <button class="lcard" onclick="window.escolher('operador')">
-          <div class="lcard-icon" style="background:#3b82f622">${I.forklift.replace('width="20" height="20"','width="24" height="24"').replace('stroke="currentColor"','stroke="#3b82f6"')}</div>
-          <span class="lcard-title">OPERADOR</span>
-          <span class="lcard-desc">Executar reposições</span>
-        </button>
+
+      <div class="mod-card mod-card-pick">
+        <div class="mod-header mod-header-pick">
+          <div class="mod-icon" style="background:#f59e0b22">${ic(I.package,22).replace('stroke="currentColor"','stroke="#f59e0b"')}</div>
+          <div>
+            <div class="mod-title" style="color:#f59e0b">ARMAZÉM</div>
+            <div class="mod-desc" style="color:#8892b0">Reposição de picking</div>
+          </div>
+        </div>
+        <div class="mod-roles mod-roles-pick">
+          <button class="mod-role mod-role-pick" onclick="window.escolher('repositor')">
+            <div class="mod-role-icon" style="background:#f59e0b18">${ic(I.clipboard,20).replace('stroke="currentColor"','stroke="#f59e0b"')}</div>
+            <div class="mod-role-name" style="color:#f59e0b">REPOSITOR</div>
+            <div class="mod-role-desc" style="color:#6b7a90">Envia endereços</div>
+          </button>
+          <button class="mod-role mod-role-pick" onclick="window.escolher('operador')">
+            <div class="mod-role-icon" style="background:#3b82f618">${ic(I.forklift,20).replace('stroke="currentColor"','stroke="#3b82f6"')}</div>
+            <div class="mod-role-name" style="color:#3b82f6">OPERADOR</div>
+            <div class="mod-role-desc" style="color:#6b7a90">Executa reposições</div>
+          </button>
+        </div>
       </div>
-      <div class="login-section" style="margin-top:20px">EXPEDIÇÃO DE CARGA</div>
-      <div class="lcards">
-        <button class="lcard" onclick="window.escolher('expedicao')" style="border-color:#22c55e30">
-          <div class="lcard-icon" style="background:#22c55e22">${I.clipboard.replace('width="20" height="20"','width="24" height="24"').replace('stroke="currentColor"','stroke="#22c55e"')}</div>
-          <span class="lcard-title" style="color:#22c55e">EXPEDIÇÃO</span>
-          <span class="lcard-desc">Enviar placas e docas</span>
-        </button>
-        <button class="lcard" onclick="window.escolher('manobrista')" style="border-color:#8b5cf630">
-          <div class="lcard-icon" style="background:#8b5cf622">${I.truck.replace('width="20" height="20"','width="24" height="24"').replace('stroke="currentColor"','stroke="#8b5cf6"')}</div>
-          <span class="lcard-title" style="color:#8b5cf6">MANOBRISTA</span>
-          <span class="lcard-desc">Receber e encostar veículos</span>
-        </button>
+
+      <div class="mod-card mod-card-exp">
+        <div class="mod-header mod-header-exp">
+          <div class="mod-icon" style="background:#22c55e22">${ic(I.truck,22).replace('stroke="currentColor"','stroke="#22c55e"')}</div>
+          <div>
+            <div class="mod-title" style="color:#22c55e">EXPEDIÇÃO</div>
+            <div class="mod-desc" style="color:#5db888">Carregamento de veículos</div>
+          </div>
+        </div>
+        <div class="mod-roles mod-roles-exp">
+          <button class="mod-role mod-role-exp" onclick="window.escolher('expedicao')">
+            <div class="mod-role-icon" style="background:#22c55e18">${ic(I.clipboard,20).replace('stroke="currentColor"','stroke="#22c55e"')}</div>
+            <div class="mod-role-name" style="color:#22c55e">EXPEDIÇÃO</div>
+            <div class="mod-role-desc" style="color:#2e6b4a">Envia placas e docas</div>
+          </button>
+          <button class="mod-role mod-role-exp" onclick="window.escolher('manobrista')">
+            <div class="mod-role-icon" style="background:#8b5cf618">${ic(I.truck,20).replace('stroke="currentColor"','stroke="#8b5cf6"')}</div>
+            <div class="mod-role-name" style="color:#8b5cf6">MANOBRISTA</div>
+            <div class="mod-role-desc" style="color:#2e6b4a">Encosta veículos</div>
+          </button>
+        </div>
       </div>
     </div>`;
 }
@@ -938,7 +1093,7 @@ function cardRep(t){
   const isHist=["concluido","vazio"].includes(t.status);
   const tipoCor=t.tipo==="picking"?"#f59e0b":"#3b82f6";
   const tipoTxt=t.tipo==="picking"?"Pick":"Pal";
-  // Linha de meta compacta: tipo · atribuição/operador · hora · tempo
+  const atrasado=!isHist&&t.status==="pendente"&&(Date.now()-t.ts)>10*60*1000;
   const metaParts=[
     `<span style="font-size:9px;font-weight:800;color:${tipoCor}">${tipoTxt}</span>`,
     t.atribNome&&t.status==="pendente"?`<span style="font-size:10px;color:#a78bfa">→ ${t.atribNome}</span>`:"",
@@ -947,14 +1102,15 @@ function cardRep(t){
     !isHist?`<span style="font-size:10px;font-weight:700;color:${corTempo(t.ts)}">${tempoFila(t.ts)}</span>`:"",
   ].filter(Boolean).join(`<span style="color:var(--mu);font-size:9px;margin:0 1px">·</span>`);
   return `
-    <div class="crep" style="border-left-color:${cor}${isHist?";opacity:.6":""}">
+    <div class="crep${atrasado?" crep-atrasado":""}" style="border-left-color:${atrasado?"#ef4444":cor}${isHist?";opacity:.6":""}">
       <div style="display:flex;align-items:flex-start;gap:8px">
         <div style="flex:1;min-width:0">
-          <div class="crep-addr" style="color:${cor};font-size:22px">${t.endereco}</div>
+          <div class="crep-addr" style="color:${atrasado?"#ef4444":cor};font-size:22px">${t.endereco}</div>
           <div class="crep-meta" style="margin-top:5px;gap:4px">${metaParts}</div>
+          ${atrasado?`<div style="font-size:9px;color:#ef4444;font-weight:700;margin-top:4px;letter-spacing:.5px">⚠ PARADO HÁ MAIS DE 10 MIN</div>`:""}
         </div>
         <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;margin-top:2px">
-          <span class="chip" style="color:${cor};border-color:${cor}40;background:${cor}15">${lbl}</span>
+          <span class="chip" style="color:${atrasado?"#ef4444":cor};border-color:${atrasado?"#ef444440":cor+"40"};background:${atrasado?"#ef444415":cor+"15"}">${lbl}</span>
           ${!isHist&&Object.keys(operadores).length>1?`<button class="btn-transfer" onclick="window.abrirRepassar('${t.id}')">${I.transfer}</button>`:""}
           ${!isHist?`<button class="btn-rem" onclick="window.remover('${t.id}')">${I.x}</button>`:""}
         </div>
@@ -1154,8 +1310,9 @@ function renderExpedicao(){
 function cardExp(c){
   const cor={pendente:"#f59e0b",encostado:"#3b82f6",liberado:"#22c55e",concluido:"#22c55e",problema:"#ef4444"}[c.status]||"#f59e0b";
   const lbl={pendente:"Aguardando",encostado:"Encostado",liberado:"Liberado",concluido:"Concluído",problema:"Problema"}[c.status];
+  const isProb=c.status==="problema";
   return `
-    <div class="cexp" style="border-left-color:${cor}">
+    <div class="cexp${isProb?" crep-atrasado":""}" style="border-left-color:${cor}">
       <div class="crep-top">
         <span class="cexp-placa" style="color:${cor}">${c.placa}</span>
         <span class="chip" style="color:${cor};border-color:${cor}40;background:${cor}15">${lbl}</span>
@@ -1164,6 +1321,12 @@ function cardExp(c){
         <button class="btn-rem" onclick="window.removerCarreg('${c.id}')">${I.x}</button>
       </div>
       <div style="font-size:12px;color:var(--tx2-exp);margin:3px 0">Doca ${c.doca||"—"}</div>
+      ${isProb&&c.problemaDesc?`
+        <div style="background:#ef444418;border:1px solid #ef444440;border-radius:8px;padding:8px 10px;margin:6px 0;
+          font-size:12px;font-weight:700;color:#ef4444;display:flex;align-items:center;gap:6px">
+          ${I.alert.replace('stroke="currentColor"','stroke="#ef4444"').replace('width="18" height="18"','width="14" height="14"')}
+          ${c.problemaDesc}${c.manobNomeAcao?` <span style="font-weight:400;color:#ef444490">· ${c.manobNomeAcao}</span>`:""}
+        </div>`:""}
       <div class="cexp-meta">
         ${c.manobNome?`<span class="man-tag">${I.truck.replace('width="20" height="20"','width="11" height="11"')} ${c.manobNome}</span>`:`<span style="font-size:9px;color:var(--mu-exp)">Qualquer manobrista</span>`}
         <span style="color:var(--mu-exp);font-size:10px">${fmtHora(c.ts)}</span>
@@ -1243,27 +1406,20 @@ function cardManMain(c){
           <div class="liberado-sub">A expedição autorizou a saída.</div>
         </div>
         <div class="op-btns">
-          <button class="abtn abtn-green" onclick="window.acaoCarreg('${c.id}','concluido')">
-            ${I.check} CONCLUÍDO
-          </button>
+          <button class="abtn abtn-green" onclick="window.acaoCarreg('${c.id}','concluido')">${I.check} CONCLUÍDO</button>
+          <button class="abtn abtn-red" onclick="window.acaoCarreg('${c.id}','problema')">${I.alert} PROBLEMA</button>
         </div>
       `:isEnc?`
         <div class="aguardando-banner">
           <div style="font-size:11px;color:#6b9cf6;">Aguardando autorização da expedição para partir...</div>
         </div>
         <div class="op-btns">
-          <button class="abtn abtn-red" onclick="window.acaoCarreg('${c.id}','problema')">
-            ${I.alert} PROBLEMA
-          </button>
+          <button class="abtn abtn-red" onclick="window.acaoCarreg('${c.id}','problema')">${I.alert} PROBLEMA</button>
         </div>
       `:`
         <div class="op-btns">
-          <button class="abtn abtn-blue" onclick="window.acaoCarreg('${c.id}','encostado')">
-            ${I.check} ENCOSTEI
-          </button>
-          <button class="abtn abtn-red" onclick="window.acaoCarreg('${c.id}','problema')">
-            ${I.alert} PROBLEMA
-          </button>
+          <button class="abtn abtn-blue" onclick="window.acaoCarreg('${c.id}','encostado')">${I.check} ENCOSTEI</button>
+          <button class="abtn abtn-red" onclick="window.acaoCarreg('${c.id}','problema')">${I.alert} PROBLEMA</button>
         </div>
       `}
     </div>`;
@@ -1284,7 +1440,8 @@ function cardManSec(c){
 // ── RENDER ────────────────────────────────────────────────────────────────────
 function render(){
   applyFont();
-  if(!perfil)                                        renderLogin();
+  if(!perfil&&pinPerfil)                             renderPin();
+  else if(!perfil)                                   renderLogin();
   else if(perfil==="repositor")                      renderRepositor();
   else if(perfil==="operador"&&!nomeOperador)        renderNomeOperador();
   else if(perfil==="operador")                       renderOperador();
@@ -1313,9 +1470,11 @@ function removerManobrista(){if(window._manRef)remove(window._manRef).catch(()=>
 
 // ── AÇÕES GERAIS ──────────────────────────────────────────────────────────────
 window.escolher=p=>{
+  // Perfis de gestão exigem PIN
+  if(p==="repositor"||p==="expedicao"){
+    pinPerfil=p;pinDigitos="";render();return;
+  }
   perfil=p;showFont=false;prevIds=null;filtroRua="todas";prevCarrIds=null;prevLibIds=[];
-  if(p==="repositor"){nomeOperador=null;opId=null;}
-  if(p==="expedicao"){atribManob="qualquer";mgmtOpen=false;}
   render();
 };
 
@@ -1343,6 +1502,7 @@ window.sair=()=>{
   if(perfil==="operador")removerOperador();
   if(perfil==="manobrista")removerManobrista();
   perfil=null;nomeOperador=null;opId=null;nomeManob=null;manobId=null;showFont=false;
+  pinPerfil=null;pinDigitos="";
   render();
 };
 
@@ -1428,6 +1588,14 @@ async function doPush(endCompleto){
     atribId:atribPara!=="qualquer"?atribPara:null,
     atribNome:atribPara!=="qualquer"?(operadores[atribPara]?.nome||null):null,
   });
+  // Feedback visual + limpa campo
+  showToast(`✓ ${endCompleto} enviado`);
+  const fEnd=document.getElementById("fEnd");
+  if(fEnd){fEnd.value="";
+    document.getElementById("prevEnd")?.classList.add("hidden");
+    document.getElementById("avisoEnd")?.classList.add("hidden");
+    setTimeout(()=>fEnd.focus(),50);
+  }
 }
 
 window.enviar=async()=>{
@@ -1503,6 +1671,8 @@ window.enviarCarreg=async()=>{
     document.getElementById("fTransp").value="";
     atribManob="qualquer";
     document.querySelectorAll(".atrib-pill-exp").forEach((el,i)=>el.classList.toggle("ativo",i===0));
+    showToast(`✓ ${placa} enviado`,{bg:"#22c55e",color:"#000"});
+    setTimeout(()=>document.getElementById("fPlaca")?.focus(),50);
   }catch(e){alert("Erro: "+e.message);}
 };
 
@@ -1522,12 +1692,52 @@ window.limparCarreg=async()=>{
 };
 
 // ── AÇÕES MANOBRISTA ──────────────────────────────────────────────────────────
+const PROBLEMAS_OPCOES=[
+  {icon:"🔋",txt:"Carro não pega / não liga"},
+  {icon:"🔧",txt:"Veículo quebrado"},
+  {icon:"🛞",txt:"Pneu furado"},
+  {icon:"⛽",txt:"Sem combustível"},
+  {icon:"🔑",txt:"Sem chave do veículo"},
+  {icon:"⛔",txt:"Acesso bloqueado à doca"},
+  {icon:"❓",txt:"Outro problema"},
+];
+
+window.abrirModalProblema=id=>{
+  document.getElementById("_probModal")?.remove();
+  const overlay=document.createElement("div");
+  overlay.className="prob-overlay";overlay.id="_probModal";
+  overlay.innerHTML=`
+    <div class="prob-sheet">
+      <div class="prob-title">${I.alert.replace('stroke="currentColor"','stroke="#ef4444"')} Relatar Problema</div>
+      <p class="prob-sub">Selecione o tipo de problema para avisar a expedição.</p>
+      <div class="prob-options">
+        ${PROBLEMAS_OPCOES.map(p=>`
+          <button class="prob-btn" onclick="window.confirmarProblema('${id}','${p.txt}')">
+            <span style="font-size:20px;line-height:1">${p.icon}</span>${p.txt}
+          </button>`).join("")}
+      </div>
+      <button class="prob-cancel" onclick="document.getElementById('_probModal')?.remove()">Cancelar</button>
+    </div>`;
+  overlay.addEventListener("click",e=>{if(e.target===overlay)overlay.remove();});
+  document.body.appendChild(overlay);
+};
+
+window.confirmarProblema=async(id,descricao)=>{
+  document.getElementById("_probModal")?.remove();
+  try{
+    await update(ref(db,`carregamentos/${id}`),{
+      status:"problema",
+      problemaDesc:descricao,
+      manobNomeAcao:nomeManob,
+    });
+  }catch(e){alert("Erro: "+e.message);}
+};
+
 window.acaoCarreg=async(id,status)=>{
+  if(status==="problema"){window.abrirModalProblema(id);return;}
   try{
     const updates={status};
-    if(status==="encostado"||status==="concluido"||status==="problema"){
-      updates.manobNomeAcao=nomeManob;
-    }
+    if(status==="encostado"||status==="concluido"){updates.manobNomeAcao=nomeManob;}
     await update(ref(db,`carregamentos/${id}`),updates);
   }catch(e){alert("Erro: "+e.message);}
 };
@@ -1587,6 +1797,8 @@ onValue(tasksRef,snap=>{
   }
   const data=snap.val()||{};
   const novo=Object.entries(data).map(([id,v])=>({id,...v})).sort((a,b)=>a.ts-b.ts);
+
+  // Som operador — nova tarefa para ele
   if(perfil==="operador"&&nomeOperador&&prevIds!==null){
     const minhasNovas=novo.filter(t=>t.status==="pendente"&&(!t.atribId||t.atribId===opId)&&!prevIds.includes(t.id));
     if(minhasNovas.length>0)beep();
@@ -1594,6 +1806,16 @@ onValue(tasksRef,snap=>{
   if(perfil==="operador"&&nomeOperador){
     prevIds=novo.filter(t=>t.status==="pendente"&&(!t.atribId||t.atribId===opId)).map(t=>t.id);
   }
+
+  // Som repositor — tarefa concluída por operador
+  if(perfil==="repositor"&&tarefas.length>0){
+    const recemConc=novo.filter(t=>
+      t.status==="concluido"&&
+      !tarefas.find(old=>old.id===t.id&&old.status==="concluido")
+    );
+    if(recemConc.length>0)beep(440,1);
+  }
+
   tarefas=novo;
   if(["repositor","operador"].includes(perfil)||(perfil==="operador"&&!nomeOperador))render();
 });
@@ -1628,6 +1850,15 @@ onValue(carregRef,snap=>{
   if(perfil==="manobrista"&&nomeManob){
     prevCarrIds=novo.filter(c=>c.status==="pendente"&&(!c.manobNome||c.manobNome===nomeManob)).map(c=>c.id);
     prevLibIds=novo.filter(c=>c.status==="liberado").map(c=>c.id);
+  }
+
+  // Som de alerta para expedição quando problema é reportado
+  if(perfil==="expedicao"&&carregamentos.length>0){
+    const novosProb=novo.filter(c=>
+      c.status==="problema"&&
+      !carregamentos.find(old=>old.id===c.id&&old.status==="problema")
+    );
+    if(novosProb.length>0)beep(330,3);
   }
 
   carregamentos=novo;
