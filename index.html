@@ -111,7 +111,7 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .prob-cancel{width:100%;padding:12px;background:transparent;border:1px solid var(--bd-man);
   color:var(--tx2-man);border-radius:10px;cursor:pointer;font-size:13px;font-weight:700;font-family:'DM Sans'}
 
-/* ATRASADO â€" card piscando vermelho quando pendente > 10 min */
+/* ATRASADO â€“ card piscando vermelho quando pendente > 10 min */
 .crep-atrasado{border-left-color:#ef4444!important;animation:si .2s ease,pisca 2s ease-in-out infinite}
 @keyframes pisca{0%,100%{opacity:1}50%{opacity:.7}}
 
@@ -233,7 +233,7 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .stat-num{font-family:'Bebas Neue';font-size:28px;letter-spacing:1px;line-height:1;margin-bottom:3px}
 .stat-lbl{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu)}
 
-/* CÃ‚MARA TABS (repositor â€" scroll horizontal) */
+/* CÃ‚MARA TABS (repositor â€“ scroll horizontal) */
 .cam-tab-bar{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;flex-shrink:0;
   background:var(--s1);border-bottom:1px solid var(--bd);position:sticky;top:52px;z-index:40}
 .cam-tab-bar::-webkit-scrollbar{display:none}
@@ -260,7 +260,7 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .atrib-pill.ativo{background:var(--am);color:#000}
 .atrib-pill.ativo svg{stroke:#000}
 
-/* CÃ‚MARA SELECTOR (legado â€" mantido para setCamara) */
+/* CÃ‚MARA SELECTOR (legado â€“ mantido para setCamara) */
 .camara-sel{display:none}
 .camara-btn{display:none}
 .camara-letra{display:none}
@@ -690,8 +690,8 @@ function parseEnd(s,camara){
   if(isNaN(rua)||isNaN(pos)||isNaN(nivel))return{valido:false,erro:"Apenas nÃºmeros"};
   if(rua<1||rua>9)return{valido:false,erro:"Rua: 1 a 9"};
   if(pos<1||pos>99)return{valido:false,erro:"PosiÃ§Ã£o: 1 a 99"};
-  if(nivel<1||nivel>5)return{valido:false,erro:"NÃ­vel: 1â€"5"};
-  const nivelLabel=["","NÃ­vel 10 â€" chÃ£o","2Âº nÃ­vel","3Âº nÃ­vel","4Âº nÃ­vel","5Âº nÃ­vel"][nivel];
+  if(nivel<1||nivel>5)return{valido:false,erro:"NÃ­vel: 1â€“5"};
+  const nivelLabel=["","NÃ­vel 10 â€“ chÃ£o","2Âº nÃ­vel","3Âº nÃ­vel","4Âº nÃ­vel","5Âº nÃ­vel"][nivel];
   const completo=`${camara} ${String(rua).padStart(3,"0")} ${String(pos).padStart(4,"0")} ${String(nivel*10).padStart(2,"0")}`;
   const isPicking=nivel===1;
   return{valido:true,completo,erro:"",camara,rua,pos,nivel,label:`${cam.nome} Â· Rua ${rua} Â· Pos ${pos} Â· ${nivelLabel}`,isPicking};
@@ -945,7 +945,7 @@ function camTabsHTML(){
       <button class="cam-tab${camaraAtual===k?" ativa":""}"
         style="${camaraAtual===k?`color:${c.cor}`:`color:var(--tx2)`}"
         onclick="window.setCamara('${k}')">
-        <span class="cam-tab-dot" style="background:${c.cor}"></span>${k} â€" ${c.nome}
+        <span class="cam-tab-dot" style="background:${c.cor}"></span>${k} â€“ ${c.nome}
       </button>`).join("")}
   </div>`;
 }
@@ -985,7 +985,7 @@ function renderRepositor(){
         <div class="ftitle">${I.package.replace('width="16" height="16"','width="18" height="18"')} Nova ReposiÃ§Ã£o</div>
         <label class="lbl">
           EndereÃ§o
-          <small>â€" ${cam?.especial ? 'ex: 1-2 (rua-posiÃ§Ã£o)' : 'ex: 4-56-2 (rua-posiÃ§Ã£o-nÃ­vel)'}</small>
+          <small>â€“ ${cam?.especial ? 'ex: 1-2 (rua-posiÃ§Ã£o)' : 'ex: 4-56-2 (rua-posiÃ§Ã£o-nÃ­vel)'}</small>
         </label>
         <input id="fEnd" class="inp" placeholder="${cam?.especial ? '1-2' : '4-56-2'}" oninput="window.onEnd(this.value)"
           style="font-size:18px;font-weight:800;letter-spacing:2px"/>
@@ -1222,7 +1222,7 @@ function renderExpedicao(){
             <input id="fTransp" class="inp-exp" placeholder="Ex: JBS"/>
           </div>
         </div>
-        <label class="lbl-exp">${I.truck} Manobrista <small style="color:var(--mu-exp);font-size:9px;text-transform:none;letter-spacing:0">â€" opcional</small></label>
+        <label class="lbl-exp">${I.truck} Manobrista <small style="color:var(--mu-exp);font-size:9px;text-transform:none;letter-spacing:0">â€“ opcional</small></label>
         ${atribPillsExpHTML()}
         <button class="btn-send-exp" onclick="window.enviarCarreg()">${I.send} ENVIAR AO MANOBRISTA</button>
       </div>
@@ -1256,7 +1256,7 @@ function cardExp(c){
         ${c.status==="pendente"?`<button class="btn-liberar" onclick="window.liberarCarreg('${sq(c.id)}')" style="background:var(--am)">${I.flag} LIBERAR</button>`:""}
         <button class="btn-rem" onclick="window.removerCarreg('${sq(c.id)}')">${I.x}</button>
       </div>
-      <div style="font-size:12px;color:var(--tx2-exp);margin:3px 0">Doca ${h(c.doca||"â€"")}</div>
+      <div style="font-size:12px;color:var(--tx2-exp);margin:3px 0">Doca ${h(c.doca||"â€“")}</div>
       ${isProb&&c.problemaDesc?`
         <div style="background:#ef444418;border:1px solid #ef444440;border-radius:8px;padding:8px 10px;margin:6px 0;
           font-size:12px;font-weight:700;color:#ef4444;display:flex;align-items:center;gap:6px">
@@ -1311,7 +1311,7 @@ function renderManobrista(){
         ${hist.map(c=>`
           <div class="chist-exp" style="border-left-color:${c.status==="concluido"?"var(--gr)":"var(--rd)"}">
             <span style="font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;color:${c.status==="concluido"?"var(--gr)":"var(--rd)"}">${h(c.placa)}</span>
-            <span style="font-size:11px;color:var(--tx2-exp);margin-left:6px">Doca ${h(c.doca||"â€"")}</span>
+            <span style="font-size:11px;color:var(--tx2-exp);margin-left:6px">Doca ${h(c.doca||"â€“")}</span>
             <span style="margin-left:auto;font-size:10px;color:var(--mu-man)">${fmtHora(c.ts)}</span>
           </div>`).join("")}`:""}
     </div>`;
@@ -1331,10 +1331,10 @@ function cardManMain(c){
     <div id="man-${idSafe(c.id)}" class="cman-main ${bordaCls}">
       ${isLib?`<div class="swipe-hint"></div>`:""}
       <div style="font-family:'Bebas Neue';font-size:13px;letter-spacing:3px;color:${placaCor}">
-        ${isLib?"âœ" LIBERADO â€" PODE PARTIR":isEnc?"AGUARDANDO CARREGAMENTO":"NOVO VEÃCULO"}
+        ${isLib?"âœ" LIBERADO â€“ PODE PARTIR":isEnc?"AGUARDANDO CARREGAMENTO":"NOVO VEÃCULO"}
       </div>
       <div class="placa-main ${isLib?"liberado":isEnc?"encostado":""}">${h(c.placa)}</div>
-      <div class="doca-main">Doca ${h(c.doca||"â€"")}</div>
+      <div class="doca-main">Doca ${h(c.doca||"â€“")}</div>
       <div class="transp-main">${h(c.transportadora||"")}</div>
       ${isLib?`
         <div class="liberado-banner">
@@ -1366,7 +1366,7 @@ function cardManSec(c){
     <div class="cman-sec">
       <div style="display:flex;align-items:center;gap:8px">
         <span style="font-family:'Bebas Neue';font-size:24px;letter-spacing:3px;color:var(--pu);opacity:.6">${h(c.placa)}</span>
-        <span style="font-size:10px;color:var(--tx2-man)">Doca ${h(c.doca||"â€"")}</span>
+        <span style="font-size:10px;color:var(--tx2-man)">Doca ${h(c.doca||"â€“")}</span>
         <span class="tempo-op" data-ts="${c.ts}" style="margin-left:auto;font-size:10px;font-weight:700;color:${corTempo(c.ts)}">${tempoFila(c.ts)}</span>
       </div>
       ${c.transportadora?`<div style="font-size:10px;color:var(--mu-man);margin-top:2px">${h(c.transportadora)}</div>`:""}
@@ -1571,9 +1571,9 @@ window.setCamara=c=>{
   camaraAtual=c;
   // Atualiza tabs
   document.querySelectorAll(".cam-tab").forEach(btn=>{
-    // Extrai letra da aba pelo texto (formato "X â€" Nome")
+    // Extrai letra da aba pelo texto (formato "X â€“ Nome")
     const txt=btn.textContent.trim();
-    const k=txt.split("â€"")[0].trim();
+    const k=txt.split("â€“")[0].trim();
     const cam=CAMARAS[k];if(!cam)return;
     const isAtiva=k===c;
     btn.classList.toggle("ativa",isAtiva);
@@ -1613,7 +1613,7 @@ window.onEnd=v=>{
   if(r.valido){
     if(r.isPicking){
       elP.className="prev-end err";
-      elP.innerHTML=`<span style="color:var(--am)">${I.alert}</span><div><div class="pfull" style="color:var(--am)">${r.completo}</div><div class="pdet" style="color:var(--am);font-weight:700;margin-top:4px">${cam.especial?"CÃ¢mara F â€" nÃ­vel de chÃ£o":"NÃ­vel 10 â€" picking de chÃ£o"}</div><div class="pdet" style="margin-top:3px">Este endereÃ§o jÃ¡ estÃ¡ acessÃ­vel no chÃ£o.<br>O operador de empilhadeira nÃ£o Ã© necessÃ¡rio.</div></div>`;
+      elP.innerHTML=`<span style="color:var(--am)">${I.alert}</span><div><div class="pfull" style="color:var(--am)">${r.completo}</div><div class="pdet" style="color:var(--am);font-weight:700;margin-top:4px">${cam.especial?"CÃ¢mara F â€“ nÃ­vel de chÃ£o":"NÃ­vel 10 â€“ picking de chÃ£o"}</div><div class="pdet" style="margin-top:3px">Este endereÃ§o jÃ¡ estÃ¡ acessÃ­vel no chÃ£o.<br>O operador de empilhadeira nÃ£o Ã© necessÃ¡rio.</div></div>`;
       if(elA)elA.className="aviso-dup hidden";window._endForcar=null;return;
     }
     elP.className="prev-end ok";
@@ -1649,7 +1649,7 @@ async function doPush(endCompleto){
 window.enviar=async()=>{
   const r=parseEnd(document.getElementById("fEnd")?.value||"",camaraAtual);
   if(!r.valido){alert(r.erro||"EndereÃ§o invÃ¡lido");return;}
-  if(r.isPicking){alert("EndereÃ§o de chÃ£o â€" o operador nÃ£o Ã© necessÃ¡rio.");return;}
+  if(r.isPicking){alert("EndereÃ§o de chÃ£o â€“ o operador nÃ£o Ã© necessÃ¡rio.");return;}
   const elA=document.getElementById("avisoEnd");
   if(elA&&!elA.classList.contains("hidden")&&window._endForcar)return;
   await doPush(r.completo);
