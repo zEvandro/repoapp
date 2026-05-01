@@ -614,6 +614,12 @@ let authReady    = false;
 let authErr      = "";
 let authBusy     = false;
 let roleUnsub    = null;
+let dataUnsubs   = [];
+
+function clearDataSubs(){
+  dataUnsubs.forEach(fn=>{try{fn();}catch{}});
+  dataUnsubs=[];
+}
 
 
 // â"€â"€ CÃ‚MARAS â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
