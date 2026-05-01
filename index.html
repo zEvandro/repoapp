@@ -1002,7 +1002,7 @@ function renderRepositor(){
       </div>
       ${fila.length>0?`<div class="secao">FILA (${fila.length})</div>${fila.map(cardRep).join("")}`:""}
       ${hist.length>0?`
-        <div class="secao">HISTÃ"RICO HOJE (${hist.length})</div>
+        <div class="secao">HISTÃ“RICO HOJE (${hist.length})</div>
         ${hist.map(cardRep).join("")}
         <button class="btn-limpar" onclick="window.limparTudo()">${I.trash} Limpar tudo</button>`:""}
     </div>`;
@@ -1229,7 +1229,7 @@ function renderExpedicao(){
       ${mgmtHTML()}
       ${filaHTML}
       ${hist.length>0?`
-        <div class="secao-exp">HISTÃ"RICO (${hist.length})</div>
+        <div class="secao-exp">HISTÃ“RICO (${hist.length})</div>
         ${hist.map(c=>`
           <div class="chist-exp" style="border-left-color:${c.status==="concluido"?"var(--gr)":"var(--rd)"}">
             <span style="font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;color:${c.status==="concluido"?"var(--gr)":"var(--rd)"}">${h(c.placa)}</span>
@@ -1331,7 +1331,7 @@ function cardManMain(c){
     <div id="man-${idSafe(c.id)}" class="cman-main ${bordaCls}">
       ${isLib?`<div class="swipe-hint"></div>`:""}
       <div style="font-family:'Bebas Neue';font-size:13px;letter-spacing:3px;color:${placaCor}">
-        ${isLib?"âœ" LIBERADO â€“ PODE PARTIR":isEnc?"AGUARDANDO CARREGAMENTO":"NOVO VEÃCULO"}
+        ${isLib?"âœ“ LIBERADO â€“ PODE PARTIR":isEnc?"AGUARDANDO CARREGAMENTO":"NOVO VEÃCULO"}
       </div>
       <div class="placa-main ${isLib?"liberado":isEnc?"encostado":""}">${h(c.placa)}</div>
       <div class="doca-main">Doca ${h(c.doca||"â€“")}</div>
@@ -1637,7 +1637,7 @@ async function doPush(endCompleto){
     atribNome:atribPara!=="qualquer"?(operadores[atribPara]?.nome||null):null,
   });
   // Feedback visual + limpa campo
-  showToast(`âœ" ${endCompleto} enviado`);
+  showToast(`âœ“ ${endCompleto} enviado`);
   const fEnd=document.getElementById("fEnd");
   if(fEnd){fEnd.value="";
     document.getElementById("prevEnd")?.classList.add("hidden");
@@ -1719,7 +1719,7 @@ window.enviarCarreg=async()=>{
     document.getElementById("fTransp").value="";
     atribManob="qualquer";
     document.querySelectorAll(".atrib-pill-exp").forEach((el,i)=>el.classList.toggle("ativo",i===0));
-    showToast(`âœ" ${placa} enviado`,{bg:"#22c55e",color:"#000"});
+    showToast(`âœ“ ${placa} enviado`,{bg:"#22c55e",color:"#000"});
     setTimeout(()=>document.getElementById("fPlaca")?.focus(),50);
   }catch(e){alert("Erro: "+e.message);}
 };
@@ -1741,13 +1741,13 @@ window.limparCarreg=async()=>{
 
 // â"€â"€ AÃ‡Ã•ES MANOBRISTA â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const PROBLEMAS_OPCOES=[
-  {icon:"ðŸ"‹",txt:"Carro nÃ£o pega / nÃ£o liga"},
-  {icon:"ðŸ"§",txt:"VeÃ­culo quebrado"},
+  {icon:"ðŸ“‹",txt:"Carro nÃ£o pega / nÃ£o liga"},
+  {icon:"ðŸ“§",txt:"VeÃ­culo quebrado"},
   {icon:"ðŸ›ž",txt:"Pneu furado"},
   {icon:"â›½",txt:"Sem combustÃ­vel"},
-  {icon:"ðŸ"‘",txt:"Sem chave do veÃ­culo"},
-  {icon:"â›"",txt:"Acesso bloqueado Ã  doca"},
-  {icon:"â"",txt:"Outro problema"},
+  {icon:"ðŸ“‘",txt:"Sem chave do veÃ­culo"},
+  {icon:"â›“",txt:"Acesso bloqueado Ã  doca"},
+  {icon:"â“",txt:"Outro problema"},
 ];
 
 window.abrirModalProblema=id=>{
