@@ -1,0 +1,26 @@
+[
+  {
+    "email": "repositor1@empresa.com",
+    "password": "CHANGE_ME_STRONG_PASSWORD",
+    "role": "repositor",
+    "name": "Repositor 1"
+  },
+  {
+    "email": "operador1@empresa.com",
+    "password": "CHANGE_ME_STRONG_PASSWORD",
+    "role": "operador",
+    "name": "Operador 1"
+  },
+  {
+    "email": "expedicao1@empresa.com",
+    "password": "CHANGE_ME_STRONG_PASSWORD",
+    "role": "expedicao",
+    "name": "Expedicao 1"
+  },
+  {
+    "email": "manobrista1@empresa.com",
+    "password": "CHANGE_ME_STRONG_PASSWORD",
+    "role": "manobrista",
+    "name": "Manobrista 1"
+  }
+]
