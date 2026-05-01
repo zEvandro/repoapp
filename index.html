@@ -93,6 +93,27 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .auth-no-role{text-align:center;color:var(--tx2);font-size:13px;line-height:1.7;
   background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px}
 
+/* ADMIN */
+.adm-tab{background:var(--s1);border:1px solid var(--bd);color:var(--tx2);font-family:'Bebas Neue';
+  font-size:14px;letter-spacing:1px;padding:8px 14px;border-radius:8px;cursor:pointer;transition:all .15s;flex-shrink:0}
+.adm-tab-on{background:var(--am);color:#000;border-color:var(--am)}
+.adm-badge{background:var(--rd);color:#fff;font-size:10px;padding:1px 6px;border-radius:8px;margin-left:4px;vertical-align:middle}
+.adm-list{display:flex;flex-direction:column;gap:8px}
+.adm-row{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.adm-email{flex:1;min-width:120px;font-size:12px;color:var(--tx);word-break:break-all}
+.adm-inp{flex:1;min-width:100px;background:var(--s2);border:1px solid var(--bd);color:var(--tx);
+  padding:8px 10px;border-radius:8px;font-size:13px;outline:none}
+.adm-sel{background:var(--s2);border:1px solid var(--bd);color:var(--tx);padding:8px 10px;
+  border-radius:8px;font-size:13px;flex:1;min-width:130px;outline:none}
+.adm-btn-ok{background:var(--gn);border:none;color:#000;font-family:'Bebas Neue';font-size:14px;
+  letter-spacing:1px;padding:8px 14px;border-radius:8px;cursor:pointer;white-space:nowrap}
+.adm-btn-del{background:transparent;border:1px solid var(--rd);color:var(--rd);font-family:'Bebas Neue';
+  font-size:13px;letter-spacing:1px;padding:6px 12px;border-radius:8px;cursor:pointer;white-space:nowrap}
+.adm-badge-role{background:var(--s2);border:1px solid var(--bd);color:var(--tx2);font-size:12px;
+  padding:4px 10px;border-radius:8px;white-space:nowrap}
+.adm-form{display:flex;flex-direction:column;gap:10px}
+
 /* MODAL PROBLEMA */
 .prob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;
   display:flex;align-items:flex-end;justify-content:center;animation:fadeIn .15s ease}
@@ -526,11 +547,11 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getDatabase, ref, push, onValue, remove, update, set, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged,
-  setPersistence, browserLocalPersistence }
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
+  signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.1";
+const APP_VERSION = "v3.2";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -552,6 +573,8 @@ const operadoresRef   = ref(db, "operadores");
 const carregRef       = ref(db, "carregamentos");
 const manoOnlineRef   = ref(db, "manobristas");
 const nomesManobRef   = ref(db, "nomesManobristas");
+const pendingRef      = ref(db, "pendingUsers");
+const rolesAdmRef     = ref(db, "roles");
 
 // â"€â"€ ÃCONES â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const I = {
@@ -615,10 +638,20 @@ let authErr      = "";
 let authBusy     = false;
 let roleUnsub    = null;
 let dataUnsubs   = [];
+let pendingUsers = [];
+let allRoles     = {};
+let adminTab     = "pending";
+let adminBusy    = false;
+let adminErr     = "";
+let _secApp      = null;
 
 function clearDataSubs(){
   dataUnsubs.forEach(fn=>{try{fn();}catch{}});
   dataUnsubs=[];
+}
+function getSecAuth(){
+  if(!_secApp) _secApp=initializeApp(firebaseConfig,"secondary");
+  return getAuth(_secApp);
 }
 
 
@@ -1380,9 +1413,79 @@ function cardManSec(c){
 }
 
 // â"€â"€ RENDER â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+function renderAdmin(){
+  const pend=pendingUsers;
+  const OPTS=[
+    {v:"repositor",  l:"Repositor (Supervisor)"},
+    {v:"operador",   l:"Operador"},
+    {v:"expedicao",  l:"Expedição"},
+    {v:"manobrista", l:"Manobrista"},
+  ];
+  const sel=(id,val="")=>`<select id="${id}" class="adm-sel">
+    <option value="">-- Papel --</option>
+    ${OPTS.map(o=>`<option value="${o.v}"${val===o.v?" selected":""}>${o.l}</option>`).join("")}
+  </select>`;
+
+  let body="";
+  if(adminTab==="pending"){
+    body=pend.length?`<div class="adm-list">${pend.map(u=>`
+      <div class="adm-row">
+        <div class="adm-email">${h(u.email||u.uid)}</div>
+        <input class="adm-inp" id="adm-n-${u.uid}" placeholder="Nome" maxlength="40"/>
+        ${sel("adm-r-"+u.uid)}
+        <button class="adm-btn-ok" onclick="window.admAtribuir('${u.uid}')">LIBERAR</button>
+        <button class="adm-btn-del" onclick="window.admRejeitar('${u.uid}')">✕</button>
+      </div>`).join("")}</div>`:
+      `<div style="text-align:center;padding:32px;color:var(--tx2);font-size:13px">
+        Nenhum usuário aguardando.<br>
+        <span style="font-size:11px">Quando alguém fizer login sem perfil aparece aqui automaticamente.</span>
+      </div>`;
+  }else if(adminTab==="users"){
+    const list=Object.entries(allRoles).map(([uid,v])=>({uid,...v}));
+    const LBL={repositor:"Repositor",operador:"Operador",expedicao:"Expedição",manobrista:"Manobrista",admin:"Admin"};
+    body=list.length?`<div class="adm-list">${list.map(u=>`
+      <div class="adm-row">
+        <div class="adm-email"><b>${h(u.name||"—")}</b><br>
+          <span style="font-size:10px;color:var(--tx2)">${h(u.email||u.uid)}</span></div>
+        <div class="adm-badge-role">${LBL[u.role]||h(u.role)}</div>
+        <button class="adm-btn-del" onclick="window.admRemover('${u.uid}')">REVOGAR</button>
+      </div>`).join("")}</div>`:
+      `<div style="text-align:center;padding:32px;color:var(--tx2);font-size:13px">Nenhum usuário com perfil.</div>`;
+  }else{
+    body=`<div class="adm-form">
+      ${adminErr?`<div class="auth-err">${h(adminErr)}</div>`:""}
+      <input id="adm-cemail" class="auth-inp" type="email" placeholder="Email" autocomplete="off"/>
+      <input id="adm-csenha" class="auth-inp" type="text" placeholder="Senha temporária (mín. 6 caracteres)" autocomplete="off"/>
+      <input id="adm-cnome"  class="auth-inp" type="text" placeholder="Nome completo" autocomplete="off"/>
+      ${sel("adm-crole")}
+      <button class="auth-btn" onclick="window.admCriarUsuario()" ${adminBusy?"disabled":""}>${adminBusy?"CRIANDO...":"CRIAR USUÁRIO"}</button>
+    </div>`;
+  }
+
+  document.getElementById("app").innerHTML=`
+    <div style="min-height:100vh;background:var(--bg);padding:16px;max-width:600px;margin:0 auto">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div>
+          <h2 style="font-family:'Bebas Neue';font-size:28px;letter-spacing:2px;color:var(--am);margin:0">ADMIN</h2>
+          <div style="font-size:11px;color:var(--tx2)">${h(authUser?.email||"")}</div>
+        </div>
+        <button class="adm-btn-del" onclick="window.sair()">SAIR</button>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+        <button class="adm-tab${adminTab==="pending"?" adm-tab-on":""}" onclick="window.admTab('pending')">
+          PENDENTES${pend.length?`<span class="adm-badge">${pend.length}</span>`:""}
+        </button>
+        <button class="adm-tab${adminTab==="users"?" adm-tab-on":""}" onclick="window.admTab('users')">USUÁRIOS</button>
+        <button class="adm-tab${adminTab==="create"?" adm-tab-on":""}" onclick="window.admTab('create')">+ CRIAR</button>
+      </div>
+      ${body}
+    </div>`;
+}
+
 function render(){
   applyFont();
   if(!perfil)                                        renderLogin();
+  else if(perfil==="admin")                          renderAdmin();
   else if(perfil==="repositor")                      renderRepositor();
   else if(perfil==="operador"&&!nomeOperador)        renderNomeOperador();
   else if(perfil==="operador")                       renderOperador();
@@ -1409,7 +1512,7 @@ function registrarManobrista(){
 }
 function removerManobrista(){if(window._manRef)remove(window._manRef).catch(()=>{});}
 
-function papelValido(r){return ["repositor","operador","expedicao","manobrista"].includes(r);}
+function papelValido(r){return ["repositor","operador","expedicao","manobrista","admin"].includes(r);}
 
 function limparSessaoDados(){
   clearInterval(window._timerOp);
@@ -1479,6 +1582,16 @@ function bindDataByPerfil(){
       render();
     },()=>{}));
   }
+  if(perfil==="admin"){
+    dataUnsubs.push(onValue(pendingRef,snap=>{
+      pendingUsers=Object.entries(snap.val()||{}).map(([uid,v])=>({uid,...v})).sort((a,b)=>(a.ts||0)-(b.ts||0));
+      render();
+    },()=>{}));
+    dataUnsubs.push(onValue(rolesAdmRef,snap=>{
+      allRoles=snap.val()||{};
+      render();
+    },()=>{}));
+  }
 }
 
 function aplicarPapel(role,name){
@@ -1533,6 +1646,54 @@ window.sair=async()=>{
   authErr="";
   try{ if(authUser) await signOut(auth); }catch{}
   render();
+};
+
+// ── ADMIN ─────────────────────────────────────────────────────────────────
+window.admTab=t=>{adminTab=t;adminErr="";render();};
+
+window.admAtribuir=async uid=>{
+  const u=pendingUsers.find(p=>p.uid===uid);
+  if(!u)return;
+  const name=(document.getElementById("adm-n-"+uid)?.value||"").trim();
+  const role=document.getElementById("adm-r-"+uid)?.value;
+  if(!role){alert("Selecione um papel para "+u.email);return;}
+  try{
+    await set(ref(db,"roles/"+uid),{role,name:name||u.email,email:u.email||""});
+    await remove(ref(db,"pendingUsers/"+uid));
+  }catch(e){alert("Erro ao atribuir papel: "+e.message);}
+};
+
+window.admRejeitar=async uid=>{
+  try{await remove(ref(db,"pendingUsers/"+uid));}catch{}
+};
+
+window.admRemover=async uid=>{
+  if(!confirm("Revogar acesso deste usuário?"))return;
+  try{await remove(ref(db,"roles/"+uid));}catch(e){alert("Erro: "+e.message);}
+};
+
+window.admCriarUsuario=async()=>{
+  const email=(document.getElementById("adm-cemail")?.value||"").trim().toLowerCase();
+  const senha=(document.getElementById("adm-csenha")?.value||"").trim();
+  const nome=(document.getElementById("adm-cnome")?.value||"").trim();
+  const role=document.getElementById("adm-crole")?.value;
+  if(!email||!senha||!nome||!role){adminErr="Preencha todos os campos.";render();return;}
+  if(senha.length<6){adminErr="Senha mínima: 6 caracteres.";render();return;}
+  adminBusy=true;adminErr="";render();
+  try{
+    const sa=getSecAuth();
+    const cred=await createUserWithEmailAndPassword(sa,email,senha);
+    const uid=cred.user.uid;
+    await signOut(sa);
+    await set(ref(db,"roles/"+uid),{role,name:nome,email});
+    adminTab="users";
+    alert("Usuário \""+nome+"\" criado com sucesso!");
+  }catch(e){
+    if(e.code==="auth/email-already-in-use")adminErr="Email já cadastrado.";
+    else if(e.code==="auth/invalid-email")adminErr="Email inválido.";
+    else if(e.code==="auth/weak-password")adminErr="Senha fraca (mínimo 6 caracteres).";
+    else adminErr="Erro: "+(e.message||"tente novamente");
+  }finally{adminBusy=false;render();}
 };
 
 window.authEntrar=async()=>{
@@ -1858,6 +2019,7 @@ onAuthStateChanged(auth,user=>{
     const roleData=snap.val()||null;
     authReady=true;
     if(!roleData||!papelValido(roleData.role)){
+      set(ref(db,`pendingUsers/${authUser.uid}`),{email:authUser.email||"",ts:serverTimestamp()}).catch(()=>{});
       perfil=null;
       render();
       return;
