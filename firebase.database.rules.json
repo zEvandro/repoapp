@@ -1,13 +1,31 @@
-﻿{
+{
   "rules": {
     ".read": false,
     ".write": false,
 
     "roles": {
+      ".read": "auth != null && root.child('roles/' + auth.uid + '/role').val() === 'admin'",
       "$uid": {
-        ".read": "auth != null && (auth.uid === $uid || auth.token.admin === true)",
-        ".write": "auth != null && auth.token.admin === true",
-        ".validate": "newData.hasChildren(['role','name']) && newData.child('role').isString() && newData.child('role').val().matches(/^(repositor|operador|expedicao|manobrista)$/) && newData.child('name').isString() && newData.child('name').val().length > 0 && newData.child('name').val().length <= 30"
+        ".read": "auth != null && (auth.uid === $uid || root.child('roles/' + auth.uid + '/role').val() === 'admin')",
+        ".write": "auth != null && (root.child('roles/' + auth.uid + '/role').val() === 'admin' || (auth.uid === $uid && !data.exists() && newData.child('role').val() !== 'admin'))",
+        ".validate": "newData.hasChildren(['role','name']) && newData.child('role').isString() && newData.child('role').val().matches(/^(repositor|operador|expedicao|manobrista|admin)$/) && newData.child('name').isString() && newData.child('name').val().length > 0 && newData.child('name').val().length <= 50"
+      }
+    },
+
+    "pendingUsers": {
+      ".read": "auth != null && root.child('roles/' + auth.uid + '/role').val() === 'admin'",
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && (auth.uid === $uid || root.child('roles/' + auth.uid + '/role').val() === 'admin')",
+        ".validate": "newData.val() === null || (newData.child('email').isString() && newData.child('ts').isNumber())"
+      }
+    },
+
+    "preRoles": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('roles/' + auth.uid + '/role').val() === 'admin'",
+      "$emailKey": {
+        ".validate": "newData.val() === null || (newData.child('role').isString() && newData.child('role').val().matches(/^(repositor|operador|expedicao|manobrista|admin)$/) && newData.child('name').isString() && newData.child('email').isString())"
       }
     },
 
