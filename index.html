@@ -111,7 +111,7 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .prob-cancel{width:100%;padding:12px;background:transparent;border:1px solid var(--bd-man);
   color:var(--tx2-man);border-radius:10px;cursor:pointer;font-size:13px;font-weight:700;font-family:'DM Sans'}
 
-/* ATRASADO â€” card piscando vermelho quando pendente > 10 min */
+/* ATRASADO â€" card piscando vermelho quando pendente > 10 min */
 .crep-atrasado{border-left-color:#ef4444!important;animation:si .2s ease,pisca 2s ease-in-out infinite}
 @keyframes pisca{0%,100%{opacity:1}50%{opacity:.7}}
 
@@ -233,7 +233,7 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .stat-num{font-family:'Bebas Neue';font-size:28px;letter-spacing:1px;line-height:1;margin-bottom:3px}
 .stat-lbl{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu)}
 
-/* CÃ‚MARA TABS (repositor â€” scroll horizontal) */
+/* CÃ‚MARA TABS (repositor â€" scroll horizontal) */
 .cam-tab-bar{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;flex-shrink:0;
   background:var(--s1);border-bottom:1px solid var(--bd);position:sticky;top:52px;z-index:40}
 .cam-tab-bar::-webkit-scrollbar{display:none}
@@ -260,7 +260,7 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .atrib-pill.ativo{background:var(--am);color:#000}
 .atrib-pill.ativo svg{stroke:#000}
 
-/* CÃ‚MARA SELECTOR (legado â€” mantido para setCamara) */
+/* CÃ‚MARA SELECTOR (legado â€" mantido para setCamara) */
 .camara-sel{display:none}
 .camara-btn{display:none}
 .camara-letra{display:none}
@@ -546,14 +546,14 @@ const fbApp = initializeApp(firebaseConfig);
 const db    = getDatabase(fbApp);
 const auth  = getAuth(fbApp);
 
-// â”€â”€ REFS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ REFS â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const tasksRef        = ref(db, "tarefas");
 const operadoresRef   = ref(db, "operadores");
 const carregRef       = ref(db, "carregamentos");
 const manoOnlineRef   = ref(db, "manobristas");
 const nomesManobRef   = ref(db, "nomesManobristas");
 
-// â”€â”€ ÃCONES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ ÃCONES â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const I = {
   clipboard:  `<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>`,
   forklift:   `<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V9l4-5h6v5l4 3v5"/><path d="M4 17H2"/><path d="M22 17h-8"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/><path d="M14 9V4"/></svg>`,
@@ -585,7 +585,7 @@ const I = {
   flag:       `<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>`,
 };
 
-// â”€â”€ ESTADO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ ESTADO â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 // Picking
 let perfil       = null;
 let nomeOperador = null;
@@ -611,12 +611,12 @@ let mgmtOpen     = false;
 // Auth
 let authUser     = null;
 let authReady    = false;
-let authErr      = “”;
+let authErr      = "";
 let authBusy     = false;
 let roleUnsub    = null;
 
 
-// â”€â”€ CÃ‚MARAS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ CÃ‚MARAS â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const CAMARAS = {
   B: { nome:"Batavo",      cor:"#3b82f6", bg:"#3b82f615", bd:"#3b82f640" },
   A: { nome:"ItambÃ©",      cor:"#ef4444", bg:"#ef444415", bd:"#ef444440" },
@@ -626,7 +626,7 @@ const CAMARAS = {
   F: { nome:"CÃ¢mara F",    cor:"#22c55e", bg:"#22c55e15", bd:"#22c55e40", especial:true },
 };
 
-// â”€â”€ FONTE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ FONTE â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const FONT_SIZES = { P:42, M:56, G:72, GG:92 };
 function fontKey()    { return "repoapp-font-"+(perfil||"op"); }
 function fontPreset() { const s=localStorage.getItem(fontKey()); return (s&&FONT_SIZES[s])?s:"Auto"; }
@@ -642,7 +642,7 @@ function applyFont() {
 }
 window.addEventListener("resize",()=>{if(fontPreset()==="Auto")applyFont();});
 
-// â”€â”€ UTILS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ UTILS â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const fmtHora = ts=>ts?new Date(ts).toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}):"";
 function tempoFila(ts){const m=Math.floor((Date.now()-ts)/60000);if(m<1)return "agora";if(m<60)return m+"min";const h=Math.floor(m/60),r=m%60;return r?h+"h "+r+"min":h+"h";}
 function corTempo(ts){const m=Math.floor((Date.now()-ts)/60000);return m<5?"var(--gr)":m<15?"var(--am)":"var(--rd)";}
@@ -652,7 +652,7 @@ function sq(v){return String(v??"").replace(/\\/g,"\\\\").replace(/'/g,"\\'");}
 function idSafe(v){return String(v??"").replace(/[^A-Za-z0-9_-]/g,"_");}
 function cleanInput(v,max=40){return String(v??"").replace(/[<>"'`]/g,"").trim().slice(0,max);}
 
-// â”€â”€ PARSER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ PARSER â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function isPickingEnd(endCompleto){
   const s=(endCompleto||"").trim().toUpperCase();
   if(s.startsWith("F "))return true;
@@ -690,14 +690,14 @@ function parseEnd(s,camara){
   if(isNaN(rua)||isNaN(pos)||isNaN(nivel))return{valido:false,erro:"Apenas nÃºmeros"};
   if(rua<1||rua>9)return{valido:false,erro:"Rua: 1 a 9"};
   if(pos<1||pos>99)return{valido:false,erro:"PosiÃ§Ã£o: 1 a 99"};
-  if(nivel<1||nivel>5)return{valido:false,erro:"NÃ­vel: 1â€“5"};
-  const nivelLabel=["","NÃ­vel 10 â€” chÃ£o","2Âº nÃ­vel","3Âº nÃ­vel","4Âº nÃ­vel","5Âº nÃ­vel"][nivel];
+  if(nivel<1||nivel>5)return{valido:false,erro:"NÃ­vel: 1â€"5"};
+  const nivelLabel=["","NÃ­vel 10 â€" chÃ£o","2Âº nÃ­vel","3Âº nÃ­vel","4Âº nÃ­vel","5Âº nÃ­vel"][nivel];
   const completo=`${camara} ${String(rua).padStart(3,"0")} ${String(pos).padStart(4,"0")} ${String(nivel*10).padStart(2,"0")}`;
   const isPicking=nivel===1;
   return{valido:true,completo,erro:"",camara,rua,pos,nivel,label:`${cam.nome} Â· Rua ${rua} Â· Pos ${pos} Â· ${nivelLabel}`,isPicking};
 }
 
-// â”€â”€ TOAST â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ TOAST â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function showToast(msg,{bg="#22c55e",color="#000"}={}){
   document.getElementById("_toast")?.remove();
   const el=document.createElement("div");
@@ -708,11 +708,11 @@ function showToast(msg,{bg="#22c55e",color="#000"}={}){
   setTimeout(()=>el.remove(),2200);
 }
 
-// â”€â”€ SOM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ SOM â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function beep(freq=880,times=2){try{const ctx=new(window.AudioContext||window.webkitAudioContext)();Array.from({length:times},(_,i)=>i*.18).forEach(d=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=freq;o.type="sine";g.gain.setValueAtTime(0,ctx.currentTime+d);g.gain.linearRampToValueAtTime(.4,ctx.currentTime+d+.01);g.gain.linearRampToValueAtTime(0,ctx.currentTime+d+.12);o.start(ctx.currentTime+d);o.stop(ctx.currentTime+d+.15);});}catch{}}
 function beepLib(){try{const ctx=new(window.AudioContext||window.webkitAudioContext)();[[880,.0],[1047,.2],[1319,.4]].forEach(([freq,d])=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=freq;o.type="sine";g.gain.setValueAtTime(0,ctx.currentTime+d);g.gain.linearRampToValueAtTime(.4,ctx.currentTime+d+.01);g.gain.linearRampToValueAtTime(0,ctx.currentTime+d+.18);o.start(ctx.currentTime+d);o.stop(ctx.currentTime+d+.22);});}catch{}}
 
-// â”€â”€ SWIPE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ SWIPE â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function initSwipe(el,onRight){
   let sx=0,sy=0,dx=0,moving=false;
   el.addEventListener("touchstart",e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;dx=0;moving=false;},{passive:true});
@@ -730,7 +730,7 @@ function initSwipe(el,onRight){
   });
 }
 
-// â”€â”€ PAINEL FONTE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ PAINEL FONTE â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function fontPanelHTML(isOp){
   if(!showFont)return"";
   const cur=fontPreset(),px=fontPx(),sp=Math.max(2,Math.round(px*.07));
@@ -745,7 +745,7 @@ function fontPanelHTML(isOp){
   </div>`;
 }
 
-// â”€â”€ OPERADORES ONLINE HTML â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ OPERADORES ONLINE HTML â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function onlineBarHTML(){
   const lista=Object.entries(operadores);
   if(lista.length===0)return"";
@@ -755,7 +755,7 @@ function onlineBarHTML(){
   </div>`;
 }
 
-// â”€â”€ MANOBRISTAS ONLINE HTML â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ MANOBRISTAS ONLINE HTML â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function manoOnlineBarHTML(){
   const lista=Object.entries(manobristas);
   if(lista.length===0)return"";
@@ -765,7 +765,7 @@ function manoOnlineBarHTML(){
   </div>`;
 }
 
-// â”€â”€ SELECT DE ATRIBUIÃ‡ÃƒO (picking) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ SELECT DE ATRIBUIÃ‡ÃƒO (picking) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function atribSelectHTML(){
   const lista=Object.entries(operadores);
   if(lista.length===0){
@@ -779,7 +779,7 @@ function atribSelectHTML(){
   </select>`;
 }
 
-// â”€â”€ PILLS DE ATRIBUIÃ‡ÃƒO (expediÃ§Ã£o) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ PILLS DE ATRIBUIÃ‡ÃƒO (expediÃ§Ã£o) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function atribPillsExpHTML(){
   const manoOnlineNames=Object.values(manobristas).map(m=>m.nome);
   const nomes=Object.entries(nomesManobristas);
@@ -798,7 +798,7 @@ function atribPillsExpHTML(){
   </div>`;
 }
 
-// â”€â”€ GERENCIAR MANOBRISTAS HTML â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ GERENCIAR MANOBRISTAS HTML â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function mgmtHTML(){
   const manoOnlineNames=Object.values(manobristas).map(m=>m.nome);
   const nomes=Object.entries(nomesManobristas);
@@ -832,7 +832,7 @@ function mgmtHTML(){
   </div>`;
 }
 
-// â”€â”€ RENDER LOGIN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ RENDER LOGIN â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function renderLogin(){
   if(!authUser){
     document.getElementById("app").innerHTML=`
@@ -889,7 +889,7 @@ function renderNomeOperador(){
   setTimeout(()=>document.getElementById("inputNome")?.focus(),100);
 }
 
-// â”€â”€ TELA NOME DO MANOBRISTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ TELA NOME DO MANOBRISTA â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function renderNomeManob(){
   const manoOnlineNames=Object.values(manobristas).map(m=>m.nome);
   const nomes=Object.entries(nomesManobristas);
@@ -923,7 +923,7 @@ function renderNomeManob(){
   setTimeout(()=>document.getElementById("inputNomeManob")?.focus(),100);
 }
 
-// â”€â”€ RENDER REPOSITOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ RENDER REPOSITOR â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function atribPillsHTML(){
   const lista=Object.entries(operadores);
   const qualquerAtivo=atribPara==="qualquer";
@@ -945,7 +945,7 @@ function camTabsHTML(){
       <button class="cam-tab${camaraAtual===k?" ativa":""}"
         style="${camaraAtual===k?`color:${c.cor}`:`color:var(--tx2)`}"
         onclick="window.setCamara('${k}')">
-        <span class="cam-tab-dot" style="background:${c.cor}"></span>${k} â€” ${c.nome}
+        <span class="cam-tab-dot" style="background:${c.cor}"></span>${k} â€" ${c.nome}
       </button>`).join("")}
   </div>`;
 }
@@ -985,7 +985,7 @@ function renderRepositor(){
         <div class="ftitle">${I.package.replace('width="16" height="16"','width="18" height="18"')} Nova ReposiÃ§Ã£o</div>
         <label class="lbl">
           EndereÃ§o
-          <small>â€” ${cam?.especial ? 'ex: 1-2 (rua-posiÃ§Ã£o)' : 'ex: 4-56-2 (rua-posiÃ§Ã£o-nÃ­vel)'}</small>
+          <small>â€" ${cam?.especial ? 'ex: 1-2 (rua-posiÃ§Ã£o)' : 'ex: 4-56-2 (rua-posiÃ§Ã£o-nÃ­vel)'}</small>
         </label>
         <input id="fEnd" class="inp" placeholder="${cam?.especial ? '1-2' : '4-56-2'}" oninput="window.onEnd(this.value)"
           style="font-size:18px;font-weight:800;letter-spacing:2px"/>
@@ -1002,7 +1002,7 @@ function renderRepositor(){
       </div>
       ${fila.length>0?`<div class="secao">FILA (${fila.length})</div>${fila.map(cardRep).join("")}`:""}
       ${hist.length>0?`
-        <div class="secao">HISTÃ“RICO HOJE (${hist.length})</div>
+        <div class="secao">HISTÃ"RICO HOJE (${hist.length})</div>
         ${hist.map(cardRep).join("")}
         <button class="btn-limpar" onclick="window.limparTudo()">${I.trash} Limpar tudo</button>`:""}
     </div>`;
@@ -1054,7 +1054,7 @@ function cardRep(t){
     </div>`;
 }
 
-// â”€â”€ RENDER OPERADOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ RENDER OPERADOR â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function renderOperador(){
   const minhasFila=tarefas.filter(t=>{
     if(!["pendente","andamento","pulado"].includes(t.status))return false;
@@ -1166,7 +1166,7 @@ function cardOp(t,i){
     </div>`;
 }
 
-// â”€â”€ RENDER EXPEDIÃ‡ÃƒO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ RENDER EXPEDIÃ‡ÃƒO â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function renderExpedicao(){
   const fila=carregamentos.filter(c=>!["concluido","problema"].includes(c.status));
   const hist=carregamentos.filter(c=>["concluido","problema"].includes(c.status));
@@ -1222,14 +1222,14 @@ function renderExpedicao(){
             <input id="fTransp" class="inp-exp" placeholder="Ex: JBS"/>
           </div>
         </div>
-        <label class="lbl-exp">${I.truck} Manobrista <small style="color:var(--mu-exp);font-size:9px;text-transform:none;letter-spacing:0">â€” opcional</small></label>
+        <label class="lbl-exp">${I.truck} Manobrista <small style="color:var(--mu-exp);font-size:9px;text-transform:none;letter-spacing:0">â€" opcional</small></label>
         ${atribPillsExpHTML()}
         <button class="btn-send-exp" onclick="window.enviarCarreg()">${I.send} ENVIAR AO MANOBRISTA</button>
       </div>
       ${mgmtHTML()}
       ${filaHTML}
       ${hist.length>0?`
-        <div class="secao-exp">HISTÃ“RICO (${hist.length})</div>
+        <div class="secao-exp">HISTÃ"RICO (${hist.length})</div>
         ${hist.map(c=>`
           <div class="chist-exp" style="border-left-color:${c.status==="concluido"?"var(--gr)":"var(--rd)"}">
             <span style="font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;color:${c.status==="concluido"?"var(--gr)":"var(--rd)"}">${h(c.placa)}</span>
@@ -1256,7 +1256,7 @@ function cardExp(c){
         ${c.status==="pendente"?`<button class="btn-liberar" onclick="window.liberarCarreg('${sq(c.id)}')" style="background:var(--am)">${I.flag} LIBERAR</button>`:""}
         <button class="btn-rem" onclick="window.removerCarreg('${sq(c.id)}')">${I.x}</button>
       </div>
-      <div style="font-size:12px;color:var(--tx2-exp);margin:3px 0">Doca ${h(c.doca||"â€”")}</div>
+      <div style="font-size:12px;color:var(--tx2-exp);margin:3px 0">Doca ${h(c.doca||"â€"")}</div>
       ${isProb&&c.problemaDesc?`
         <div style="background:#ef444418;border:1px solid #ef444440;border-radius:8px;padding:8px 10px;margin:6px 0;
           font-size:12px;font-weight:700;color:#ef4444;display:flex;align-items:center;gap:6px">
@@ -1271,7 +1271,7 @@ function cardExp(c){
     </div>`;
 }
 
-// â”€â”€ RENDER MANOBRISTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ RENDER MANOBRISTA â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function renderManobrista(){
   const minhaFila=carregamentos.filter(c=>{
     if(["concluido","problema"].includes(c.status))return false;
@@ -1311,7 +1311,7 @@ function renderManobrista(){
         ${hist.map(c=>`
           <div class="chist-exp" style="border-left-color:${c.status==="concluido"?"var(--gr)":"var(--rd)"}">
             <span style="font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;color:${c.status==="concluido"?"var(--gr)":"var(--rd)"}">${h(c.placa)}</span>
-            <span style="font-size:11px;color:var(--tx2-exp);margin-left:6px">Doca ${h(c.doca||"â€”")}</span>
+            <span style="font-size:11px;color:var(--tx2-exp);margin-left:6px">Doca ${h(c.doca||"â€"")}</span>
             <span style="margin-left:auto;font-size:10px;color:var(--mu-man)">${fmtHora(c.ts)}</span>
           </div>`).join("")}`:""}
     </div>`;
@@ -1331,10 +1331,10 @@ function cardManMain(c){
     <div id="man-${idSafe(c.id)}" class="cman-main ${bordaCls}">
       ${isLib?`<div class="swipe-hint"></div>`:""}
       <div style="font-family:'Bebas Neue';font-size:13px;letter-spacing:3px;color:${placaCor}">
-        ${isLib?"âœ“ LIBERADO â€” PODE PARTIR":isEnc?"AGUARDANDO CARREGAMENTO":"NOVO VEÃCULO"}
+        ${isLib?"âœ" LIBERADO â€" PODE PARTIR":isEnc?"AGUARDANDO CARREGAMENTO":"NOVO VEÃCULO"}
       </div>
       <div class="placa-main ${isLib?"liberado":isEnc?"encostado":""}">${h(c.placa)}</div>
-      <div class="doca-main">Doca ${h(c.doca||"â€”")}</div>
+      <div class="doca-main">Doca ${h(c.doca||"â€"")}</div>
       <div class="transp-main">${h(c.transportadora||"")}</div>
       ${isLib?`
         <div class="liberado-banner">
@@ -1366,14 +1366,14 @@ function cardManSec(c){
     <div class="cman-sec">
       <div style="display:flex;align-items:center;gap:8px">
         <span style="font-family:'Bebas Neue';font-size:24px;letter-spacing:3px;color:var(--pu);opacity:.6">${h(c.placa)}</span>
-        <span style="font-size:10px;color:var(--tx2-man)">Doca ${h(c.doca||"â€”")}</span>
+        <span style="font-size:10px;color:var(--tx2-man)">Doca ${h(c.doca||"â€"")}</span>
         <span class="tempo-op" data-ts="${c.ts}" style="margin-left:auto;font-size:10px;font-weight:700;color:${corTempo(c.ts)}">${tempoFila(c.ts)}</span>
       </div>
       ${c.transportadora?`<div style="font-size:10px;color:var(--mu-man);margin-top:2px">${h(c.transportadora)}</div>`:""}
     </div>`;
 }
 
-// â”€â”€ RENDER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ RENDER â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function render(){
   applyFont();
   if(!perfil)                                        renderLogin();
@@ -1385,7 +1385,7 @@ function render(){
   else if(perfil==="manobrista")                     renderManobrista();
 }
 
-// â”€â”€ PRESENÃ‡A (picking) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ PRESENÃ‡A (picking) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function registrarOperador(){
   if(!opId||!nomeOperador)return;
   const opRef=ref(db,`operadores/${opId}`);
@@ -1394,7 +1394,7 @@ function registrarOperador(){
 }
 function removerOperador(){if(window._opRef)remove(window._opRef).catch(()=>{});}
 
-// â”€â”€ PRESENÃ‡A (manobrista) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ PRESENÃ‡A (manobrista) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function registrarManobrista(){
   if(!manobId||!nomeManob)return;
   const mRef=ref(db,`manobristas/${manobId}`);
@@ -1500,7 +1500,7 @@ function aplicarPapel(role,name){
   render();
 }
 
-// â”€â”€ AÃ‡Ã•ES GERAIS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ AÃ‡Ã•ES GERAIS â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 
 
 window.confirmarNome=()=>{
@@ -1554,7 +1554,7 @@ window.authEntrar=async()=>{
   }
 };
 
-// â”€â”€ AÃ‡Ã•ES PICKING â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ AÃ‡Ã•ES PICKING â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 window.setFiltroRua=r=>{filtroRua=r;render();};
 window.toggleFont=()=>{showFont=!showFont;render();};
 window.setAtrib=v=>{
@@ -1571,9 +1571,9 @@ window.setCamara=c=>{
   camaraAtual=c;
   // Atualiza tabs
   document.querySelectorAll(".cam-tab").forEach(btn=>{
-    // Extrai letra da aba pelo texto (formato "X â€” Nome")
+    // Extrai letra da aba pelo texto (formato "X â€" Nome")
     const txt=btn.textContent.trim();
-    const k=txt.split("â€”")[0].trim();
+    const k=txt.split("â€"")[0].trim();
     const cam=CAMARAS[k];if(!cam)return;
     const isAtiva=k===c;
     btn.classList.toggle("ativa",isAtiva);
@@ -1613,7 +1613,7 @@ window.onEnd=v=>{
   if(r.valido){
     if(r.isPicking){
       elP.className="prev-end err";
-      elP.innerHTML=`<span style="color:var(--am)">${I.alert}</span><div><div class="pfull" style="color:var(--am)">${r.completo}</div><div class="pdet" style="color:var(--am);font-weight:700;margin-top:4px">${cam.especial?"CÃ¢mara F â€” nÃ­vel de chÃ£o":"NÃ­vel 10 â€” picking de chÃ£o"}</div><div class="pdet" style="margin-top:3px">Este endereÃ§o jÃ¡ estÃ¡ acessÃ­vel no chÃ£o.<br>O operador de empilhadeira nÃ£o Ã© necessÃ¡rio.</div></div>`;
+      elP.innerHTML=`<span style="color:var(--am)">${I.alert}</span><div><div class="pfull" style="color:var(--am)">${r.completo}</div><div class="pdet" style="color:var(--am);font-weight:700;margin-top:4px">${cam.especial?"CÃ¢mara F â€" nÃ­vel de chÃ£o":"NÃ­vel 10 â€" picking de chÃ£o"}</div><div class="pdet" style="margin-top:3px">Este endereÃ§o jÃ¡ estÃ¡ acessÃ­vel no chÃ£o.<br>O operador de empilhadeira nÃ£o Ã© necessÃ¡rio.</div></div>`;
       if(elA)elA.className="aviso-dup hidden";window._endForcar=null;return;
     }
     elP.className="prev-end ok";
@@ -1637,7 +1637,7 @@ async function doPush(endCompleto){
     atribNome:atribPara!=="qualquer"?(operadores[atribPara]?.nome||null):null,
   });
   // Feedback visual + limpa campo
-  showToast(`âœ“ ${endCompleto} enviado`);
+  showToast(`âœ" ${endCompleto} enviado`);
   const fEnd=document.getElementById("fEnd");
   if(fEnd){fEnd.value="";
     document.getElementById("prevEnd")?.classList.add("hidden");
@@ -1649,7 +1649,7 @@ async function doPush(endCompleto){
 window.enviar=async()=>{
   const r=parseEnd(document.getElementById("fEnd")?.value||"",camaraAtual);
   if(!r.valido){alert(r.erro||"EndereÃ§o invÃ¡lido");return;}
-  if(r.isPicking){alert("EndereÃ§o de chÃ£o â€” o operador nÃ£o Ã© necessÃ¡rio.");return;}
+  if(r.isPicking){alert("EndereÃ§o de chÃ£o â€" o operador nÃ£o Ã© necessÃ¡rio.");return;}
   const elA=document.getElementById("avisoEnd");
   if(elA&&!elA.classList.contains("hidden")&&window._endForcar)return;
   await doPush(r.completo);
@@ -1668,7 +1668,7 @@ window.remover=async id=>{if(!confirm("Remover esta tarefa?"))return;try{await r
 window.fecharAlerta=async id=>{try{await update(ref(db,`tarefas/${id}`),{alertaVisto:true});}catch{}document.getElementById("al-"+idSafe(id))?.remove();};
 window.limparTudo=async()=>{if(!confirm("Limpar todas as tarefas?"))return;try{await remove(tasksRef);}catch(e){alert("Erro: "+e.message);}};
 
-// â”€â”€ AÃ‡Ã•ES EXPEDIÃ‡ÃƒO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ AÃ‡Ã•ES EXPEDIÃ‡ÃƒO â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 window.setAtribManob=nome=>{
   atribManob=nome;
   document.querySelectorAll(".atrib-pill-exp").forEach(el=>{
@@ -1719,7 +1719,7 @@ window.enviarCarreg=async()=>{
     document.getElementById("fTransp").value="";
     atribManob="qualquer";
     document.querySelectorAll(".atrib-pill-exp").forEach((el,i)=>el.classList.toggle("ativo",i===0));
-    showToast(`âœ“ ${placa} enviado`,{bg:"#22c55e",color:"#000"});
+    showToast(`âœ" ${placa} enviado`,{bg:"#22c55e",color:"#000"});
     setTimeout(()=>document.getElementById("fPlaca")?.focus(),50);
   }catch(e){alert("Erro: "+e.message);}
 };
@@ -1739,15 +1739,15 @@ window.limparCarreg=async()=>{
   try{await Promise.all(conc.map(c=>remove(ref(db,`carregamentos/${c.id}`))));}catch(e){alert("Erro: "+e.message);}
 };
 
-// â”€â”€ AÃ‡Ã•ES MANOBRISTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ AÃ‡Ã•ES MANOBRISTA â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const PROBLEMAS_OPCOES=[
-  {icon:"ðŸ”‹",txt:"Carro nÃ£o pega / nÃ£o liga"},
-  {icon:"ðŸ”§",txt:"VeÃ­culo quebrado"},
+  {icon:"ðŸ"‹",txt:"Carro nÃ£o pega / nÃ£o liga"},
+  {icon:"ðŸ"§",txt:"VeÃ­culo quebrado"},
   {icon:"ðŸ›ž",txt:"Pneu furado"},
   {icon:"â›½",txt:"Sem combustÃ­vel"},
-  {icon:"ðŸ”‘",txt:"Sem chave do veÃ­culo"},
-  {icon:"â›”",txt:"Acesso bloqueado Ã  doca"},
-  {icon:"â“",txt:"Outro problema"},
+  {icon:"ðŸ"‘",txt:"Sem chave do veÃ­culo"},
+  {icon:"â›"",txt:"Acesso bloqueado Ã  doca"},
+  {icon:"â"",txt:"Outro problema"},
 ];
 
 window.abrirModalProblema=id=>{
@@ -1790,7 +1790,7 @@ window.acaoCarreg=async(id,status)=>{
   }catch(e){alert("Erro: "+e.message);}
 };
 
-// â”€â”€ MODAL REPASSAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ MODAL REPASSAR â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 window.abrirRepassar=taskId=>{
   const task=tarefas.find(t=>t.id===taskId);
   if(!task)return;
@@ -1835,7 +1835,7 @@ window.confirmarRepassar=async(taskId,novoOpId,novoOpNome)=>{
   }catch(e){alert("Erro ao repassar: "+e.message);}
 };
 
-// â”€â”€ AUTH + ROLE BOOTSTRAP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â"€â"€ AUTH + ROLE BOOTSTRAP â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 onAuthStateChanged(auth,user=>{
   if(roleUnsub){try{roleUnsub();}catch{}roleUnsub=null;}
   limparSessaoDados();
