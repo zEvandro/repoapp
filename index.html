@@ -545,13 +545,13 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 <div id="app"></div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getDatabase, ref, push, onValue, remove, update, set, serverTimestamp }
+import { getDatabase, ref, push, onValue, get, remove, update, set, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.2";
+const APP_VERSION = "v3.3";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -575,6 +575,7 @@ const manoOnlineRef   = ref(db, "manobristas");
 const nomesManobRef   = ref(db, "nomesManobristas");
 const pendingRef      = ref(db, "pendingUsers");
 const rolesAdmRef     = ref(db, "roles");
+const preRolesRef     = ref(db, "preRoles");
 
 // â"€â"€ ÃCONES â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const I = {
@@ -1454,11 +1455,15 @@ function renderAdmin(){
   }else{
     body=`<div class="adm-form">
       ${adminErr?`<div class="auth-err">${h(adminErr)}</div>`:""}
+      <div style="font-size:11px;color:var(--tx2);line-height:1.5;background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:10px">
+        <b style="color:var(--am)">Usuário já existe no sistema?</b> Deixe a senha em branco — o papel será atribuído automaticamente no próximo login.<br>
+        <b style="color:var(--am)">Usuário novo?</b> Preencha a senha para criar a conta agora.
+      </div>
       <input id="adm-cemail" class="auth-inp" type="email" placeholder="Email" autocomplete="off"/>
-      <input id="adm-csenha" class="auth-inp" type="text" placeholder="Senha temporária (mín. 6 caracteres)" autocomplete="off"/>
+      <input id="adm-csenha" class="auth-inp" type="text" placeholder="Senha (deixe em branco se já tem conta)" autocomplete="off"/>
       <input id="adm-cnome"  class="auth-inp" type="text" placeholder="Nome completo" autocomplete="off"/>
       ${sel("adm-crole")}
-      <button class="auth-btn" onclick="window.admCriarUsuario()" ${adminBusy?"disabled":""}>${adminBusy?"CRIANDO...":"CRIAR USUÁRIO"}</button>
+      <button class="auth-btn" onclick="window.admCriarUsuario()" ${adminBusy?"disabled":""}>${adminBusy?"SALVANDO...":"SALVAR"}</button>
     </div>`;
   }
 
@@ -1677,20 +1682,32 @@ window.admCriarUsuario=async()=>{
   const senha=(document.getElementById("adm-csenha")?.value||"").trim();
   const nome=(document.getElementById("adm-cnome")?.value||"").trim();
   const role=document.getElementById("adm-crole")?.value;
-  if(!email||!senha||!nome||!role){adminErr="Preencha todos os campos.";render();return;}
-  if(senha.length<6){adminErr="Senha mínima: 6 caracteres.";render();return;}
+  if(!email||!nome||!role){adminErr="Preencha email, nome e papel.";render();return;}
   adminBusy=true;adminErr="";render();
   try{
-    const sa=getSecAuth();
-    const cred=await createUserWithEmailAndPassword(sa,email,senha);
-    const uid=cred.user.uid;
-    await signOut(sa);
-    await set(ref(db,"roles/"+uid),{role,name:nome,email});
+    if(senha.length>=6){
+      // Tenta criar usuário novo no Auth
+      const sa=getSecAuth();
+      const cred=await createUserWithEmailAndPassword(sa,email,senha);
+      const uid=cred.user.uid;
+      await signOut(sa);
+      await set(ref(db,"roles/"+uid),{role,name:nome,email});
+    }else{
+      // Sem senha: pré-atribui papel por email (usuário já existe no Auth)
+      const emailKey=email.replace(/\./g,",");
+      await set(ref(db,`preRoles/${emailKey}`),{role,name:nome,email});
+    }
     adminTab="users";
-    alert("Usuário \""+nome+"\" criado com sucesso!");
+    adminErr="";
+    alert("Papel atribuído a \""+nome+"\".\nNa próxima vez que ele fizer login, o acesso já vai funcionar.");
   }catch(e){
-    if(e.code==="auth/email-already-in-use")adminErr="Email já cadastrado.";
-    else if(e.code==="auth/invalid-email")adminErr="Email inválido.";
+    if(e.code==="auth/email-already-in-use"){
+      // Usuário existe no Auth mas não no banco: pré-atribui por email
+      const emailKey=email.replace(/\./g,",");
+      await set(ref(db,`preRoles/${emailKey}`),{role,name:nome,email}).catch(()=>{});
+      adminTab="users";
+      alert("Usuário já existe. Papel pré-atribuído a \""+nome+"\".\nNa próxima vez que ele fizer login, o acesso vai funcionar automaticamente.");
+    }else if(e.code==="auth/invalid-email")adminErr="Email inválido.";
     else if(e.code==="auth/weak-password")adminErr="Senha fraca (mínimo 6 caracteres).";
     else adminErr="Erro: "+(e.message||"tente novamente");
   }finally{adminBusy=false;render();}
@@ -2019,9 +2036,23 @@ onAuthStateChanged(auth,user=>{
     const roleData=snap.val()||null;
     authReady=true;
     if(!roleData||!papelValido(roleData.role)){
-      set(ref(db,`pendingUsers/${authUser.uid}`),{email:authUser.email||"",ts:serverTimestamp()}).catch(()=>{});
-      perfil=null;
-      render();
+      const emailKey=(authUser.email||"").replace(/\./g,",");
+      get(ref(db,`preRoles/${emailKey}`)).then(snap=>{
+        if(snap.exists()){
+          const pre=snap.val();
+          set(ref(db,`roles/${authUser.uid}`),{role:pre.role,name:pre.name,email:authUser.email||""})
+            .then(()=>remove(ref(db,`preRoles/${emailKey}`)))
+            .catch(()=>{});
+        }else{
+          set(ref(db,`pendingUsers/${authUser.uid}`),{email:authUser.email||"",ts:serverTimestamp()}).catch(()=>{});
+          perfil=null;
+          render();
+        }
+      }).catch(()=>{
+        set(ref(db,`pendingUsers/${authUser.uid}`),{email:authUser.email||"",ts:serverTimestamp()}).catch(()=>{});
+        perfil=null;
+        render();
+      });
       return;
     }
     aplicarPapel(roleData.role,roleData.name||"");
