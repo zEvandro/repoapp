@@ -1,0 +1,59 @@
+﻿{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "roles": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid === $uid || auth.token.admin === true)",
+        ".write": "auth != null && auth.token.admin === true",
+        ".validate": "newData.hasChildren(['role','name']) && newData.child('role').isString() && newData.child('role').val().matches(/^(repositor|operador|expedicao|manobrista)$/) && newData.child('name').isString() && newData.child('name').val().length > 0 && newData.child('name').val().length <= 30"
+      }
+    },
+
+    "tarefas": {
+      ".read": "auth != null && (root.child('roles/' + auth.uid + '/role').val() === 'repositor' || root.child('roles/' + auth.uid + '/role').val() === 'operador')",
+      ".write": false,
+      "$id": {
+        ".write": "auth != null && (root.child('roles/' + auth.uid + '/role').val() === 'repositor' || (root.child('roles/' + auth.uid + '/role').val() === 'operador' && data.exists() && newData.exists() && newData.child('endereco').val() === data.child('endereco').val() && newData.child('tipo').val() === data.child('tipo').val() && newData.child('atribId').val() === data.child('atribId').val() && newData.child('atribNome').val() === data.child('atribNome').val() && newData.child('alertaVisto').val() === data.child('alertaVisto').val() && newData.child('status').val().matches(/^(andamento|concluido|vazio|pulado)$/)))",
+        ".validate": "newData.val() === null || (newData.hasChildren(['endereco','tipo','status','ts']) && newData.child('endereco').isString() && newData.child('endereco').val().matches(/^[A-F]\\s+\\d{2,3}\\s+\\d{3,4}\\s+\\d{2}$/) && newData.child('tipo').isString() && newData.child('tipo').val().matches(/^(picking|palete)$/) && newData.child('status').isString() && newData.child('status').val().matches(/^(pendente|andamento|concluido|vazio|pulado)$/) && newData.child('ts').isNumber() && (!newData.child('atribId').exists() || newData.child('atribId').isString() || newData.child('atribId').val() === null) && (!newData.child('atribNome').exists() || newData.child('atribNome').isString() || newData.child('atribNome').val() === null) && (!newData.child('opId').exists() || newData.child('opId').isString() || newData.child('opId').val() === null) && (!newData.child('opNome').exists() || newData.child('opNome').isString() || newData.child('opNome').val() === null) && (!newData.child('alertaVisto').exists() || newData.child('alertaVisto').isBoolean()))"
+      }
+    },
+
+    "operadores": {
+      ".read": "auth != null && (root.child('roles/' + auth.uid + '/role').val() === 'repositor' || root.child('roles/' + auth.uid + '/role').val() === 'operador')",
+      ".write": false,
+      "$uid": {
+        ".write": "auth != null && auth.uid === $uid && root.child('roles/' + auth.uid + '/role').val() === 'operador'",
+        ".validate": "newData.val() === null || (newData.hasChildren(['nome','ts']) && newData.child('nome').isString() && newData.child('nome').val().length > 0 && newData.child('nome').val().length <= 30 && newData.child('ts').isNumber())"
+      }
+    },
+
+    "carregamentos": {
+      ".read": "auth != null && (root.child('roles/' + auth.uid + '/role').val() === 'expedicao' || root.child('roles/' + auth.uid + '/role').val() === 'manobrista')",
+      ".write": false,
+      "$id": {
+        ".write": "auth != null && (root.child('roles/' + auth.uid + '/role').val() === 'expedicao' || (root.child('roles/' + auth.uid + '/role').val() === 'manobrista' && data.exists() && newData.exists() && newData.child('placa').val() === data.child('placa').val() && newData.child('doca').val() === data.child('doca').val() && newData.child('transportadora').val() === data.child('transportadora').val() && newData.child('manobNome').val() === data.child('manobNome').val() && newData.child('status').val().matches(/^(encostado|concluido|problema)$/) && (!data.child('manobNome').exists() || data.child('manobNome').val() === root.child('roles/' + auth.uid + '/name').val()) && (!newData.child('manobNomeAcao').exists() || newData.child('manobNomeAcao').val() === root.child('roles/' + auth.uid + '/name').val())))",
+        ".validate": "newData.val() === null || (newData.hasChildren(['placa','doca','transportadora','status','ts']) && newData.child('placa').isString() && newData.child('placa').val().matches(/^[A-Z0-9-]{5,12}$/) && newData.child('doca').isString() && newData.child('doca').val().length > 0 && newData.child('doca').val().length <= 30 && newData.child('transportadora').isString() && newData.child('transportadora').val().length > 0 && newData.child('transportadora').val().length <= 40 && newData.child('status').isString() && newData.child('status').val().matches(/^(pendente|encostado|liberado|concluido|problema)$/) && newData.child('ts').isNumber() && (!newData.child('manobNome').exists() || newData.child('manobNome').isString() || newData.child('manobNome').val() === null) && (!newData.child('manobNomeAcao').exists() || newData.child('manobNomeAcao').isString()) && (!newData.child('problemaDesc').exists() || newData.child('problemaDesc').isString()))"
+      }
+    },
+
+    "manobristas": {
+      ".read": "auth != null && (root.child('roles/' + auth.uid + '/role').val() === 'expedicao' || root.child('roles/' + auth.uid + '/role').val() === 'manobrista')",
+      ".write": false,
+      "$uid": {
+        ".write": "auth != null && auth.uid === $uid && root.child('roles/' + auth.uid + '/role').val() === 'manobrista'",
+        ".validate": "newData.val() === null || (newData.hasChildren(['nome','ts']) && newData.child('nome').isString() && newData.child('nome').val().length > 0 && newData.child('nome').val().length <= 30 && newData.child('ts').isNumber())"
+      }
+    },
+
+    "nomesManobristas": {
+      ".read": "auth != null && (root.child('roles/' + auth.uid + '/role').val() === 'expedicao' || root.child('roles/' + auth.uid + '/role').val() === 'manobrista')",
+      ".write": false,
+      "$id": {
+        ".write": "auth != null && root.child('roles/' + auth.uid + '/role').val() === 'expedicao'",
+        ".validate": "newData.val() === null || (newData.isString() && newData.val().length > 0 && newData.val().length <= 20)"
+      }
+    }
+  }
+}
