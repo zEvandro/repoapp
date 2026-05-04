@@ -290,6 +290,20 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 
 /* MAIN */
 .main{flex:1;overflow-y:auto;padding:16px;background:var(--bg)}
+/* REPOSITOR SPLIT */
+.main-rep{display:flex;height:calc(100vh - 52px);overflow:hidden;background:var(--bg)}
+.rep-esq{width:340px;min-width:260px;flex-shrink:0;overflow-y:auto;border-right:1px solid var(--bd);display:flex;flex-direction:column}
+.rep-esq .cam-tab-bar{position:sticky;top:0;z-index:30}
+.rep-esq-form{padding:12px 14px 20px}
+.rep-dir{flex:1;min-width:0;overflow-y:auto;padding:12px 14px}
+.rep-dir-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;
+  font-size:10px;font-weight:700;letter-spacing:2px;color:var(--mu);padding-bottom:6px;border-bottom:1px solid var(--bd)}
+.rep-fila-n{background:var(--am);color:#000;font-size:12px;font-weight:800;padding:2px 9px;border-radius:10px;letter-spacing:0}
+@media(max-width:720px){
+  .main-rep{flex-direction:column;height:auto;overflow:visible}
+  .rep-esq{width:100%;min-width:unset;border-right:none;border-bottom:1px solid var(--bd)}
+  .rep-esq .cam-tab-bar{top:52px}
+}
 .main-op{flex:1;overflow-y:auto;padding:16px;background:var(--bg-op)}
 .main-exp{flex:1;overflow-y:auto;padding:16px;background:var(--bg-exp)}
 .main-man{flex:1;overflow-y:auto;padding:16px;background:var(--bg-man)}
@@ -551,7 +565,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.3";
+const APP_VERSION = "v3.4";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -991,74 +1005,86 @@ function camTabsHTML(){
 }
 
 function renderRepositor(){
-  const fila=tarefas.filter(t=>["pendente","andamento","pulado"].includes(t.status));
-  const hist=tarefas.filter(t=>["concluido","vazio"].includes(t.status));
-  const alts=tarefas.filter(t=>t.status==="vazio"&&!t.alertaVisto);
-  const nFila=fila.length, nFeito=hist.filter(t=>t.status==="concluido").length;
+  const fila=tarefas.filter(t=>[“pendente”,”andamento”,”pulado”].includes(t.status));
+  const hist=tarefas.filter(t=>[“concluido”,”vazio”].includes(t.status));
+  const alts=tarefas.filter(t=>t.status===”vazio”&&!t.alertaVisto);
+  const nFila=fila.length, nFeito=hist.filter(t=>t.status===”concluido”).length;
   const cam=CAMARAS[camaraAtual];
 
-  document.getElementById("app").innerHTML=`
-    <div class="topbar">
-      <span class="tlogo">REPO</span>
-      <span class="trole rep">${I.clipboard} Repositor</span>
-      <span class="tsp"></span>
-      ${nFila>0?`<div class="tstat"><span class="tstat-n" style="color:var(--am)">${nFila}</span><span class="tstat-l">fila</span></div>`:""}
-      ${nFeito>0?`<div class="tstat"><span class="tstat-n" style="color:var(--gr)">${nFeito}</span><span class="tstat-l">feitos</span></div>`:""}
-      <span class="tlive"><span class="dot"></span></span>
-      <span class="tver">${APP_VERSION}</span>
-      <button class="tbtn-icon" onclick="window.toggleFont()">${I.settings}</button>
-      <button class="tbtn-out" onclick="window.sair()">${I.logout} Sair</button>
+  document.getElementById(“app”).innerHTML=`
+    <div class=”topbar”>
+      <span class=”tlogo”>REPO</span>
+      <span class=”trole rep”>${I.clipboard} Repositor</span>
+      <span class=”tsp”></span>
+      ${nFila>0?`<div class=”tstat”><span class=”tstat-n” style=”color:var(--am)”>${nFila}</span><span class=”tstat-l”>fila</span></div>`:””}
+      ${nFeito>0?`<div class=”tstat”><span class=”tstat-n” style=”color:var(--gr)”>${nFeito}</span><span class=”tstat-l”>feitos</span></div>`:””}
+      <span class=”tlive”><span class=”dot”></span></span>
+      <span class=”tver”>${APP_VERSION}</span>
+      <button class=”tbtn-icon” onclick=”window.toggleFont()”>${I.settings}</button>
+      <button class=”tbtn-out” onclick=”window.sair()”>${I.logout} Sair</button>
     </div>
     ${fontPanelHTML(false)}
-    ${camTabsHTML()}
-    ${alts.map(t=>`
-      <div class="alerta" id="al-${idSafe(t.id)}">
-        <span class="adot"></span>
-        <div style="flex:1"><b>EndereÃ§o vazio reportado</b><br>
-          <span>${h(t.endereco)}${t.opNome?` Â· por ${h(t.opNome)}`:""}</span><br>
-          <small>Consulte o Basic e envie novo endereÃ§o.</small>
+    <div class=”main-rep”>
+      <div class=”rep-esq”>
+        ${camTabsHTML()}
+        <div class=”rep-esq-form”>
+          <div class=”ftitle”>${I.package.replace('width=”16” height=”16”','width=”18” height=”18”')} Nova Reposição</div>
+          <label class=”lbl”>Endereço
+            <small>— ${cam?.especial?'ex: 1-2 (rua-posição)':'ex: 4-56-2 (rua-posição-nível)'}</small>
+          </label>
+          <input id=”fEnd” class=”inp” placeholder=”${cam?.especial?'1-2':'4-56-2'}” oninput=”window.onEnd(this.value)”
+            style=”font-size:18px;font-weight:800;letter-spacing:2px”/>
+          <div id=”prevEnd” class=”prev-end hidden”></div>
+          <div id=”avisoEnd” class=”aviso-dup hidden”></div>
+          <label class=”lbl” style=”margin-top:14px”>Tipo</label>
+          <div class=”toggle”>
+            <button class=”tbtn active” id=”tPick” onclick=”window.setTipo('picking')”>${I.package} Picking</button>
+            <button class=”tbtn” id=”tPal” onclick=”window.setTipo('palete')”>${I.layers} Palete Fechado</button>
+          </div>
+          <label class=”lbl” style=”margin-top:14px”>${I.users} Atribuir para</label>
+          ${atribPillsHTML()}
+          <button class=”btn-send” onclick=”window.enviar()”>${I.send} ENVIAR AO OPERADOR</button>
         </div>
-        <button class="alerta-close" onclick="window.fecharAlerta('${sq(t.id)}')">${I.x}</button>
-      </div>`).join("")}
-    <div class="main">
-      <div class="formcard">
-        <div class="ftitle">${I.package.replace('width="16" height="16"','width="18" height="18"')} Nova ReposiÃ§Ã£o</div>
-        <label class="lbl">
-          EndereÃ§o
-          <small>â€“ ${cam?.especial ? 'ex: 1-2 (rua-posiÃ§Ã£o)' : 'ex: 4-56-2 (rua-posiÃ§Ã£o-nÃ­vel)'}</small>
-        </label>
-        <input id="fEnd" class="inp" placeholder="${cam?.especial ? '1-2' : '4-56-2'}" oninput="window.onEnd(this.value)"
-          style="font-size:18px;font-weight:800;letter-spacing:2px"/>
-        <div id="prevEnd" class="prev-end hidden"></div>
-        <div id="avisoEnd" class="aviso-dup hidden"></div>
-        <label class="lbl" style="margin-top:14px">Tipo</label>
-        <div class="toggle">
-          <button class="tbtn active" id="tPick" onclick="window.setTipo('picking')">${I.package} Picking</button>
-          <button class="tbtn" id="tPal" onclick="window.setTipo('palete')">${I.layers} Palete Fechado</button>
-        </div>
-        <label class="lbl" style="margin-top:14px">${I.users} Atribuir para</label>
-        ${atribPillsHTML()}
-        <button class="btn-send" onclick="window.enviar()">${I.send} ENVIAR AO OPERADOR</button>
       </div>
-      ${fila.length>0?`<div class="secao">FILA (${fila.length})</div>${fila.map(cardRep).join("")}`:""}
-      ${hist.length>0?`
-        <div class="secao">HISTÃ“RICO HOJE (${hist.length})</div>
-        ${hist.map(cardRep).join("")}
-        <button class="btn-limpar" onclick="window.limparTudo()">${I.trash} Limpar tudo</button>`:""}
+      <div class=”rep-dir”>
+        ${alts.map(t=>`
+          <div class=”alerta” id=”al-${idSafe(t.id)}”>
+            <span class=”adot”></span>
+            <div style=”flex:1”><b>Endereço vazio reportado</b><br>
+              <span>${h(t.endereco)}${t.opNome?` · por ${h(t.opNome)}`:””}</span><br>
+              <small>Consulte o Basic e envie novo endereço.</small>
+            </div>
+            <button class=”alerta-close” onclick=”window.fecharAlerta('${sq(t.id)}')”>${I.x}</button>
+          </div>`).join(“”)}
+        ${fila.length>0
+          ?`<div class=”rep-dir-hdr”><span>FILA</span><span class=”rep-fila-n”>${fila.length}</span></div>
+            ${fila.map(cardRep).join(“”)}`
+          :`<div class=”empty” style=”padding:50px 20px”>
+              <div class=”empty-icon-wrap”>${I.inbox.replace('stroke=”currentColor”','stroke=”var(--mu-op)”')}</div>
+              <div class=”empty-title”>Fila vazia</div>
+              <div class=”empty-sub”>Envie reposições pelo painel à esquerda.</div>
+            </div>`}
+        ${hist.length>0?`
+          <div class=”rep-dir-hdr” style=”margin-top:12px”>
+            <span>HISTÓRICO HOJE</span>
+            <span class=”rep-fila-n” style=”background:var(--s2);color:var(--tx2)”>${hist.length}</span>
+          </div>
+          ${hist.map(cardRep).join(“”)}
+          <button class=”btn-limpar” onclick=”window.limparTudo()”>${I.trash} Limpar tudo</button>`:””}
+      </div>
     </div>`;
 
   if(window._fs){
     if(window._fs.camara)camaraAtual=window._fs.camara;
-    const e=document.getElementById("fEnd");
-    if(e)e.value=window._fs.end||"";
-    if(window._fs.tipo==="palete")window.setTipo("palete");
+    const e=document.getElementById(“fEnd”);
+    if(e)e.value=window._fs.end||””;
+    if(window._fs.tipo===”palete”)window.setTipo(“palete”);
     if(window._fs.end)window.onEnd(window._fs.end);
   }
 
-  // Scroll a aba ativa para o centro
   setTimeout(()=>{
-    const bar=document.getElementById("camTabBar");
-    const ativa=bar?.querySelector(".cam-tab.ativa");
+    const bar=document.getElementById(“camTabBar”);
+    const ativa=bar?.querySelector(“.cam-tab.ativa”);
     if(bar&&ativa)bar.scrollLeft=ativa.offsetLeft-(bar.clientWidth/2)+(ativa.clientWidth/2);
   },50);
 }
