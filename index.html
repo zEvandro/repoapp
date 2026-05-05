@@ -565,7 +565,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.6";
+const APP_VERSION = "v3.7";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -1859,12 +1859,12 @@ async function doPush(endCompleto){
 window.enviar=async()=>{
   const r=parseEnd(document.getElementById("fEnd")?.value||"",camaraAtual);
   if(!r.valido){alert(r.erro||"Endereço inválido");return;}
-  if(r.isPicking){alert("Endereço de chão – o operador não é necessário.");return;}
+  if(r.isPicking&&r.camara!=="F"){alert("Endereço de chão – o operador não é necessário.");return;}
   const elA=document.getElementById("avisoEnd");
   if(elA&&!elA.classList.contains("hidden")&&window._endForcar)return;
   await doPush(r.completo);
 };
-window.enviarForcar=async()=>{const r=parseEnd(document.getElementById("fEnd")?.value||"",camaraAtual);if(r.valido&&!r.isPicking)await doPush(r.completo);};
+window.enviarForcar=async()=>{const r=parseEnd(document.getElementById("fEnd")?.value||"",camaraAtual);if(r.valido&&(!r.isPicking||r.camara==="F"))await doPush(r.completo);};
 
 window.acao=async(id,status)=>{
   try{
