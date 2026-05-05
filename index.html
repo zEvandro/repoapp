@@ -565,7 +565,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.7";
+const APP_VERSION = "v3.8";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -725,7 +725,7 @@ function parseEnd(s,camara){
     if(isNaN(rua)||isNaN(pos))return{valido:false,erro:"Apenas números"};
     if(rua<1||rua>9)return{valido:false,erro:"Rua: 1 a 9"};
     if(pos<1||pos>99)return{valido:false,erro:"Posição: 1 a 99"};
-    const completo=`F ${String(rua).padStart(2,"0")} ${String(pos).padStart(3,"0")}`;
+    const completo=`F ${String(rua).padStart(2,"0")} ${String(pos).padStart(3,"0")} 00`;
     return{valido:true,completo,erro:"",camara:"F",rua,pos,nivel:null,label:`Câmara F · Rua ${rua} · Posição ${pos}`,isPicking:true};
   }
   const reCompleto=/^([A-F])\s+(\d{2,3})\s+(\d{3,4})\s+(\d{2})$/i;
@@ -1821,9 +1821,9 @@ window.onEnd=v=>{
   const r=parseEnd(v,camaraAtual);
   const cam=CAMARAS[camaraAtual]||CAMARAS.B;
   if(r.valido){
-    if(r.isPicking){
+    if(r.isPicking&&r.camara!=="F"){
       elP.className="prev-end err";
-      elP.innerHTML=`<span style="color:var(--am)">${I.alert}</span><div><div class="pfull" style="color:var(--am)">${r.completo}</div><div class="pdet" style="color:var(--am);font-weight:700;margin-top:4px">${cam.especial?"Câmara F – nível de chão":"Nível 10 – picking de chão"}</div><div class="pdet" style="margin-top:3px">Este endereço já está acessível no chão.<br>O operador de empilhadeira não é necessário.</div></div>`;
+      elP.innerHTML=`<span style="color:var(--am)">${I.alert}</span><div><div class="pfull" style="color:var(--am)">${r.completo}</div><div class="pdet" style="color:var(--am);font-weight:700;margin-top:4px">Nível 10 – picking de chão</div><div class="pdet" style="margin-top:3px">Este endereço já está acessível no chão.<br>O operador de empilhadeira não é necessário.</div></div>`;
       if(elA)elA.className="aviso-dup hidden";window._endForcar=null;return;
     }
     elP.className="prev-end ok";
@@ -1842,11 +1842,16 @@ window.onEnd=v=>{
 
 async function doPush(endCompleto){
   window._fs=null;window._endForcar=null;
-  await push(tasksRef,{endereco:endCompleto,tipo:tipoAtual,status:"pendente",ts:Date.now(),
-    atribId:atribPara!=="qualquer"?atribPara:null,
-    atribNome:atribPara!=="qualquer"?(operadores[atribPara]?.nome||null):null,
-  });
-  // Feedback visual + limpa campo
+  try{
+    await push(tasksRef,{endereco:endCompleto,tipo:tipoAtual,status:"pendente",ts:Date.now(),
+      atribId:atribPara!=="qualquer"?atribPara:null,
+      atribNome:atribPara!=="qualquer"?(operadores[atribPara]?.nome||null):null,
+    });
+  }catch(e){
+    showToast("Erro ao enviar. Verifique a conexão.",{bg:"#ef4444",color:"#fff"});
+    console.error("doPush error:",e);
+    return;
+  }
   showToast(`✓ ${endCompleto} enviado`);
   const fEnd=document.getElementById("fEnd");
   if(fEnd){fEnd.value="";
