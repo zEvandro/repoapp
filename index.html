@@ -556,6 +556,228 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .empty-title{font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;margin-bottom:6px;color:var(--tx2-op)}
 .empty-sub{font-size:12px;line-height:1.7}
 .hidden{display:none!important}
+
+/* ══════════════════════════════════════════════════════════════════
+   VISUAL UPGRADE — Glass Command
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Glow palette ──────────────────────────────────────────────── */
+:root{
+  --glow-am:rgba(245,158,11,.22);
+  --glow-bl:rgba(59,130,246,.22);
+  --glow-gr:rgba(34,197,94,.22);
+  --glow-rd:rgba(239,68,68,.22);
+  --glow-pu:rgba(139,92,246,.22);
+}
+
+/* ── Login ─────────────────────────────────────────────────────── */
+.login{
+  background:
+    radial-gradient(ellipse 110% 80% at 50% -5%,#1a2650 0%,#0b0e17 55%),
+    radial-gradient(ellipse 70% 50% at 10% 110%,#0d1430 0%,transparent 65%)!important
+}
+.logo{
+  box-shadow:0 0 0 1px rgba(245,158,11,.3),0 0 50px rgba(245,158,11,.4),0 0 100px rgba(245,158,11,.18)!important;
+  animation:logoGlow 3s ease-in-out infinite!important
+}
+@keyframes logoGlow{
+  0%,100%{box-shadow:0 0 0 1px rgba(245,158,11,.3),0 0 50px rgba(245,158,11,.4),0 0 100px rgba(245,158,11,.18)}
+  50%{box-shadow:0 0 0 1px rgba(245,158,11,.55),0 0 70px rgba(245,158,11,.65),0 0 130px rgba(245,158,11,.28)}
+}
+.login h1{text-shadow:0 2px 30px rgba(255,255,255,.15)!important}
+.mod-card{box-shadow:0 4px 24px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.04)!important}
+.mod-card-pick{box-shadow:0 4px 28px rgba(245,158,11,.1),0 4px 24px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.04)!important}
+.mod-card-exp{box-shadow:0 4px 28px rgba(34,197,94,.1),0 4px 24px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.04)!important}
+
+/* ── Topbars — glass ───────────────────────────────────────────── */
+.topbar,.topbar-op,.topbar-exp,.topbar-man{
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:0 1px 0 rgba(255,255,255,.05),0 4px 24px rgba(0,0,0,.45)!important;
+  border-bottom:1px solid rgba(255,255,255,.06)!important
+}
+.topbar    {background:rgba(11,14,23,.87)!important}
+.topbar-op {background:rgba(2,3,5,.92)!important}
+.topbar-exp{background:rgba(7,20,16,.92)!important}
+.topbar-man{background:rgba(7,3,15,.92)!important}
+
+/* TLOGO neon */
+.tlogo    {text-shadow:0 0 22px rgba(245,158,11,.7)!important}
+.tlogo-exp{text-shadow:0 0 22px rgba(34,197,94,.7)!important}
+.tlogo-man{text-shadow:0 0 22px rgba(139,92,246,.7)!important}
+
+/* ── Backgrounds — mesh gradient ───────────────────────────────── */
+.main-op {background:radial-gradient(ellipse 130% 70% at 50% 0%,#071528 0%,var(--bg-op) 55%)!important}
+.main-man{background:radial-gradient(ellipse 130% 70% at 50% 0%,#0e0622 0%,var(--bg-man) 55%)!important}
+.main-exp{background:radial-gradient(ellipse 130% 70% at 50% 0%,#061410 0%,var(--bg-exp) 55%)!important}
+.rep-dir {background:radial-gradient(ellipse 130% 70% at 50% 0%,#0c1128 0%,var(--bg) 55%)}
+html,body{background:var(--bg)!important}
+
+/* ── Cards — depth ─────────────────────────────────────────────── */
+.crep{
+  background:linear-gradient(160deg,#0d1020 0%,rgba(9,11,20,.98) 100%)!important;
+  box-shadow:0 2px 16px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.035)!important;
+  border-color:rgba(44,52,84,.75)!important;border-radius:16px!important
+}
+.cexp{
+  background:linear-gradient(160deg,#0a1510 0%,rgba(5,10,8,.98) 100%)!important;
+  box-shadow:0 2px 16px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.035)!important;
+  border-radius:16px!important
+}
+.formcard{
+  background:linear-gradient(160deg,#0d1020 0%,rgba(9,11,20,.98) 100%)!important;
+  box-shadow:0 2px 16px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04)!important;
+  border-color:rgba(44,52,84,.6)!important
+}
+.formcard-exp{
+  background:linear-gradient(160deg,#0a1510 0%,rgba(5,10,8,.98) 100%)!important;
+  box-shadow:0 2px 16px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04)!important
+}
+.stat-card{
+  background:linear-gradient(160deg,#0d1020 0%,rgba(9,11,20,.95) 100%)!important;
+  box-shadow:0 2px 12px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04)!important;
+  border-color:rgba(44,52,84,.6)!important
+}
+.stat-card-op{background:linear-gradient(160deg,#0a0d14 0%,rgba(2,3,5,.95) 100%)!important}
+
+/* ── Operator main card ────────────────────────────────────────── */
+.cop-main{
+  background:linear-gradient(160deg,#0c1826 0%,#070a12 100%)!important;
+  border-color:rgba(245,158,11,.7)!important;
+  box-shadow:
+    0 0 0 1px rgba(245,158,11,.22),
+    0 0 35px rgba(245,158,11,.13),
+    0 8px 40px rgba(0,0,0,.65),
+    inset 0 1px 0 rgba(255,255,255,.06)!important;
+  border-radius:22px!important
+}
+.addr-main{text-shadow:0 0 40px rgba(245,158,11,.5)}
+
+/* ── Manobrista main card ──────────────────────────────────────── */
+.cman-main{
+  background:linear-gradient(160deg,#0e0820 0%,#07050e 100%)!important;
+  border-color:rgba(139,92,246,.7)!important;
+  box-shadow:
+    0 0 0 1px rgba(139,92,246,.22),
+    0 0 35px rgba(139,92,246,.13),
+    0 8px 40px rgba(0,0,0,.65),
+    inset 0 1px 0 rgba(255,255,255,.06)!important;
+  border-radius:22px!important
+}
+.placa-main{text-shadow:0 0 40px rgba(139,92,246,.5)}
+.cman-main.liberado{
+  border-color:rgba(34,197,94,.8)!important;
+  box-shadow:
+    0 0 0 2px rgba(34,197,94,.45),
+    0 0 45px rgba(34,197,94,.3),
+    0 8px 40px rgba(0,0,0,.65)!important
+}
+@keyframes pulsar{
+  0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.3),0 0 0 2px rgba(34,197,94,.45),0 0 45px rgba(34,197,94,.3),0 8px 40px rgba(0,0,0,.65)}
+  50%    {box-shadow:0 0 0 8px rgba(34,197,94,.1),0 0 0 2px rgba(34,197,94,.6),0 0 65px rgba(34,197,94,.45),0 8px 40px rgba(0,0,0,.65)}
+}
+
+/* ── Action buttons ────────────────────────────────────────────── */
+.abtn{border-radius:13px!important}
+.abtn-blue {background:linear-gradient(135deg,#3b82f6 0%,#2563eb 100%)!important;box-shadow:0 3px 16px rgba(59,130,246,.45)!important}
+.abtn-green{background:linear-gradient(135deg,#22c55e 0%,#16a34a 100%)!important;box-shadow:0 3px 16px rgba(34,197,94,.45)!important}
+.abtn-red  {background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%)!important;box-shadow:0 3px 16px rgba(239,68,68,.45)!important}
+.abtn-gray {background:linear-gradient(135deg,#1c2244 0%,#141830 100%)!important;box-shadow:0 2px 10px rgba(0,0,0,.4)!important;color:#7a8ab0!important}
+.abtn:active{transform:scale(.96)!important;filter:brightness(.85)!important}
+
+/* ── Send buttons ──────────────────────────────────────────────── */
+.btn-send{
+  background:linear-gradient(135deg,#f5a623 0%,#d97706 100%)!important;
+  box-shadow:0 4px 24px rgba(245,158,11,.55),0 2px 8px rgba(0,0,0,.3)!important;
+  border-radius:13px!important;letter-spacing:4px!important;
+  transition:all .2s ease!important
+}
+.btn-send:hover{box-shadow:0 6px 34px rgba(245,158,11,.75),0 2px 8px rgba(0,0,0,.3)!important;transform:translateY(-1px)!important}
+.btn-send-exp{
+  background:linear-gradient(135deg,#22c55e 0%,#16a34a 100%)!important;
+  box-shadow:0 4px 24px rgba(34,197,94,.45)!important;
+  border-radius:13px!important;letter-spacing:4px!important
+}
+
+/* ── Auth buttons ──────────────────────────────────────────────── */
+.auth-btn{
+  background:linear-gradient(135deg,#f5a623 0%,#d97706 100%)!important;
+  box-shadow:0 4px 22px rgba(245,158,11,.45)!important;
+  letter-spacing:4px!important
+}
+.auth-btn:hover{box-shadow:0 6px 30px rgba(245,158,11,.65)!important;transform:translateY(-1px)!important;transition:all .2s ease}
+
+/* ── Input focus glow ──────────────────────────────────────────── */
+.inp:focus        {border-color:#f59e0b!important;box-shadow:0 0 0 3px rgba(245,158,11,.14)!important}
+.inp-exp:focus    {border-color:#22c55e!important;box-shadow:0 0 0 3px rgba(34,197,94,.14)!important}
+.auth-inp:focus   {border-color:#f59e0b!important;box-shadow:0 0 0 3px rgba(245,158,11,.16)!important}
+.op-name-input:focus    {border-color:#3b82f6!important;box-shadow:0 0 0 3px rgba(59,130,246,.16)!important}
+.op-name-input-man:focus{border-color:#8b5cf6!important;box-shadow:0 0 0 3px rgba(139,92,246,.16)!important}
+.mgmt-inp:focus   {box-shadow:0 0 0 3px rgba(34,197,94,.14)!important}
+
+/* ── Alerts ────────────────────────────────────────────────────── */
+.alerta{
+  background:rgba(239,68,68,.07)!important;
+  border-color:rgba(239,68,68,.35)!important;
+  box-shadow:0 0 22px rgba(239,68,68,.12),inset 0 1px 0 rgba(255,255,255,.03)!important
+}
+.crep-atrasado{box-shadow:0 0 28px rgba(239,68,68,.22)!important}
+@keyframes pisca{
+  0%,100%{opacity:1;box-shadow:0 0 16px rgba(239,68,68,.1)}
+  50%    {opacity:.72;box-shadow:0 0 30px rgba(239,68,68,.32)}
+}
+
+/* ── Online indicators ─────────────────────────────────────────── */
+.dot       {box-shadow:0 0 8px var(--gr),0 0 18px rgba(34,197,94,.45)!important}
+.online-dot{box-shadow:0 0 8px var(--gr),0 0 14px rgba(34,197,94,.4)!important}
+.mgmt-online{box-shadow:0 0 8px var(--gr)!important}
+
+/* ── Camera tab active ─────────────────────────────────────────── */
+.cam-tab.ativa{background:rgba(255,255,255,.03);text-shadow:0 0 18px currentColor}
+
+/* ── Active pills ──────────────────────────────────────────────── */
+.filtro-ativo{box-shadow:0 2px 14px rgba(245,158,11,.4)!important}
+.atrib-pill.ativo{box-shadow:0 2px 14px rgba(245,158,11,.4)!important}
+.atrib-pill-exp.ativo{box-shadow:0 2px 14px rgba(34,197,94,.4)!important}
+.rep-fila-n{box-shadow:0 1px 10px rgba(245,158,11,.45)!important}
+
+/* ── Modal ─────────────────────────────────────────────────────── */
+.modal{
+  background:linear-gradient(160deg,#0d1020 0%,rgba(9,11,20,.98) 100%)!important;
+  box-shadow:0 20px 60px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.07),inset 0 1px 0 rgba(255,255,255,.07)!important
+}
+
+/* ── Name screen box ───────────────────────────────────────────── */
+.op-name-box{
+  background:linear-gradient(160deg,#0a0d14 0%,rgba(2,3,5,.98) 100%)!important;
+  box-shadow:0 8px 44px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.05)!important
+}
+.op-name-box-man{
+  background:linear-gradient(160deg,#0e0820 0%,rgba(7,3,15,.98) 100%)!important;
+  box-shadow:0 8px 44px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.05)!important
+}
+.op-name-icon{
+  background:rgba(59,130,246,.14)!important;
+  border:1px solid rgba(59,130,246,.3)!important;
+  box-shadow:0 0 22px rgba(59,130,246,.22)!important
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────────── */
+::-webkit-scrollbar{width:3px!important}
+::-webkit-scrollbar-track{background:transparent!important}
+::-webkit-scrollbar-thumb{background:rgba(44,52,84,.9)!important;border-radius:2px!important}
+::-webkit-scrollbar-thumb:hover{background:rgba(75,88,130,.9)!important}
+
+/* ── Mgmt card ─────────────────────────────────────────────────── */
+.mgmt-card{
+  background:linear-gradient(160deg,#0a1510 0%,rgba(5,10,8,.98) 100%)!important;
+  box-shadow:0 2px 14px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.03)!important
+}
+
+/* ── Auth no-role box ──────────────────────────────────────────── */
+.auth-no-role{
+  background:linear-gradient(160deg,#0d1020 0%,rgba(9,11,20,.98) 100%)!important;
+  box-shadow:0 2px 14px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04)!important
+}
 </style>
 </head>
 <body>
@@ -568,7 +790,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.10";
+const APP_VERSION = "v3.11";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
