@@ -418,6 +418,9 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .btn-rem{background:transparent;border:none;color:var(--mu);cursor:pointer;padding:4px;
   display:flex;align-items:center;justify-content:center;border-radius:6px;transition:all .15s}
 .btn-rem:hover{color:var(--rd);background:#ef444415}
+.btn-vazio{background:transparent;border:none;color:var(--mu);cursor:pointer;padding:4px;
+  display:flex;align-items:center;justify-content:center;border-radius:6px;transition:all .15s;font-size:11px;font-weight:700}
+.btn-vazio:hover{color:#f59e0b;background:#f59e0b15}
 .btn-limpar{width:100%;padding:10px;background:transparent;border:1px solid var(--bd);
   color:var(--mu);border-radius:10px;cursor:pointer;font-size:12px;font-weight:700;margin-top:6px;
   display:flex;align-items:center;justify-content:center;gap:6px}
@@ -565,7 +568,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.8";
+const APP_VERSION = "v3.10";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -1114,6 +1117,7 @@ function cardRep(t){
         <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;margin-top:2px">
           <span class="chip" style="color:${atrasado?"#ef4444":cor};border-color:${atrasado?"#ef444440":cor+"40"};background:${atrasado?"#ef444415":cor+"15"}">${lbl}</span>
           ${!isHist&&Object.keys(operadores).length>1?`<button class="btn-transfer" onclick="window.abrirRepassar('${sq(t.id)}')">${I.transfer}</button>`:""}
+          ${!isHist?`<button class="btn-vazio" onclick="window.marcarVazio('${sq(t.id)}')" title="Endereço vazio">⚠ Vazio</button>`:""}
           ${!isHist?`<button class="btn-rem" onclick="window.remover('${sq(t.id)}')">${I.x}</button>`:""}
         </div>
       </div>
@@ -1132,7 +1136,7 @@ function renderOperador(){
   const pulados=minhasFila.filter(t=>t.status==="pulado").sort((a,b)=>a.ts-b.ts);
   const fila=[...ativos,...pulados];
   const hist=tarefas.filter(t=>t.status==="concluido"||t.status==="vazio");
-  const getRua=t=>{const m=t.endereco.match(/B\s+0*(\d+)/);return m?m[1]:null;};
+  const getRua=t=>{const m=t.endereco.match(/[A-F]\s+0*(\d+)/);return m?m[1]:null;};
   const ruasNaFila=[...new Set(fila.map(getRua).filter(Boolean))].sort();
   const filaFiltrada=filtroRua==="todas"?fila:fila.filter(t=>getRua(t)===filtroRua);
   const filtroBarHTML=ruasNaFila.length>1?`
@@ -1216,6 +1220,7 @@ function cardOp(t,i){
                <button class="abtn abtn-red" onclick="window.acao('${sq(t.id)}','vazio')">${I.alert} Vazio</button>
                <button class="abtn abtn-gray" onclick="window.pular('${sq(t.id)}')">${I.skip}</button>`
             :`<button class="abtn abtn-blue" onclick="window.acao('${sq(t.id)}','andamento')">${I.receive} Pegar</button>
+               <button class="abtn abtn-red" onclick="window.acao('${sq(t.id)}','vazio')">${I.alert} Vazio</button>
                <button class="abtn abtn-gray" onclick="window.pular('${sq(t.id)}')">${I.skip} Pular</button>`}
         </div>
         <div class="sdica2">${I.swipe} Deslize para concluir</div>
@@ -1874,12 +1879,13 @@ window.enviarForcar=async()=>{const r=parseEnd(document.getElementById("fEnd")?.
 window.acao=async(id,status)=>{
   try{
     const updates={status};
-    if(status==="andamento"){updates.opId=opId;updates.opNome=nomeOperador;}
+    if(status==="andamento"||status==="vazio"){updates.opId=opId;updates.opNome=nomeOperador;}
     await update(ref(db,`tarefas/${id}`),updates);
   }catch(e){alert("Erro: "+e.message);}
 };
 window.pular=async id=>{try{await update(ref(db,`tarefas/${id}`),{status:"pulado",ts:Date.now()});}catch(e){alert("Erro: "+e.message);}};
 window.remover=async id=>{if(!confirm("Remover esta tarefa?"))return;try{await remove(ref(db,`tarefas/${id}`));}catch(e){alert("Erro: "+e.message);}};
+window.marcarVazio=async id=>{if(!confirm("Marcar este endereço como vazio?"))return;try{await update(ref(db,`tarefas/${id}`),{status:"vazio"});}catch(e){alert("Erro: "+e.message);}};
 window.fecharAlerta=async id=>{try{await update(ref(db,`tarefas/${id}`),{alertaVisto:true});}catch{}document.getElementById("al-"+idSafe(id))?.remove();};
 window.limparTudo=async()=>{if(!confirm("Limpar todas as tarefas?"))return;try{await remove(tasksRef);}catch(e){alert("Erro: "+e.message);}};
 
