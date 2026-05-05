@@ -40,7 +40,7 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .login h1{font-family:'Bebas Neue';font-size:44px;letter-spacing:3px;color:#fff}
 .login-sub{font-size:12px;color:var(--tx2);letter-spacing:2px;text-transform:uppercase;margin-top:4px}
 .login-ver{font-size:11px;color:var(--mu);letter-spacing:2px;margin-bottom:24px;margin-top:8px}
-/* MÃ³dulos do login */
+/* Módulos do login */
 .mod-card{width:100%;border-radius:16px;overflow:hidden;border:1px solid var(--bd);
   margin-bottom:12px;transition:border-color .2s}
 .mod-card-pick{border-color:#f59e0b30}
@@ -132,7 +132,7 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .prob-cancel{width:100%;padding:12px;background:transparent;border:1px solid var(--bd-man);
   color:var(--tx2-man);border-radius:10px;cursor:pointer;font-size:13px;font-weight:700;font-family:'DM Sans'}
 
-/* ATRASADO â€“ card piscando vermelho quando pendente > 10 min */
+/* ATRASADO – card piscando vermelho quando pendente > 10 min */
 .crep-atrasado{border-left-color:#ef4444!important;animation:si .2s ease,pisca 2s ease-in-out infinite}
 @keyframes pisca{0%,100%{opacity:1}50%{opacity:.7}}
 
@@ -254,7 +254,7 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .stat-num{font-family:'Bebas Neue';font-size:28px;letter-spacing:1px;line-height:1;margin-bottom:3px}
 .stat-lbl{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu)}
 
-/* CÃ‚MARA TABS (repositor â€“ scroll horizontal) */
+/* CÂMARA TABS (repositor – scroll horizontal) */
 .cam-tab-bar{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;flex-shrink:0;
   background:var(--s1);border-bottom:1px solid var(--bd);position:sticky;top:52px;z-index:40}
 .cam-tab-bar::-webkit-scrollbar{display:none}
@@ -281,7 +281,7 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .atrib-pill.ativo{background:var(--am);color:#000}
 .atrib-pill.ativo svg{stroke:#000}
 
-/* CÃ‚MARA SELECTOR (legado â€“ mantido para setCamara) */
+/* CÂMARA SELECTOR (legado – mantido para setCamara) */
 .camara-sel{display:none}
 .camara-btn{display:none}
 .camara-letra{display:none}
@@ -358,7 +358,7 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
   display:flex;align-items:center;justify-content:center;gap:10px}
 .btn-send-exp:hover{filter:brightness(1.1)}
 
-/* ATRIBUIÃ‡ÃƒO PILLS (expediÃ§Ã£o) */
+/* ATRIBUIÇÃO PILLS (expedição) */
 .atrib-pills-exp{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 .atrib-pill-exp{padding:7px 14px;border-radius:99px;border:1px solid var(--bd-exp);background:var(--s2-exp);
   color:var(--tx2-exp);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;
@@ -435,7 +435,7 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
   font-size:10px;font-weight:700;transition:all .15s;white-space:nowrap}
 .btn-transfer:hover{border-color:var(--pu);color:#a78bfa;background:#8b5cf615}
 
-/* CARD EXPEDIÃ‡ÃƒO */
+/* CARD EXPEDIÇÃO */
 .cexp{background:var(--s1-exp);border:1px solid var(--bd-exp);border-left:3px solid;border-radius:14px;
   padding:13px;margin-bottom:9px;animation:si .2s ease}
 .cexp-placa{font-family:'Bebas Neue';font-size:24px;letter-spacing:3px;flex:1}
@@ -565,7 +565,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.5";
+const APP_VERSION = "v3.6";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -591,7 +591,7 @@ const pendingRef      = ref(db, "pendingUsers");
 const rolesAdmRef     = ref(db, "roles");
 const preRolesRef     = ref(db, "preRoles");
 
-// â"€â"€ ÃCONES â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// â"€â"€ ÍCONES â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const I = {
   clipboard:  `<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>`,
   forklift:   `<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V9l4-5h6v5l4 3v5"/><path d="M4 17H2"/><path d="M22 17h-8"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/><path d="M14 9V4"/></svg>`,
@@ -636,13 +636,13 @@ let prevIds      = null;
 let showFont     = false;
 let filtroRua    = "todas";
 let camaraAtual  = "B";
-// ExpediÃ§Ã£o / Manobrista
+// Expedição / Manobrista
 let nomeManob    = null;
 let manobId      = null;
 let carregamentos = [];
-let manobristas  = {};       // presenÃ§a online
+let manobristas  = {};       // presença online
 let nomesManobristas = {};   // cadastro permanente
-let atribManob   = "qualquer"; // nome do manobrista atribuÃ­do
+let atribManob   = "qualquer"; // nome do manobrista atribuído
 let prevCarrIds  = null;
 let prevLibIds   = [];
 let mgmtOpen     = false;
@@ -670,14 +670,14 @@ function getSecAuth(){
 }
 
 
-// â"€â"€ CÃ‚MARAS â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// â"€â"€ CÂMARAS â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const CAMARAS = {
   B: { nome:"Batavo",      cor:"#3b82f6", bg:"#3b82f615", bd:"#3b82f640" },
-  A: { nome:"ItambÃ©",      cor:"#ef4444", bg:"#ef444415", bd:"#ef444440" },
+  A: { nome:"Itambé",      cor:"#ef4444", bg:"#ef444415", bd:"#ef444440" },
   E: { nome:"DPA",         cor:"#8b5cf6", bg:"#8b5cf615", bd:"#8b5cf640" },
-  C: { nome:"Ãrea Seca",   cor:"#f59e0b", bg:"#f59e0b15", bd:"#f59e0b40" },
-  D: { nome:"Ãrea Seca 2", cor:"#f97316", bg:"#f9731615", bd:"#f9731640" },
-  F: { nome:"CÃ¢mara F",    cor:"#22c55e", bg:"#22c55e15", bd:"#22c55e40", especial:true },
+  C: { nome:"Área Seca",   cor:"#f59e0b", bg:"#f59e0b15", bd:"#f59e0b40" },
+  D: { nome:"Área Seca 2", cor:"#f97316", bg:"#f9731615", bd:"#f9731640" },
+  F: { nome:"Câmara F",    cor:"#22c55e", bg:"#22c55e15", bd:"#22c55e40", especial:true },
 };
 
 // â"€â"€ FONTE â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
@@ -717,38 +717,38 @@ function parseEnd(s,camara){
   s=(s||"").trim();
   if(!s)return{valido:false,erro:""};
   const cam=CAMARAS[camara];
-  if(!cam)return{valido:false,erro:"CÃ¢mara invÃ¡lida"};
+  if(!cam)return{valido:false,erro:"Câmara inválida"};
   if(cam.especial){
     const p=s.split(/[-\/\s]+/).filter(Boolean);
-    if(p.length!==2)return{valido:false,erro:'CÃ¢mara F: use RUA-POSIÃ‡ÃƒO  ex: "1-2"'};
+    if(p.length!==2)return{valido:false,erro:'Câmara F: use RUA-POSIÇÃO  ex: "1-2"'};
     const rua=+p[0],pos=+p[1];
-    if(isNaN(rua)||isNaN(pos))return{valido:false,erro:"Apenas nÃºmeros"};
+    if(isNaN(rua)||isNaN(pos))return{valido:false,erro:"Apenas números"};
     if(rua<1||rua>9)return{valido:false,erro:"Rua: 1 a 9"};
-    if(pos<1||pos>99)return{valido:false,erro:"PosiÃ§Ã£o: 1 a 99"};
+    if(pos<1||pos>99)return{valido:false,erro:"Posição: 1 a 99"};
     const completo=`F ${String(rua).padStart(2,"0")} ${String(pos).padStart(3,"0")}`;
-    return{valido:true,completo,erro:"",camara:"F",rua,pos,nivel:null,label:`CÃ¢mara F Â· Rua ${rua} Â· PosiÃ§Ã£o ${pos}`,isPicking:true};
+    return{valido:true,completo,erro:"",camara:"F",rua,pos,nivel:null,label:`Câmara F · Rua ${rua} · Posição ${pos}`,isPicking:true};
   }
   const reCompleto=/^([A-F])\s+(\d{2,3})\s+(\d{3,4})\s+(\d{2})$/i;
   const mC=s.match(reCompleto);
   if(mC){
     const[,letra,rua,pos,nivel]=mC;
     const isPicking=nivel==="10";
-    return{valido:true,completo:`${letra.toUpperCase()} ${rua.padStart(3,"0")} ${pos.padStart(4,"0")} ${nivel}`,erro:"",camara:letra.toUpperCase(),rua:+rua,pos:+pos,nivel:+nivel/10,label:`${CAMARAS[letra.toUpperCase()]?.nome||letra} Â· Rua ${+rua} Â· Pos ${+pos} Â· ${nivel}`,isPicking};
+    return{valido:true,completo:`${letra.toUpperCase()} ${rua.padStart(3,"0")} ${pos.padStart(4,"0")} ${nivel}`,erro:"",camara:letra.toUpperCase(),rua:+rua,pos:+pos,nivel:+nivel/10,label:`${CAMARAS[letra.toUpperCase()]?.nome||letra} · Rua ${+rua} · Pos ${+pos} · ${nivel}`,isPicking};
   }
   let input=s;
   const mLetra=input.match(/^([A-F])\s*[-\/\s]?(.*)/i);
   if(mLetra)input=mLetra[2];
   const p=input.split(/[-\/\s]+/).filter(Boolean);
-  if(p.length!==3)return{valido:false,erro:'Use: RUA-POSIÃ‡ÃƒO-NÃVEL  ex: "4-56-2"'};
+  if(p.length!==3)return{valido:false,erro:'Use: RUA-POSIÇÃO-NÍVEL  ex: "4-56-2"'};
   const rua=+p[0],pos=+p[1],nivel=+p[2];
-  if(isNaN(rua)||isNaN(pos)||isNaN(nivel))return{valido:false,erro:"Apenas nÃºmeros"};
+  if(isNaN(rua)||isNaN(pos)||isNaN(nivel))return{valido:false,erro:"Apenas números"};
   if(rua<1||rua>9)return{valido:false,erro:"Rua: 1 a 9"};
-  if(pos<1||pos>99)return{valido:false,erro:"PosiÃ§Ã£o: 1 a 99"};
-  if(nivel<1||nivel>5)return{valido:false,erro:"NÃ­vel: 1â€“5"};
-  const nivelLabel=["","NÃ­vel 10 â€“ chÃ£o","2Âº nÃ­vel","3Âº nÃ­vel","4Âº nÃ­vel","5Âº nÃ­vel"][nivel];
+  if(pos<1||pos>99)return{valido:false,erro:"Posição: 1 a 99"};
+  if(nivel<1||nivel>5)return{valido:false,erro:"Nível: 1–5"};
+  const nivelLabel=["","Nível 10 – chão","2º nível","3º nível","4º nível","5º nível"][nivel];
   const completo=`${camara} ${String(rua).padStart(3,"0")} ${String(pos).padStart(4,"0")} ${String(nivel*10).padStart(2,"0")}`;
   const isPicking=nivel===1;
-  return{valido:true,completo,erro:"",camara,rua,pos,nivel,label:`${cam.nome} Â· Rua ${rua} Â· Pos ${pos} Â· ${nivelLabel}`,isPicking};
+  return{valido:true,completo,erro:"",camara,rua,pos,nivel,label:`${cam.nome} · Rua ${rua} · Pos ${pos} · ${nivelLabel}`,isPicking};
 }
 
 // â"€â"€ TOAST â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
@@ -774,7 +774,7 @@ function initSwipe(el,onRight){
     dx=e.touches[0].clientX-sx;const dy=e.touches[0].clientY-sy;
     if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>10){
       moving=true;if(dx>0){el.style.transform=`translateX(${dx}px)`;el.style.opacity=`${1-Math.min(dx/200,.4)}`;
-      const h=el.querySelector(".swipe-hint");if(h){h.textContent="CONCLUÃDO";h.style.opacity=Math.min(dx/80,1);}}
+      const h=el.querySelector(".swipe-hint");if(h){h.textContent="CONCLUÍDO";h.style.opacity=Math.min(dx/80,1);}}
     }
   },{passive:true});
   el.addEventListener("touchend",()=>{
@@ -793,7 +793,7 @@ function fontPanelHTML(isOp){
     `<button class="font-btn${cur===k?" ativo":""}" data-preset="${k}" onclick="window.setFont('${k}')">${k}${k==="Auto"?` ${I.smartphone}`:""}</button>`
   ).join("");
   return `<div class="${cls}" id="fontPanel">
-    <span class="font-label">Tamanho do endereÃ§o</span>
+    <span class="font-label">Tamanho do endereço</span>
     <div class="font-btns">${btns}</div>
     <span class="font-preview" id="fontPreview" style="font-size:${px}px;letter-spacing:${sp}px">B 004 0056 10</span>
   </div>`;
@@ -819,7 +819,7 @@ function manoOnlineBarHTML(){
   </div>`;
 }
 
-// â"€â"€ SELECT DE ATRIBUIÃ‡ÃƒO (picking) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// â"€â"€ SELECT DE ATRIBUIÇÃO (picking) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function atribSelectHTML(){
   const lista=Object.entries(operadores);
   if(lista.length===0){
@@ -828,12 +828,12 @@ function atribSelectHTML(){
     </select>`;
   }
   return `<select class="atrib-select" id="atribSelect" onchange="window.setAtrib(this.value)">
-    <option value="qualquer"${atribPara==="qualquer"?" selected":""}>Qualquer operador disponÃ­vel</option>
+    <option value="qualquer"${atribPara==="qualquer"?" selected":""}>Qualquer operador disponível</option>
     ${lista.map(([id,op])=>`<option value="${h(id)}"${atribPara===id?" selected":""}>${h(op.nome)}</option>`).join("")}
   </select>`;
 }
 
-// â"€â"€ PILLS DE ATRIBUIÃ‡ÃƒO (expediÃ§Ã£o) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// â"€â"€ PILLS DE ATRIBUIÇÃO (expedição) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function atribPillsExpHTML(){
   const manoOnlineNames=Object.values(manobristas).map(m=>m.nome);
   const nomes=Object.entries(nomesManobristas);
@@ -859,7 +859,7 @@ function mgmtHTML(){
   return `<div class="mgmt-card">
     <div class="mgmt-header" onclick="window.toggleMgmt()">
       <div class="mgmt-title">${I.users} Manobristas Cadastrados <span style="font-size:12px;color:var(--mu-exp);font-family:'DM Sans';font-weight:700;letter-spacing:0">(${nomes.length})</span></div>
-      <span class="mgmt-toggle${mgmtOpen?" open":""}">â–¸</span>
+      <span class="mgmt-toggle${mgmtOpen?" open":""}">▸</span>
     </div>
     <div class="mgmt-body${mgmtOpen?" open":""}">
       <div class="mgmt-list">
@@ -930,8 +930,8 @@ function renderNomeOperador(){
     <div class="op-name-screen">
       <div class="op-name-box">
         <div class="op-name-icon">${I.user.replace('stroke="currentColor"','stroke="#3b82f6"')}</div>
-        <div class="op-name-title">IDENTIFICAÃ‡ÃƒO</div>
-        <p class="op-name-sub">Digite seu nome para entrar na fila de tarefas. Isso ajuda o repositor a atribuir tarefas diretamente para vocÃª.</p>
+        <div class="op-name-title">IDENTIFICAÇÃO</div>
+        <p class="op-name-sub">Digite seu nome para entrar na fila de tarefas. Isso ajuda o repositor a atribuir tarefas diretamente para você.</p>
         <input id="inputNome" class="op-name-input" placeholder="Seu nome ou apelido"
           maxlength="20" oninput="document.getElementById('btnEntrar').disabled=!this.value.trim()"
           onkeydown="if(event.key==='Enter')window.confirmarNome()"/>
@@ -953,7 +953,7 @@ function renderNomeManob(){
         <div class="op-name-icon" style="background:#8b5cf622;border:1px solid #8b5cf644">
           ${I.truck.replace('stroke="currentColor"','stroke="#8b5cf6"')}
         </div>
-        <div class="op-name-title-man">IDENTIFICAÃ‡ÃƒO</div>
+        <div class="op-name-title-man">IDENTIFICAÇÃO</div>
         <p class="op-name-sub-man">Selecione seu nome na lista ou digite abaixo.</p>
         ${nomes.length>0?`
           <div class="man-name-pills">
@@ -999,7 +999,7 @@ function camTabsHTML(){
       <button class="cam-tab${camaraAtual===k?" ativa":""}"
         style="${camaraAtual===k?`color:${c.cor}`:`color:var(--tx2)`}"
         onclick="window.setCamara('${k}')">
-        <span class="cam-tab-dot" style="background:${c.cor}"></span>${k} â€“ ${c.nome}
+        <span class="cam-tab-dot" style="background:${c.cor}"></span>${k} – ${c.nome}
       </button>`).join("")}
   </div>`;
 }
@@ -1091,25 +1091,25 @@ function renderRepositor(){
 
 function cardRep(t){
   const cor={pendente:"#f59e0b",andamento:"#3b82f6",concluido:"#22c55e",vazio:"#ef4444",pulado:"#8892b0"}[t.status];
-  const lbl={pendente:"Pendente",andamento:"Em andamento",concluido:"ConcluÃ­do",vazio:"End. vazio",pulado:"Pulado"}[t.status];
+  const lbl={pendente:"Pendente",andamento:"Em andamento",concluido:"Concluído",vazio:"End. vazio",pulado:"Pulado"}[t.status];
   const isHist=["concluido","vazio"].includes(t.status);
   const tipoCor=t.tipo==="picking"?"#f59e0b":"#3b82f6";
   const tipoTxt=t.tipo==="picking"?"Pick":"Pal";
   const atrasado=!isHist&&t.status==="pendente"&&(Date.now()-t.ts)>10*60*1000;
   const metaParts=[
     `<span style="font-size:9px;font-weight:800;color:${tipoCor}">${tipoTxt}</span>`,
-    t.atribNome&&t.status==="pendente"?`<span style="font-size:10px;color:#a78bfa">â†’ ${h(t.atribNome)}</span>`:"",
+    t.atribNome&&t.status==="pendente"?`<span style="font-size:10px;color:#a78bfa">→ ${h(t.atribNome)}</span>`:"",
     t.opNome&&t.status!=="pendente"?`<span style="font-size:10px;color:#a78bfa">${h(t.opNome)}</span>`:"",
     `<span style="font-size:10px;color:var(--mu)">${fmtHora(t.ts)}</span>`,
     !isHist?`<span style="font-size:10px;font-weight:700;color:${corTempo(t.ts)}">${tempoFila(t.ts)}</span>`:"",
-  ].filter(Boolean).join(`<span style="color:var(--mu);font-size:9px;margin:0 1px">Â·</span>`);
+  ].filter(Boolean).join(`<span style="color:var(--mu);font-size:9px;margin:0 1px">·</span>`);
   return `
     <div class="crep${atrasado?" crep-atrasado":""}" style="border-left-color:${atrasado?"#ef4444":cor}${isHist?";opacity:.6":""}">
       <div style="display:flex;align-items:flex-start;gap:8px">
         <div style="flex:1;min-width:0">
           <div class="crep-addr" style="color:${atrasado?"#ef4444":cor};font-size:22px">${h(t.endereco)}</div>
           <div class="crep-meta" style="margin-top:5px;gap:4px">${metaParts}</div>
-          ${atrasado?`<div style="font-size:9px;color:#ef4444;font-weight:700;margin-top:4px;letter-spacing:.5px">âš  PARADO HÃ MAIS DE 10 MIN</div>`:""}
+          ${atrasado?`<div style="font-size:9px;color:#ef4444;font-weight:700;margin-top:4px;letter-spacing:.5px">⚠ PARADO HÁ MAIS DE 10 MIN</div>`:""}
         </div>
         <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;margin-top:2px">
           <span class="chip" style="color:${atrasado?"#ef4444":cor};border-color:${atrasado?"#ef444440":cor+"40"};background:${atrasado?"#ef444415":cor+"15"}">${lbl}</span>
@@ -1151,7 +1151,7 @@ function renderOperador(){
       <div class="stat-card stat-card-op"><div class="stat-num" style="color:var(--gr)">${hist.filter(t=>t.status==="concluido"&&t.opId===opId).length}</div><div class="stat-lbl">Fiz hoje</div></div>
     </div>`:"";
   const filaHTML=fila.length===0
-    ?`<div class="empty"><div class="empty-icon-wrap">${I.inbox.replace('stroke="currentColor"','stroke="var(--mu-op)"')}</div><div class="empty-title">Sem tarefas</div><div class="empty-sub">Aguardando reposiÃ§Ãµes atribuÃ­das a vocÃª<br>ou disponÃ­veis para qualquer operador.</div></div>`
+    ?`<div class="empty"><div class="empty-icon-wrap">${I.inbox.replace('stroke="currentColor"','stroke="var(--mu-op)"')}</div><div class="empty-title">Sem tarefas</div><div class="empty-sub">Aguardando reposições atribuídas a você<br>ou disponíveis para qualquer operador.</div></div>`
     :statsHTML+(filaFiltrada.length===0
       ?`<div class="empty" style="padding:30px 20px"><div class="empty-icon-wrap">${I.search.replace('stroke="currentColor"','stroke="var(--mu-op)"')}</div><div class="empty-title">Nenhum na Rua ${filtroRua}</div><div class="empty-sub">Selecione outra rua ou "Todas".</div></div>`
       :filaFiltrada.map((t,i)=>cardOp(t,i)).join(""));
@@ -1170,9 +1170,9 @@ function renderOperador(){
     ${filtroBarHTML}
     <div class="main-op">
       ${filaHTML}
-      ${filaFiltrada.length>0?`<div class="sdica">${I.swipe} Arraste para direita para <b>concluir</b> &nbsp;Â·&nbsp; ${I.tap} Toque em <b>ConcluÃ­do</b></div>`:""}
+      ${filaFiltrada.length>0?`<div class="sdica">${I.swipe} Arraste para direita para <b>concluir</b> &nbsp;·&nbsp; ${I.tap} Toque em <b>Concluído</b></div>`:""}
       ${hist.length>0?`
-        <div class="secao">ConcluÃ­das hoje (${hist.length})</div>
+        <div class="secao">Concluídas hoje (${hist.length})</div>
         ${hist.map(t=>`
           <div class="chist" style="border-left-color:${t.status==="concluido"?"var(--gr)":"var(--rd)"}">
             <span style="font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;color:${t.status==="concluido"?"var(--gr)":"var(--rd)"}">${h(t.endereco)}</span>
@@ -1206,13 +1206,13 @@ function cardOp(t,i){
     return `
       <div id="op-${idSafe(t.id)}" class="cop-main" style="${isPulado?"border-color:#8892b0;opacity:.7":""}">
         <div class="swipe-hint"></div>
-        <div class="tipo-main" style="color:${tipoCor}">${tipoIcon} ${tipoTxt}${foiAtrib?` <span style="font-size:11px;color:#a78bfa;background:#8b5cf615;border:1px solid #8b5cf640;border-radius:99px;padding:2px 8px;font-family:'DM Sans';font-weight:700;letter-spacing:0">Para vocÃª</span>`:""}</div>
+        <div class="tipo-main" style="color:${tipoCor}">${tipoIcon} ${tipoTxt}${foiAtrib?` <span style="font-size:11px;color:#a78bfa;background:#8b5cf615;border:1px solid #8b5cf640;border-radius:99px;padding:2px 8px;font-family:'DM Sans';font-weight:700;letter-spacing:0">Para você</span>`:""}</div>
         <div class="addr-main" style="color:${addrCor}">${h(t.endereco)}</div>
         ${t.descricao?`<div class="desc-main">${h(t.descricao)}</div>`:""}
         ${t.codigo?`<div class="cod-main">${h(t.codigo)}</div>`:""}
         <div class="op-btns">
           ${t.status==="andamento"&&t.opId===opId
-            ?`<button class="abtn abtn-green" onclick="window.acao('${sq(t.id)}','concluido')">${I.check} ConcluÃ­do</button>
+            ?`<button class="abtn abtn-green" onclick="window.acao('${sq(t.id)}','concluido')">${I.check} Concluído</button>
                <button class="abtn abtn-red" onclick="window.acao('${sq(t.id)}','vazio')">${I.alert} Vazio</button>
                <button class="abtn abtn-gray" onclick="window.pular('${sq(t.id)}')">${I.skip}</button>`
             :`<button class="abtn abtn-blue" onclick="window.acao('${sq(t.id)}','andamento')">${I.receive} Pegar</button>
@@ -1232,7 +1232,7 @@ function cardOp(t,i){
     </div>`;
 }
 
-// â"€â"€ RENDER EXPEDIÃ‡ÃƒO â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// â"€â"€ RENDER EXPEDIÇÃO â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function renderExpedicao(){
   const fila=carregamentos.filter(c=>!["concluido","problema"].includes(c.status));
   const hist=carregamentos.filter(c=>["concluido","problema"].includes(c.status));
@@ -1250,11 +1250,11 @@ function renderExpedicao(){
       <div class="stat-card" style="background:var(--s1-exp);border-color:var(--bd-exp)"><div class="stat-num" style="color:var(--am)">${fila.filter(c=>c.status==="pendente").length}</div><div class="stat-lbl">Aguardando</div></div>
       <div class="stat-card" style="background:var(--s1-exp);border-color:var(--bd-exp)"><div class="stat-num" style="color:var(--bl)">${fila.filter(c=>c.status==="encostado").length}</div><div class="stat-lbl">Encostados</div></div>
       <div class="stat-card" style="background:var(--s1-exp);border-color:var(--bd-exp)"><div class="stat-num" style="color:var(--gr)">${fila.filter(c=>c.status==="liberado").length}</div><div class="stat-lbl">Liberados</div></div>
-      <div class="stat-card" style="background:var(--s1-exp);border-color:var(--bd-exp)"><div class="stat-num" style="color:var(--gr)">${hist.filter(c=>c.status==="concluido").length}</div><div class="stat-lbl">ConcluÃ­dos</div></div>
+      <div class="stat-card" style="background:var(--s1-exp);border-color:var(--bd-exp)"><div class="stat-num" style="color:var(--gr)">${hist.filter(c=>c.status==="concluido").length}</div><div class="stat-lbl">Concluídos</div></div>
     </div>`:"";
 
   const filaHTML=fila.length===0
-    ?`<div class="empty-exp"><div class="empty-icon-wrap-exp">${I.truck.replace('width="20" height="20"','width="28" height="28"').replace('stroke="currentColor"','stroke="var(--mu-exp)"')}</div><div class="empty-title" style="color:var(--tx2-exp)">Nenhum veÃ­culo</div><div class="empty-sub">Envie uma placa para iniciar.</div></div>`
+    ?`<div class="empty-exp"><div class="empty-icon-wrap-exp">${I.truck.replace('width="20" height="20"','width="28" height="28"').replace('stroke="currentColor"','stroke="var(--mu-exp)"')}</div><div class="empty-title" style="color:var(--tx2-exp)">Nenhum veículo</div><div class="empty-sub">Envie uma placa para iniciar.</div></div>`
     :statsHTML+Object.entries(groups).map(([transp,cards])=>`
       <div class="transp-grp">
         ${I.flag.replace('stroke="currentColor"','stroke="#22c55e"')} ${h(transp)}
@@ -1265,7 +1265,7 @@ function renderExpedicao(){
   document.getElementById("app").innerHTML=`
     <div class="topbar-exp">
       <span class="tlogo-exp">EXPO</span>
-      <span class="trole expe">${I.clipboard} ExpediÃ§Ã£o</span>
+      <span class="trole expe">${I.clipboard} Expedição</span>
       <span class="tsp"></span>
       <span class="tlive"><span class="dot"></span>ao vivo</span>
       <span class="tver">${APP_VERSION}</span>
@@ -1274,7 +1274,7 @@ function renderExpedicao(){
     ${manoOnlineBarHTML()}
     <div class="main-exp">
       <div class="formcard-exp">
-        <div class="ftitle-exp">${I.truck.replace('stroke="currentColor"','stroke="#22c55e"')} Novo VeÃ­culo</div>
+        <div class="ftitle-exp">${I.truck.replace('stroke="currentColor"','stroke="#22c55e"')} Novo Veículo</div>
         <label class="lbl-exp">Placa</label>
         <input id="fPlaca" class="inp-exp inp-exp-placa" placeholder="ABC-1234"
           oninput="this.value=this.value.toUpperCase()"/>
@@ -1288,30 +1288,30 @@ function renderExpedicao(){
             <input id="fTransp" class="inp-exp" placeholder="Ex: JBS"/>
           </div>
         </div>
-        <label class="lbl-exp">${I.truck} Manobrista <small style="color:var(--mu-exp);font-size:9px;text-transform:none;letter-spacing:0">â€“ opcional</small></label>
+        <label class="lbl-exp">${I.truck} Manobrista <small style="color:var(--mu-exp);font-size:9px;text-transform:none;letter-spacing:0">– opcional</small></label>
         ${atribPillsExpHTML()}
         <button class="btn-send-exp" onclick="window.enviarCarreg()">${I.send} ENVIAR AO MANOBRISTA</button>
       </div>
       ${mgmtHTML()}
       ${filaHTML}
       ${hist.length>0?`
-        <div class="secao-exp">HISTÃ“RICO (${hist.length})</div>
+        <div class="secao-exp">HISTÓRICO (${hist.length})</div>
         ${hist.map(c=>`
           <div class="chist-exp" style="border-left-color:${c.status==="concluido"?"var(--gr)":"var(--rd)"}">
             <span style="font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;color:${c.status==="concluido"?"var(--gr)":"var(--rd)"}">${h(c.placa)}</span>
             <span style="font-size:11px;color:var(--tx2-exp);margin-left:4px">Doca ${h(c.doca)}</span>
             <span style="margin-left:auto;display:flex;align-items:center;gap:5px;font-size:10px;color:var(--mu-exp)">
-              ${c.manobNome?`<span style="color:#6ee7b7">${h(c.manobNome)}</span> Â·`:""}
+              ${c.manobNome?`<span style="color:#6ee7b7">${h(c.manobNome)}</span> ·`:""}
               ${fmtHora(c.ts)}
             </span>
           </div>`).join("")}
-        <button class="btn-limpar-exp" onclick="window.limparCarreg()">${I.trash} Limpar histÃ³rico</button>`:""}
+        <button class="btn-limpar-exp" onclick="window.limparCarreg()">${I.trash} Limpar histórico</button>`:""}
     </div>`;
 }
 
 function cardExp(c){
   const cor={pendente:"#f59e0b",encostado:"#3b82f6",liberado:"#22c55e",concluido:"#22c55e",problema:"#ef4444"}[c.status]||"#f59e0b";
-  const lbl={pendente:"Aguardando",encostado:"Encostado",liberado:"Liberado",concluido:"ConcluÃ­do",problema:"Problema"}[c.status];
+  const lbl={pendente:"Aguardando",encostado:"Encostado",liberado:"Liberado",concluido:"Concluído",problema:"Problema"}[c.status];
   const isProb=c.status==="problema";
   return `
     <div class="cexp${isProb?" crep-atrasado":""}" style="border-left-color:${cor}">
@@ -1322,12 +1322,12 @@ function cardExp(c){
         ${c.status==="pendente"?`<button class="btn-liberar" onclick="window.liberarCarreg('${sq(c.id)}')" style="background:var(--am)">${I.flag} LIBERAR</button>`:""}
         <button class="btn-rem" onclick="window.removerCarreg('${sq(c.id)}')">${I.x}</button>
       </div>
-      <div style="font-size:12px;color:var(--tx2-exp);margin:3px 0">Doca ${h(c.doca||"â€“")}</div>
+      <div style="font-size:12px;color:var(--tx2-exp);margin:3px 0">Doca ${h(c.doca||"–")}</div>
       ${isProb&&c.problemaDesc?`
         <div style="background:#ef444418;border:1px solid #ef444440;border-radius:8px;padding:8px 10px;margin:6px 0;
           font-size:12px;font-weight:700;color:#ef4444;display:flex;align-items:center;gap:6px">
           ${I.alert.replace('stroke="currentColor"','stroke="#ef4444"').replace('width="18" height="18"','width="14" height="14"')}
-          ${h(c.problemaDesc)}${c.manobNomeAcao?` <span style="font-weight:400;color:#ef444490">Â· ${h(c.manobNomeAcao)}</span>`:""}
+          ${h(c.problemaDesc)}${c.manobNomeAcao?` <span style="font-weight:400;color:#ef444490">· ${h(c.manobNomeAcao)}</span>`:""}
         </div>`:""}
       <div class="cexp-meta">
         ${c.manobNome?`<span class="man-tag">${I.truck.replace('width="20" height="20"','width="11" height="11"')} ${h(c.manobNome)}</span>`:`<span style="font-size:9px;color:var(--mu-exp)">Qualquer manobrista</span>`}
@@ -1354,8 +1354,8 @@ function renderManobrista(){
 
   const emptyHTML=`<div class="empty-man">
     <div class="empty-icon-wrap-man">${I.truck.replace('width="20" height="20"','width="28" height="28"').replace('stroke="currentColor"','stroke="var(--mu-man)"')}</div>
-    <div class="empty-title" style="color:var(--tx2-man)">Sem veÃ­culos</div>
-    <div class="empty-sub" style="color:var(--mu-man)">Aguardando a expediÃ§Ã£o enviar<br>uma placa para vocÃª.</div>
+    <div class="empty-title" style="color:var(--tx2-man)">Sem veículos</div>
+    <div class="empty-sub" style="color:var(--mu-man)">Aguardando a expedição enviar<br>uma placa para você.</div>
   </div>`;
 
   document.getElementById("app").innerHTML=`
@@ -1373,11 +1373,11 @@ function renderManobrista(){
       ${resto.map(cardManSec).join("")}
       ${minhaFila.length>0&&primeiro?.status==="liberado"?`<div class="sdica-man">${I.swipe} Arraste para direita para <b>concluir</b></div>`:""}
       ${hist.length>0?`
-        <div class="secao" style="color:var(--mu-man);border-color:var(--bd-man)">ConcluÃ­dos hoje (${hist.length})</div>
+        <div class="secao" style="color:var(--mu-man);border-color:var(--bd-man)">Concluídos hoje (${hist.length})</div>
         ${hist.map(c=>`
           <div class="chist-exp" style="border-left-color:${c.status==="concluido"?"var(--gr)":"var(--rd)"}">
             <span style="font-family:'Bebas Neue';font-size:20px;letter-spacing:3px;color:${c.status==="concluido"?"var(--gr)":"var(--rd)"}">${h(c.placa)}</span>
-            <span style="font-size:11px;color:var(--tx2-exp);margin-left:6px">Doca ${h(c.doca||"â€“")}</span>
+            <span style="font-size:11px;color:var(--tx2-exp);margin-left:6px">Doca ${h(c.doca||"–")}</span>
             <span style="margin-left:auto;font-size:10px;color:var(--mu-man)">${fmtHora(c.ts)}</span>
           </div>`).join("")}`:""}
     </div>`;
@@ -1397,23 +1397,23 @@ function cardManMain(c){
     <div id="man-${idSafe(c.id)}" class="cman-main ${bordaCls}">
       ${isLib?`<div class="swipe-hint"></div>`:""}
       <div style="font-family:'Bebas Neue';font-size:13px;letter-spacing:3px;color:${placaCor}">
-        ${isLib?"âœ“ LIBERADO â€“ PODE PARTIR":isEnc?"AGUARDANDO CARREGAMENTO":"NOVO VEÃCULO"}
+        ${isLib?"✓ LIBERADO – PODE PARTIR":isEnc?"AGUARDANDO CARREGAMENTO":"NOVO VEÍCULO"}
       </div>
       <div class="placa-main ${isLib?"liberado":isEnc?"encostado":""}">${h(c.placa)}</div>
-      <div class="doca-main">Doca ${h(c.doca||"â€“")}</div>
+      <div class="doca-main">Doca ${h(c.doca||"–")}</div>
       <div class="transp-main">${h(c.transportadora||"")}</div>
       ${isLib?`
         <div class="liberado-banner">
           <div class="liberado-title">${I.flag.replace('stroke="currentColor"','stroke="#22c55e"')} LIBERADO!</div>
-          <div class="liberado-sub">A expediÃ§Ã£o autorizou a saÃ­da.</div>
+          <div class="liberado-sub">A expedição autorizou a saída.</div>
         </div>
         <div class="op-btns">
-          <button class="abtn abtn-green" onclick="window.acaoCarreg('${sq(c.id)}','concluido')">${I.check} CONCLUÃDO</button>
+          <button class="abtn abtn-green" onclick="window.acaoCarreg('${sq(c.id)}','concluido')">${I.check} CONCLUÍDO</button>
           <button class="abtn abtn-red" onclick="window.acaoCarreg('${sq(c.id)}','problema')">${I.alert} PROBLEMA</button>
         </div>
       `:isEnc?`
         <div class="aguardando-banner">
-          <div style="font-size:11px;color:#6b9cf6;">Aguardando autorizaÃ§Ã£o da expediÃ§Ã£o para partir...</div>
+          <div style="font-size:11px;color:#6b9cf6;">Aguardando autorização da expedição para partir...</div>
         </div>
         <div class="op-btns">
           <button class="abtn abtn-red" onclick="window.acaoCarreg('${sq(c.id)}','problema')">${I.alert} PROBLEMA</button>
@@ -1432,7 +1432,7 @@ function cardManSec(c){
     <div class="cman-sec">
       <div style="display:flex;align-items:center;gap:8px">
         <span style="font-family:'Bebas Neue';font-size:24px;letter-spacing:3px;color:var(--pu);opacity:.6">${h(c.placa)}</span>
-        <span style="font-size:10px;color:var(--tx2-man)">Doca ${h(c.doca||"â€“")}</span>
+        <span style="font-size:10px;color:var(--tx2-man)">Doca ${h(c.doca||"–")}</span>
         <span class="tempo-op" data-ts="${c.ts}" style="margin-left:auto;font-size:10px;font-weight:700;color:${corTempo(c.ts)}">${tempoFila(c.ts)}</span>
       </div>
       ${c.transportadora?`<div style="font-size:10px;color:var(--mu-man);margin-top:2px">${h(c.transportadora)}</div>`:""}
@@ -1525,7 +1525,7 @@ function render(){
   else if(perfil==="manobrista")                     renderManobrista();
 }
 
-// â"€â"€ PRESENÃ‡A (picking) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// â"€â"€ PRESENÇA (picking) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function registrarOperador(){
   if(!opId||!nomeOperador)return;
   const opRef=ref(db,`operadores/${opId}`);
@@ -1534,7 +1534,7 @@ function registrarOperador(){
 }
 function removerOperador(){if(window._opRef)remove(window._opRef).catch(()=>{});}
 
-// â"€â"€ PRESENÃ‡A (manobrista) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// â"€â"€ PRESENÇA (manobrista) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function registrarManobrista(){
   if(!manobId||!nomeManob)return;
   const mRef=ref(db,`manobristas/${manobId}`);
@@ -1650,7 +1650,7 @@ function aplicarPapel(role,name){
   render();
 }
 
-// â"€â"€ AÃ‡Ã•ES GERAIS â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// â"€â"€ AÇÕES GERAIS â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 
 
 window.confirmarNome=()=>{
@@ -1764,7 +1764,7 @@ window.authEntrar=async()=>{
   }
 };
 
-// â"€â"€ AÃ‡Ã•ES PICKING â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// â"€â"€ AÇÕES PICKING â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 window.setFiltroRua=r=>{filtroRua=r;render();};
 window.toggleFont=()=>{showFont=!showFont;render();};
 window.setAtrib=v=>{
@@ -1781,9 +1781,9 @@ window.setCamara=c=>{
   camaraAtual=c;
   // Atualiza tabs
   document.querySelectorAll(".cam-tab").forEach(btn=>{
-    // Extrai letra da aba pelo texto (formato "X â€“ Nome")
+    // Extrai letra da aba pelo texto (formato "X – Nome")
     const txt=btn.textContent.trim();
-    const k=txt.split("â€“")[0].trim();
+    const k=txt.split("–")[0].trim();
     const cam=CAMARAS[k];if(!cam)return;
     const isAtiva=k===c;
     btn.classList.toggle("ativa",isAtiva);
@@ -1823,14 +1823,14 @@ window.onEnd=v=>{
   if(r.valido){
     if(r.isPicking){
       elP.className="prev-end err";
-      elP.innerHTML=`<span style="color:var(--am)">${I.alert}</span><div><div class="pfull" style="color:var(--am)">${r.completo}</div><div class="pdet" style="color:var(--am);font-weight:700;margin-top:4px">${cam.especial?"CÃ¢mara F â€“ nÃ­vel de chÃ£o":"NÃ­vel 10 â€“ picking de chÃ£o"}</div><div class="pdet" style="margin-top:3px">Este endereÃ§o jÃ¡ estÃ¡ acessÃ­vel no chÃ£o.<br>O operador de empilhadeira nÃ£o Ã© necessÃ¡rio.</div></div>`;
+      elP.innerHTML=`<span style="color:var(--am)">${I.alert}</span><div><div class="pfull" style="color:var(--am)">${r.completo}</div><div class="pdet" style="color:var(--am);font-weight:700;margin-top:4px">${cam.especial?"Câmara F – nível de chão":"Nível 10 – picking de chão"}</div><div class="pdet" style="margin-top:3px">Este endereço já está acessível no chão.<br>O operador de empilhadeira não é necessário.</div></div>`;
       if(elA)elA.className="aviso-dup hidden";window._endForcar=null;return;
     }
     elP.className="prev-end ok";
     elP.innerHTML=`<span style="color:var(--gr)">${I.check}</span><div><div class="pfull" style="color:${cam.cor}">${r.completo}</div>${r.label?`<div class="pdet" style="margin-top:3px">${r.label}</div>`:""}</div>`;
     const dup=tarefas.find(t=>t.endereco===r.completo&&["pendente","andamento","pulado"].includes(t.status));
     if(elA){
-      if(dup){elA.className="aviso-dup";elA.innerHTML=`${I.alert} EndereÃ§o jÃ¡ na fila como <b>${{pendente:"Pendente",andamento:"Em andamento",pulado:"Pulado"}[dup.status]}</b>. <button class="btndup" onclick="window.enviarForcar()">Enviar mesmo assim</button>`;window._endForcar=r.completo;}
+      if(dup){elA.className="aviso-dup";elA.innerHTML=`${I.alert} Endereço já na fila como <b>${{pendente:"Pendente",andamento:"Em andamento",pulado:"Pulado"}[dup.status]}</b>. <button class="btndup" onclick="window.enviarForcar()">Enviar mesmo assim</button>`;window._endForcar=r.completo;}
       else{elA.className="aviso-dup hidden";window._endForcar=null;}
     }
   }else{
@@ -1847,7 +1847,7 @@ async function doPush(endCompleto){
     atribNome:atribPara!=="qualquer"?(operadores[atribPara]?.nome||null):null,
   });
   // Feedback visual + limpa campo
-  showToast(`âœ“ ${endCompleto} enviado`);
+  showToast(`✓ ${endCompleto} enviado`);
   const fEnd=document.getElementById("fEnd");
   if(fEnd){fEnd.value="";
     document.getElementById("prevEnd")?.classList.add("hidden");
@@ -1858,8 +1858,8 @@ async function doPush(endCompleto){
 
 window.enviar=async()=>{
   const r=parseEnd(document.getElementById("fEnd")?.value||"",camaraAtual);
-  if(!r.valido){alert(r.erro||"EndereÃ§o invÃ¡lido");return;}
-  if(r.isPicking){alert("EndereÃ§o de chÃ£o â€“ o operador nÃ£o Ã© necessÃ¡rio.");return;}
+  if(!r.valido){alert(r.erro||"Endereço inválido");return;}
+  if(r.isPicking){alert("Endereço de chão – o operador não é necessário.");return;}
   const elA=document.getElementById("avisoEnd");
   if(elA&&!elA.classList.contains("hidden")&&window._endForcar)return;
   await doPush(r.completo);
@@ -1878,7 +1878,7 @@ window.remover=async id=>{if(!confirm("Remover esta tarefa?"))return;try{await r
 window.fecharAlerta=async id=>{try{await update(ref(db,`tarefas/${id}`),{alertaVisto:true});}catch{}document.getElementById("al-"+idSafe(id))?.remove();};
 window.limparTudo=async()=>{if(!confirm("Limpar todas as tarefas?"))return;try{await remove(tasksRef);}catch(e){alert("Erro: "+e.message);}};
 
-// â"€â"€ AÃ‡Ã•ES EXPEDIÃ‡ÃƒO â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// â"€â"€ AÇÕES EXPEDIÇÃO â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 window.setAtribManob=nome=>{
   atribManob=nome;
   document.querySelectorAll(".atrib-pill-exp").forEach(el=>{
@@ -1899,7 +1899,7 @@ window.adicionarManob=async()=>{
   const nome=cleanInput(document.getElementById("inputNovoManob")?.value,20);
   if(!nome)return;
   const jaExiste=Object.values(nomesManobristas).some(n=>n.toLowerCase()===nome.toLowerCase());
-  if(jaExiste){alert("Este nome jÃ¡ estÃ¡ cadastrado.");return;}
+  if(jaExiste){alert("Este nome já está cadastrado.");return;}
   try{
     await push(nomesManobRef,nome);
     const inp=document.getElementById("inputNovoManob");
@@ -1916,7 +1916,7 @@ window.enviarCarreg=async()=>{
   const placa=cleanInput((document.getElementById("fPlaca")?.value||"").toUpperCase(),12);
   const doca=cleanInput(document.getElementById("fDoca")?.value,30);
   const transp=cleanInput(document.getElementById("fTransp")?.value,40);
-  if(!placa){alert("Informe a placa do veÃ­culo.");return;}
+  if(!placa){alert("Informe a placa do veículo.");return;}
   if(!doca){alert("Informe a doca.");return;}
   try{
     await push(carregRef,{
@@ -1929,7 +1929,7 @@ window.enviarCarreg=async()=>{
     document.getElementById("fTransp").value="";
     atribManob="qualquer";
     document.querySelectorAll(".atrib-pill-exp").forEach((el,i)=>el.classList.toggle("ativo",i===0));
-    showToast(`âœ“ ${placa} enviado`,{bg:"#22c55e",color:"#000"});
+    showToast(`✓ ${placa} enviado`,{bg:"#22c55e",color:"#000"});
     setTimeout(()=>document.getElementById("fPlaca")?.focus(),50);
   }catch(e){alert("Erro: "+e.message);}
 };
@@ -1939,25 +1939,25 @@ window.liberarCarreg=async id=>{
 };
 
 window.removerCarreg=async id=>{
-  if(!confirm("Remover este veÃ­culo?"))return;
+  if(!confirm("Remover este veículo?"))return;
   try{await remove(ref(db,`carregamentos/${id}`));}catch(e){alert("Erro: "+e.message);}
 };
 
 window.limparCarreg=async()=>{
-  if(!confirm("Limpar histÃ³rico de carregamentos?"))return;
+  if(!confirm("Limpar histórico de carregamentos?"))return;
   const conc=carregamentos.filter(c=>["concluido","problema"].includes(c.status));
   try{await Promise.all(conc.map(c=>remove(ref(db,`carregamentos/${c.id}`))));}catch(e){alert("Erro: "+e.message);}
 };
 
-// â"€â"€ AÃ‡Ã•ES MANOBRISTA â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// â"€â"€ AÇÕES MANOBRISTA â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const PROBLEMAS_OPCOES=[
-  {icon:"ðŸ“‹",txt:"Carro nÃ£o pega / nÃ£o liga"},
-  {icon:"ðŸ“§",txt:"VeÃ­culo quebrado"},
-  {icon:"ðŸ›ž",txt:"Pneu furado"},
-  {icon:"â›½",txt:"Sem combustÃ­vel"},
-  {icon:"ðŸ“‘",txt:"Sem chave do veÃ­culo"},
-  {icon:"â›“",txt:"Acesso bloqueado Ã  doca"},
-  {icon:"â“",txt:"Outro problema"},
+  {icon:"📋",txt:"Carro não pega / não liga"},
+  {icon:"🔧",txt:"Veículo quebrado"},
+  {icon:"🛞",txt:"Pneu furado"},
+  {icon:"⛽",txt:"Sem combustível"},
+  {icon:"🔑",txt:"Sem chave do veículo"},
+  {icon:"⛔",txt:"Acesso bloqueado à doca"},
+  {icon:"❓",txt:"Outro problema"},
 ];
 
 window.abrirModalProblema=id=>{
@@ -1967,7 +1967,7 @@ window.abrirModalProblema=id=>{
   overlay.innerHTML=`
     <div class="prob-sheet">
       <div class="prob-title">${I.alert.replace('stroke="currentColor"','stroke="#ef4444"')} Relatar Problema</div>
-      <p class="prob-sub">Selecione o tipo de problema para avisar a expediÃ§Ã£o.</p>
+      <p class="prob-sub">Selecione o tipo de problema para avisar a expedição.</p>
       <div class="prob-options">
         ${PROBLEMAS_OPCOES.map(p=>`
           <button class="prob-btn" onclick="window.confirmarProblema('${sq(id)}','${sq(p.txt)}')">
@@ -2005,14 +2005,14 @@ window.abrirRepassar=taskId=>{
   const task=tarefas.find(t=>t.id===taskId);
   if(!task)return;
   const disponiveis=Object.entries(operadores).filter(([id])=>id!==task.atribId);
-  if(disponiveis.length===0){alert("NÃ£o hÃ¡ outros operadores online para repassar.");return;}
+  if(disponiveis.length===0){alert("Não há outros operadores online para repassar.");return;}
   const carga=id=>tarefas.filter(t=>["pendente","andamento","pulado"].includes(t.status)&&(t.atribId===id||(!t.atribId&&id==="livre"))).length;
   const overlay=document.createElement("div");
   overlay.className="modal-overlay";overlay.id="modalRepassar";
   overlay.innerHTML=`
     <div class="modal">
       <div class="modal-title">${I.transfer} Repassar Tarefa</div>
-      <div class="modal-sub"><b style="color:var(--am)">${h(task.endereco)}</b><br>${h(task.descricao||"Sem descriÃ§Ã£o")} Â· ${task.tipo==="picking"?"Picking":"Palete"}</div>
+      <div class="modal-sub"><b style="color:var(--am)">${h(task.endereco)}</b><br>${h(task.descricao||"Sem descrição")} · ${task.tipo==="picking"?"Picking":"Palete"}</div>
       <div class="modal-ops">
         ${disponiveis.map(([id,op])=>{
           const n=carga(id);
@@ -2026,7 +2026,7 @@ window.abrirRepassar=taskId=>{
         }).join("")}
         ${task.atribId?`<button class="modal-op-btn" onclick="window.confirmarRepassar('${sq(taskId)}','qualquer','')">
           <div style="width:36px;height:36px;border-radius:10px;background:#4b588220;display:flex;align-items:center;justify-content:center;flex-shrink:0">${I.users.replace('stroke="currentColor"','stroke="#8892b0"')}</div>
-          <div><div class="modal-op-nome" style="color:var(--tx2)">Qualquer operador</div><div class="modal-op-info">Remover atribuiÃ§Ã£o especÃ­fica</div></div>
+          <div><div class="modal-op-nome" style="color:var(--tx2)">Qualquer operador</div><div class="modal-op-info">Remover atribuição específica</div></div>
         </button>`:""}
       </div>
       <button class="modal-cancel" onclick="window.fecharModal()">Cancelar</button>
