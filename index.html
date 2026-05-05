@@ -558,226 +558,301 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .hidden{display:none!important}
 
 /* ══════════════════════════════════════════════════════════════════
-   VISUAL UPGRADE — Glass Command
+   VISUAL UPGRADE — Dark Premium / Cockpit
    ══════════════════════════════════════════════════════════════════ */
 
-/* ── Glow palette ──────────────────────────────────────────────── */
+/* ── Paleta refinada ───────────────────────────────────────────── */
 :root{
-  --glow-am:rgba(245,158,11,.22);
-  --glow-bl:rgba(59,130,246,.22);
-  --glow-gr:rgba(34,197,94,.22);
-  --glow-rd:rgba(239,68,68,.22);
-  --glow-pu:rgba(139,92,246,.22);
+  --bg:#06060a;--s1:#0d0d12;--s2:#111117;--s3:#16161e;--bd:#1e1e2c;
+  --am:#fbbf24;--bl:#60a5fa;--gr:#4ade80;--rd:#f87171;--pu:#a78bfa;
+  --tx:#e8eaff;--tx2:#7878a8;--mu:#3a3a60;
+  --bg-op:#04040a;--s1-op:#0b0b11;--s2-op:#0f0f16;--bd-op:#191928;
+  --tx-op:#dde8ff;--tx2-op:#5858a0;--mu-op:#282848;
+  --bg-exp:#040a06;--s1-exp:#090e0a;--s2-exp:#0d130f;--bd-exp:#162018;
+  --tx-exp:#c8f5d8;--tx2-exp:#3a8050;--mu-exp:#1c3822;
+  --bg-man:#060408;--s1-man:#0c0810;--s2-man:#101016;--bd-man:#1e1828;
+  --tx-man:#e8e0ff;--tx2-man:#6858a8;--mu-man:#282040;
+  --addr-size:82px;--addr-sp:4px;
 }
 
-/* ── Login ─────────────────────────────────────────────────────── */
+/* ── Base ──────────────────────────────────────────────────────── */
+html,body{background:#06060a!important}
+
+/* ── Login — cinematic ─────────────────────────────────────────── */
 .login{
   background:
-    radial-gradient(ellipse 110% 80% at 50% -5%,#1a2650 0%,#0b0e17 55%),
-    radial-gradient(ellipse 70% 50% at 10% 110%,#0d1430 0%,transparent 65%)!important
+    radial-gradient(ellipse 90% 70% at 50% -5%,#18183a 0%,#06060a 58%),
+    radial-gradient(ellipse 60% 40% at 85% 95%,#0e0e28 0%,transparent 60%)!important
 }
 .logo{
-  box-shadow:0 0 0 1px rgba(245,158,11,.3),0 0 50px rgba(245,158,11,.4),0 0 100px rgba(245,158,11,.18)!important;
-  animation:logoGlow 3s ease-in-out infinite!important
+  width:80px!important;height:80px!important;border-radius:22px!important;
+  box-shadow:0 0 0 1px #fbbf2460,0 0 40px #fbbf2466,0 0 90px #fbbf2430,0 0 160px #fbbf2415!important;
+  animation:logoGlow 2.5s ease-in-out infinite!important
 }
 @keyframes logoGlow{
-  0%,100%{box-shadow:0 0 0 1px rgba(245,158,11,.3),0 0 50px rgba(245,158,11,.4),0 0 100px rgba(245,158,11,.18)}
-  50%{box-shadow:0 0 0 1px rgba(245,158,11,.55),0 0 70px rgba(245,158,11,.65),0 0 130px rgba(245,158,11,.28)}
+  0%,100%{box-shadow:0 0 0 1px #fbbf2460,0 0 40px #fbbf2466,0 0 90px #fbbf2430,0 0 160px #fbbf2415}
+  50%    {box-shadow:0 0 0 2px #fbbf24aa,0 0 60px #fbbf24aa,0 0 120px #fbbf2458,0 0 200px #fbbf2428}
 }
-.login h1{text-shadow:0 2px 30px rgba(255,255,255,.15)!important}
-.mod-card{box-shadow:0 4px 24px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.04)!important}
-.mod-card-pick{box-shadow:0 4px 28px rgba(245,158,11,.1),0 4px 24px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.04)!important}
-.mod-card-exp{box-shadow:0 4px 28px rgba(34,197,94,.1),0 4px 24px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.04)!important}
+.login h1{font-size:52px!important;letter-spacing:8px!important;text-shadow:0 0 50px rgba(255,255,255,.25)!important}
+.login-sub{color:#fbbf24!important;opacity:.65!important;letter-spacing:4px!important}
+.mod-card{background:#09090e!important;border-radius:18px!important;box-shadow:0 6px 30px rgba(0,0,0,.65)!important}
+.mod-card-pick{border-color:#fbbf2435!important;box-shadow:0 0 35px #fbbf2412,0 6px 30px rgba(0,0,0,.65)!important}
+.mod-card-exp {border-color:#4ade8035!important;box-shadow:0 0 35px #4ade8012,0 6px 30px rgba(0,0,0,.65)!important}
+.mod-header-pick{background:#0d0d11!important}
+.mod-header-exp {background:#070c08!important}
+.mod-roles-pick{background:#09090d!important}
+.mod-roles-exp {background:#060c07!important}
+.mod-role-name{font-size:17px!important;letter-spacing:3px!important}
+.mod-title{font-size:22px!important;letter-spacing:4px!important}
 
-/* ── Topbars — glass ───────────────────────────────────────────── */
-.topbar,.topbar-op,.topbar-exp,.topbar-man{
-  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-  box-shadow:0 1px 0 rgba(255,255,255,.05),0 4px 24px rgba(0,0,0,.45)!important;
-  border-bottom:1px solid rgba(255,255,255,.06)!important
-}
-.topbar    {background:rgba(11,14,23,.87)!important}
-.topbar-op {background:rgba(2,3,5,.92)!important}
-.topbar-exp{background:rgba(7,20,16,.92)!important}
-.topbar-man{background:rgba(7,3,15,.92)!important}
-
-/* TLOGO neon */
-.tlogo    {text-shadow:0 0 22px rgba(245,158,11,.7)!important}
-.tlogo-exp{text-shadow:0 0 22px rgba(34,197,94,.7)!important}
-.tlogo-man{text-shadow:0 0 22px rgba(139,92,246,.7)!important}
-
-/* ── Backgrounds — mesh gradient ───────────────────────────────── */
-.main-op {background:radial-gradient(ellipse 130% 70% at 50% 0%,#071528 0%,var(--bg-op) 55%)!important}
-.main-man{background:radial-gradient(ellipse 130% 70% at 50% 0%,#0e0622 0%,var(--bg-man) 55%)!important}
-.main-exp{background:radial-gradient(ellipse 130% 70% at 50% 0%,#061410 0%,var(--bg-exp) 55%)!important}
-.rep-dir {background:radial-gradient(ellipse 130% 70% at 50% 0%,#0c1128 0%,var(--bg) 55%)}
-html,body{background:var(--bg)!important}
-
-/* ── Cards — depth ─────────────────────────────────────────────── */
-.crep{
-  background:linear-gradient(160deg,#0d1020 0%,rgba(9,11,20,.98) 100%)!important;
-  box-shadow:0 2px 16px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.035)!important;
-  border-color:rgba(44,52,84,.75)!important;border-radius:16px!important
-}
-.cexp{
-  background:linear-gradient(160deg,#0a1510 0%,rgba(5,10,8,.98) 100%)!important;
-  box-shadow:0 2px 16px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.035)!important;
-  border-radius:16px!important
-}
-.formcard{
-  background:linear-gradient(160deg,#0d1020 0%,rgba(9,11,20,.98) 100%)!important;
-  box-shadow:0 2px 16px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04)!important;
-  border-color:rgba(44,52,84,.6)!important
-}
-.formcard-exp{
-  background:linear-gradient(160deg,#0a1510 0%,rgba(5,10,8,.98) 100%)!important;
-  box-shadow:0 2px 16px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04)!important
-}
-.stat-card{
-  background:linear-gradient(160deg,#0d1020 0%,rgba(9,11,20,.95) 100%)!important;
-  box-shadow:0 2px 12px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04)!important;
-  border-color:rgba(44,52,84,.6)!important
-}
-.stat-card-op{background:linear-gradient(160deg,#0a0d14 0%,rgba(2,3,5,.95) 100%)!important}
-
-/* ── Operator main card ────────────────────────────────────────── */
-.cop-main{
-  background:linear-gradient(160deg,#0c1826 0%,#070a12 100%)!important;
-  border-color:rgba(245,158,11,.7)!important;
-  box-shadow:
-    0 0 0 1px rgba(245,158,11,.22),
-    0 0 35px rgba(245,158,11,.13),
-    0 8px 40px rgba(0,0,0,.65),
-    inset 0 1px 0 rgba(255,255,255,.06)!important;
-  border-radius:22px!important
-}
-.addr-main{text-shadow:0 0 40px rgba(245,158,11,.5)}
-
-/* ── Manobrista main card ──────────────────────────────────────── */
-.cman-main{
-  background:linear-gradient(160deg,#0e0820 0%,#07050e 100%)!important;
-  border-color:rgba(139,92,246,.7)!important;
-  box-shadow:
-    0 0 0 1px rgba(139,92,246,.22),
-    0 0 35px rgba(139,92,246,.13),
-    0 8px 40px rgba(0,0,0,.65),
-    inset 0 1px 0 rgba(255,255,255,.06)!important;
-  border-radius:22px!important
-}
-.placa-main{text-shadow:0 0 40px rgba(139,92,246,.5)}
-.cman-main.liberado{
-  border-color:rgba(34,197,94,.8)!important;
-  box-shadow:
-    0 0 0 2px rgba(34,197,94,.45),
-    0 0 45px rgba(34,197,94,.3),
-    0 8px 40px rgba(0,0,0,.65)!important
-}
-@keyframes pulsar{
-  0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.3),0 0 0 2px rgba(34,197,94,.45),0 0 45px rgba(34,197,94,.3),0 8px 40px rgba(0,0,0,.65)}
-  50%    {box-shadow:0 0 0 8px rgba(34,197,94,.1),0 0 0 2px rgba(34,197,94,.6),0 0 65px rgba(34,197,94,.45),0 8px 40px rgba(0,0,0,.65)}
-}
-
-/* ── Action buttons ────────────────────────────────────────────── */
-.abtn{border-radius:13px!important}
-.abtn-blue {background:linear-gradient(135deg,#3b82f6 0%,#2563eb 100%)!important;box-shadow:0 3px 16px rgba(59,130,246,.45)!important}
-.abtn-green{background:linear-gradient(135deg,#22c55e 0%,#16a34a 100%)!important;box-shadow:0 3px 16px rgba(34,197,94,.45)!important}
-.abtn-red  {background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%)!important;box-shadow:0 3px 16px rgba(239,68,68,.45)!important}
-.abtn-gray {background:linear-gradient(135deg,#1c2244 0%,#141830 100%)!important;box-shadow:0 2px 10px rgba(0,0,0,.4)!important;color:#7a8ab0!important}
-.abtn:active{transform:scale(.96)!important;filter:brightness(.85)!important}
-
-/* ── Send buttons ──────────────────────────────────────────────── */
-.btn-send{
-  background:linear-gradient(135deg,#f5a623 0%,#d97706 100%)!important;
-  box-shadow:0 4px 24px rgba(245,158,11,.55),0 2px 8px rgba(0,0,0,.3)!important;
-  border-radius:13px!important;letter-spacing:4px!important;
+/* ── Auth form ─────────────────────────────────────────────────── */
+.auth-inp{background:#0d0d14!important;border:1px solid #252538!important;font-size:16px!important}
+.auth-inp:focus{border-color:#fbbf24!important;box-shadow:0 0 0 3px #fbbf2422,0 0 20px #fbbf2418!important}
+.auth-btn{
+  background:#fbbf24!important;font-size:22px!important;letter-spacing:5px!important;
+  box-shadow:0 0 0 1px #fbbf2480,0 4px 28px #fbbf2460!important;
   transition:all .2s ease!important
 }
-.btn-send:hover{box-shadow:0 6px 34px rgba(245,158,11,.75),0 2px 8px rgba(0,0,0,.3)!important;transform:translateY(-1px)!important}
-.btn-send-exp{
-  background:linear-gradient(135deg,#22c55e 0%,#16a34a 100%)!important;
-  box-shadow:0 4px 24px rgba(34,197,94,.45)!important;
-  border-radius:13px!important;letter-spacing:4px!important
+.auth-btn:hover{box-shadow:0 0 0 2px #fbbf24cc,0 6px 40px #fbbf2490!important;transform:translateY(-2px)!important}
+
+/* ── Name screen ───────────────────────────────────────────────── */
+.op-name-screen{background:radial-gradient(ellipse 90% 70% at 50% -5%,#0a0f28 0%,#04040a 60%)!important}
+.op-name-screen-man{background:radial-gradient(ellipse 90% 70% at 50% -5%,#120826 0%,#060408 60%)!important}
+.op-name-box{
+  background:#09090e!important;border:1px solid #202038!important;
+  box-shadow:0 0 0 1px #60a5fa25,0 0 50px #60a5fa18,0 12px 60px rgba(0,0,0,.85)!important
 }
-
-/* ── Auth buttons ──────────────────────────────────────────────── */
-.auth-btn{
-  background:linear-gradient(135deg,#f5a623 0%,#d97706 100%)!important;
-  box-shadow:0 4px 22px rgba(245,158,11,.45)!important;
-  letter-spacing:4px!important
+.op-name-box-man{
+  background:#09090e!important;border:1px solid #1e1430!important;
+  box-shadow:0 0 0 1px #a78bfa25,0 0 50px #a78bfa18,0 12px 60px rgba(0,0,0,.85)!important
 }
-.auth-btn:hover{box-shadow:0 6px 30px rgba(245,158,11,.65)!important;transform:translateY(-1px)!important;transition:all .2s ease}
+.op-name-icon{background:#60a5fa18!important;border:1px solid #60a5fa35!important;box-shadow:0 0 24px #60a5fa44!important}
+.op-name-title{font-size:30px!important;letter-spacing:3px!important;color:#dde8ff!important}
+.op-name-btn{box-shadow:0 0 0 1px #60a5fa80,0 4px 24px #60a5fa55!important;font-size:20px!important;letter-spacing:4px!important}
 
-/* ── Input focus glow ──────────────────────────────────────────── */
-.inp:focus        {border-color:#f59e0b!important;box-shadow:0 0 0 3px rgba(245,158,11,.14)!important}
-.inp-exp:focus    {border-color:#22c55e!important;box-shadow:0 0 0 3px rgba(34,197,94,.14)!important}
-.auth-inp:focus   {border-color:#f59e0b!important;box-shadow:0 0 0 3px rgba(245,158,11,.16)!important}
-.op-name-input:focus    {border-color:#3b82f6!important;box-shadow:0 0 0 3px rgba(59,130,246,.16)!important}
-.op-name-input-man:focus{border-color:#8b5cf6!important;box-shadow:0 0 0 3px rgba(139,92,246,.16)!important}
-.mgmt-inp:focus   {box-shadow:0 0 0 3px rgba(34,197,94,.14)!important}
+/* ── Topbars — cockpit line ────────────────────────────────────── */
+.topbar{
+  background:#06060a!important;
+  border-bottom:1px solid #fbbf2438!important;
+  box-shadow:0 1px 0 #fbbf2420,0 4px 30px rgba(0,0,0,.85)!important
+}
+.topbar-op{
+  background:#04040a!important;
+  border-bottom:1px solid #60a5fa38!important;
+  box-shadow:0 1px 0 #60a5fa20,0 4px 30px rgba(0,0,0,.85)!important
+}
+.topbar-exp{
+  background:#040a06!important;
+  border-bottom:1px solid #4ade8038!important;
+  box-shadow:0 1px 0 #4ade8020,0 4px 30px rgba(0,0,0,.85)!important
+}
+.topbar-man{
+  background:#060408!important;
+  border-bottom:1px solid #a78bfa38!important;
+  box-shadow:0 1px 0 #a78bfa20,0 4px 30px rgba(0,0,0,.85)!important
+}
+.tlogo    {font-size:26px!important;letter-spacing:4px!important;color:#fbbf24!important;text-shadow:0 0 20px #fbbf24cc,0 0 50px #fbbf2466!important}
+.tlogo-exp{font-size:26px!important;letter-spacing:4px!important;color:#4ade80!important;text-shadow:0 0 20px #4ade80cc,0 0 50px #4ade8066!important}
+.tlogo-man{font-size:26px!important;letter-spacing:4px!important;color:#a78bfa!important;text-shadow:0 0 20px #a78bfacc,0 0 50px #a78bfa66!important}
+.tver{color:#404060!important;letter-spacing:2px!important}
 
-/* ── Alerts ────────────────────────────────────────────────────── */
+/* ── Backgrounds ───────────────────────────────────────────────── */
+.main-op {background:radial-gradient(ellipse 120% 55% at 50% 0%,#080e22 0%,#04040a 50%)!important}
+.main-exp{background:radial-gradient(ellipse 120% 55% at 50% 0%,#061410 0%,#040a06 50%)!important}
+.main-man{background:radial-gradient(ellipse 120% 55% at 50% 0%,#0e0620 0%,#060408 50%)!important}
+.main-rep{background:#06060a!important}
+.rep-dir {background:radial-gradient(ellipse 120% 55% at 50% 0%,#0b0b1e 0%,#06060a 50%)}
+.rep-esq {background:#08080d!important}
+
+/* ── Camera tabs ───────────────────────────────────────────────── */
+.cam-tab-bar{background:#08080d!important;border-bottom:1px solid #1a1a28!important}
+.cam-tab.ativa{background:rgba(255,255,255,.04)!important;font-weight:800!important;text-shadow:0 0 18px currentColor,0 0 40px currentColor}
+
+/* ── Online bars ───────────────────────────────────────────────── */
+.online-bar{background:#08080d!important;border-bottom:1px solid #1a1a28!important}
+.online-bar-exp{background:#07090a!important;border-bottom:1px solid #182018!important}
+.dot       {background:#4ade80!important;box-shadow:0 0 8px #4ade80,0 0 22px #4ade8066!important}
+.online-dot{background:#4ade80!important;box-shadow:0 0 8px #4ade80,0 0 18px #4ade8055!important}
+.mgmt-online{background:#4ade80!important;box-shadow:0 0 8px #4ade80!important}
+
+/* ── Filtro bar ────────────────────────────────────────────────── */
+.filtro-bar{background:#04040a!important;border-bottom:1px solid #191928!important}
+.filtro-btn{background:#0e0e18!important;border:1px solid #1e1e2e!important;color:#5858a0!important}
+.filtro-ativo{background:#fbbf24!important;border-color:#fbbf24!important;color:#000!important;box-shadow:0 0 0 1px #fbbf2480,0 2px 18px #fbbf2466!important}
+.filtro-n{background:rgba(0,0,0,.3)!important}
+
+/* ── Atrib pills ───────────────────────────────────────────────── */
+.atrib-pills{gap:8px!important}
+.atrib-pill{background:#0e0e18!important;border:1px solid #1e1e2e!important;color:#5858a0!important;padding:8px 16px!important}
+.atrib-pill:hover{border:1px solid #fbbf24!important;color:#fbbf24!important}
+.atrib-pill.ativo{background:#fbbf24!important;color:#000!important;box-shadow:0 0 0 1px #fbbf2480,0 2px 18px #fbbf2466!important}
+
+/* ── Stat cards ────────────────────────────────────────────────── */
+.stat-card   {background:#0a0a0f!important;border:1px solid #1a1a28!important;box-shadow:0 4px 20px rgba(0,0,0,.65)!important}
+.stat-card-op{background:#08080e!important;border-color:#181828!important}
+.stat-num{font-size:34px!important}
+.stat-lbl{letter-spacing:2px!important;color:#3a3a60!important}
+
+/* ── Form cards ────────────────────────────────────────────────── */
+.formcard    {background:#09090e!important;border:1px solid #1a1a28!important;border-radius:18px!important;box-shadow:0 4px 24px rgba(0,0,0,.65)!important}
+.formcard-exp{background:#07090a!important;border:1px solid #182018!important;border-radius:18px!important;box-shadow:0 4px 24px rgba(0,0,0,.65)!important}
+.ftitle    {font-size:20px!important;letter-spacing:3px!important}
+.ftitle-exp{font-size:20px!important;letter-spacing:3px!important}
+
+/* ── Inputs ────────────────────────────────────────────────────── */
+.inp    {background:#0d0d14!important;border:1px solid #252538!important;border-radius:12px!important;font-size:15px!important;color:#d0d0f0!important}
+.inp-exp{background:#0a0f0b!important;border:1px solid #1e2a1e!important;border-radius:12px!important;font-size:15px!important}
+.inp:focus    {border-color:#fbbf24!important;box-shadow:0 0 0 3px #fbbf2422,0 0 20px #fbbf2415!important}
+.inp-exp:focus{border-color:#4ade80!important;box-shadow:0 0 0 3px #4ade8022!important}
+.op-name-input:focus    {border-color:#60a5fa!important;box-shadow:0 0 0 3px #60a5fa22!important}
+.op-name-input-man:focus{border-color:#a78bfa!important;box-shadow:0 0 0 3px #a78bfa22!important}
+.mgmt-inp:focus{box-shadow:0 0 0 3px #4ade8022!important}
+
+/* ── Toggle buttons (pick/pal) ─────────────────────────────────── */
+.tbtn    {background:#0e0e18!important;border:1px solid #1e1e2e!important;color:#505080!important}
+.tbtn.active{background:#fbbf24!important;border-color:#fbbf24!important;box-shadow:0 0 0 1px #fbbf2480,0 2px 16px #fbbf2455!important}
+.tbtn.active svg{stroke:#000!important}
+
+/* ── Repositor cards ───────────────────────────────────────────── */
+.crep{
+  background:#09090e!important;border:1px solid #1a1a28!important;
+  border-left:3px solid!important;border-radius:16px!important;
+  box-shadow:0 4px 24px rgba(0,0,0,.7)!important;
+  transition:transform .15s!important
+}
+.crep:hover{transform:translateX(3px)!important}
+.crep-meta{gap:6px!important}
+.rep-dir-hdr{color:#fbbf2488!important;letter-spacing:3px!important;border-bottom:1px solid #18182a!important}
+.rep-fila-n{background:#fbbf24!important;color:#000!important;box-shadow:0 0 0 1px #fbbf2480,0 2px 14px #fbbf2466!important;font-size:13px!important}
+.btn-limpar{background:#09090e!important;border:1px solid #1a1a28!important;color:#3a3a60!important;border-radius:12px!important}
+.btn-limpar:hover{border-color:#f87171!important;color:#f87171!important}
+.btn-rem:hover{color:#f87171!important;background:#f8717118!important}
+.btn-vazio:hover{color:#fbbf24!important;background:#fbbf2418!important}
+.crep-atrasado{box-shadow:0 0 30px #f8717130!important}
+@keyframes pisca{0%,100%{opacity:1;box-shadow:0 0 18px #f8717115}50%{opacity:.7;box-shadow:0 0 35px #f8717140}}
+@keyframes si{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* ── Expedição cards ───────────────────────────────────────────── */
+.cexp{background:#07090a!important;border:1px solid #162018!important;border-left:3px solid!important;border-radius:16px!important;box-shadow:0 4px 24px rgba(0,0,0,.7)!important}
+
+/* ── Alerta vazio ──────────────────────────────────────────────── */
 .alerta{
-  background:rgba(239,68,68,.07)!important;
-  border-color:rgba(239,68,68,.35)!important;
-  box-shadow:0 0 22px rgba(239,68,68,.12),inset 0 1px 0 rgba(255,255,255,.03)!important
-}
-.crep-atrasado{box-shadow:0 0 28px rgba(239,68,68,.22)!important}
-@keyframes pisca{
-  0%,100%{opacity:1;box-shadow:0 0 16px rgba(239,68,68,.1)}
-  50%    {opacity:.72;box-shadow:0 0 30px rgba(239,68,68,.32)}
+  background:#100808!important;border:1px solid #f8717140!important;
+  border-left:3px solid #f87171!important;border-radius:12px!important;
+  box-shadow:0 0 30px #f8717120,inset 0 0 30px #f8717108!important
 }
 
-/* ── Online indicators ─────────────────────────────────────────── */
-.dot       {box-shadow:0 0 8px var(--gr),0 0 18px rgba(34,197,94,.45)!important}
-.online-dot{box-shadow:0 0 8px var(--gr),0 0 14px rgba(34,197,94,.4)!important}
-.mgmt-online{box-shadow:0 0 8px var(--gr)!important}
+/* ── Operador principal ────────────────────────────────────────── */
+.cop-main{
+  background:#050508!important;border:2px solid #fbbf24!important;border-radius:22px!important;
+  box-shadow:
+    0 0 0 1px #fbbf2450,
+    0 0 30px #fbbf2430,
+    0 0 70px #fbbf2418,
+    0 14px 55px rgba(0,0,0,.9)!important
+}
+.tipo-main{font-size:26px!important;letter-spacing:4px!important}
+.addr-main{
+  font-size:var(--addr-size)!important;letter-spacing:6px!important;
+  text-shadow:0 0 30px #fbbf24,0 0 70px #fbbf2466,0 0 120px #fbbf2430!important
+}
+.op-btns{gap:10px!important;margin-top:20px!important}
+.sdica2{font-size:11px!important;letter-spacing:1px!important}
+.cop-sec{background:#08080d!important;border:1px solid #181828!important;border-radius:14px!important}
 
-/* ── Camera tab active ─────────────────────────────────────────── */
-.cam-tab.ativa{background:rgba(255,255,255,.03);text-shadow:0 0 18px currentColor}
+/* ── Botões de ação — neon ─────────────────────────────────────── */
+.abtn{
+  padding:16px 8px!important;border-radius:13px!important;
+  font-size:13px!important;font-weight:800!important;letter-spacing:1px!important
+}
+.abtn-blue {background:#60a5fa!important;color:#000!important;box-shadow:0 0 0 1px #60a5fa80,0 4px 22px #60a5fa66!important}
+.abtn-green{background:#4ade80!important;color:#000!important;box-shadow:0 0 0 1px #4ade8080,0 4px 22px #4ade8066!important}
+.abtn-red  {background:#f87171!important;color:#000!important;box-shadow:0 0 0 1px #f8717180,0 4px 22px #f8717166!important}
+.abtn-gray {background:#111120!important;color:#505080!important;border:1px solid #242440!important;box-shadow:0 4px 16px rgba(0,0,0,.55)!important}
+.abtn:active{transform:scale(.95)!important;filter:brightness(.82)!important}
 
-/* ── Active pills ──────────────────────────────────────────────── */
-.filtro-ativo{box-shadow:0 2px 14px rgba(245,158,11,.4)!important}
-.atrib-pill.ativo{box-shadow:0 2px 14px rgba(245,158,11,.4)!important}
-.atrib-pill-exp.ativo{box-shadow:0 2px 14px rgba(34,197,94,.4)!important}
-.rep-fila-n{box-shadow:0 1px 10px rgba(245,158,11,.45)!important}
+/* ── Botão ENVIAR ──────────────────────────────────────────────── */
+.btn-send{
+  background:#fbbf24!important;color:#000!important;
+  font-size:22px!important;letter-spacing:5px!important;
+  border-radius:14px!important;padding:16px!important;
+  box-shadow:0 0 0 1px #fbbf2488,0 4px 22px #fbbf2466,0 0 60px #fbbf2430!important;
+  transition:all .2s ease!important
+}
+.btn-send:hover{
+  box-shadow:0 0 0 2px #fbbf24cc,0 6px 32px #fbbf2499,0 0 90px #fbbf2450!important;
+  transform:translateY(-2px)!important
+}
+.btn-send-exp{
+  background:#4ade80!important;color:#000!important;
+  font-size:22px!important;letter-spacing:5px!important;
+  border-radius:14px!important;padding:16px!important;
+  box-shadow:0 0 0 1px #4ade8088,0 4px 22px #4ade8066,0 0 50px #4ade8028!important
+}
+
+/* ── Manobrista principal ──────────────────────────────────────── */
+.cman-main{
+  background:#060408!important;border:2px solid #a78bfa!important;border-radius:22px!important;
+  box-shadow:0 0 0 1px #a78bfa50,0 0 30px #a78bfa30,0 0 70px #a78bfa18,0 14px 55px rgba(0,0,0,.9)!important
+}
+.placa-main{text-shadow:0 0 30px #a78bfa,0 0 70px #a78bfa66,0 0 120px #a78bfa30!important}
+.cman-main.liberado{
+  border:2px solid #4ade80!important;
+  box-shadow:0 0 0 2px #4ade8070,0 0 40px #4ade8055,0 0 100px #4ade8028,0 14px 55px rgba(0,0,0,.9)!important
+}
+.placa-main.liberado{text-shadow:0 0 30px #4ade80,0 0 70px #4ade8066!important}
+.liberado-title{font-size:38px!important;letter-spacing:6px!important;text-shadow:0 0 30px #4ade80,0 0 60px #4ade8066!important}
+@keyframes pulsar{
+  0%,100%{box-shadow:0 0 0 0 #4ade8025,0 0 0 2px #4ade8070,0 0 40px #4ade8055,0 0 100px #4ade8028,0 14px 55px rgba(0,0,0,.9)}
+  50%    {box-shadow:0 0 0 12px #4ade8010,0 0 0 2px #4ade80cc,0 0 65px #4ade8088,0 0 130px #4ade8040,0 14px 55px rgba(0,0,0,.9)}
+}
+.cman-sec{background:#09090e!important;border:1px solid #1a1828!important;border-radius:14px!important}
+
+/* ── Histórico ─────────────────────────────────────────────────── */
+.chist    {background:#08080d!important;border:1px solid #18182a!important;border-left:3px solid!important;border-radius:10px!important}
+.chist-exp{background:#07090a!important;border:1px solid #162018!important;border-left:3px solid!important;border-radius:10px!important}
+.secao    {color:#fbbf2460!important;border-bottom:1px solid #1a1a28!important;letter-spacing:3px!important}
+.secao-exp{color:#4ade8060!important;border-bottom:1px solid #162018!important;letter-spacing:3px!important}
+
+/* ── Dica ──────────────────────────────────────────────────────── */
+.sdica    {background:#08080d!important;border:1px solid #18182a!important;border-radius:12px!important;color:#3a3a70!important}
+.sdica-man{background:#090810!important;border:1px solid #181828!important;border-radius:12px!important}
+
+/* ── Empty state ───────────────────────────────────────────────── */
+.empty-icon-wrap    {background:#0e0e18!important}
+.empty-icon-wrap-exp{background:#0a0f0b!important}
+.empty-icon-wrap-man{background:#0e0a18!important}
 
 /* ── Modal ─────────────────────────────────────────────────────── */
 .modal{
-  background:linear-gradient(160deg,#0d1020 0%,rgba(9,11,20,.98) 100%)!important;
-  box-shadow:0 20px 60px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.07),inset 0 1px 0 rgba(255,255,255,.07)!important
+  background:#09090e!important;border:1px solid #1e1e2c!important;border-radius:20px!important;
+  box-shadow:0 0 0 1px #ffffff0a,0 30px 80px rgba(0,0,0,.95),0 0 100px rgba(0,0,0,.6)!important
 }
+.prob-sheet{background:#09090e!important;border:1px solid #1e1e2c!important;box-shadow:0 30px 80px rgba(0,0,0,.95)!important}
 
-/* ── Name screen box ───────────────────────────────────────────── */
-.op-name-box{
-  background:linear-gradient(160deg,#0a0d14 0%,rgba(2,3,5,.98) 100%)!important;
-  box-shadow:0 8px 44px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.05)!important
-}
-.op-name-box-man{
-  background:linear-gradient(160deg,#0e0820 0%,rgba(7,3,15,.98) 100%)!important;
-  box-shadow:0 8px 44px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.05)!important
-}
-.op-name-icon{
-  background:rgba(59,130,246,.14)!important;
-  border:1px solid rgba(59,130,246,.3)!important;
-  box-shadow:0 0 22px rgba(59,130,246,.22)!important
-}
+/* ── Transportadora group ──────────────────────────────────────── */
+.transp-grp{background:#0a0f0b!important;border:1px solid #182018!important}
 
-/* ── Scrollbar ─────────────────────────────────────────────────── */
-::-webkit-scrollbar{width:3px!important}
+/* ── Mgmt ──────────────────────────────────────────────────────── */
+.mgmt-card{background:#07090a!important;border:1px solid #182018!important;box-shadow:0 4px 20px rgba(0,0,0,.6)!important}
+.mgmt-item{background:#0a0f0b!important;border:1px solid #162016!important}
+.mgmt-inp {background:#0d120e!important;border:1px solid #1e2a1e!important}
+.mgmt-btn-add{background:#4ade80!important;color:#000!important;box-shadow:0 2px 14px #4ade8055!important}
+
+/* ── Admin ─────────────────────────────────────────────────────── */
+.adm-tab{background:#0d0d14!important;border:1px solid #1e1e2c!important}
+.adm-tab-on{background:#fbbf24!important;border-color:#fbbf24!important;color:#000!important}
+.adm-row{background:#09090e!important;border:1px solid #1a1a28!important;border-radius:12px!important}
+
+/* ── Auth no-role ──────────────────────────────────────────────── */
+.auth-no-role{background:#09090e!important;border:1px solid #1e1e2c!important;box-shadow:0 4px 20px rgba(0,0,0,.6)!important}
+.auth-btn-sec{background:#09090e!important;border:1px solid #1e1e2c!important}
+
+/* ── Scrollbar neon ────────────────────────────────────────────── */
+::-webkit-scrollbar{width:2px!important}
 ::-webkit-scrollbar-track{background:transparent!important}
-::-webkit-scrollbar-thumb{background:rgba(44,52,84,.9)!important;border-radius:2px!important}
-::-webkit-scrollbar-thumb:hover{background:rgba(75,88,130,.9)!important}
-
-/* ── Mgmt card ─────────────────────────────────────────────────── */
-.mgmt-card{
-  background:linear-gradient(160deg,#0a1510 0%,rgba(5,10,8,.98) 100%)!important;
-  box-shadow:0 2px 14px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.03)!important
-}
-
-/* ── Auth no-role box ──────────────────────────────────────────── */
-.auth-no-role{
-  background:linear-gradient(160deg,#0d1020 0%,rgba(9,11,20,.98) 100%)!important;
-  box-shadow:0 2px 14px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04)!important
-}
+::-webkit-scrollbar-thumb{background:#fbbf2440!important;border-radius:2px!important}
+::-webkit-scrollbar-thumb:hover{background:#fbbf24!important}
 </style>
 </head>
 <body>
@@ -790,7 +865,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.11";
+const APP_VERSION = "v3.12";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",

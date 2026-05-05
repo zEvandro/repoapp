@@ -1,4 +1,4 @@
-﻿const CACHE = "repoapp-v3.11";
+const CACHE = "repoapp-v3.12";
 const FILES = ["./", "./index.html", "./manifest.json"];
 
 self.addEventListener("install", e => {
@@ -16,9 +16,12 @@ self.addEventListener("activate", e => {
 });
 
 self.addEventListener("fetch", e => {
-  // Sempre busca da rede — Firebase precisa de internet
-  // Usa cache só como fallback se offline
+  // no-cache: sempre valida com o servidor, nunca serve arquivo velho do cache HTTP
+  // Fallback para cache próprio do SW só se estiver offline
+  const req = e.request;
+  const isSameOrigin = new URL(req.url).origin === self.location.origin;
   e.respondWith(
-    fetch(e.request).catch(() => caches.match(e.request))
+    fetch(req, isSameOrigin ? {cache: "no-cache"} : {})
+      .catch(() => caches.match(req))
   );
 });
