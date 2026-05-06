@@ -853,6 +853,37 @@ html,body{background:#06060a!important}
 ::-webkit-scrollbar-track{background:transparent!important}
 ::-webkit-scrollbar-thumb{background:#fbbf2440!important;border-radius:2px!important}
 ::-webkit-scrollbar-thumb:hover{background:#fbbf24!important}
+
+/* ── Avisos de endereço (variantes) ────────────────────────────── */
+.aviso-dup-ok{background:#4ade8014!important;border-color:#4ade8050!important;color:#4ade80!important}
+.aviso-dup-ok b{color:#fff!important}
+.aviso-dup-vz{background:#f8717114!important;border-color:#f8717150!important;color:#f87171!important}
+.aviso-dup-vz b{color:#fff!important}
+
+/* ── Encerrar Dia ───────────────────────────────────────────────── */
+.novo-dia-wrap{
+  margin-top:20px;background:#09090e;border:1px solid #252538;
+  border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px
+}
+.novo-dia-resumo{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.novo-dia-stat{
+  font-size:11px;font-weight:700;letter-spacing:1px;padding:4px 12px;
+  border-radius:99px;border:1px solid;display:flex;align-items:center;gap:5px
+}
+.nds-ok {color:#4ade80;border-color:#4ade8040;background:#4ade8012}
+.nds-vz {color:#f87171;border-color:#f8717140;background:#f8717112}
+.nds-fila{color:#fbbf24;border-color:#fbbf2440;background:#fbbf2412}
+.btn-novo-dia{
+  width:100%;padding:13px;border-radius:12px;border:none;cursor:pointer;
+  font-family:'Bebas Neue';font-size:18px;letter-spacing:3px;
+  background:#1a1a28;color:#5858a0;
+  border:1px solid #252538;transition:all .2s ease;
+  display:flex;align-items:center;justify-content:center;gap:8px
+}
+.btn-novo-dia:hover{
+  background:#f87171;color:#000;border-color:#f87171;
+  box-shadow:0 0 0 1px #f8717180,0 4px 20px #f8717155
+}
 </style>
 </head>
 <body>
@@ -865,7 +896,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.12";
+const APP_VERSION = "v3.13";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -1370,7 +1401,14 @@ function renderRepositor(){
             <span class="rep-fila-n" style="background:var(--s2);color:var(--tx2)">${hist.length}</span>
           </div>
           ${hist.map(cardRep).join("")}
-          <button class="btn-limpar" onclick="window.limparTudo()">${I.trash} Limpar tudo</button>`:""}
+          <div class="novo-dia-wrap">
+            <div class="novo-dia-resumo">
+              ${hist.filter(t=>t.status==="concluido").length>0?`<span class="novo-dia-stat nds-ok">${I.checkCircle.replace('width="18" height="18"','width="13" height="13"')} ${hist.filter(t=>t.status==="concluido").length} concluídos</span>`:""}
+              ${hist.filter(t=>t.status==="vazio").length>0?`<span class="novo-dia-stat nds-vz">${I.alert.replace('width="18" height="18"','width="13" height="13"')} ${hist.filter(t=>t.status==="vazio").length} vazios</span>`:""}
+              ${fila.length>0?`<span class="novo-dia-stat nds-fila">${I.clock.replace('width="12" height="12"','width="11" height="11"')} ${fila.length} ainda na fila</span>`:""}
+            </div>
+            <button class="btn-novo-dia" onclick="window.novoDia()">${I.flag} Encerrar Dia</button>
+          </div>`:""}
       </div>
     </div>`;
 
@@ -2131,9 +2169,20 @@ window.onEnd=v=>{
     elP.className="prev-end ok";
     elP.innerHTML=`<span style="color:var(--gr)">${I.check}</span><div><div class="pfull" style="color:${cam.cor}">${r.completo}</div>${r.label?`<div class="pdet" style="margin-top:3px">${r.label}</div>`:""}</div>`;
     const dup=tarefas.find(t=>t.endereco===r.completo&&["pendente","andamento","pulado"].includes(t.status));
+    const feito=tarefas.find(t=>t.endereco===r.completo&&["concluido","vazio"].includes(t.status));
     if(elA){
-      if(dup){elA.className="aviso-dup";elA.innerHTML=`${I.alert} Endereço já na fila como <b>${{pendente:"Pendente",andamento:"Em andamento",pulado:"Pulado"}[dup.status]}</b>. <button class="btndup" onclick="window.enviarForcar()">Enviar mesmo assim</button>`;window._endForcar=r.completo;}
-      else{elA.className="aviso-dup hidden";window._endForcar=null;}
+      if(dup){
+        elA.className="aviso-dup";
+        elA.innerHTML=`${I.alert} Endereço já na fila como <b>${{pendente:"Pendente",andamento:"Em andamento",pulado:"Pulado"}[dup.status]}</b>. <button class="btndup" onclick="window.enviarForcar()">Enviar mesmo assim</button>`;
+        window._endForcar=r.completo;
+      }else if(feito){
+        const ok=feito.status==="concluido";
+        elA.className="aviso-dup "+(ok?"aviso-dup-ok":"aviso-dup-vz");
+        elA.innerHTML=`${ok?I.checkCircle:I.alert} Endereço já marcado como <b>${ok?"Concluído":"Vazio"}</b> hoje às ${fmtHora(feito.ts)}${feito.opNome?` · ${h(feito.opNome)}`:""}.&ensp;<button class="btndup" onclick="window.enviarForcar()">Enviar de novo</button>`;
+        window._endForcar=r.completo;
+      }else{
+        elA.className="aviso-dup hidden";window._endForcar=null;
+      }
     }
   }else{
     elP.className="prev-end err";
@@ -2185,6 +2234,19 @@ window.remover=async id=>{if(!confirm("Remover esta tarefa?"))return;try{await r
 window.marcarVazio=async id=>{if(!confirm("Marcar este endereço como vazio?"))return;try{await update(ref(db,`tarefas/${id}`),{status:"vazio"});}catch(e){alert("Erro: "+e.message);}};
 window.fecharAlerta=async id=>{try{await update(ref(db,`tarefas/${id}`),{alertaVisto:true});}catch{}document.getElementById("al-"+idSafe(id))?.remove();};
 window.limparTudo=async()=>{if(!confirm("Limpar todas as tarefas?"))return;try{await remove(tasksRef);}catch(e){alert("Erro: "+e.message);}};
+window.novoDia=async()=>{
+  const nConc=tarefas.filter(t=>t.status==="concluido").length;
+  const nVz=tarefas.filter(t=>t.status==="vazio").length;
+  const nFila=tarefas.filter(t=>["pendente","andamento","pulado"].includes(t.status)).length;
+  let msg="Encerrar o dia e limpar todos os registros?\n\n";
+  msg+=`✓  ${nConc} concluído${nConc!==1?"s":""}`;
+  if(nVz>0)msg+=`\n✗  ${nVz} vazio${nVz!==1?"s":""}`;
+  if(nFila>0)msg+=`\n⚠  ${nFila} ainda na fila (serão removidos)`;
+  msg+="\n\nEsta ação não pode ser desfeita.";
+  if(!confirm(msg))return;
+  try{await remove(tasksRef);showToast("Dia encerrado. Boa operação amanhã!",{bg:"#4ade80",color:"#000"});}
+  catch(e){alert("Erro: "+e.message);}
+};
 
 // â"€â"€ AÇÕES EXPEDIÇÃO â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 window.setAtribManob=nome=>{
