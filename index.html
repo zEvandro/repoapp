@@ -924,7 +924,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.16";
+const APP_VERSION = "v3.17";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -1570,8 +1570,10 @@ function cardOp(t,i){
 
   // Identidade por câmara
   const cam=(t.endereco||"")[0]||"?";
-  const camMap={A:"#38bdf8",B:"#fbbf24",C:"#4ade80",D:"#a78bfa",E:"#f472b6",F:"#22d3ee"};
-  const cc=isPulado?"#8892b0":(camMap[cam]||"#fbbf24");
+  const camColors={A:"#38bdf8",B:"#fbbf24",C:"#4ade80",D:"#a78bfa",E:"#f472b6",F:"#22d3ee"};
+  const camNames={A:"CÂMARA ITAMBÉ",B:"CÂMARA BATAVO",C:"CÂMARA ÁREA SECA",D:"CÂMARA ÁREA SECA",E:"CÂMARA DPA",F:"CÂMARA 11"};
+  const cc=isPulado?"#8892b0":(camColors[cam]||"#fbbf24");
+  const camName=camNames[cam]||`CÂMARA ${cam}`;
   const camVars=`--cs-c:${cc};--cs-bd:${cc}40;--cs-bg:linear-gradient(90deg,${cc}1a,transparent);--cs-bg2:${cc}18`;
 
   if(isFirst){
@@ -1584,9 +1586,8 @@ function cardOp(t,i){
     return `
       <div id="op-${idSafe(t.id)}" class="cop-main" style="${camVars};${cardStyle}">
         <div class="cam-strip">
-          <span class="cam-label">CÂMARA</span>
-          <span class="cam-letter-big">${cam}</span>
-          <span class="cam-pill">CAM ${cam}</span>
+          <span class="cam-letter-big" style="font-size:22px;letter-spacing:4px">${camName}</span>
+          <span class="cam-pill">${cam}</span>
         </div>
         <div class="swipe-hint"></div>
         <div class="tipo-main" style="color:${tipoCor}">${tipoIcon} ${tipoTxt}${foiAtrib?` <span style="font-size:11px;color:#a78bfa;background:#8b5cf615;border:1px solid #8b5cf640;border-radius:99px;padding:2px 8px;font-family:'DM Sans';font-weight:700;letter-spacing:0">Para você</span>`:""}</div>
@@ -1608,7 +1609,7 @@ function cardOp(t,i){
   return `
     <div id="op-${idSafe(t.id)}" class="cop-sec cop-sec-cam" style="${camVars}">
       <div style="display:flex;align-items:center;gap:8px">
-        <span style="font-family:'Bebas Neue';font-size:13px;letter-spacing:3px;color:${cc};opacity:.8;margin-right:2px">CAM ${cam}</span>
+        <span style="font-family:'Bebas Neue';font-size:11px;letter-spacing:2px;color:${cc};opacity:.85;margin-right:2px;white-space:nowrap">${camName}</span>
         <span style="font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;color:var(--mu-op)">${h(t.endereco)}</span>
         <span style="font-size:9px;font-weight:700;color:${tipoCor}">${t.tipo==="picking"?"PICK":"PAL"}</span>
         <span class="tempo-op" data-ts="${t.ts}" style="margin-left:auto;font-size:10px;font-weight:700;color:${corTempo(t.ts)}">${tempoFila(t.ts)}</span>
