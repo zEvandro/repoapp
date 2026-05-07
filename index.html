@@ -960,7 +960,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.19";
+const APP_VERSION = "v3.20";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -1462,6 +1462,7 @@ function renderRepositor(){
         </div>
       </div>
       <div class="rep-dir">
+        ${onlineBarHTML()}
         ${hist.length>0?`
           <div class="encerrar-bar">
             ${hist.filter(t=>t.status==="concluido").length>0?`<span class="novo-dia-stat nds-ok">${I.checkCircle.replace('width="18" height="18"','width="13" height="13"')} ${hist.filter(t=>t.status==="concluido").length} concluídos</span>`:""}
