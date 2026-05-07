@@ -41,9 +41,9 @@
     "operadores": {
       ".read": "auth != null && (root.child('roles/' + auth.uid + '/role').val() === 'repositor' || root.child('roles/' + auth.uid + '/role').val() === 'operador')",
       ".write": false,
-      "$uid": {
-        ".write": "auth != null && auth.uid === $uid && root.child('roles/' + auth.uid + '/role').val() === 'operador'",
-        ".validate": "newData.val() === null || (newData.hasChildren(['nome','ts']) && newData.child('nome').isString() && newData.child('nome').val().length > 0 && newData.child('nome').val().length <= 30 && newData.child('ts').isNumber())"
+      "$key": {
+        ".write": "auth != null && (newData.val() === null ? data.child('uid').val() === auth.uid : newData.child('uid').val() === auth.uid) && root.child('roles/' + auth.uid + '/role').val() === 'operador'",
+        ".validate": "newData.val() === null || (newData.hasChildren(['nome','uid','ts']) && newData.child('nome').isString() && newData.child('nome').val().length > 0 && newData.child('nome').val().length <= 30 && newData.child('uid').isString() && newData.child('ts').isNumber())"
       }
     },
 

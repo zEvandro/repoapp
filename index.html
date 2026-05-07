@@ -860,29 +860,30 @@ html,body{background:#06060a!important}
 .aviso-dup-vz{background:#f8717114!important;border-color:#f8717150!important;color:#f87171!important}
 .aviso-dup-vz b{color:#fff!important}
 
-/* ── Encerrar Dia ───────────────────────────────────────────────── */
-.novo-dia-wrap{
-  margin-top:20px;background:#09090e;border:1px solid #252538;
-  border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px
+/* ── Encerrar Dia — barra sticky no topo do painel direito ──────── */
+.encerrar-bar{
+  position:sticky;top:0;z-index:20;
+  background:#09090e;border-bottom:1px solid #252538;
+  padding:10px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  margin:-12px -14px 12px;padding:10px 14px
 }
-.novo-dia-resumo{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .novo-dia-stat{
-  font-size:11px;font-weight:700;letter-spacing:1px;padding:4px 12px;
-  border-radius:99px;border:1px solid;display:flex;align-items:center;gap:5px
+  font-size:11px;font-weight:700;letter-spacing:.5px;padding:4px 10px;
+  border-radius:99px;border:1px solid;display:flex;align-items:center;gap:4px
 }
 .nds-ok {color:#4ade80;border-color:#4ade8040;background:#4ade8012}
 .nds-vz {color:#f87171;border-color:#f8717140;background:#f8717112}
 .nds-fila{color:#fbbf24;border-color:#fbbf2440;background:#fbbf2412}
-.btn-novo-dia{
-  width:100%;padding:13px;border-radius:12px;border:none;cursor:pointer;
-  font-family:'Bebas Neue';font-size:18px;letter-spacing:3px;
-  background:#1a1a28;color:#5858a0;
-  border:1px solid #252538;transition:all .2s ease;
-  display:flex;align-items:center;justify-content:center;gap:8px
+.btn-encerrar{
+  margin-left:auto;flex-shrink:0;
+  padding:7px 16px;border-radius:8px;cursor:pointer;
+  font-family:'Bebas Neue';font-size:14px;letter-spacing:2px;
+  background:transparent;border:1px solid #f87171;color:#f87171;
+  display:flex;align-items:center;gap:6px;transition:all .15s;white-space:nowrap
 }
-.btn-novo-dia:hover{
-  background:#f87171;color:#000;border-color:#f87171;
-  box-shadow:0 0 0 1px #f8717180,0 4px 20px #f8717155
+.btn-encerrar:hover{
+  background:#f87171;color:#000;
+  box-shadow:0 0 0 1px #f8717180,0 2px 16px #f8717166
 }
 </style>
 </head>
@@ -896,7 +897,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.13";
+const APP_VERSION = "v3.15";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -1378,6 +1379,13 @@ function renderRepositor(){
         </div>
       </div>
       <div class="rep-dir">
+        ${hist.length>0?`
+          <div class="encerrar-bar">
+            ${hist.filter(t=>t.status==="concluido").length>0?`<span class="novo-dia-stat nds-ok">${I.checkCircle.replace('width="18" height="18"','width="13" height="13"')} ${hist.filter(t=>t.status==="concluido").length} concluídos</span>`:""}
+            ${hist.filter(t=>t.status==="vazio").length>0?`<span class="novo-dia-stat nds-vz">${I.alert.replace('width="18" height="18"','width="13" height="13"')} ${hist.filter(t=>t.status==="vazio").length} vazios</span>`:""}
+            ${fila.length>0?`<span class="novo-dia-stat nds-fila">${I.clock.replace('width="12" height="12"','width="11" height="11"')} ${fila.length} na fila</span>`:""}
+            <button class="btn-encerrar" onclick="window.novoDia()">${I.flag} Encerrar Dia</button>
+          </div>`:""}
         ${alts.map(t=>`
           <div class="alerta" id="al-${idSafe(t.id)}">
             <span class="adot"></span>
@@ -1400,15 +1408,7 @@ function renderRepositor(){
             <span>HISTÓRICO HOJE</span>
             <span class="rep-fila-n" style="background:var(--s2);color:var(--tx2)">${hist.length}</span>
           </div>
-          ${hist.map(cardRep).join("")}
-          <div class="novo-dia-wrap">
-            <div class="novo-dia-resumo">
-              ${hist.filter(t=>t.status==="concluido").length>0?`<span class="novo-dia-stat nds-ok">${I.checkCircle.replace('width="18" height="18"','width="13" height="13"')} ${hist.filter(t=>t.status==="concluido").length} concluídos</span>`:""}
-              ${hist.filter(t=>t.status==="vazio").length>0?`<span class="novo-dia-stat nds-vz">${I.alert.replace('width="18" height="18"','width="13" height="13"')} ${hist.filter(t=>t.status==="vazio").length} vazios</span>`:""}
-              ${fila.length>0?`<span class="novo-dia-stat nds-fila">${I.clock.replace('width="12" height="12"','width="11" height="11"')} ${fila.length} ainda na fila</span>`:""}
-            </div>
-            <button class="btn-novo-dia" onclick="window.novoDia()">${I.flag} Encerrar Dia</button>
-          </div>`:""}
+          ${hist.map(cardRep).join("")}`:""}
       </div>
     </div>`;
 
@@ -1868,8 +1868,10 @@ function render(){
 // â"€â"€ PRESENÇA (picking) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function registrarOperador(){
   if(!opId||!nomeOperador)return;
-  const opRef=ref(db,`operadores/${opId}`);
-  set(opRef,{nome:nomeOperador,ts:Date.now()});
+  let sessId=sessionStorage.getItem("op_sess_id");
+  if(!sessId){sessId=Math.random().toString(36).slice(2,11);sessionStorage.setItem("op_sess_id",sessId);}
+  const opRef=ref(db,`operadores/${sessId}`);
+  set(opRef,{nome:nomeOperador,uid:opId,ts:Date.now()});
   window._opRef=opRef;
 }
 function removerOperador(){if(window._opRef)remove(window._opRef).catch(()=>{});}
@@ -1919,7 +1921,14 @@ function bindDataByPerfil(){
       render();
     },()=>{}));
     dataUnsubs.push(onValue(operadoresRef,snap=>{
-      operadores=snap.val()||{};
+      const raw=snap.val()||{};
+      operadores={};
+      Object.values(raw).forEach(op=>{
+        if(op.uid&&op.nome){
+          if(!operadores[op.uid]||op.ts>operadores[op.uid].ts)
+            operadores[op.uid]={nome:op.nome,ts:op.ts};
+        }
+      });
       if(perfil==="repositor")render();
     },()=>{}));
   }
