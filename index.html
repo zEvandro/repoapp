@@ -973,7 +973,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.22";
+const APP_VERSION = "v3.23";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -2068,6 +2068,15 @@ function bindDataByPerfil(){
             operadores[op.uid]={nome:op.nome,ts:op.ts,sessKey};
         }
       });
+      // Sincroniza filtros do localStorage → Firebase (uma vez por sessão)
+      if(perfil==="repositor"&&!sessionStorage.getItem("cam_filter_synced")){
+        sessionStorage.setItem("cam_filter_synced","1");
+        Object.keys(operadores).forEach(uid=>{
+          const f=getOpCamFilter(uid);
+          const obj=f&&f.length>0?Object.fromEntries(f.map(c=>[c,true])):null;
+          set(ref(db,`opCamFiltros/${uid}`),obj).catch(()=>{});
+        });
+      }
       if(perfil==="repositor")render();
     },()=>{}));
     if(perfil==="operador"){
