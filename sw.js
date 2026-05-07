@@ -1,4 +1,4 @@
-const CACHE = "repoapp-v3.16";
+const CACHE = "repoapp-v3.18";
 const FILES = ["./", "./index.html", "./manifest.json"];
 
 self.addEventListener("install", e => {

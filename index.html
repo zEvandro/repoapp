@@ -855,6 +855,18 @@ html,body{background:#06060a!important}
   background:#09090e!important;border:1px solid #1e1e2c!important;border-radius:20px!important;
   box-shadow:0 0 0 1px #ffffff0a,0 30px 80px rgba(0,0,0,.95),0 0 100px rgba(0,0,0,.6)!important
 }
+.input-nome-edit{
+  width:100%;box-sizing:border-box;margin-top:14px;
+  background:#0d0d14;border:1px solid #252538;border-radius:10px;
+  padding:12px 14px;color:#e8eaff;font-family:'DM Sans';font-size:16px;font-weight:600;
+  outline:none;transition:border-color .15s
+}
+.input-nome-edit:focus{border-color:#60a5fa}
+.btn-rename-op{
+  background:none;border:none;cursor:pointer;padding:2px 5px;
+  color:#7878a8;opacity:.7;transition:opacity .15s;display:inline-flex;align-items:center;flex-shrink:0
+}
+.btn-rename-op:hover{opacity:1;color:#e8eaff}
 .prob-sheet{background:#09090e!important;border:1px solid #1e1e2c!important;box-shadow:0 30px 80px rgba(0,0,0,.95)!important}
 
 /* ── Transportadora group ──────────────────────────────────────── */
@@ -924,7 +936,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.17";
+const APP_VERSION = "v3.18";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -980,6 +992,7 @@ const I = {
   transfer:   `<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3L21 7L17 11"/><path d="M21 7H3"/><path d="M7 21L3 17L7 13"/><path d="M3 17H21"/></svg>`,
   plus:       `<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>`,
   flag:       `<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>`,
+  pencil:     `<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>`,
 };
 
 // â"€â"€ ESTADO â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
@@ -1164,7 +1177,7 @@ function onlineBarHTML(){
   if(lista.length===0)return"";
   return `<div class="online-bar">
     <span class="online-label">${I.users} Online</span>
-    ${lista.map(([id,op])=>`<div class="online-op"><span class="online-dot"></span>${h(op.nome)}</div>`).join("")}
+    ${lista.map(([id,op])=>`<div class="online-op"><span class="online-dot"></span>${h(op.nome)}<button class="btn-rename-op" onclick="window.editarNomeOpRep('${sq(id)}','${sq(op.nome)}')" title="Renomear">${I.pencil}</button></div>`).join("")}
   </div>`;
 }
 
@@ -1525,7 +1538,7 @@ function renderOperador(){
     <div class="topbar-op">
       <span class="tlogo">REPO</span>
       <span class="trole oper">${I.forklift} Operador</span>
-      <span class="op-nome-badge">${h(nomeOperador)}</span>
+      <span class="op-nome-badge" onclick="window.editarNomeOp()" style="cursor:pointer" title="Editar nome">${h(nomeOperador)} ${I.pencil}</span>
       <span class="tsp"></span>
       <span class="tlive"><span class="dot"></span>ao vivo</span>
       <span class="tver">${APP_VERSION}</span>
@@ -1969,10 +1982,10 @@ function bindDataByPerfil(){
     dataUnsubs.push(onValue(operadoresRef,snap=>{
       const raw=snap.val()||{};
       operadores={};
-      Object.values(raw).forEach(op=>{
+      Object.entries(raw).forEach(([sessKey,op])=>{
         if(op.uid&&op.nome){
           if(!operadores[op.uid]||op.ts>operadores[op.uid].ts)
-            operadores[op.uid]={nome:op.nome,ts:op.ts};
+            operadores[op.uid]={nome:op.nome,ts:op.ts,sessKey};
         }
       });
       if(perfil==="repositor")render();
@@ -2033,7 +2046,8 @@ function aplicarPapel(role,name){
     perfil=novoPerfil;
   }
   if(perfil==="operador"){
-    nomeOperador=cleanInput(name||authUser?.email||"Operador",30);
+    const savedName=localStorage.getItem(`op_display_name_${authUser?.uid}`);
+    nomeOperador=cleanInput(savedName||name||authUser?.email||"Operador",30);
     opId=authUser?.uid||null;
     registrarOperador();
   }else if(perfil==="manobrista"){
@@ -2052,6 +2066,7 @@ window.confirmarNome=()=>{
   const nome=cleanInput(document.getElementById("inputNome")?.value,20);
   if(!nome)return;
   nomeOperador=nome;opId=authUser?.uid||uid();
+  localStorage.setItem(`op_display_name_${opId}`,nome);
   registrarOperador();render();
 };
 
@@ -2060,6 +2075,51 @@ window.confirmarNomeManob=()=>{
   if(!nome)return;
   nomeManob=nome;manobId=authUser?.uid||uid();
   registrarManobrista();render();
+};
+
+function abrirEditarNome(titulo,nomeAtual,onConfirm){
+  document.getElementById("modalEditarNome")?.remove();
+  const overlay=document.createElement("div");
+  overlay.className="modal-overlay";overlay.id="modalEditarNome";
+  overlay.innerHTML=`
+    <div class="modal">
+      <div class="modal-title">${I.pencil} ${titulo}</div>
+      <input id="inputEditarNome" class="input-nome-edit" type="text" maxlength="30"
+        value="${h(nomeAtual)}" placeholder="Nome de exibição" autocomplete="off" spellcheck="false">
+      <div style="display:flex;gap:8px;margin-top:14px">
+        <button class="modal-cancel" style="flex:1" onclick="document.getElementById('modalEditarNome')?.remove()">Cancelar</button>
+        <button class="abtn abtn-blue" style="flex:1;padding:10px 6px" onclick="window._confirmarEditarNome()">Salvar</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  const inp=document.getElementById("inputEditarNome");
+  inp.focus();inp.select();
+  window._confirmarEditarNome=()=>{
+    const novo=cleanInput(inp.value,30);
+    if(!novo)return;
+    overlay.remove();
+    onConfirm(novo);
+  };
+  inp.addEventListener("keydown",e=>{if(e.key==="Enter")window._confirmarEditarNome();});
+  overlay.addEventListener("click",e=>{if(e.target===overlay)overlay.remove();});
+}
+
+window.editarNomeOp=()=>{
+  abrirEditarNome("Seu Nome",nomeOperador,novo=>{
+    nomeOperador=novo;
+    localStorage.setItem(`op_display_name_${opId}`,novo);
+    registrarOperador();
+    render();
+  });
+};
+
+window.editarNomeOpRep=async(uid,nomeAtual)=>{
+  abrirEditarNome("Nome do Operador",nomeAtual,async novo=>{
+    const sessKey=operadores[uid]?.sessKey;
+    if(!sessKey)return;
+    try{await update(ref(db,`operadores/${sessKey}`),{nome:novo});}
+    catch(e){alert("Erro: "+e.message);}
+  });
 };
 
 window.selecionarNomeManob=nome=>{
