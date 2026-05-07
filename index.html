@@ -887,6 +887,9 @@ html,body{background:#06060a!important}
   box-shadow:0 0 0 1px var(--cc),0 0 18px var(--cc)40}
 .cam-filter-chip-letter{font-family:'Bebas Neue';font-size:26px;line-height:1;color:var(--cc)}
 .cam-filter-chip-name{font-size:8px;font-weight:700;letter-spacing:.5px;color:var(--cc);opacity:.8;text-align:center}
+.aviso-cam-compat{font-size:11px;color:#f87171;margin-top:8px;padding:7px 10px;
+  background:#f8717110;border:1px solid #f8717140;border-radius:8px;
+  display:flex;align-items:flex-start;gap:6px;line-height:1.5}
 .atrib-cam-tags{display:flex;gap:3px;flex-wrap:wrap;margin-left:4px}
 .atrib-cam-tag{font-family:'Bebas Neue';font-size:11px;padding:1px 5px;border-radius:4px;letter-spacing:.5px;line-height:1.4}
 .input-nome-edit{
@@ -970,7 +973,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.21";
+const APP_VERSION = "v3.22";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -995,6 +998,7 @@ const nomesManobRef   = ref(db, "nomesManobristas");
 const pendingRef      = ref(db, "pendingUsers");
 const rolesAdmRef     = ref(db, "roles");
 const preRolesRef     = ref(db, "preRoles");
+const opCamFiltrosRef = ref(db, "opCamFiltros");
 
 // â"€â"€ ÍCONES â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const I = {
@@ -1043,7 +1047,8 @@ let prevIds      = null;
 let showFont     = false;
 let filtroRua    = "todas";
 let camaraAtual  = "B";
-let tabMobileRep = "fila";
+let tabMobileRep     = "fila";
+let meuFiltroCamera  = null; // array de letras de câmara, null = todas
 // Expedição / Manobrista
 let nomeManob    = null;
 let manobId      = null;
@@ -1393,6 +1398,14 @@ function renderNomeManob(){
 function atribPillsHTML(){
   const lista=Object.entries(operadores);
   const qualquerAtivo=atribPara==="qualquer";
+  // Operadores que NÃO receberão quando "qualquer" + câmara atual
+  const incompativeis=qualquerAtivo?lista.filter(([id])=>{
+    const f=getOpCamFilter(id);
+    return f&&f.length>0&&!f.includes(camaraAtual);
+  }):[];
+  const avisoQualquer=incompativeis.length>0
+    ?`<div class="aviso-cam-compat">${I.alert} <b>${incompativeis.map(([,op])=>h(op.nome)).join(", ")}</b> não receberá${incompativeis.length>1?"m":""} — câmara ${camaraAtual} fora do filtro.</div>`
+    :"";
   return `<div class="atrib-pills">
     <button class="atrib-pill${qualquerAtivo?" ativo":""}" onclick="window.setAtrib('qualquer')">
       ${I.users} Qualquer
@@ -1405,7 +1418,7 @@ function atribPillsHTML(){
       </button>`;
     }).join("")}
     ${lista.length===0?`<span style="font-size:10px;color:var(--mu);align-self:center">Nenhum operador online</span>`:""}
-  </div>`;
+  </div>${avisoQualquer}`;
 }
 
 function camChipsHTML(){
@@ -1567,6 +1580,7 @@ function renderOperador(){
     if(!["pendente","andamento","pulado"].includes(t.status))return false;
     if(t.atribId&&t.atribId!==opId)return false;
     if(t.status==="andamento"&&t.opId&&t.opId!==opId)return false;
+    if(meuFiltroCamera&&meuFiltroCamera.length>0&&!meuFiltroCamera.includes((t.endereco||"")[0]))return false;
     return true;
   });
   const ativos=minhasFila.filter(t=>t.status==="pendente"||t.status==="andamento").sort((a,b)=>a.ts-b.ts);
@@ -2015,7 +2029,7 @@ function limparSessaoDados(){
   clearDataSubs();
   perfil=null;nomeOperador=null;opId=null;nomeManob=null;manobId=null;showFont=false;
   tarefas=[];operadores={};carregamentos=[];manobristas={};nomesManobristas={};
-  prevIds=null;prevCarrIds=null;prevLibIds=[];filtroRua="todas";atribPara="qualquer";atribManob="qualquer";
+  prevIds=null;prevCarrIds=null;prevLibIds=[];filtroRua="todas";atribPara="qualquer";atribManob="qualquer";meuFiltroCamera=null;
 }
 
 function bindDataByPerfil(){
@@ -2028,11 +2042,15 @@ function bindDataByPerfil(){
       const data=snap.val()||{};
       const novo=Object.entries(data).map(([id,v])=>({id,...v})).sort((a,b)=>a.ts-b.ts);
       if(perfil==="operador"&&nomeOperador&&prevIds!==null){
-        const minhasNovas=novo.filter(t=>t.status==="pendente"&&(!t.atribId||t.atribId===opId)&&!prevIds.includes(t.id));
+        const minhasNovas=novo.filter(t=>t.status==="pendente"&&(!t.atribId||t.atribId===opId)
+          &&(!meuFiltroCamera||!meuFiltroCamera.length||meuFiltroCamera.includes((t.endereco||"")[0]))
+          &&!prevIds.includes(t.id));
         if(minhasNovas.length>0)beep();
       }
       if(perfil==="operador"&&nomeOperador){
-        prevIds=novo.filter(t=>t.status==="pendente"&&(!t.atribId||t.atribId===opId)).map(t=>t.id);
+        prevIds=novo.filter(t=>t.status==="pendente"&&(!t.atribId||t.atribId===opId)
+          &&(!meuFiltroCamera||!meuFiltroCamera.length||meuFiltroCamera.includes((t.endereco||"")[0]))
+        ).map(t=>t.id);
       }
       if(perfil==="repositor"&&tarefas.length>0){
         const recemConc=novo.filter(t=>t.status==="concluido"&&!tarefas.find(old=>old.id===t.id&&old.status==="concluido"));
@@ -2052,6 +2070,13 @@ function bindDataByPerfil(){
       });
       if(perfil==="repositor")render();
     },()=>{}));
+    if(perfil==="operador"){
+      dataUnsubs.push(onValue(ref(db,`opCamFiltros/${opId}`),snap=>{
+        const val=snap.val();
+        meuFiltroCamera=val?Object.keys(val):null;
+        render();
+      },()=>{}));
+    }
   }
   if(perfil==="expedicao"||perfil==="manobrista"){
     dataUnsubs.push(onValue(carregRef,snap=>{
@@ -2190,8 +2215,13 @@ function getOpCamFilter(uid){
   return s?JSON.parse(s):null; // null = todas as câmaras
 }
 function setOpCamFilter(uid,cams){
-  if(!cams||cams.length===0)localStorage.removeItem(`op_cam_filter_${uid}`);
-  else localStorage.setItem(`op_cam_filter_${uid}`,JSON.stringify(cams));
+  if(!cams||cams.length===0){
+    localStorage.removeItem(`op_cam_filter_${uid}`);
+    set(ref(db,`opCamFiltros/${uid}`),null).catch(()=>{});
+  }else{
+    localStorage.setItem(`op_cam_filter_${uid}`,JSON.stringify(cams));
+    set(ref(db,`opCamFiltros/${uid}`),Object.fromEntries(cams.map(c=>[c,true]))).catch(()=>{});
+  }
 }
 
 window.editarFiltroOpCam=(uid,nomeOp)=>{

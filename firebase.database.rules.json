@@ -69,6 +69,11 @@
       }
     },
 
+    "opCamFiltros": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('roles/' + auth.uid + '/role').val() === 'repositor'"
+    },
+
     "nomesManobristas": {
       ".read": "auth != null && (root.child('roles/' + auth.uid + '/role').val() === 'expedicao' || root.child('roles/' + auth.uid + '/role').val() === 'manobrista')",
       ".write": false,
