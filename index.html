@@ -879,6 +879,16 @@ html,body{background:#06060a!important}
   background:#09090e!important;border:1px solid #1e1e2c!important;border-radius:20px!important;
   box-shadow:0 0 0 1px #ffffff0a,0 30px 80px rgba(0,0,0,.95),0 0 100px rgba(0,0,0,.6)!important
 }
+.cam-filter-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.cam-filter-chip{display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:10px 6px;border-radius:12px;border:2px solid #1e1e2c;background:#0d0d14;
+  cursor:pointer;transition:all .15s;font-family:inherit;width:100%}
+.cam-filter-chip.ativo{border-color:var(--cc)!important;background:var(--cc-bg)!important;
+  box-shadow:0 0 0 1px var(--cc),0 0 18px var(--cc)40}
+.cam-filter-chip-letter{font-family:'Bebas Neue';font-size:26px;line-height:1;color:var(--cc)}
+.cam-filter-chip-name{font-size:8px;font-weight:700;letter-spacing:.5px;color:var(--cc);opacity:.8;text-align:center}
+.atrib-cam-tags{display:flex;gap:3px;flex-wrap:wrap;margin-left:4px}
+.atrib-cam-tag{font-family:'Bebas Neue';font-size:11px;padding:1px 5px;border-radius:4px;letter-spacing:.5px;line-height:1.4}
 .input-nome-edit{
   width:100%;box-sizing:border-box;margin-top:14px;
   background:#0d0d14;border:1px solid #252538;border-radius:10px;
@@ -960,7 +970,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.20";
+const APP_VERSION = "v3.21";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
@@ -1017,6 +1027,7 @@ const I = {
   plus:       `<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>`,
   flag:       `<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>`,
   pencil:     `<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>`,
+  filter:     `<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>`,
 };
 
 // â"€â"€ ESTADO â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
@@ -1202,7 +1213,11 @@ function onlineBarHTML(){
   if(lista.length===0)return"";
   return `<div class="online-bar">
     <span class="online-label">${I.users} Online</span>
-    ${lista.map(([id,op])=>`<div class="online-op"><span class="online-dot"></span>${h(op.nome)}<button class="btn-rename-op" onclick="window.editarNomeOpRep('${sq(id)}','${sq(op.nome)}')" title="Renomear">${I.pencil}</button></div>`).join("")}
+    ${lista.map(([id,op])=>{
+      const f=getOpCamFilter(id);
+      const tags=f&&f.length>0?`<span class="atrib-cam-tags">${f.map(k=>`<span class="atrib-cam-tag" style="background:${CAMARAS[k]?.cor||"#fff"}22;color:${CAMARAS[k]?.cor||"#fff"};border:1px solid ${CAMARAS[k]?.cor||"#fff"}50">${k}</span>`).join("")}</span>`:"";
+      return `<div class="online-op"><span class="online-dot"></span>${h(op.nome)}${tags}<button class="btn-rename-op" onclick="window.editarFiltroOpCam('${sq(id)}','${sq(op.nome)}')" title="Câmaras permitidas" style="color:${f&&f.length>0?"var(--am)":"#7878a8"}">${I.filter}</button><button class="btn-rename-op" onclick="window.editarNomeOpRep('${sq(id)}','${sq(op.nome)}')" title="Renomear">${I.pencil}</button></div>`;
+    }).join("")}
   </div>`;
 }
 
@@ -1382,10 +1397,13 @@ function atribPillsHTML(){
     <button class="atrib-pill${qualquerAtivo?" ativo":""}" onclick="window.setAtrib('qualquer')">
       ${I.users} Qualquer
     </button>
-    ${lista.map(([id,op])=>`
-      <button class="atrib-pill${atribPara===id?" ativo":""}" onclick="window.setAtrib('${sq(id)}')">
-        <span class="online-dot" style="width:6px;height:6px;animation:none;flex-shrink:0"></span>${h(op.nome)}
-      </button>`).join("")}
+    ${lista.map(([id,op])=>{
+      const f=getOpCamFilter(id);
+      const tags=f&&f.length>0?`<span class="atrib-cam-tags">${f.map(k=>`<span class="atrib-cam-tag" style="background:${CAMARAS[k]?.cor||"#fff"}22;color:${CAMARAS[k]?.cor||"#fff"};border:1px solid ${CAMARAS[k]?.cor||"#fff"}50">${k}</span>`).join("")}</span>`:"";
+      return `<button class="atrib-pill${atribPara===id?" ativo":""}" onclick="window.setAtrib('${sq(id)}')">
+        <span class="online-dot" style="width:6px;height:6px;animation:none;flex-shrink:0"></span>${h(op.nome)}${tags}
+      </button>`;
+    }).join("")}
     ${lista.length===0?`<span style="font-size:10px;color:var(--mu);align-self:center">Nenhum operador online</span>`:""}
   </div>`;
 }
@@ -2166,6 +2184,52 @@ window.editarNomeOpRep=async(uid,nomeAtual)=>{
   });
 };
 
+// ── Filtro de câmaras por operador ─────────────────────────────────
+function getOpCamFilter(uid){
+  const s=localStorage.getItem(`op_cam_filter_${uid}`);
+  return s?JSON.parse(s):null; // null = todas as câmaras
+}
+function setOpCamFilter(uid,cams){
+  if(!cams||cams.length===0)localStorage.removeItem(`op_cam_filter_${uid}`);
+  else localStorage.setItem(`op_cam_filter_${uid}`,JSON.stringify(cams));
+}
+
+window.editarFiltroOpCam=(uid,nomeOp)=>{
+  const current=getOpCamFilter(uid)||[];
+  const chipNome={A:"Itambé",B:"Batavo",C:"Á.Seca",D:"Á.Seca 2",E:"DPA",F:"Cam 11"};
+  document.getElementById("modalFiltroOp")?.remove();
+  const overlay=document.createElement("div");
+  overlay.className="modal-overlay";overlay.id="modalFiltroOp";
+  overlay.innerHTML=`
+    <div class="modal">
+      <div class="modal-title">${I.filter} CÂMARAS DE ${h(nomeOp).toUpperCase()}</div>
+      <div class="modal-sub">Selecione as câmaras que <b>${h(nomeOp)}</b> pode receber.<br>Sem seleção = todas as câmaras liberadas.</div>
+      <div class="cam-filter-grid">
+        ${Object.entries(CAMARAS).map(([k,c])=>`
+          <button class="cam-filter-chip${current.includes(k)?" ativo":""}"
+            data-cam="${k}" style="--cc:${c.cor};--cc-bg:${c.bg}">
+            <span class="cam-filter-chip-letter">${k}</span>
+            <span class="cam-filter-chip-name">${chipNome[k]||c.nome}</span>
+          </button>`).join("")}
+      </div>
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <button class="modal-cancel" style="flex:1" onclick="document.getElementById('modalFiltroOp')?.remove()">Cancelar</button>
+        <button class="abtn abtn-blue" style="flex:1;padding:10px 6px" onclick="window._salvarFiltroOp('${sq(uid)}')">Salvar</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.querySelectorAll(".cam-filter-chip").forEach(btn=>{
+    btn.addEventListener("click",()=>btn.classList.toggle("ativo"));
+  });
+  overlay.addEventListener("click",e=>{if(e.target===overlay)overlay.remove();});
+  window._salvarFiltroOp=uid2=>{
+    const selecionadas=[...overlay.querySelectorAll(".cam-filter-chip.ativo")].map(b=>b.dataset.cam);
+    setOpCamFilter(uid2,selecionadas);
+    overlay.remove();
+    render();
+  };
+};
+
 window.selecionarNomeManob=nome=>{
   const inp=document.getElementById("inputNomeManob");
   if(inp){inp.value=nome;document.getElementById("btnEntrarManob").disabled=false;}
@@ -2393,6 +2457,34 @@ window.enviar=async()=>{
   if(r.isPicking&&r.camara!=="F"){alert("Endereço de chão – o operador não é necessário.");return;}
   const elA=document.getElementById("avisoEnd");
   if(elA&&!elA.classList.contains("hidden")&&window._endForcar)return;
+  // Verificar filtro de câmara do operador selecionado
+  if(atribPara!=="qualquer"){
+    const filtro=getOpCamFilter(atribPara);
+    if(filtro&&filtro.length>0&&!filtro.includes(r.camara)){
+      const opNome=operadores[atribPara]?.nome||"o operador";
+      const camNome=CAMARAS[r.camara]?.nome||r.camara;
+      const filtroNomes=filtro.map(k=>CAMARAS[k]?.nome||k).join(", ");
+      const confirmado=await new Promise(res=>{
+        const ov=document.createElement("div");
+        ov.className="modal-overlay";
+        ov.innerHTML=`<div class="modal">
+          <div class="modal-title" style="color:var(--am)">${I.alert} CÂMARA FORA DO FILTRO</div>
+          <div class="modal-sub"><b>${h(opNome)}</b> está configurado apenas para:<br>
+            <span style="color:var(--am);font-weight:700">${h(filtroNomes)}</span><br><br>
+            Este endereço é da <b>${h(camNome)}</b>. Deseja enviar mesmo assim?
+          </div>
+          <div style="display:flex;gap:8px;margin-top:4px">
+            <button class="modal-cancel" style="flex:1" onclick="this.closest('.modal-overlay')._res(false)">Cancelar</button>
+            <button class="abtn abtn-red" style="flex:1;padding:10px 6px" onclick="this.closest('.modal-overlay')._res(true)">Enviar mesmo assim</button>
+          </div>
+        </div>`;
+        ov._res=v=>{ov.remove();res(v);};
+        document.body.appendChild(ov);
+        ov.addEventListener("click",e=>{if(e.target===ov){ov._res(false);}});
+      });
+      if(!confirmado)return;
+    }
+  }
   await doPush(r.completo);
 };
 window.enviarForcar=async()=>{const r=parseEnd(document.getElementById("fEnd")?.value||"",camaraAtual);if(r.valido&&(!r.isPicking||r.camara==="F"))await doPush(r.completo);};
