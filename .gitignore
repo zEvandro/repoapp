@@ -1,0 +1,12 @@
+node_modules/
+.config/
+
+# Firebase / secrets
+*firebase-adminsdk*.json
+service-account.json
+scripts/users.json
+backup.rules*.json
+
+# Config com credenciais reais — NUNCA commitar
+firebase-config.js
+
