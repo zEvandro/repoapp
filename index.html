@@ -8,6 +8,7 @@
   <meta http-equiv="Expires" content="0"/>
   <meta name="theme-color" content="#050709"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-title" content="RepoApp"/>
   <link rel="manifest" href="manifest.json"/>
   <link rel="apple-touch-icon" href="icon.png"/>
@@ -16,12 +17,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;700&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0b0e17;--s1:#131726;--s2:#1a1f32;--s3:#222840;--bd:#2c3454;
-  --am:#f59e0b;--bl:#3b82f6;--gr:#22c55e;--rd:#ef4444;--pu:#8b5cf6;
-  --tx:#dde3f5;--tx2:#8892b0;--mu:#4b5882;
-  --bg-op:#020305;--s1-op:#0a0d14;--s2-op:#0e1119;--bd-op:#1a2040;
-  --tx-op:#f0f4ff;--tx2-op:#6b7aa0;--mu-op:#3a4460;
-  --addr-size:68px;--addr-sp:5px;
+  --bg:#06060a;--s1:#0d0d12;--s2:#111117;--s3:#16161e;--bd:#1e1e2c;
+  --am:#fbbf24;--bl:#60a5fa;--gr:#4ade80;--rd:#f87171;--pu:#a78bfa;
+  --tx:#e8eaff;--tx2:#7878a8;--mu:#3a3a60;
+  --bg-op:#04040a;--s1-op:#0b0b11;--s2-op:#0f0f16;--bd-op:#191928;
+  --tx-op:#dde8ff;--tx2-op:#5858a0;--mu-op:#282848;
+  --addr-size:82px;--addr-sp:4px;
 }
 html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif;overflow-x:hidden}
 #app{display:flex;flex-direction:column;min-height:100dvh}
@@ -98,7 +99,7 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
   padding:8px 10px;border-radius:8px;font-size:13px;outline:none}
 .adm-sel{background:var(--s2);border:1px solid var(--bd);color:var(--tx);padding:8px 10px;
   border-radius:8px;font-size:13px;flex:1;min-width:130px;outline:none}
-.adm-btn-ok{background:var(--gn);border:none;color:#000;font-family:'Bebas Neue';font-size:14px;
+.adm-btn-ok{background:var(--gr);border:none;color:#000;font-family:'Bebas Neue';font-size:14px;
   letter-spacing:1px;padding:8px 14px;border-radius:8px;cursor:pointer;white-space:nowrap}
 .adm-btn-del{background:transparent;border:1px solid var(--rd);color:var(--rd);font-family:'Bebas Neue';
   font-size:13px;letter-spacing:1px;padding:6px 12px;border-radius:8px;cursor:pointer;white-space:nowrap}
@@ -222,13 +223,6 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .atrib-pill.ativo{background:var(--am);color:#000}
 .atrib-pill.ativo svg{stroke:#000}
 
-/* CÂMARA SELECTOR (legado – mantido para setCamara) */
-.camara-sel{display:none}
-.camara-btn{display:none}
-.camara-letra{display:none}
-.camara-nome{display:none}
-.atrib-select{display:none}
-
 /* MAIN */
 .main{flex:1;overflow-y:auto;padding:16px;background:var(--bg)}
 /* REPOSITOR SPLIT */
@@ -333,9 +327,6 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
   display:flex;align-items:center;justify-content:center;gap:6px}
 .btn-limpar:hover{border-color:var(--rd);color:var(--rd)}
 
-/* OPERADOR BADGE no card */
-.op-tag{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;
-  padding:3px 9px;border-radius:99px;border:1px solid #8b5cf640;background:#8b5cf615;color:#a78bfa}
 .btn-transfer{background:transparent;border:1px solid var(--bd);color:var(--tx2);cursor:pointer;
   padding:4px 8px;display:flex;align-items:center;gap:4px;border-radius:6px;
   font-size:10px;font-weight:700;transition:all .15s;white-space:nowrap}
@@ -419,16 +410,6 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 /* ══════════════════════════════════════════════════════════════════
    VISUAL UPGRADE — Dark Premium / Cockpit
    ══════════════════════════════════════════════════════════════════ */
-
-/* ── Paleta refinada ───────────────────────────────────────────── */
-:root{
-  --bg:#06060a;--s1:#0d0d12;--s2:#111117;--s3:#16161e;--bd:#1e1e2c;
-  --am:#fbbf24;--bl:#60a5fa;--gr:#4ade80;--rd:#f87171;--pu:#a78bfa;
-  --tx:#e8eaff;--tx2:#7878a8;--mu:#3a3a60;
-  --bg-op:#04040a;--s1-op:#0b0b11;--s2-op:#0f0f16;--bd-op:#191928;
-  --tx-op:#dde8ff;--tx2-op:#5858a0;--mu-op:#282848;
-  --addr-size:82px;--addr-sp:4px;
-}
 
 /* ── Base ──────────────────────────────────────────────────────── */
 html,body{background:#06060a!important}
@@ -672,17 +653,6 @@ html,body{background:#06060a!important}
   color:#7878a8;opacity:.7;transition:opacity .15s;display:inline-flex;align-items:center;flex-shrink:0
 }
 .btn-rename-op:hover{opacity:1;color:#e8eaff}
-.prob-sheet{background:#09090e!important;border:1px solid #1e1e2c!important;box-shadow:0 30px 80px rgba(0,0,0,.95)!important}
-
-/* ── Transportadora group ──────────────────────────────────────── */
-.transp-grp{background:#0a0f0b!important;border:1px solid #182018!important}
-
-/* ── Mgmt ──────────────────────────────────────────────────────── */
-.mgmt-card{background:#07090a!important;border:1px solid #182018!important;box-shadow:0 4px 20px rgba(0,0,0,.6)!important}
-.mgmt-item{background:#0a0f0b!important;border:1px solid #162016!important}
-.mgmt-inp {background:#0d120e!important;border:1px solid #1e2a1e!important}
-.mgmt-btn-add{background:#4ade80!important;color:#000!important;box-shadow:0 2px 14px #4ade8055!important}
-
 /* ── Admin ─────────────────────────────────────────────────────── */
 .adm-tab{background:#0d0d14!important;border:1px solid #1e1e2c!important}
 .adm-tab-on{background:#fbbf24!important;border-color:#fbbf24!important;color:#000!important}
@@ -756,8 +726,6 @@ const tasksRef        = ref(db, "tarefas");
 const operadoresRef   = ref(db, "operadores");
 const pendingRef      = ref(db, "pendingUsers");
 const rolesAdmRef     = ref(db, "roles");
-const preRolesRef     = ref(db, "preRoles");
-const opCamFiltrosRef = ref(db, "opCamFiltros");
 
 // â"€â"€ ÍCONES â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const I = {
@@ -869,11 +837,6 @@ function idSafe(v){return String(v??"").replace(/[^A-Za-z0-9_-]/g,"_");}
 function cleanInput(v,max=40){return String(v??"").replace(/[<>"'`]/g,"").trim().slice(0,max);}
 
 // â"€â"€ PARSER â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
-function isPickingEnd(endCompleto){
-  const s=(endCompleto||"").trim().toUpperCase();
-  if(s.startsWith("F "))return true;
-  return /\s10$/i.test(s);
-}
 function parseEnd(s,camara){
   camara=(camara||camaraAtual||"B").toUpperCase();
   s=(s||"").trim();
