@@ -965,6 +965,7 @@ html,body{background:#06060a!important}
 </head>
 <body>
 <div id="app"></div>
+<script src="./firebase-config.js"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getDatabase, ref, push, onValue, get, remove, update, set, serverTimestamp }
@@ -973,17 +974,10 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.23";
+const APP_VERSION = "v3.24";
 
-const firebaseConfig = {
-  apiKey:            "AIzaSyCp7oep4v4YTv9KjU_BCNAl5jgWlCTdvmI",
-  authDomain:        "repoapp-1edbd.firebaseapp.com",
-  databaseURL:       "https://repoapp-1edbd-default-rtdb.firebaseio.com",
-  projectId:         "repoapp-1edbd",
-  storageBucket:     "repoapp-1edbd.firebasestorage.app",
-  messagingSenderId: "151491743077",
-  appId:             "1:151491743077:web:06aa81e8ce4c4e032f258c"
-};
+const firebaseConfig = window.FIREBASE_CONFIG;
+if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
 
 const fbApp = initializeApp(firebaseConfig);
 const db    = getDatabase(fbApp);
