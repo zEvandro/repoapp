@@ -1026,6 +1026,62 @@ function camTabsHTML(){
   </div>`;
 }
 
+function renderLogin(){
+  if(!authUser){
+    document.getElementById("app").innerHTML=`
+      <div class="login">
+        <div class="logo"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><text x="6" y="32" font-family="'Bebas Neue', sans-serif" font-size="34" fill="#0b0e17">R</text></svg></div>
+        <h1>REPOAPP</h1>
+        <p class="login-sub">Sistema de Operações de Armazém</p>
+        <p class="login-ver">${APP_VERSION}</p>
+        <div class="auth-box">
+          <input id="authEmail" type="email" class="auth-inp" placeholder="Email"
+            autocomplete="email" onkeydown="if(event.key==='Enter')document.getElementById('authPass')?.focus()"/>
+          <input id="authPass" type="password" class="auth-inp" placeholder="Senha"
+            autocomplete="current-password" onkeydown="if(event.key==='Enter')window.authEntrar()"/>
+          ${authErr?`<div class="auth-err">${h(authErr)}</div>`:""}
+          <button class="auth-btn" onclick="window.authEntrar()" ${authBusy?"disabled":""}>
+            ${authBusy?"ENTRANDO...":"ENTRAR"}
+          </button>
+        </div>
+      </div>`;
+    setTimeout(()=>document.getElementById("authEmail")?.focus(),80);
+    return;
+  }
+  document.getElementById("app").innerHTML=`
+    <div class="login">
+      <div class="logo"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><text x="6" y="32" font-family="'Bebas Neue', sans-serif" font-size="34" fill="#0b0e17">R</text></svg></div>
+      <h1>REPOAPP</h1>
+      <p class="login-sub">Sistema de Operações de Armazém</p>
+      <p class="login-ver">${APP_VERSION}</p>
+      <div class="auth-box">
+        <div class="auth-no-role">
+          <b style="color:var(--rd)">Sem perfil configurado</b><br>
+          <span style="font-size:11px;color:var(--mu)">${h(authUser.email||"")}</span><br>
+          Fale com o administrador do sistema para liberar seu acesso.
+        </div>
+        <button class="auth-btn-sec" onclick="window.sair()">${I.logout} SAIR</button>
+      </div>
+    </div>`;
+}
+function renderNomeOperador(){
+  document.getElementById("app").innerHTML=`
+    <div class="op-name-screen">
+      <div class="op-name-box">
+        <div class="op-name-icon">${I.user.replace('stroke="currentColor"','stroke="#3b82f6"')}</div>
+        <div class="op-name-title">IDENTIFICAÇÃO</div>
+        <p class="op-name-sub">Digite seu nome para entrar na fila de tarefas. Isso ajuda o repositor a atribuir tarefas diretamente para você.</p>
+        <input id="inputNome" class="op-name-input" placeholder="Seu nome ou apelido"
+          maxlength="20" oninput="document.getElementById('btnEntrar').disabled=!this.value.trim()"
+          onkeydown="if(event.key==='Enter')window.confirmarNome()"/>
+        <button id="btnEntrar" class="op-name-btn" onclick="window.confirmarNome()" disabled>
+          ${I.arrowRight} ENTRAR
+        </button>
+      </div>
+    </div>`;
+  setTimeout(()=>document.getElementById("inputNome")?.focus(),100);
+}
+
 function renderRepositor(){
   const fila=tarefas.filter(t=>["pendente","andamento","pulado"].includes(t.status));
   const hist=tarefas.filter(t=>["concluido","vazio"].includes(t.status));
