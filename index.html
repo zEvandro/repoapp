@@ -33,7 +33,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.44";
+const APP_VERSION = "v3.45";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js nÃ£o carregado.");
@@ -414,6 +414,7 @@ function renderRepositor(){
         </div>
       </div>
       <div class="rep-dir">
+        <div class="rep-queue-col">
         ${onlineBarHTML()}
         ${hist.length>0?`
           <div class="encerrar-bar">
@@ -439,12 +440,19 @@ function renderRepositor(){
               <div class="empty-title">Fila vazia</div>
               <div class="empty-sub">Envie reposiÃ§Ãµes pelo painel Ã  esquerda.</div>
             </div>`}
+        </div>
+        <aside class="rep-hist-col">
         ${hist.length>0?`
-          <div class="rep-dir-hdr" style="margin-top:12px">
+          <div class="rep-dir-hdr rep-hist-hdr" style="margin-top:0">
             <span>Histórico de hoje</span>
             <span class="rep-fila-n" style="background:var(--s2);color:var(--tx2)">${hist.length}</span>
           </div>
-          ${hist.map(cardRep).join("")}`:""}
+          ${hist.map(cardRep).join("")}`
+          :`<div class="empty rep-hist-empty" style="padding:36px 20px">
+              <div class="empty-title">Sem histórico hoje</div>
+              <div class="empty-sub">As conclusões e endereços vazios do dia aparecerão aqui.</div>
+            </div>`}
+        </aside>
       </div>
     </div>`;
 
