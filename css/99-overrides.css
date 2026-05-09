@@ -396,13 +396,6 @@ html,body,#app{
   overflow-x:hidden!important;
 }
 
-.main-rep,
-.main-rep .rep-esq,
-.main-rep .rep-dir{
-  width:100%!important;
-  max-width:100%!important;
-}
-
 .main-rep{
   overflow-x:hidden!important;
 }
@@ -410,6 +403,53 @@ html,body,#app{
 .main-rep .rep-dir,
 .main-rep .rep-esq{
   overflow-x:hidden;
+}
+
+@media (min-width:769px){
+  .main-rep{
+    display:grid!important;
+    grid-template-columns:340px minmax(0,1fr)!important;
+    min-height:calc(100vh - 56px)!important;
+    height:calc(100vh - 56px)!important;
+  }
+
+  .main-rep .rep-esq{
+    width:340px!important;
+    min-width:340px!important;
+    max-width:340px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    border-right:1px solid var(--corp-border)!important;
+  }
+
+  .main-rep .rep-dir{
+    min-width:0!important;
+    width:auto!important;
+    display:block!important;
+    overflow-y:auto!important;
+  }
+
+  .main-rep.tab-enviar .rep-dir,
+  .main-rep.tab-fila .rep-esq{
+    display:block!important;
+  }
+}
+
+@media (max-width:768px){
+  .main-rep{
+    display:flex!important;
+    flex-direction:column!important;
+    grid-template-columns:1fr!important;
+    height:auto!important;
+    min-height:unset!important;
+  }
+
+  .main-rep .rep-esq,
+  .main-rep .rep-dir{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+  }
 }
 
 .main-rep .crep{
@@ -545,5 +585,6 @@ html,body,#app{
   box-shadow:none!important;
   text-shadow:none!important;
 }
+
 
 
