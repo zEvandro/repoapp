@@ -478,8 +478,8 @@ html,body{background:#06060a!important}
 
 /* ── Online bars ───────────────────────────────────────────────── */
 .online-bar{background:#08080d!important;border-bottom:1px solid #1a1a28!important}
-.dot       {background:#4ade80!important}
-.online-dot{background:#4ade80!important}
+.dot       {background:#4a8c60!important;animation:none!important}
+.online-dot{background:#4a8c60!important;animation:none!important}
 
 /* ── Filtro bar ────────────────────────────────────────────────── */
 .filtro-bar{background:#04040a!important;border-bottom:1px solid #191928!important}
@@ -697,7 +697,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.32";
+const APP_VERSION = "v3.33";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
@@ -787,12 +787,12 @@ function getSecAuth(){
 
 // â"€â"€ CÂMARAS â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 const CAMARAS = {
-  B: { nome:"Batavo",      cor:"#3b82f6", bg:"#3b82f615", bd:"#3b82f640" },
-  A: { nome:"Itambé",      cor:"#ef4444", bg:"#ef444415", bd:"#ef444440" },
-  E: { nome:"DPA",         cor:"#8b5cf6", bg:"#8b5cf615", bd:"#8b5cf640" },
-  C: { nome:"Área Seca",   cor:"#f59e0b", bg:"#f59e0b15", bd:"#f59e0b40" },
-  D: { nome:"Área Seca 2", cor:"#f97316", bg:"#f9731615", bd:"#f9731640" },
-  F: { nome:"Câmara F",    cor:"#22c55e", bg:"#22c55e15", bd:"#22c55e40", especial:true },
+  B: { nome:"Batavo",      cor:"#5b8dd9", bg:"#5b8dd912", bd:"#5b8dd932" },
+  A: { nome:"Itambé",      cor:"#c96060", bg:"#c9606012", bd:"#c9606032" },
+  E: { nome:"DPA",         cor:"#8b6bc8", bg:"#8b6bc812", bd:"#8b6bc832" },
+  C: { nome:"Área Seca",   cor:"#c4952a", bg:"#c4952a12", bd:"#c4952a32" },
+  D: { nome:"Área Seca 2", cor:"#c47a38", bg:"#c47a3812", bd:"#c47a3832" },
+  F: { nome:"Câmara F",    cor:"#4ca870", bg:"#4ca87012", bd:"#4ca87032", especial:true },
 };
 
 // â"€â"€ FONTE â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
@@ -1725,7 +1725,7 @@ window.setCamara=c=>{
     const cam=CAMARAS[k];if(!cam)return;
     const isAtiva=k===c;
     btn.classList.toggle("ativa",isAtiva);
-    btn.querySelector(".cam-chip-letter").style.textShadow=isAtiva?`0 0 14px ${cam.cor}`:"";
+    btn.querySelector(".cam-chip-letter").style.textShadow="";
   });
   window._endForcar=null;
 };
