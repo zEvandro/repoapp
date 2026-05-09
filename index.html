@@ -712,7 +712,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.28";
+const APP_VERSION = "v3.29";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
@@ -1394,11 +1394,10 @@ function registrarOperador(){
   const opRef=ref(db,`operadores/${opId}`);
   window._opRef=opRef;
   if(window._connUnsub){try{window._connUnsub();}catch{}window._connUnsub=null;}
+  set(opRef,{nome:nomeOperador,uid:opId,ts:Date.now()}).catch(()=>{});
   window._connUnsub=onValue(ref(db,'.info/connected'),snap=>{
     if(snap.val()!==true)return;
-    onDisconnect(opRef).remove().then(()=>{
-      set(opRef,{nome:nomeOperador,uid:opId,ts:Date.now()});
-    }).catch(()=>{});
+    onDisconnect(opRef).remove().catch(()=>{});
   });
 }
 function removerOperador(){
