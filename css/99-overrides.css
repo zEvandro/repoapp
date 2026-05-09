@@ -692,3 +692,82 @@ html,body,#app{
     justify-content:flex-end;
   }
 }
+
+/* DESKTOP BUTTON POLISH - keep split layout, improve controls like mobile */
+@media (min-width:1025px){
+  .main-rep .rep-esq .cam-tab-bar{
+    position:static!important;
+    top:auto!important;
+    z-index:auto!important;
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:8px;
+    padding:10px 12px;
+    overflow:visible!important;
+    background:var(--corp-header)!important;
+    border-bottom:1px solid var(--corp-border)!important;
+  }
+
+  .main-rep .rep-esq .cam-tab{
+    min-height:42px;
+    width:100%;
+    padding:8px 8px!important;
+    border:1px solid var(--corp-border)!important;
+    border-radius:8px!important;
+    background:var(--corp-surface)!important;
+    color:var(--corp-muted)!important;
+    justify-content:center!important;
+    font-size:11px!important;
+    font-weight:600!important;
+    line-height:1.2;
+    gap:6px;
+    white-space:normal!important;
+    text-align:center;
+  }
+
+  .main-rep .rep-esq .cam-tab:hover{
+    border-color:#475569!important;
+    color:#E2E8F0!important;
+    background:#273449!important;
+  }
+
+  .main-rep .rep-esq .cam-tab.ativa{
+    border-color:var(--corp-primary)!important;
+    color:#F8FAFC!important;
+    background:rgba(37,99,235,.18)!important;
+    box-shadow:none!important;
+  }
+
+  .main-rep .rep-esq .cam-tab-dot{
+    width:6px!important;
+    height:6px!important;
+    opacity:.9;
+  }
+
+  .main-rep .toggle{
+    gap:8px!important;
+  }
+
+  .main-rep .tbtn{
+    min-height:42px!important;
+    border-radius:8px!important;
+    font-size:12px!important;
+    font-weight:600!important;
+  }
+
+  .main-rep .atrib-pills{
+    gap:8px!important;
+  }
+
+  .main-rep .atrib-pill{
+    min-height:34px!important;
+    padding:7px 11px!important;
+    border-radius:8px!important;
+    font-size:12px!important;
+    font-weight:600!important;
+  }
+
+  .main-rep .btn-send{
+    margin-top:14px!important;
+  }
+}
