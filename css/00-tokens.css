@@ -22,7 +22,23 @@
   --corp-info:#0284C7;
   --corp-font:'Inter','Segoe UI',system-ui,-apple-system,'Roboto','Arial',sans-serif;
 }
-html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif;overflow-x:hidden}
-#app{display:flex;flex-direction:column;min-height:100dvh}
+html,body{
+  width:100%;
+  min-height:100vh;
+  margin:0;
+  padding:0;
+  height:100%;
+  background:var(--corp-bg);
+  color:var(--tx);
+  font-family:'DM Sans',sans-serif;
+  overflow-x:hidden;
+}
+#app{
+  width:100%;
+  max-width:100%;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
 svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
