@@ -251,7 +251,7 @@ svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
   padding:10px 6px;border-radius:12px;border:2px solid #1e1e2c;background:#0d0d14;
   cursor:pointer;transition:all .15s;font-family:inherit;width:100%}
 .cam-chip.ativa{border-color:var(--cc)!important;background:var(--cc-bg)!important;
-  box-shadow:0 0 0 1px var(--cc),0 0 18px var(--cc)40}
+  box-shadow:0 0 0 1px var(--cc)}
 .cam-chip-letter{font-family:'Bebas Neue';font-size:28px;line-height:1;color:var(--cc)}
 .cam-chip-name{font-size:8px;font-weight:700;letter-spacing:.5px;color:var(--cc);opacity:.8;text-align:center;line-height:1.2}
 @media(max-width:720px){
@@ -427,7 +427,7 @@ html,body{background:#06060a!important}
 .login h1{font-size:52px!important;letter-spacing:8px!important}
 .login-sub{color:var(--tx2)!important;letter-spacing:4px!important}
 .mod-card{background:#09090e!important;border-radius:18px!important;box-shadow:0 6px 30px rgba(0,0,0,.65)!important}
-.mod-card-pick{border-color:#fbbf2435!important;box-shadow:0 0 35px #fbbf2412,0 6px 30px rgba(0,0,0,.65)!important}
+.mod-card-pick{border-color:#fbbf2435!important;box-shadow:0 6px 30px rgba(0,0,0,.65)!important}
 .mod-header-pick{background:#0d0d11!important}
 .mod-roles-pick{background:#09090d!important}
 .mod-role-name{font-size:17px!important;letter-spacing:3px!important}
@@ -528,15 +528,15 @@ html,body{background:#06060a!important}
 .btn-limpar:hover{border-color:#f87171!important;color:#f87171!important}
 .btn-rem:hover{color:#f87171!important;background:#f8717118!important}
 .btn-vazio:hover{color:#fbbf24!important;background:#fbbf2418!important}
-.crep-atrasado{box-shadow:0 0 30px #f8717130!important}
-@keyframes pisca{0%,100%{opacity:1;box-shadow:0 0 18px #f8717115}50%{opacity:.7;box-shadow:0 0 35px #f8717140}}
+.crep-atrasado{border-left-color:#f87171!important}
+@keyframes pisca{0%,100%{opacity:1}50%{opacity:.65}}
 @keyframes si{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 
 /* ── Alerta vazio ──────────────────────────────────────────────── */
 .alerta{
   background:#100808!important;border:1px solid #f8717140!important;
   border-left:3px solid #f87171!important;border-radius:12px!important;
-  box-shadow:0 0 30px #f8717120,inset 0 0 30px #f8717108!important
+  box-shadow:0 4px 16px rgba(0,0,0,.5)!important
 }
 
 /* ── Operador principal ────────────────────────────────────────── */
@@ -580,7 +580,7 @@ html,body{background:#06060a!important}
 /* cor da faixa no card secundário */
 .cop-sec-cam{border-left:3px solid var(--cs-c)!important}
 
-/* ── Botões de ação — neon ─────────────────────────────────────── */
+/* ── Botões de ação ────────────────────────────────────────────── */
 .abtn{
   padding:16px 8px!important;border-radius:13px!important;
   font-size:13px!important;font-weight:800!important;letter-spacing:1px!important
@@ -648,7 +648,7 @@ html,body{background:#06060a!important}
 .auth-no-role{background:#09090e!important;border:1px solid #1e1e2c!important;box-shadow:0 4px 20px rgba(0,0,0,.6)!important}
 .auth-btn-sec{background:#09090e!important;border:1px solid #1e1e2c!important}
 
-/* ── Scrollbar neon ────────────────────────────────────────────── */
+/* ── Scrollbar ─────────────────────────────────────────────────── */
 ::-webkit-scrollbar{width:2px!important}
 ::-webkit-scrollbar-track{background:transparent!important}
 ::-webkit-scrollbar-thumb{background:#fbbf2440!important;border-radius:2px!important}
@@ -697,7 +697,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.30";
+const APP_VERSION = "v3.31";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
@@ -957,7 +957,7 @@ function camChipsHTML(){
       <button class="cam-chip${camaraAtual===k?" ativa":""}"
         style="--cc:${c.cor};--cc-bg:${c.bg};color:${c.cor}"
         onclick="window.setCamara('${k}')">
-        <span class="cam-chip-letter" style="${camaraAtual===k?`text-shadow:0 0 14px ${c.cor}`:""}">${k}</span>
+        <span class="cam-chip-letter">${k}</span>
         <span class="cam-chip-name">${chipNome[k]||c.nome}</span>
       </button>`).join("")}
   </div>`;
