@@ -706,7 +706,7 @@ html,body{background:#06060a!important}
 <script src="./firebase-config.js"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getDatabase, ref, push, onValue, get, remove, update, set, serverTimestamp }
+import { getDatabase, ref, push, onValue, get, remove, update, set, serverTimestamp, onDisconnect }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
@@ -1395,6 +1395,7 @@ function registrarOperador(){
   if(!sessId){sessId=Math.random().toString(36).slice(2,11);sessionStorage.setItem("op_sess_id",sessId);}
   const opRef=ref(db,`operadores/${sessId}`);
   set(opRef,{nome:nomeOperador,uid:opId,ts:Date.now()});
+  onDisconnect(opRef).remove();
   window._opRef=opRef;
 }
 function removerOperador(){if(window._opRef)remove(window._opRef).catch(()=>{});}
