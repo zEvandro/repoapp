@@ -33,7 +33,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.48";
+const APP_VERSION = "v3.49";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
@@ -590,9 +590,10 @@ function cardOp(t,i){
   const camVars=`--cs-c:${cc};--cs-bd:${cc}40;--cs-bg:linear-gradient(90deg,${cc}1a,transparent);--cs-bg2:${cc}18`;
 
   if(isFirst){
+    const wmark=t.tipo==="picking"?"P":"PF";
     const cardStyle=isPulado
       ?`border-color:#8892b0!important;box-shadow:none!important;opacity:.7`
-      :`border-color:${cc}!important;box-shadow:0 0 0 1px ${cc}50,0 0 30px ${cc}38,0 0 70px ${cc}1a,0 14px 55px rgba(0,0,0,.9)!important`;
+      :`border-color:${cc}!important;border-left:5px solid ${tipoCor}!important;box-shadow:0 0 0 1px ${cc}50,0 0 30px ${cc}38,0 0 70px ${cc}1a,0 14px 55px rgba(0,0,0,.9)!important`;
     const addrStyle=isPulado
       ?`color:#8892b0`
       :`color:${cc};text-shadow:0 0 30px ${cc},0 0 70px ${cc}66,0 0 120px ${cc}30`;
@@ -601,9 +602,11 @@ function cardOp(t,i){
         <div class="cam-strip">
           <span class="cam-letter-big" style="font-size:22px;letter-spacing:4px">${camName}</span>
           <span class="cam-pill">${cam}</span>
+          <span style="margin-left:auto;font-family:'DM Sans';font-size:11px;font-weight:800;letter-spacing:.5px;color:${tipoCor};background:${tipoCor}22;border:1px solid ${tipoCor}55;border-radius:99px;padding:2px 10px">${tipoTxt}</span>
         </div>
         <div class="swipe-hint"></div>
-        <div class="tipo-main" style="color:${tipoCor}">${tipoIcon} ${tipoTxt}${foiAtrib?` <span style="font-size:11px;color:#a78bfa;background:#8b5cf615;border:1px solid #8b5cf640;border-radius:99px;padding:2px 8px;font-family:'DM Sans';font-weight:700;letter-spacing:0">Para você</span>`:""}${t.urgente?` <span style="font-size:11px;color:#f97316;background:#f9731615;border:1px solid #f9731640;border-radius:99px;padding:2px 8px;font-family:'DM Sans';font-weight:700;letter-spacing:0">⬆ Urgente</span>`:""}</div>
+        <div style="position:absolute;right:-8px;bottom:-20px;font-family:'Bebas Neue';font-size:150px;letter-spacing:-4px;opacity:.05;pointer-events:none;user-select:none;line-height:1;color:${tipoCor}">${wmark}</div>
+        <div class="tipo-main" style="color:${tipoCor};background:${tipoCor}15;border-radius:10px;padding:5px 14px;margin:4px -4px">${tipoIcon} ${tipoTxt}${foiAtrib?` <span style="font-size:11px;color:#a78bfa;background:#8b5cf615;border:1px solid #8b5cf640;border-radius:99px;padding:2px 8px;font-family:'DM Sans';font-weight:700;letter-spacing:0">Para você</span>`:""}${t.urgente?` <span style="font-size:11px;color:#f97316;background:#f9731615;border:1px solid #f9731640;border-radius:99px;padding:2px 8px;font-family:'DM Sans';font-weight:700;letter-spacing:0">⬆ Urgente</span>`:""}</div>
         <div class="addr-main" style="${addrStyle}">${h(t.endereco)}</div>
         ${t.descricao?`<div class="desc-main">${h(t.descricao)}</div>`:""}
         ${t.codigo?`<div class="cod-main">${h(t.codigo)}</div>`:""}
@@ -624,7 +627,7 @@ function cardOp(t,i){
       <div style="display:flex;align-items:center;gap:8px">
         <span style="font-family:'Bebas Neue';font-size:11px;letter-spacing:2px;color:${cc};opacity:.85;margin-right:2px;white-space:nowrap">${camName}</span>
         <span style="font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;color:var(--mu-op)">${h(t.endereco)}</span>
-        <span style="font-size:9px;font-weight:700;color:${tipoCor}">${t.tipo==="picking"?"PICK":"PAL"}</span>
+        <span style="font-size:10px;font-weight:800;font-family:'DM Sans';color:${tipoCor};background:${tipoCor}22;border-radius:99px;padding:1px 7px">${t.tipo==="picking"?"PICK":"PAL"}</span>
         ${t.urgente?`<span style="font-size:9px;font-weight:700;color:#f97316">⬆ URG</span>`:""}
         <span class="tempo-op" data-ts="${t.ts}" style="margin-left:auto;font-size:10px;font-weight:700;color:${corTempo(t.ts)}">${tempoFila(t.ts)}</span>
       </div>
