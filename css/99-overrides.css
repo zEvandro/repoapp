@@ -922,6 +922,11 @@ html,body,#app{
   padding:20px 14px;
 }
 
+/* ── Urgente button ─────────────────────────────────────────────── */
+.btn-urgente{background:none;border:none;cursor:pointer;padding:3px 5px;border-radius:4px;color:#475569;transition:color .15s;display:inline-flex;align-items:center;flex-shrink:0}
+.btn-urgente:hover{color:#f97316}
+.btn-urgente.ativo{color:#f97316}
+
 /* ── Operator selector theme ────────────────────────────────────── */
 .op-sel-row{background:var(--corp-surface)!important;border:1px solid var(--corp-border)!important;}
 .op-sel-row:hover{border-color:var(--corp-primary)!important;}

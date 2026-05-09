@@ -33,7 +33,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.47";
+const APP_VERSION = "v3.48";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
@@ -466,6 +466,8 @@ function cardRep(t){
   const tipoCor=t.tipo==="picking"?"#f59e0b":"#3b82f6";
   const tipoTxt=t.tipo==="picking"?"Pick":"Pal";
   const atrasado=!isHist&&t.status==="pendente"&&(Date.now()-t.ts)>10*60*1000;
+  const urgente=!isHist&&!!t.urgente;
+  const corBorda=atrasado?"#ef4444":urgente?"#f97316":cor;
   const metaParts=[
     `<span style="font-size:9px;font-weight:800;color:${tipoCor}">${tipoTxt}</span>`,
     t.atribNome&&t.status==="pendente"?`<span style="font-size:10px;color:#a78bfa">→ ${h(t.atribNome)}</span>`:"",
@@ -474,15 +476,17 @@ function cardRep(t){
     !isHist?`<span style="font-size:10px;font-weight:700;color:${corTempo(t.ts)}">${tempoFila(t.ts)}</span>`:"",
   ].filter(Boolean).join(`<span style="color:var(--mu);font-size:9px;margin:0 1px">·</span>`);
   return `
-    <div class="crep${atrasado?" crep-atrasado":""}" style="border-left-color:${atrasado?"#ef4444":cor}${isHist?";opacity:.6":""}">
+    <div class="crep${atrasado?" crep-atrasado":""}" style="border-left-color:${corBorda}${isHist?";opacity:.6":""}">
       <div style="display:flex;align-items:flex-start;gap:8px">
         <div style="flex:1;min-width:0">
-          <div class="crep-addr" style="color:${atrasado?"#ef4444":cor};font-size:22px">${h(t.endereco)}</div>
+          <div class="crep-addr" style="color:${atrasado?"#ef4444":urgente?"#f97316":cor};font-size:22px">${h(t.endereco)}</div>
           <div class="crep-meta" style="margin-top:5px;gap:4px">${metaParts}</div>
           ${atrasado?`<div style="font-size:9px;color:#ef4444;font-weight:700;margin-top:4px;letter-spacing:.5px">⚠ PARADO HÁ MAIS DE 10 MIN</div>`:""}
+          ${urgente?`<div style="font-size:9px;color:#f97316;font-weight:700;margin-top:4px;letter-spacing:.5px">⬆ URGENTE</div>`:""}
         </div>
         <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;margin-top:2px">
-          <span class="chip" style="color:${atrasado?"#ef4444":cor};border-color:${atrasado?"#ef444440":cor+"40"};background:${atrasado?"#ef444415":cor+"15"}">${lbl}</span>
+          <span class="chip" style="color:${corBorda};border-color:${corBorda+"40"};background:${corBorda+"15"}">${lbl}</span>
+          ${!isHist?`<button class="btn-urgente${urgente?" ativo":""}" onclick="window.toggleUrgente('${sq(t.id)}')" title="${urgente?"Remover urgência":"Marcar urgente"}">${I.flag}</button>`:""}
           ${!isHist&&Object.keys(operadores).length>1?`<button class="btn-transfer" onclick="window.abrirRepassar('${sq(t.id)}')">${I.transfer}</button>`:""}
           ${!isHist?`<button class="btn-vazio" onclick="window.marcarVazio('${sq(t.id)}')" title="Endereço vazio">⚠ Vazio</button>`:""}
           ${!isHist?`<button class="btn-rem" onclick="window.remover('${sq(t.id)}')">${I.x}</button>`:""}
@@ -500,7 +504,10 @@ function renderOperador(){
     if(meuFiltroCamera&&meuFiltroCamera.length>0&&!meuFiltroCamera.includes((t.endereco||"")[0]))return false;
     return true;
   });
-  const ativos=minhasFila.filter(t=>t.status==="pendente"||t.status==="andamento").sort((a,b)=>a.ts-b.ts);
+  const ativos=minhasFila.filter(t=>t.status==="pendente"||t.status==="andamento").sort((a,b)=>{
+    if(!!b.urgente!==!!a.urgente)return b.urgente?1:-1;
+    return a.ts-b.ts;
+  });
   const pulados=minhasFila.filter(t=>t.status==="pulado").sort((a,b)=>a.ts-b.ts);
   const fila=[...ativos,...pulados];
   const hist=tarefas.filter(t=>t.status==="concluido"||t.status==="vazio");
@@ -596,7 +603,7 @@ function cardOp(t,i){
           <span class="cam-pill">${cam}</span>
         </div>
         <div class="swipe-hint"></div>
-        <div class="tipo-main" style="color:${tipoCor}">${tipoIcon} ${tipoTxt}${foiAtrib?` <span style="font-size:11px;color:#a78bfa;background:#8b5cf615;border:1px solid #8b5cf640;border-radius:99px;padding:2px 8px;font-family:'DM Sans';font-weight:700;letter-spacing:0">Para você</span>`:""}</div>
+        <div class="tipo-main" style="color:${tipoCor}">${tipoIcon} ${tipoTxt}${foiAtrib?` <span style="font-size:11px;color:#a78bfa;background:#8b5cf615;border:1px solid #8b5cf640;border-radius:99px;padding:2px 8px;font-family:'DM Sans';font-weight:700;letter-spacing:0">Para você</span>`:""}${t.urgente?` <span style="font-size:11px;color:#f97316;background:#f9731615;border:1px solid #f9731640;border-radius:99px;padding:2px 8px;font-family:'DM Sans';font-weight:700;letter-spacing:0">⬆ Urgente</span>`:""}</div>
         <div class="addr-main" style="${addrStyle}">${h(t.endereco)}</div>
         ${t.descricao?`<div class="desc-main">${h(t.descricao)}</div>`:""}
         ${t.codigo?`<div class="cod-main">${h(t.codigo)}</div>`:""}
@@ -618,6 +625,7 @@ function cardOp(t,i){
         <span style="font-family:'Bebas Neue';font-size:11px;letter-spacing:2px;color:${cc};opacity:.85;margin-right:2px;white-space:nowrap">${camName}</span>
         <span style="font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;color:var(--mu-op)">${h(t.endereco)}</span>
         <span style="font-size:9px;font-weight:700;color:${tipoCor}">${t.tipo==="picking"?"PICK":"PAL"}</span>
+        ${t.urgente?`<span style="font-size:9px;font-weight:700;color:#f97316">⬆ URG</span>`:""}
         <span class="tempo-op" data-ts="${t.ts}" style="margin-left:auto;font-size:10px;font-weight:700;color:${corTempo(t.ts)}">${tempoFila(t.ts)}</span>
       </div>
       ${t.descricao?`<div style="font-size:11px;color:var(--mu-op);margin-top:3px">${h(t.descricao)}</div>`:""}
@@ -1196,20 +1204,102 @@ window.acao=async(id,status)=>{
 window.pular=async id=>{try{await update(ref(db,`tarefas/${id}`),{status:"pulado",ts:Date.now()});}catch(e){alert("Erro: "+e.message);}};
 window.remover=async id=>{if(!confirm("Remover esta tarefa?"))return;try{await remove(ref(db,`tarefas/${id}`));}catch(e){alert("Erro: "+e.message);}};
 window.marcarVazio=async id=>{if(!confirm("Marcar este endereço como vazio?"))return;try{await update(ref(db,`tarefas/${id}`),{status:"vazio"});}catch(e){alert("Erro: "+e.message);}};
+window.toggleUrgente=async id=>{
+  const t=tarefas.find(t=>t.id===id);if(!t)return;
+  try{await update(ref(db,`tarefas/${id}`),{urgente:t.urgente?null:true});}
+  catch(e){alert("Erro: "+e.message);}
+};
 window.fecharAlerta=async id=>{try{await update(ref(db,`tarefas/${id}`),{alertaVisto:true});}catch{}document.getElementById("al-"+idSafe(id))?.remove();};
 window.limparTudo=async()=>{if(!confirm("Limpar todas as tarefas?"))return;try{await remove(tasksRef);}catch(e){alert("Erro: "+e.message);}};
 window.novoDia=async()=>{
-  const nConc=tarefas.filter(t=>t.status==="concluido").length;
-  const nVz=tarefas.filter(t=>t.status==="vazio").length;
-  const nFila=tarefas.filter(t=>["pendente","andamento","pulado"].includes(t.status)).length;
-  let msg="Encerrar o dia e limpar todos os registros?\n\n";
-  msg+=`✓  ${nConc} concluído${nConc!==1?"s":""}`;
-  if(nVz>0)msg+=`\n✗  ${nVz} vazio${nVz!==1?"s":""}`;
-  if(nFila>0)msg+=`\n⚠  ${nFila} ainda na fila (serão removidos)`;
-  msg+="\n\nEsta ação não pode ser desfeita.";
-  if(!confirm(msg))return;
-  try{await remove(tasksRef);showToast("Dia encerrado. Boa operação amanhã!",{bg:"#4ade80",color:"#000"});}
-  catch(e){alert("Erro: "+e.message);}
+  const conc=tarefas.filter(t=>t.status==="concluido");
+  const vz=tarefas.filter(t=>t.status==="vazio");
+  const emFila=tarefas.filter(t=>["pendente","andamento","pulado"].includes(t.status));
+  const porOp={};
+  [...conc,...vz].forEach(t=>{
+    if(!t.opNome)return;
+    if(!porOp[t.opNome])porOp[t.opNome]={c:0,v:0};
+    t.status==="concluido"?porOp[t.opNome].c++:porOp[t.opNome].v++;
+  });
+  const porCam={};
+  [...conc,...vz].forEach(t=>{
+    const cam=(t.endereco||"")[0]||"?";
+    if(!porCam[cam])porCam[cam]={c:0,v:0};
+    t.status==="concluido"?porCam[cam].c++:porCam[cam].v++;
+  });
+  const camNomes={A:"Itambé",B:"Batavo",C:"Á. Seca",D:"Á. Seca 2",E:"DPA",F:"Cam 11"};
+  const hoje=new Date().toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"2-digit",year:"numeric"});
+  const linhasRel=[
+    `📋 RELATÓRIO – ${hoje}`,`${"─".repeat(32)}`,
+    `✅ Concluídos: ${conc.length}`,
+    `❌ Endereços vazios: ${vz.length}`,
+    emFila.length>0?`⏳ Restaram na fila: ${emFila.length}`:"",
+    Object.keys(porOp).length>0?"\n👷 Por operador:":"",
+    ...Object.entries(porOp).map(([n,{c,v}])=>`• ${n}: ${c} concluído${c!==1?"s":""}${v>0?`, ${v} vazio${v!==1?"s":""}`:""}`),
+    Object.keys(porCam).length>0?"\n📦 Por câmara:":"",
+    ...Object.entries(porCam).sort().map(([k,{c,v}])=>`• ${k} – ${camNomes[k]||k}: ${c} concluído${c!==1?"s":""}${v>0?`, ${v} vazio${v!==1?"s":""}`:""}`),
+  ].filter(l=>l!==undefined&&l!=="").join("\n");
+  window._relTexto=linhasRel;
+  const overlay=document.createElement("div");
+  overlay.className="modal-overlay";overlay.id="modalRelatorio";
+  overlay.innerHTML=`
+    <div class="modal" style="max-width:440px;width:92vw;max-height:85vh;overflow-y:auto">
+      <div class="modal-title">${I.flag} Encerrar Dia</div>
+      <div style="font-size:11px;color:var(--mu);margin-bottom:14px">${hoje}</div>
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+        <div style="flex:1;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:12px;text-align:center">
+          <div style="font-size:26px;font-weight:700;color:#22c55e">${conc.length}</div>
+          <div style="font-size:10px;color:var(--mu);margin-top:2px">Concluídos</div>
+        </div>
+        <div style="flex:1;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:12px;text-align:center">
+          <div style="font-size:26px;font-weight:700;color:#ef4444">${vz.length}</div>
+          <div style="font-size:10px;color:var(--mu);margin-top:2px">Vazios</div>
+        </div>
+        <div style="flex:1;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:12px;text-align:center">
+          <div style="font-size:26px;font-weight:700;color:#f59e0b">${emFila.length}</div>
+          <div style="font-size:10px;color:var(--mu);margin-top:2px">Na fila</div>
+        </div>
+      </div>
+      ${Object.keys(porOp).length>0?`
+      <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--mu);margin-bottom:6px;text-transform:uppercase">Por Operador</div>
+      <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:14px">
+        ${Object.entries(porOp).map(([n,{c,v}])=>`
+          <div style="display:flex;align-items:center;gap:8px;background:var(--s2);border:1px solid var(--bd);border-radius:6px;padding:7px 10px">
+            <span class="online-dot" style="flex-shrink:0;width:6px;height:6px"></span>
+            <span style="flex:1;font-size:12px;font-weight:600">${h(n)}</span>
+            <span style="font-size:11px;color:#22c55e;font-weight:700">✓ ${c}</span>
+            ${v>0?`<span style="font-size:11px;color:#ef4444;font-weight:700;margin-left:4px">✗ ${v}</span>`:""}
+          </div>`).join("")}
+      </div>`:""}
+      ${Object.keys(porCam).length>0?`
+      <div style="font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--mu);margin-bottom:6px;text-transform:uppercase">Por Câmara</div>
+      <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:14px">
+        ${Object.entries(porCam).sort().map(([k,{c,v}])=>{
+          const cor=CAMARAS[k]?.cor||"#8892b0";
+          return`<div style="display:flex;align-items:center;gap:8px;background:var(--s2);border:1px solid var(--bd);border-radius:6px;padding:7px 10px">
+            <span style="width:7px;height:7px;border-radius:50%;background:${cor};flex-shrink:0"></span>
+            <span style="flex:1;font-size:12px;font-weight:600">${k} – ${camNomes[k]||k}</span>
+            <span style="font-size:11px;color:#22c55e;font-weight:700">✓ ${c}</span>
+            ${v>0?`<span style="font-size:11px;color:#ef4444;font-weight:700;margin-left:4px">✗ ${v}</span>`:""}
+          </div>`;
+        }).join("")}
+      </div>`:""}
+      ${emFila.length>0?`<div style="font-size:11px;color:#f59e0b;background:#f59e0b10;border:1px solid #f59e0b30;border-radius:6px;padding:8px 10px;margin-bottom:14px">
+        ⚠ ${emFila.length} tarefa${emFila.length!==1?"s":""} ainda na fila serão removidas.
+      </div>`:""}
+      <div style="display:flex;gap:8px">
+        <button class="modal-cancel" style="flex:1" onclick="document.getElementById('modalRelatorio')?.remove()">Cancelar</button>
+        <button class="abtn abtn-gray" style="flex:1;padding:10px 6px" onclick="navigator.clipboard?.writeText(window._relTexto).then(()=>showToast('Relatório copiado!',{bg:'#22c55e',color:'#000'})).catch(()=>{})">${I.clipboard.replace('width="20" height="20"','width="14" height="14"')} Copiar</button>
+        <button class="abtn abtn-red" style="flex:1;padding:10px 6px" onclick="window._encerrarDia()">Encerrar</button>
+      </div>
+    </div>`;
+  overlay.addEventListener("click",e=>{if(e.target===overlay)overlay.remove();});
+  document.body.appendChild(overlay);
+  window._encerrarDia=async()=>{
+    overlay.remove();
+    try{await remove(tasksRef);showToast("Dia encerrado. Boa operação amanhã!",{bg:"#4ade80",color:"#000"});}
+    catch(e){alert("Erro: "+e.message);}
+  };
 };
 
 // â"€â"€ MODAL REPASSAR â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
