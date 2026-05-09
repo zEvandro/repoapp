@@ -771,3 +771,46 @@ html,body,#app{
     margin-top:14px!important;
   }
 }
+
+/* DESKTOP WIDTH TUNING - avoid stretched cards in right panel */
+@media (min-width:1025px){
+  .main-rep .rep-dir{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .main-rep .online-bar,
+  .main-rep .encerrar-bar,
+  .main-rep .rep-dir-hdr,
+  .main-rep .crep,
+  .main-rep .empty{
+    width:min(100%,980px)!important;
+  }
+
+  .main-rep .crep,
+  .main-rep .rep-dir-hdr,
+  .main-rep .encerrar-bar,
+  .main-rep .empty,
+  .main-rep .online-bar{
+    margin-right:auto!important;
+  }
+
+  .main-rep .online-bar{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    align-items:flex-start!important;
+    gap:8px!important;
+  }
+
+  .main-rep .online-label{
+    width:100%!important;
+  }
+
+  .main-rep .online-op{
+    width:auto!important;
+    min-width:260px;
+    max-width:460px;
+    flex:1 1 320px;
+  }
+}
