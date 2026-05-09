@@ -422,15 +422,10 @@ html,body{background:#06060a!important}
 }
 .logo{
   width:80px!important;height:80px!important;border-radius:22px!important;
-  box-shadow:0 0 0 1px #fbbf2460,0 0 40px #fbbf2466,0 0 90px #fbbf2430,0 0 160px #fbbf2415!important;
-  animation:logoGlow 2.5s ease-in-out infinite!important
+  box-shadow:0 4px 16px rgba(0,0,0,.5)!important
 }
-@keyframes logoGlow{
-  0%,100%{box-shadow:0 0 0 1px #fbbf2460,0 0 40px #fbbf2466,0 0 90px #fbbf2430,0 0 160px #fbbf2415}
-  50%    {box-shadow:0 0 0 2px #fbbf24aa,0 0 60px #fbbf24aa,0 0 120px #fbbf2458,0 0 200px #fbbf2428}
-}
-.login h1{font-size:52px!important;letter-spacing:8px!important;text-shadow:0 0 50px rgba(255,255,255,.25)!important}
-.login-sub{color:#fbbf24!important;opacity:.65!important;letter-spacing:4px!important}
+.login h1{font-size:52px!important;letter-spacing:8px!important}
+.login-sub{color:var(--tx2)!important;letter-spacing:4px!important}
 .mod-card{background:#09090e!important;border-radius:18px!important;box-shadow:0 6px 30px rgba(0,0,0,.65)!important}
 .mod-card-pick{border-color:#fbbf2435!important;box-shadow:0 0 35px #fbbf2412,0 6px 30px rgba(0,0,0,.65)!important}
 .mod-header-pick{background:#0d0d11!important}
@@ -440,36 +435,35 @@ html,body{background:#06060a!important}
 
 /* ── Auth form ─────────────────────────────────────────────────── */
 .auth-inp{background:#0d0d14!important;border:1px solid #252538!important;font-size:16px!important}
-.auth-inp:focus{border-color:#fbbf24!important;box-shadow:0 0 0 3px #fbbf2422,0 0 20px #fbbf2418!important}
+.auth-inp:focus{border-color:#fbbf24!important;box-shadow:none!important}
 .auth-btn{
   background:#fbbf24!important;font-size:22px!important;letter-spacing:5px!important;
-  box-shadow:0 0 0 1px #fbbf2480,0 4px 28px #fbbf2460!important;
-  transition:all .2s ease!important
+  box-shadow:none!important;transition:filter .15s!important
 }
-.auth-btn:hover{box-shadow:0 0 0 2px #fbbf24cc,0 6px 40px #fbbf2490!important;transform:translateY(-2px)!important}
+.auth-btn:hover{filter:brightness(1.08)!important}
 
 /* ── Name screen ───────────────────────────────────────────────── */
 .op-name-screen{background:radial-gradient(ellipse 90% 70% at 50% -5%,#0a0f28 0%,#04040a 60%)!important}
 .op-name-box{
   background:#09090e!important;border:1px solid #202038!important;
-  box-shadow:0 0 0 1px #60a5fa25,0 0 50px #60a5fa18,0 12px 60px rgba(0,0,0,.85)!important
+  box-shadow:0 8px 32px rgba(0,0,0,.7)!important
 }
-.op-name-icon{background:#60a5fa18!important;border:1px solid #60a5fa35!important;box-shadow:0 0 24px #60a5fa44!important}
+.op-name-icon{background:#60a5fa12!important;border:1px solid #60a5fa30!important}
 .op-name-title{font-size:30px!important;letter-spacing:3px!important;color:#dde8ff!important}
-.op-name-btn{box-shadow:0 0 0 1px #60a5fa80,0 4px 24px #60a5fa55!important;font-size:20px!important;letter-spacing:4px!important}
+.op-name-btn{box-shadow:none!important;font-size:20px!important;letter-spacing:4px!important}
 
 /* ── Topbars — cockpit line ────────────────────────────────────── */
 .topbar{
   background:#06060a!important;
-  border-bottom:1px solid #fbbf2438!important;
-  box-shadow:0 1px 0 #fbbf2420,0 4px 30px rgba(0,0,0,.85)!important
+  border-bottom:1px solid #1e1e2c!important;
+  box-shadow:0 1px 0 rgba(0,0,0,.4)!important
 }
 .topbar-op{
   background:#04040a!important;
-  border-bottom:1px solid #60a5fa38!important;
-  box-shadow:0 1px 0 #60a5fa20,0 4px 30px rgba(0,0,0,.85)!important
+  border-bottom:1px solid #1e1e2c!important;
+  box-shadow:0 1px 0 rgba(0,0,0,.4)!important
 }
-.tlogo    {font-size:26px!important;letter-spacing:4px!important;color:#fbbf24!important;text-shadow:0 0 20px #fbbf24cc,0 0 50px #fbbf2466!important}
+.tlogo    {font-size:26px!important;letter-spacing:4px!important;color:#fbbf24!important}
 .tver{color:#404060!important;letter-spacing:2px!important}
 
 /* ── Backgrounds ───────────────────────────────────────────────── */
@@ -480,24 +474,24 @@ html,body{background:#06060a!important}
 
 /* ── Camera tabs ───────────────────────────────────────────────── */
 .cam-tab-bar{background:#08080d!important;border-bottom:1px solid #1a1a28!important}
-.cam-tab.ativa{background:rgba(255,255,255,.04)!important;font-weight:800!important;text-shadow:0 0 18px currentColor,0 0 40px currentColor}
+.cam-tab.ativa{background:rgba(255,255,255,.04)!important;font-weight:800!important}
 
 /* ── Online bars ───────────────────────────────────────────────── */
 .online-bar{background:#08080d!important;border-bottom:1px solid #1a1a28!important}
-.dot       {background:#4ade80!important;box-shadow:0 0 8px #4ade80,0 0 22px #4ade8066!important}
-.online-dot{background:#4ade80!important;box-shadow:0 0 8px #4ade80,0 0 18px #4ade8055!important}
+.dot       {background:#4ade80!important}
+.online-dot{background:#4ade80!important}
 
 /* ── Filtro bar ────────────────────────────────────────────────── */
 .filtro-bar{background:#04040a!important;border-bottom:1px solid #191928!important}
 .filtro-btn{background:#0e0e18!important;border:1px solid #1e1e2e!important;color:#5858a0!important}
-.filtro-ativo{background:#fbbf24!important;border-color:#fbbf24!important;color:#000!important;box-shadow:0 0 0 1px #fbbf2480,0 2px 18px #fbbf2466!important}
+.filtro-ativo{background:#fbbf24!important;border-color:#fbbf24!important;color:#000!important}
 .filtro-n{background:rgba(0,0,0,.3)!important}
 
 /* ── Atrib pills ───────────────────────────────────────────────── */
 .atrib-pills{gap:8px!important}
 .atrib-pill{background:#0e0e18!important;border:1px solid #1e1e2e!important;color:#5858a0!important;padding:8px 16px!important}
 .atrib-pill:hover{border:1px solid #fbbf24!important;color:#fbbf24!important}
-.atrib-pill.ativo{background:#fbbf24!important;color:#000!important;box-shadow:0 0 0 1px #fbbf2480,0 2px 18px #fbbf2466!important}
+.atrib-pill.ativo{background:#fbbf24!important;color:#000!important}
 
 /* ── Stat cards ────────────────────────────────────────────────── */
 .stat-card   {background:#0a0a0f!important;border:1px solid #1a1a28!important;box-shadow:0 4px 20px rgba(0,0,0,.65)!important}
@@ -511,12 +505,12 @@ html,body{background:#06060a!important}
 
 /* ── Inputs ────────────────────────────────────────────────────── */
 .inp{background:#0d0d14!important;border:1px solid #252538!important;border-radius:12px!important;font-size:15px!important;color:#d0d0f0!important}
-.inp:focus{border-color:#fbbf24!important;box-shadow:0 0 0 3px #fbbf2422,0 0 20px #fbbf2415!important}
-.op-name-input:focus{border-color:#60a5fa!important;box-shadow:0 0 0 3px #60a5fa22!important}
+.inp:focus{border-color:#fbbf24!important;box-shadow:none!important}
+.op-name-input:focus{border-color:#60a5fa!important;box-shadow:none!important}
 
 /* ── Toggle buttons (pick/pal) ─────────────────────────────────── */
 .tbtn    {background:#0e0e18!important;border:1px solid #1e1e2e!important;color:#505080!important}
-.tbtn.active{background:#fbbf24!important;border-color:#fbbf24!important;box-shadow:0 0 0 1px #fbbf2480,0 2px 16px #fbbf2455!important}
+.tbtn.active{background:#fbbf24!important;border-color:#fbbf24!important}
 .tbtn.active svg{stroke:#000!important}
 
 /* ── Repositor cards ───────────────────────────────────────────── */
@@ -529,7 +523,7 @@ html,body{background:#06060a!important}
 .crep:hover{transform:translateX(3px)!important}
 .crep-meta{gap:6px!important}
 .rep-dir-hdr{color:#fbbf2488!important;letter-spacing:3px!important;border-bottom:1px solid #18182a!important}
-.rep-fila-n{background:#fbbf24!important;color:#000!important;box-shadow:0 0 0 1px #fbbf2480,0 2px 14px #fbbf2466!important;font-size:13px!important}
+.rep-fila-n{background:#fbbf24!important;color:#000!important;font-size:13px!important}
 .btn-limpar{background:#09090e!important;border:1px solid #1a1a28!important;color:#3a3a60!important;border-radius:12px!important}
 .btn-limpar:hover{border-color:#f87171!important;color:#f87171!important}
 .btn-rem:hover{color:#f87171!important;background:#f8717118!important}
@@ -548,11 +542,7 @@ html,body{background:#06060a!important}
 /* ── Operador principal ────────────────────────────────────────── */
 .cop-main{
   background:#050508!important;border:2px solid #fbbf24!important;border-radius:22px!important;
-  box-shadow:
-    0 0 0 1px #fbbf2450,
-    0 0 30px #fbbf2430,
-    0 0 70px #fbbf2418,
-    0 14px 55px rgba(0,0,0,.9)!important
+  box-shadow:0 8px 32px rgba(0,0,0,.8)!important
 }
 .tipo-main{font-size:26px!important;letter-spacing:4px!important}
 .addr-main{
@@ -578,7 +568,7 @@ html,body{background:#06060a!important}
 }
 .cam-letter-big{
   font-family:'Bebas Neue';font-size:36px;line-height:1;letter-spacing:0;
-  color:var(--cs-c);text-shadow:0 0 18px var(--cs-c),0 0 40px var(--cs-c);
+  color:var(--cs-c);
 }
 .cam-pill{
   margin-left:auto;
@@ -595,10 +585,10 @@ html,body{background:#06060a!important}
   padding:16px 8px!important;border-radius:13px!important;
   font-size:13px!important;font-weight:800!important;letter-spacing:1px!important
 }
-.abtn-blue {background:#60a5fa!important;color:#000!important;box-shadow:0 0 0 1px #60a5fa80,0 4px 22px #60a5fa66!important}
-.abtn-green{background:#4ade80!important;color:#000!important;box-shadow:0 0 0 1px #4ade8080,0 4px 22px #4ade8066!important}
-.abtn-red  {background:#f87171!important;color:#000!important;box-shadow:0 0 0 1px #f8717180,0 4px 22px #f8717166!important}
-.abtn-gray {background:#111120!important;color:#505080!important;border:1px solid #242440!important;box-shadow:0 4px 16px rgba(0,0,0,.55)!important}
+.abtn-blue {background:#60a5fa!important;color:#000!important}
+.abtn-green{background:#4ade80!important;color:#000!important}
+.abtn-red  {background:#f87171!important;color:#000!important}
+.abtn-gray {background:#111120!important;color:#505080!important;border:1px solid #242440!important}
 .abtn:active{transform:scale(.95)!important;filter:brightness(.82)!important}
 
 /* ── Botão ENVIAR ──────────────────────────────────────────────── */
@@ -606,13 +596,9 @@ html,body{background:#06060a!important}
   background:#fbbf24!important;color:#000!important;
   font-size:22px!important;letter-spacing:5px!important;
   border-radius:14px!important;padding:16px!important;
-  box-shadow:0 0 0 1px #fbbf2488,0 4px 22px #fbbf2466,0 0 60px #fbbf2430!important;
-  transition:all .2s ease!important
+  box-shadow:none!important;transition:filter .15s!important
 }
-.btn-send:hover{
-  box-shadow:0 0 0 2px #fbbf24cc,0 6px 32px #fbbf2499,0 0 90px #fbbf2450!important;
-  transform:translateY(-2px)!important
-}
+.btn-send:hover{filter:brightness(1.08)!important}
 /* ── Histórico ─────────────────────────────────────────────────── */
 .chist{background:#08080d!important;border:1px solid #18182a!important;border-left:3px solid!important;border-radius:10px!important}
 .secao{color:#fbbf2460!important;border-bottom:1px solid #1a1a28!important;letter-spacing:3px!important}
@@ -626,14 +612,14 @@ html,body{background:#06060a!important}
 /* ── Modal ─────────────────────────────────────────────────────── */
 .modal{
   background:#09090e!important;border:1px solid #1e1e2c!important;border-radius:20px!important;
-  box-shadow:0 0 0 1px #ffffff0a,0 30px 80px rgba(0,0,0,.95),0 0 100px rgba(0,0,0,.6)!important
+  box-shadow:0 16px 48px rgba(0,0,0,.9)!important
 }
 .cam-filter-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
 .cam-filter-chip{display:flex;flex-direction:column;align-items:center;gap:3px;
   padding:10px 6px;border-radius:12px;border:2px solid #1e1e2c;background:#0d0d14;
   cursor:pointer;transition:all .15s;font-family:inherit;width:100%}
 .cam-filter-chip.ativo{border-color:var(--cc)!important;background:var(--cc-bg)!important;
-  box-shadow:0 0 0 1px var(--cc),0 0 18px var(--cc)40}
+  box-shadow:0 0 0 1px var(--cc)}
 .cam-filter-chip-letter{font-family:'Bebas Neue';font-size:26px;line-height:1;color:var(--cc)}
 .cam-filter-chip-name{font-size:8px;font-weight:700;letter-spacing:.5px;color:var(--cc);opacity:.8;text-align:center}
 .aviso-cam-compat{font-size:11px;color:#f87171;margin-top:8px;padding:7px 10px;
@@ -696,8 +682,7 @@ html,body{background:#06060a!important}
   display:flex;align-items:center;gap:6px;transition:all .15s;white-space:nowrap
 }
 .btn-encerrar:hover{
-  background:#f87171;color:#000;
-  box-shadow:0 0 0 1px #f8717180,0 2px 16px #f8717166
+  background:#f87171;color:#000
 }
 </style>
 </head>
@@ -712,7 +697,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.29";
+const APP_VERSION = "v3.30";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");

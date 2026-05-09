@@ -1,4 +1,4 @@
-const CACHE = "repoapp-v3.29";
+const CACHE = "repoapp-v3.30";
 const FILES = ["./", "./index.html", "./manifest.json", "./firebase-config.js"];
 
 self.addEventListener("install", e => {
