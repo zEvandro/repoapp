@@ -96,24 +96,62 @@
   letter-spacing:.2px;
 }
 
-.online-bar{
-  background:var(--corp-header);
-  border-bottom:1px solid var(--corp-border);
+.op-sel-list{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  margin-top:2px;
 }
 
-.online-label{
-  text-transform:none;
-  letter-spacing:.2px;
-  font-size:11px;
-  color:var(--corp-muted);
-}
-
-.online-op{
+.op-sel-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 10px;
+  border-radius:8px;
   background:var(--corp-surface);
   border:1px solid var(--corp-border);
+  cursor:pointer;
+  transition:border-color .15s,background .15s;
+}
+
+.op-sel-row:hover{
+  border-color:var(--corp-primary);
+}
+
+.op-sel-row.selecionado{
+  background:var(--corp-primary);
+  border-color:var(--corp-primary);
+}
+
+.op-sel-nome{
+  flex:1;
+  font-size:13px;
+  font-weight:600;
   color:var(--corp-text);
-  border-radius:8px;
-  padding:5px 10px;
+}
+
+.op-sel-empty{
+  font-size:11px;
+  color:var(--corp-muted);
+  text-align:center;
+  padding:12px 0;
+}
+
+.btn-cam-filter{
+  background:transparent;
+  border:none;
+  cursor:pointer;
+  padding:2px 4px;
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  flex-shrink:0;
+  transition:opacity .15s;
+}
+
+.btn-cam-filter:hover{
+  opacity:.7;
 }
 
 .online-dot,
@@ -193,18 +231,6 @@
   color:var(--corp-text);
 }
 
-.atrib-pill{
-  background:var(--corp-surface);
-  border:1px solid var(--corp-border);
-  color:var(--corp-muted);
-  border-radius:8px;
-}
-
-.atrib-pill.ativo{
-  background:var(--corp-primary);
-  border-color:var(--corp-primary);
-  color:var(--corp-text);
-}
 
 .btn-send{
   background:var(--corp-primary);

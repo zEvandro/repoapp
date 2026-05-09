@@ -33,7 +33,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.45";
+const APP_VERSION = "v3.46";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
@@ -90,7 +90,7 @@ let opId         = null;
 let tarefas      = [];
 let operadores   = {};
 let tipoAtual    = "picking";
-let atribPara    = "qualquer";
+let atribPara    = null;
 let prevIds      = null;
 let showFont     = false;
 let filtroRua    = "todas";
@@ -244,46 +244,29 @@ function fontPanelHTML(isOp){
   </div>`;
 }
 
-// â"€â"€ OPERADORES ONLINE HTML â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
-function onlineBarHTML(){
-  const lista=Object.entries(operadores);
-  if(lista.length===0)return"";
-  return `<div class="online-bar">
-    <span class="online-label">${I.users} Online</span>
-    ${lista.map(([id,op])=>{
-      const f=getOpCamFilter(id);
-      const tags=f&&f.length>0?`<span class="atrib-cam-tags">${f.map(k=>`<span class="atrib-cam-tag" style="background:${CAMARAS[k]?.cor||"#fff"}22;color:${CAMARAS[k]?.cor||"#fff"};border:1px solid ${CAMARAS[k]?.cor||"#fff"}50">${k}</span>`).join("")}</span>`:"";
-      return `<div class="online-op"><span class="online-main"><span class="online-dot"></span><span class="online-name">${h(op.nome)}</span>${tags}</span><span class="online-actions"><button class="btn-rename-op" onclick="window.editarFiltroOpCam('${sq(id)}','${sq(op.nome)}')" title="Câmaras permitidas" style="color:${f&&f.length>0?"var(--am)":"#7878a8"}">${I.filter}</button><button class="btn-rename-op" onclick="window.editarNomeOpRep('${sq(id)}','${sq(op.nome)}')" title="Renomear">${I.pencil}</button></span></div>`;
-    }).join("")}
-  </div>`;
-}
-
-
 // â"€â"€ RENDER REPOSITOR â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
-function atribPillsHTML(){
+function operadoresSelectorHTML(){
   const lista=Object.entries(operadores);
-  const qualquerAtivo=atribPara==="qualquer";
-  // Operadores que NÃO receberão quando "qualquer" + câmara atual
-  const incompativeis=qualquerAtivo?lista.filter(([id])=>{
+  const incompativeis=atribPara===null?lista.filter(([id])=>{
     const f=getOpCamFilter(id);
     return f&&f.length>0&&!f.includes(camaraAtual);
   }):[];
-  const avisoQualquer=incompativeis.length>0
+  const avisoIncompat=incompativeis.length>0
     ?`<div class="aviso-cam-compat">${I.alert} <b>${incompativeis.map(([,op])=>h(op.nome)).join(", ")}</b> não receberá${incompativeis.length>1?"m":""} — câmara ${camaraAtual} fora do filtro.</div>`
     :"";
-  return `<div class="atrib-pills">
-    <button class="atrib-pill${qualquerAtivo?" ativo":""}" onclick="window.setAtrib('qualquer')">
-      ${I.users} Qualquer
-    </button>
+  if(lista.length===0)return`<div class="op-sel-empty">Nenhum operador online</div>`;
+  return`<div class="op-sel-list">
     ${lista.map(([id,op])=>{
       const f=getOpCamFilter(id);
       const tags=f&&f.length>0?`<span class="atrib-cam-tags">${f.map(k=>`<span class="atrib-cam-tag" style="background:${CAMARAS[k]?.cor||"#fff"}22;color:${CAMARAS[k]?.cor||"#fff"};border:1px solid ${CAMARAS[k]?.cor||"#fff"}50">${k}</span>`).join("")}</span>`:"";
-      return `<button class="atrib-pill${atribPara===id?" ativo":""}" onclick="window.setAtrib('${sq(id)}')">
-        <span class="online-dot" style="width:6px;height:6px;animation:none;flex-shrink:0"></span>${h(op.nome)}${tags}
-      </button>`;
+      return`<div class="op-sel-row${atribPara===id?" selecionado":""}" data-op-id="${sq(id)}" onclick="window.setAtrib('${sq(id)}')">
+        <span class="online-dot"></span>
+        <span class="op-sel-nome">${h(op.nome)}</span>
+        ${tags}
+        <button class="btn-cam-filter" onclick="event.stopPropagation();window.editarFiltroOpCam('${sq(id)}','${sq(op.nome)}')" title="Câmaras permitidas" style="color:${f&&f.length>0?"var(--am)":"#7878a8"}">${I.filter}</button>
+      </div>`;
     }).join("")}
-    ${lista.length===0?`<span style="font-size:10px;color:var(--mu);align-self:center">Nenhum operador online</span>`:""}
-  </div>${avisoQualquer}`;
+  </div>${avisoIncompat}`;
 }
 
 function camChipsHTML(){
@@ -408,14 +391,13 @@ function renderRepositor(){
             <button class="tbtn active" id="tPick" onclick="window.setTipo('picking')">${I.package} Picking</button>
             <button class="tbtn" id="tPal" onclick="window.setTipo('palete')">${I.layers} Palete Fechado</button>
           </div>
-          <label class="lbl" style="margin-top:14px">${I.users} Atribuir para</label>
-          ${atribPillsHTML()}
+          <label class="lbl" style="margin-top:14px">${I.users} Operadores online</label>
+          ${operadoresSelectorHTML()}
           <button class="btn-send" onclick="window.enviar()">${I.send} Enviar ao operador</button>
         </div>
       </div>
       <div class="rep-dir">
         <div class="rep-queue-col">
-        ${onlineBarHTML()}
         ${hist.length>0?`
           <div class="encerrar-bar">
             ${hist.filter(t=>t.status==="concluido").length>0?`<span class="novo-dia-stat nds-ok">${I.checkCircle.replace('width="18" height="18"','width="13" height="13"')} ${hist.filter(t=>t.status==="concluido").length} concluídos</span>`:""}
@@ -742,7 +724,7 @@ function limparSessaoDados(){
   clearDataSubs();
   perfil=null;nomeOperador=null;opId=null;showFont=false;
   tarefas=[];operadores={};
-  prevIds=null;filtroRua="todas";atribPara="qualquer";meuFiltroCamera=null;
+  prevIds=null;filtroRua="todas";atribPara=null;meuFiltroCamera=null;
 }
 
 function bindDataByPerfil(){
@@ -1033,12 +1015,9 @@ window.authEntrar=async()=>{
 window.setFiltroRua=r=>{filtroRua=r;render();};
 window.toggleFont=()=>{showFont=!showFont;render();};
 window.setAtrib=v=>{
-  atribPara=v;
-  document.querySelectorAll(".atrib-pill").forEach(el=>{
-    const txt=el.textContent.trim();
-    const isQualquer=v==="qualquer"&&txt.includes("Qualquer");
-    const isOp=!isQualquer&&operadores[v]&&txt.includes(operadores[v].nome);
-    el.classList.toggle("ativo",isQualquer||isOp);
+  atribPara=atribPara===v?null:v;
+  document.querySelectorAll(".op-sel-row").forEach(el=>{
+    el.classList.toggle("selecionado",el.dataset.opId===atribPara);
   });
 };
 
@@ -1136,8 +1115,8 @@ async function doPush(endCompleto){
   window._fs=null;window._endForcar=null;
   try{
     await push(tasksRef,{endereco:endCompleto,tipo:tipoAtual,status:"pendente",ts:Date.now(),
-      atribId:atribPara!=="qualquer"?atribPara:null,
-      atribNome:atribPara!=="qualquer"?(operadores[atribPara]?.nome||null):null,
+      atribId:atribPara||null,
+      atribNome:atribPara?(operadores[atribPara]?.nome||null):null,
     });
   }catch(e){
     showToast("Erro ao enviar. Verifique a conexão.",{bg:"#ef4444",color:"#fff"});
@@ -1160,7 +1139,7 @@ window.enviar=async()=>{
   const elA=document.getElementById("avisoEnd");
   if(elA&&!elA.classList.contains("hidden")&&window._endForcar)return;
   // Verificar filtro de câmara do operador selecionado
-  if(atribPara!=="qualquer"){
+  if(atribPara!==null){
     const filtro=getOpCamFilter(atribPara);
     if(filtro&&filtro.length>0&&!filtro.includes(r.camara)){
       const opNome=operadores[atribPara]?.nome||"o operador";
