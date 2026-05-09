@@ -222,7 +222,7 @@ html,body{background:#13161e!important}
 .btn-encerrar{margin-left:auto;flex-shrink:0;padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'DM Sans';font-size:12px;font-weight:700;letter-spacing:.5px;background:transparent;border:1px solid #b83030;color:#b83030;display:flex;align-items:center;gap:6px;transition:all .15s;white-space:nowrap}
 .btn-encerrar:hover{background:#b83030!important;color:#fff!important}
 
-/* FINAL - REPOSITOR CORPORATIVO (sobrep�e legado gamer) */
+/* FINAL - REPOSITOR CORPORATIVO (sobrep�e legado gamer) */
 .topbar,
 .font-panel,
 .main-rep,
@@ -828,13 +828,17 @@ html,body,#app{
   .main-rep .rep-hist-col{
     min-width:0;
     border-left:1px solid var(--corp-border);
-    padding-left:12px;
+    padding-left:0;
     opacity:.84;
+    position:sticky;
+    top:0;
+    max-height:calc(100vh - 56px);
+    overflow-y:auto;
   }
 
   .main-rep .rep-queue-col .crep{
-    width:min(100%,980px)!important;
-    margin-right:auto!important;
+    width:100%!important;
+    margin-right:0!important;
   }
 
   .main-rep .rep-hist-col .crep{
@@ -870,9 +874,59 @@ html,body,#app{
     padding-left:0;
     opacity:1;
     margin-top:10px;
+    position:static!important;
+    max-height:none!important;
+    overflow-y:visible!important;
   }
 
   .main-rep .rep-hist-col .crep{
     opacity:.92!important;
   }
 }
+
+/* ── Histórico sticky header + buscador ────────────────────────── */
+.rep-hist-sticky-top{
+  position:sticky;
+  top:0;
+  z-index:2;
+  background:var(--corp-bg);
+}
+
+.hist-search-wrap{
+  padding:6px 14px 8px;
+  border-bottom:1px solid var(--corp-border);
+}
+
+.hist-search-inp{
+  width:100%;
+  box-sizing:border-box;
+  background:var(--corp-surface);
+  border:1px solid var(--corp-border);
+  border-radius:6px;
+  padding:6px 10px;
+  color:var(--corp-text);
+  font-size:12px;
+  font-family:inherit;
+  outline:none;
+  transition:border-color .15s;
+}
+
+.hist-search-inp:focus{
+  border-color:var(--corp-primary);
+}
+
+.hist-no-result{
+  font-size:12px;
+  color:var(--corp-muted);
+  text-align:center;
+  padding:20px 14px;
+}
+
+/* ── Operator selector theme ────────────────────────────────────── */
+.op-sel-row{background:var(--corp-surface)!important;border:1px solid var(--corp-border)!important;}
+.op-sel-row:hover{border-color:var(--corp-primary)!important;}
+.op-sel-row.selecionado{background:rgba(37,99,235,.18)!important;border-color:var(--corp-primary)!important;}
+.op-sel-nome{color:var(--corp-text)!important;font-size:12px!important;font-weight:600!important;}
+.op-sel-empty{color:var(--corp-muted)!important;}
+.btn-cam-filter{color:var(--corp-muted)!important;}
+.btn-cam-filter:hover{color:var(--corp-text)!important;opacity:1!important;}

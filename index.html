@@ -33,7 +33,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.46";
+const APP_VERSION = "v3.47";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
@@ -97,6 +97,7 @@ let filtroRua    = "todas";
 let camaraAtual  = "B";
 let tabMobileRep     = "fila";
 let meuFiltroCamera  = null;
+let filtroHistorico  = "";
 // Auth
 let authUser     = null;
 let authReady    = false;
@@ -425,16 +426,19 @@ function renderRepositor(){
             </div>`}
         </div>
         <aside class="rep-hist-col">
-        ${hist.length>0?`
-          <div class="rep-dir-hdr rep-hist-hdr" style="margin-top:0">
-            <span>Histórico de hoje</span>
-            <span class="rep-fila-n" style="background:var(--s2);color:var(--tx2)">${hist.length}</span>
+          <div class="rep-hist-sticky-top">
+            <div class="rep-dir-hdr rep-hist-hdr" style="margin-top:0">
+              <span>Histórico de hoje</span>
+              ${hist.length>0?`<span class="rep-fila-n" style="background:var(--s2);color:var(--tx2)">${hist.length}</span>`:""}
+            </div>
+            ${hist.length>0?`<div class="hist-search-wrap"><input class="hist-search-inp" id="histSearch" type="search" placeholder="Buscar endereço…" value="${h(filtroHistorico)}" oninput="window.setFiltroHistorico(this.value)" autocomplete="off"/></div>`:""}
           </div>
-          ${hist.map(cardRep).join("")}`
-          :`<div class="empty rep-hist-empty" style="padding:36px 20px">
-              <div class="empty-title">Sem histórico hoje</div>
-              <div class="empty-sub">As conclusões e endereços vazios do dia aparecerão aqui.</div>
-            </div>`}
+          ${hist.length>0
+            ?`${hist.map(cardRep).join("")}<div class="hist-no-result" style="display:none">Nenhum resultado para "<b>${h(filtroHistorico)}</b>"</div>`
+            :`<div class="empty rep-hist-empty" style="padding:36px 20px">
+                <div class="empty-title">Sem histórico hoje</div>
+                <div class="empty-sub">As conclusões e endereços vazios do dia aparecerão aqui.</div>
+              </div>`}
         </aside>
       </div>
     </div>`;
@@ -452,6 +456,7 @@ function renderRepositor(){
     const ativa=bar?.querySelector(".cam-tab.ativa");
     if(bar&&ativa)bar.scrollLeft=ativa.offsetLeft-(bar.clientWidth/2)+(ativa.clientWidth/2);
   },50);
+  if(filtroHistorico)window.setFiltroHistorico(filtroHistorico);
 }
 
 function cardRep(t){
@@ -725,7 +730,7 @@ function limparSessaoDados(){
   clearDataSubs();
   perfil=null;nomeOperador=null;opId=null;showFont=false;
   tarefas=[];operadores={};
-  prevIds=null;filtroRua="todas";atribPara=null;meuFiltroCamera=null;
+  prevIds=null;filtroRua="todas";atribPara=null;meuFiltroCamera=null;filtroHistorico="";
 }
 
 function bindDataByPerfil(){
@@ -1014,6 +1019,16 @@ window.authEntrar=async()=>{
 
 // â"€â"€ AÇÕES PICKING â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 window.setFiltroRua=r=>{filtroRua=r;render();};
+window.setFiltroHistorico=v=>{
+  filtroHistorico=v.toLowerCase().trim();
+  document.querySelectorAll(".rep-hist-col .crep").forEach(el=>{
+    const addr=el.querySelector(".crep-addr")?.textContent?.toLowerCase()||"";
+    el.style.display=!filtroHistorico||addr.includes(filtroHistorico)?"":"none";
+  });
+  const vazio=document.querySelector(".rep-hist-col .hist-no-result");
+  const algum=[...document.querySelectorAll(".rep-hist-col .crep")].some(el=>el.style.display!=="none");
+  if(vazio)vazio.style.display=algum?"none":"";
+};
 window.toggleFont=()=>{showFont=!showFont;render();};
 window.setAtrib=v=>{
   atribPara=atribPara===v?null:v;
