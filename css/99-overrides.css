@@ -772,27 +772,24 @@ html,body,#app{
   }
 }
 
-/* DESKTOP WIDTH TUNING - avoid stretched cards in right panel */
+/* DESKTOP CARD TUNING - reduce only cards, keep full panels */
 @media (min-width:1025px){
   .main-rep .rep-dir{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
   }
 
   .main-rep .online-bar,
   .main-rep .encerrar-bar,
   .main-rep .rep-dir-hdr,
-  .main-rep .crep,
   .main-rep .empty{
-    width:min(100%,980px)!important;
+    width:100%!important;
+    max-width:100%!important;
   }
 
-  .main-rep .crep,
-  .main-rep .rep-dir-hdr,
-  .main-rep .encerrar-bar,
-  .main-rep .empty,
-  .main-rep .online-bar{
+  .main-rep .crep{
+    width:min(100%,980px)!important;
     margin-right:auto!important;
   }
 
