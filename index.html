@@ -33,7 +33,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.40";
+const APP_VERSION = "v3.41";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
@@ -253,7 +253,7 @@ function onlineBarHTML(){
     ${lista.map(([id,op])=>{
       const f=getOpCamFilter(id);
       const tags=f&&f.length>0?`<span class="atrib-cam-tags">${f.map(k=>`<span class="atrib-cam-tag" style="background:${CAMARAS[k]?.cor||"#fff"}22;color:${CAMARAS[k]?.cor||"#fff"};border:1px solid ${CAMARAS[k]?.cor||"#fff"}50">${k}</span>`).join("")}</span>`:"";
-      return `<div class="online-op"><span class="online-dot"></span>${h(op.nome)}${tags}<button class="btn-rename-op" onclick="window.editarFiltroOpCam('${sq(id)}','${sq(op.nome)}')" title="Câmaras permitidas" style="color:${f&&f.length>0?"var(--am)":"#7878a8"}">${I.filter}</button><button class="btn-rename-op" onclick="window.editarNomeOpRep('${sq(id)}','${sq(op.nome)}')" title="Renomear">${I.pencil}</button></div>`;
+      return `<div class="online-op"><span class="online-main"><span class="online-dot"></span><span class="online-name">${h(op.nome)}</span>${tags}</span><span class="online-actions"><button class="btn-rename-op" onclick="window.editarFiltroOpCam('${sq(id)}','${sq(op.nome)}')" title="C�maras permitidas" style="color:${f&&f.length>0?"var(--am)":"#7878a8"}">${I.filter}</button><button class="btn-rename-op" onclick="window.editarNomeOpRep('${sq(id)}','${sq(op.nome)}')" title="Renomear">${I.pencil}</button></span></div>`;
     }).join("")}
   </div>`;
 }
