@@ -712,7 +712,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.27";
+const APP_VERSION = "v3.28";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
@@ -1391,9 +1391,7 @@ function render(){
 // â"€â"€ PRESENÇA (picking) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
 function registrarOperador(){
   if(!opId||!nomeOperador)return;
-  let sessId=sessionStorage.getItem("op_sess_id");
-  if(!sessId){sessId=Math.random().toString(36).slice(2,11);sessionStorage.setItem("op_sess_id",sessId);}
-  const opRef=ref(db,`operadores/${sessId}`);
+  const opRef=ref(db,`operadores/${opId}`);
   window._opRef=opRef;
   if(window._connUnsub){try{window._connUnsub();}catch{}window._connUnsub=null;}
   window._connUnsub=onValue(ref(db,'.info/connected'),snap=>{
@@ -1449,11 +1447,9 @@ function bindDataByPerfil(){
     dataUnsubs.push(onValue(operadoresRef,snap=>{
       const raw=snap.val()||{};
       operadores={};
-      Object.entries(raw).forEach(([sessKey,op])=>{
-        if(op.uid&&op.nome){
-          if(!operadores[op.uid]||op.ts>operadores[op.uid].ts)
-            operadores[op.uid]={nome:op.nome,ts:op.ts,sessKey};
-        }
+      Object.entries(raw).forEach(([uid,op])=>{
+        if(uid&&op.nome)
+          operadores[uid]={nome:op.nome,ts:op.ts};
       });
       // Sincroniza filtros do localStorage → Firebase (uma vez por sessão)
       if(perfil==="repositor"&&!sessionStorage.getItem("cam_filter_synced")){
@@ -1557,9 +1553,7 @@ window.editarNomeOp=()=>{
 
 window.editarNomeOpRep=async(uid,nomeAtual)=>{
   abrirEditarNome("Nome do Operador",nomeAtual,async novo=>{
-    const sessKey=operadores[uid]?.sessKey;
-    if(!sessKey)return;
-    try{await update(ref(db,`operadores/${sessKey}`),{nome:novo});}
+    try{await update(ref(db,`operadores/${uid}`),{nome:novo});}
     catch(e){alert("Erro: "+e.message);}
   });
 };
