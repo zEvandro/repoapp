@@ -264,6 +264,7 @@ function operadoresSelectorHTML(){
         <span class="op-sel-nome">${h(op.nome)}</span>
         ${tags}
         <button class="btn-cam-filter" onclick="event.stopPropagation();window.editarFiltroOpCam('${sq(id)}','${sq(op.nome)}')" title="Câmaras permitidas" style="color:${f&&f.length>0?"var(--am)":"#7878a8"}">${I.filter}</button>
+        <button class="btn-cam-filter" onclick="event.stopPropagation();window.editarNomeOpRep('${sq(id)}','${sq(op.nome)}')" title="Renomear" style="color:#7878a8">${I.pencil}</button>
       </div>`;
     }).join("")}
   </div>${avisoIncompat}`;
