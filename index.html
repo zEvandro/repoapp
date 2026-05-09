@@ -712,7 +712,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.26";
+const APP_VERSION = "v3.27";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
@@ -1394,11 +1394,19 @@ function registrarOperador(){
   let sessId=sessionStorage.getItem("op_sess_id");
   if(!sessId){sessId=Math.random().toString(36).slice(2,11);sessionStorage.setItem("op_sess_id",sessId);}
   const opRef=ref(db,`operadores/${sessId}`);
-  set(opRef,{nome:nomeOperador,uid:opId,ts:Date.now()});
-  onDisconnect(opRef).remove();
   window._opRef=opRef;
+  if(window._connUnsub){try{window._connUnsub();}catch{}window._connUnsub=null;}
+  window._connUnsub=onValue(ref(db,'.info/connected'),snap=>{
+    if(snap.val()!==true)return;
+    onDisconnect(opRef).remove().then(()=>{
+      set(opRef,{nome:nomeOperador,uid:opId,ts:Date.now()});
+    }).catch(()=>{});
+  });
 }
-function removerOperador(){if(window._opRef)remove(window._opRef).catch(()=>{});}
+function removerOperador(){
+  if(window._connUnsub){try{window._connUnsub();}catch{}window._connUnsub=null;}
+  if(window._opRef){remove(window._opRef).catch(()=>{});window._opRef=null;}
+}
 
 function papelValido(r){return ["repositor","operador","admin"].includes(r);}
 
