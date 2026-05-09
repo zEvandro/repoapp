@@ -405,7 +405,7 @@ html,body,#app{
   overflow-x:hidden;
 }
 
-@media (min-width:769px){
+@media (min-width:1025px){
   .main-rep{
     display:grid!important;
     grid-template-columns:340px minmax(0,1fr)!important;
@@ -435,13 +435,14 @@ html,body,#app{
   }
 }
 
-@media (max-width:768px){
+@media (max-width:1024px){
   .main-rep{
     display:flex!important;
     flex-direction:column!important;
     grid-template-columns:1fr!important;
     height:auto!important;
     min-height:unset!important;
+    overflow:visible!important;
   }
 
   .main-rep .rep-esq,
@@ -450,6 +451,19 @@ html,body,#app{
     max-width:100%!important;
     min-width:0!important;
   }
+
+  .main-rep .rep-esq{
+    border-right:none!important;
+  }
+}
+
+@media (max-width:720px){
+  .rep-mob-tabs{display:flex!important;}
+  .cam-chips-grid{display:grid!important;}
+  .rep-esq .cam-tab-bar{display:none!important;}
+
+  .main-rep.tab-enviar .rep-dir{display:none!important;}
+  .main-rep.tab-fila .rep-esq{display:none!important;}
 }
 
 .main-rep .crep{
@@ -585,6 +599,7 @@ html,body,#app{
   box-shadow:none!important;
   text-shadow:none!important;
 }
+
 
 
 
