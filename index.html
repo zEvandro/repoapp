@@ -253,7 +253,7 @@ function onlineBarHTML(){
     ${lista.map(([id,op])=>{
       const f=getOpCamFilter(id);
       const tags=f&&f.length>0?`<span class="atrib-cam-tags">${f.map(k=>`<span class="atrib-cam-tag" style="background:${CAMARAS[k]?.cor||"#fff"}22;color:${CAMARAS[k]?.cor||"#fff"};border:1px solid ${CAMARAS[k]?.cor||"#fff"}50">${k}</span>`).join("")}</span>`:"";
-      return `<div class="online-op"><span class="online-main"><span class="online-dot"></span><span class="online-name">${h(op.nome)}</span>${tags}</span><span class="online-actions"><button class="btn-rename-op" onclick="window.editarFiltroOpCam('${sq(id)}','${sq(op.nome)}')" title="C‚maras permitidas" style="color:${f&&f.length>0?"var(--am)":"#7878a8"}">${I.filter}</button><button class="btn-rename-op" onclick="window.editarNomeOpRep('${sq(id)}','${sq(op.nome)}')" title="Renomear">${I.pencil}</button></span></div>`;
+      return `<div class="online-op"><span class="online-main"><span class="online-dot"></span><span class="online-name">${h(op.nome)}</span>${tags}</span><span class="online-actions"><button class="btn-rename-op" onclick="window.editarFiltroOpCam('${sq(id)}','${sq(op.nome)}')" title="C√¢maras permitidas" style="color:${f&&f.length>0?"var(--am)":"#7878a8"}">${I.filter}</button><button class="btn-rename-op" onclick="window.editarNomeOpRep('${sq(id)}','${sq(op.nome)}')" title="Renomear">${I.pencil}</button></span></div>`;
     }).join("")}
   </div>`;
 }
@@ -444,13 +444,13 @@ function renderRepositor(){
         <aside class="rep-hist-col">
         ${hist.length>0?`
           <div class="rep-dir-hdr rep-hist-hdr" style="margin-top:0">
-            <span>HistÛrico de hoje</span>
+            <span>Hist√≥rico de hoje</span>
             <span class="rep-fila-n" style="background:var(--s2);color:var(--tx2)">${hist.length}</span>
           </div>
           ${hist.map(cardRep).join("")}`
           :`<div class="empty rep-hist-empty" style="padding:36px 20px">
-              <div class="empty-title">Sem histÛrico hoje</div>
-              <div class="empty-sub">As conclusıes e endereÁos vazios do dia aparecer„o aqui.</div>
+              <div class="empty-title">Sem hist√≥rico hoje</div>
+              <div class="empty-sub">As conclus√µes e endere√ßos vazios do dia aparecer√£o aqui.</div>
             </div>`}
         </aside>
       </div>
