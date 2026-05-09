@@ -33,7 +33,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.36";
+const APP_VERSION = "v3.37";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
@@ -388,8 +388,8 @@ function renderRepositor(){
     ${fontPanelHTML(false)}
     <div class="main-rep tab-${tabMobileRep}">
       <div class="rep-mob-tabs">
-        <button class="rep-mob-tab${tabMobileRep==="enviar"?" ativo":""}" data-tab="enviar" onclick="window.setTabRep('enviar')">${I.send} ENVIAR</button>
-        <button class="rep-mob-tab${tabMobileRep==="fila"?" ativo":""}" data-tab="fila" onclick="window.setTabRep('fila')">${I.clipboard} FILA${nFila>0?` <span class="mob-tab-badge">${nFila}</span>`:""}</button>
+        <button class="rep-mob-tab${tabMobileRep==="enviar"?" ativo":""}" data-tab="enviar" onclick="window.setTabRep('enviar')">${I.send} Enviar</button>
+        <button class="rep-mob-tab${tabMobileRep==="fila"?" ativo":""}" data-tab="fila" onclick="window.setTabRep('fila')">${I.clipboard} Fila${nFila>0?` <span class="mob-tab-badge">${nFila}</span>`:""}</button>
       </div>
       <div class="rep-esq">
         ${camChipsHTML()}
@@ -410,7 +410,7 @@ function renderRepositor(){
           </div>
           <label class="lbl" style="margin-top:14px">${I.users} Atribuir para</label>
           ${atribPillsHTML()}
-          <button class="btn-send" onclick="window.enviar()">${I.send} ENVIAR AO OPERADOR</button>
+          <button class="btn-send" onclick="window.enviar()">${I.send} Enviar ao operador</button>
         </div>
       </div>
       <div class="rep-dir">
@@ -432,7 +432,7 @@ function renderRepositor(){
             <button class="alerta-close" onclick="window.fecharAlerta('${sq(t.id)}')">${I.x}</button>
           </div>`).join("")}
         ${fila.length>0
-          ?`<div class="rep-dir-hdr"><span>FILA</span><span class="rep-fila-n">${fila.length}</span></div>
+          ?`<div class="rep-dir-hdr"><span>Fila</span><span class="rep-fila-n">${fila.length}</span></div>
             ${fila.map(cardRep).join("")}`
           :`<div class="empty" style="padding:50px 20px">
               <div class="empty-icon-wrap">${I.inbox.replace('stroke="currentColor"','stroke="var(--mu-op)"')}</div>
@@ -441,7 +441,7 @@ function renderRepositor(){
             </div>`}
         ${hist.length>0?`
           <div class="rep-dir-hdr" style="margin-top:12px">
-            <span>HISTÓRICO HOJE</span>
+            <span>Hist�rico de hoje</span>
             <span class="rep-fila-n" style="background:var(--s2);color:var(--tx2)">${hist.length}</span>
           </div>
           ${hist.map(cardRep).join("")}`:""}

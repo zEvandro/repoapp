@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#13161e;--s1:#1a1d27;--s2:#20232e;--s3:#252830;--bd:#2e3240;
@@ -8,6 +8,19 @@
   --bg-op:#13161e;--s1-op:#1a1d27;--s2-op:#20232e;--bd-op:#2e3240;
   --tx-op:#c9d1dc;--tx2-op:#5c6b80;--mu-op:#3a4455;
   --addr-size:82px;--addr-sp:4px;
+  --corp-bg:#0F172A;
+  --corp-header:#111827;
+  --corp-panel:#1E293B;
+  --corp-surface:#1F2937;
+  --corp-border:#334155;
+  --corp-text:#F8FAFC;
+  --corp-muted:#94A3B8;
+  --corp-primary:#2563EB;
+  --corp-success:#16A34A;
+  --corp-warning:#D97706;
+  --corp-danger:#DC2626;
+  --corp-info:#0284C7;
+  --corp-font:'Inter','Segoe UI',system-ui,-apple-system,'Roboto','Arial',sans-serif;
 }
 html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif;overflow-x:hidden}
 #app{display:flex;flex-direction:column;min-height:100dvh}
