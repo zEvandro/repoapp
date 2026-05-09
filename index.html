@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
   <meta http-equiv="Pragma" content="no-cache"/>
   <meta http-equiv="Expires" content="0"/>
-  <meta name="theme-color" content="#050709"/>
+  <meta name="theme-color" content="#13161e"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-title" content="RepoApp"/>
@@ -17,11 +17,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;700&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#06060a;--s1:#0d0d12;--s2:#111117;--s3:#16161e;--bd:#1e1e2c;
-  --am:#fbbf24;--bl:#60a5fa;--gr:#4ade80;--rd:#f87171;--pu:#a78bfa;
-  --tx:#e8eaff;--tx2:#7878a8;--mu:#3a3a60;
-  --bg-op:#04040a;--s1-op:#0b0b11;--s2-op:#0f0f16;--bd-op:#191928;
-  --tx-op:#dde8ff;--tx2-op:#5858a0;--mu-op:#282848;
+  --bg:#13161e;--s1:#1a1d27;--s2:#20232e;--s3:#252830;--bd:#2e3240;
+  --am:#fbbf24;--bl:#4b8fd4;--gr:#2d7a50;--rd:#b83030;--pu:#7c5cbf;
+  --tx:#c9d1dc;--tx2:#5c6b80;--mu:#3a4455;
+  --bg-op:#13161e;--s1-op:#1a1d27;--s2-op:#20232e;--bd-op:#2e3240;
+  --tx-op:#c9d1dc;--tx2-op:#5c6b80;--mu-op:#3a4455;
   --addr-size:82px;--addr-sp:4px;
 }
 html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif;overflow-x:hidden}
@@ -416,21 +416,25 @@ html,body{background:#13161e!important}
 
 /* ── Login ─────────────────────────────────────────────────────── */
 .login{background:#13161e!important}
-.logo{width:72px!important;height:72px!important;border-radius:14px!important;box-shadow:none!important}
-.login h1{font-size:44px!important;letter-spacing:5px!important;color:#c9d1dc!important}
-.login-sub{color:#4a5568!important;letter-spacing:3px!important}
+.logo{width:68px!important;height:68px!important;border-radius:12px!important;background:#1e2d4a!important;box-shadow:none!important}
+.login h1{font-size:38px!important;letter-spacing:4px!important;color:#c9d1dc!important}
+.login-sub{color:#4a5568!important;letter-spacing:2px!important}
 .mod-card{background:#1a1d27!important;border:1px solid #252830!important;border-radius:10px!important;box-shadow:none!important}
 .mod-card-pick{border-color:#252830!important}
 .mod-header-pick{background:#1c2030!important}
 .mod-roles-pick{background:#181b25!important}
-.mod-role-name{font-size:15px!important;letter-spacing:1.5px!important}
-.mod-title{font-size:18px!important;letter-spacing:2px!important}
+.mod-role-name{font-size:14px!important;letter-spacing:1px!important;font-family:'DM Sans'!important}
+.mod-title{font-size:16px!important;letter-spacing:1.5px!important;font-family:'DM Sans'!important;font-weight:700!important}
 
 /* ── Auth form ─────────────────────────────────────────────────── */
 .auth-inp{background:#20232e!important;border:1px solid #2e3240!important;color:#c9d1dc!important;font-size:15px!important}
 .auth-inp:focus{border-color:#2563eb!important;box-shadow:none!important}
-.auth-btn{background:#2563eb!important;color:#fff!important;font-size:18px!important;letter-spacing:3px!important;box-shadow:none!important;transition:filter .15s!important}
+.auth-btn{background:#2563eb!important;color:#fff!important;font-size:15px!important;letter-spacing:1.5px!important;font-family:'DM Sans'!important;font-weight:700!important;box-shadow:none!important;transition:filter .15s!important}
 .auth-btn:hover{filter:brightness(1.1)!important}
+.auth-btn-sec{color:#5c6b80!important}
+.aviso-dup{color:#8a9ab0!important;background:#1e2d4a18!important;border-color:#2d406050!important}
+.aviso-dup b{color:#c9d1dc!important}
+.btndup{background:#2563eb!important;color:#fff!important;font-family:'DM Sans'!important}
 
 /* ── Name screen ───────────────────────────────────────────────── */
 .op-name-screen{background:#13161e!important}
@@ -442,13 +446,16 @@ html,body{background:#13161e!important}
 /* ── Topbars ───────────────────────────────────────────────────── */
 .topbar{background:#1a1d27!important;border-bottom:1px solid #252830!important;box-shadow:none!important}
 .topbar-op{background:#1a1d27!important;border-bottom:1px solid #252830!important;box-shadow:none!important}
-.tlogo{font-size:20px!important;letter-spacing:2px!important;color:#c9d1dc!important}
+.tlogo{font-size:18px!important;letter-spacing:2px!important;color:#c9d1dc!important}
 .tver{color:#3a4455!important;letter-spacing:1px!important}
-.rep{background:#1e2d4a!important;color:#5b8dd9!important;border:1px solid #2d4060!important}
-.oper{background:#1e2d4a!important;color:#5b8dd9!important;border:1px solid #2d4060!important}
+.rep{background:#1e2d4a!important;color:#5b8dd9!important;border:1px solid #2d4060!important;font-family:'DM Sans'!important;font-size:10px!important}
+.oper{background:#1e2d4a!important;color:#5b8dd9!important;border:1px solid #2d4060!important;font-family:'DM Sans'!important;font-size:10px!important}
+.op-nome-badge{color:#5b8dd9!important;background:#1e2d4a!important;border-color:#2d406040!important}
 .tbtn-icon:hover{border-color:#2563eb!important;color:#5b8dd9!important}
+.tbtn-out:hover{border-color:#b83030!important;color:#b83030!important}
 .tstat{background:#20232e!important;border-color:#2e3240!important}
 .tstat-l{color:#3a4455!important}
+.tstat-n{font-family:'DM Sans'!important;font-weight:700!important;font-size:13px!important}
 
 /* ── Fundos de tela ────────────────────────────────────────────── */
 .main-op{background:#13161e!important}
@@ -489,7 +496,7 @@ html,body{background:#13161e!important}
 
 /* ── Form cards ────────────────────────────────────────────────── */
 .formcard{background:#1a1d27!important;border:1px solid #252830!important;border-radius:10px!important;box-shadow:none!important}
-.ftitle{font-size:14px!important;letter-spacing:1.5px!important;color:#5c6b80!important}
+.ftitle{font-size:13px!important;letter-spacing:.5px!important;color:#5c6b80!important;font-family:'DM Sans'!important;font-weight:700!important;text-transform:uppercase!important}
 
 /* ── Font panel ────────────────────────────────────────────────── */
 .font-panel,.font-panel-op{background:#1a1d27!important;border-bottom:1px solid #252830!important}
@@ -551,12 +558,12 @@ html,body{background:#13161e!important}
 .abtn:active{transform:scale(.97)!important;filter:brightness(.88)!important}
 
 /* ── Botão ENVIAR ──────────────────────────────────────────────── */
-.btn-send{background:#2563eb!important;color:#fff!important;font-size:17px!important;letter-spacing:3px!important;border-radius:8px!important;padding:14px!important;box-shadow:none!important;transition:filter .15s!important}
+.btn-send{background:#2563eb!important;color:#fff!important;font-size:14px!important;letter-spacing:1px!important;font-family:'DM Sans'!important;font-weight:700!important;border-radius:8px!important;padding:14px!important;box-shadow:none!important;transition:filter .15s!important}
 .btn-send:hover{filter:brightness(1.1)!important}
 
 /* ── Histórico ─────────────────────────────────────────────────── */
 .chist{background:#1a1d27!important;border:1px solid #252830!important;border-left:3px solid!important;border-radius:8px!important}
-.secao{color:#3a4455!important;border-bottom:1px solid #252830!important;letter-spacing:1.5px!important;font-size:9px!important}
+.secao{color:#3a4455!important;border-bottom:1px solid #252830!important;letter-spacing:.5px!important;font-size:10px!important;font-family:'DM Sans'!important;font-weight:700!important}
 
 /* ── Dica ──────────────────────────────────────────────────────── */
 .sdica{background:#1a1d27!important;border:1px solid #252830!important;border-radius:8px!important;color:#3a4455!important}
@@ -566,8 +573,10 @@ html,body{background:#13161e!important}
 
 /* ── Modal ─────────────────────────────────────────────────────── */
 .modal{background:#1a1d27!important;border:1px solid #252830!important;border-radius:12px!important;box-shadow:0 8px 32px rgba(0,0,0,.5)!important}
+.modal-title{font-family:'DM Sans'!important;font-size:15px!important;letter-spacing:.5px!important;font-weight:700!important}
 .modal-op-btn{background:#20232e!important;border-color:#2e3240!important}
 .modal-op-btn:hover{border-color:#2563eb!important;background:#1e2d4a!important}
+.modal-cancel{background:#1a1d27!important;border-color:#252830!important;color:#5c6b80!important}
 .cam-filter-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
 .cam-filter-chip{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 6px;border-radius:8px;border:1px solid #2e3240;background:#20232e;cursor:pointer;transition:all .15s;font-family:inherit;width:100%}
 .cam-filter-chip.ativo{border-color:var(--cc)!important;background:var(--cc-bg)!important;box-shadow:none!important}
@@ -634,7 +643,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.34";
+const APP_VERSION = "v3.35";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
