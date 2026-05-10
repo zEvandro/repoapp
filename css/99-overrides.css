@@ -927,6 +927,18 @@ html,body,#app{
 .btn-urgente:hover{color:#f97316}
 .btn-urgente.ativo{color:#f97316}
 
+/* ── Indicador de conexão ───────────────────────────────────────── */
+.conn-banner{
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  font-family:'DM Sans';font-size:13px;font-weight:700;letter-spacing:.2px;
+  text-align:center;padding:9px 16px;
+  transition:transform .35s ease,opacity .35s ease;
+  pointer-events:none;
+}
+.conn-hidden{transform:translateY(-100%);opacity:0}
+.conn-off{transform:translateY(0);opacity:1;background:#ef4444;color:#fff}
+.conn-ok{transform:translateY(0);opacity:1;background:#16a34a;color:#fff}
+
 /* ── Operator selector theme ────────────────────────────────────── */
 .op-sel-row{background:var(--corp-surface)!important;border:1px solid var(--corp-border)!important;}
 .op-sel-row:hover{border-color:var(--corp-primary)!important;}

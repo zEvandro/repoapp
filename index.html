@@ -24,6 +24,7 @@
 </head>
 <body>
 <div id="app"></div>
+<div id="conn-banner" class="conn-banner conn-hidden"></div>
 <script src="./firebase-config.js"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -33,7 +34,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.50";
+const APP_VERSION = "v3.51";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
@@ -98,6 +99,7 @@ let camaraAtual  = "B";
 let tabMobileRep     = "fila";
 let meuFiltroCamera  = null;
 let filtroHistorico  = "";
+let _connEverConnected = false;
 // Auth
 let authUser     = null;
 let authReady    = false;
@@ -736,9 +738,37 @@ function limparSessaoDados(){
   clearInterval(window._timerOp);
   removerOperador();
   clearDataSubs();
+  if(window._connIndUnsub){try{window._connIndUnsub();}catch{}window._connIndUnsub=null;}
+  _connEverConnected=false;
+  const b=document.getElementById('conn-banner');
+  if(b)b.className='conn-banner conn-hidden';
   perfil=null;nomeOperador=null;opId=null;showFont=false;
   tarefas=[];operadores={};
   prevIds=null;filtroRua="todas";atribPara=null;meuFiltroCamera=null;filtroHistorico="";
+}
+
+function updateConnBanner(ok){
+  const b=document.getElementById('conn-banner');
+  if(!b)return;
+  clearTimeout(window._connBannerTimer);
+  if(ok){
+    b.textContent='✓ Conexão restaurada';
+    b.className='conn-banner conn-ok';
+    window._connBannerTimer=setTimeout(()=>{b.className='conn-banner conn-hidden';},2500);
+  }else{
+    b.textContent='⚠ Sem conexão — dados podem estar desatualizados';
+    b.className='conn-banner conn-off';
+  }
+}
+
+function bindConnIndicator(){
+  if(window._connIndUnsub){try{window._connIndUnsub();}catch{}window._connIndUnsub=null;}
+  window._connIndUnsub=onValue(ref(db,'.info/connected'),snap=>{
+    const ok=snap.val()===true;
+    if(ok)_connEverConnected=true;
+    if(!_connEverConnected)return;
+    updateConnBanner(ok);
+  });
 }
 
 function bindDataByPerfil(){
@@ -804,6 +834,7 @@ function bindDataByPerfil(){
       render();
     },()=>{}));
   }
+  bindConnIndicator();
 }
 
 function aplicarPapel(role,name){
