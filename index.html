@@ -31,10 +31,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getDatabase, ref, push, onValue, get, remove, update, set, serverTimestamp, onDisconnect }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
-  signOut, onAuthStateChanged, setPersistence, browserLocalPersistence, sendPasswordResetEmail }
+  signOut, onAuthStateChanged, setPersistence, browserLocalPersistence, updatePassword }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.61";
+const APP_VERSION = "v3.62";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
@@ -728,11 +728,11 @@ function renderAdmin(){
   }else if(adminTab==="senha"){
     body=`<div class="adm-form">
       ${adminErr?`<div class="auth-err">${h(adminErr)}</div>`:""}
-      <div style="font-size:11px;color:var(--tx2);line-height:1.6;background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:10px;margin-bottom:4px">
-        Firebase enviará um link de redefinição para o e-mail do usuário. O link expira em 1 hora.
-      </div>
-      <input id="adm-reset-email" class="auth-inp" type="email" placeholder="E-mail do usuário" autocomplete="off"/>
-      <button class="auth-btn" onclick="window.admResetSenha()" ${adminBusy?"disabled":""}>${adminBusy?"ENVIANDO...":"ENVIAR LINK DE REDEFINIÇÃO"}</button>
+      <input id="adm-rs-email"   class="auth-inp" type="email" placeholder="E-mail da conta" autocomplete="off"/>
+      <input id="adm-rs-atual"   class="auth-inp" type="password" placeholder="Senha atual" autocomplete="off"/>
+      <input id="adm-rs-nova"    class="auth-inp" type="password" placeholder="Nova senha" autocomplete="off"/>
+      <input id="adm-rs-confirm" class="auth-inp" type="password" placeholder="Confirmar nova senha" autocomplete="off"/>
+      <button class="auth-btn" onclick="window.admResetSenha()" ${adminBusy?"disabled":""}>${adminBusy?"ALTERANDO...":"ALTERAR SENHA"}</button>
     </div>`;
   }else{
     body=`<div class="adm-form">
@@ -1039,21 +1039,29 @@ window.sair=async()=>{
 window.admTab=t=>{adminTab=t;adminErr="";render();};
 
 window.admResetSenha=async()=>{
-  const email=(document.getElementById("adm-reset-email")?.value||"").trim().toLowerCase();
-  if(!email){adminErr="Informe o e-mail do usuário.";render();return;}
+  const email  =(document.getElementById("adm-rs-email")?.value||"").trim().toLowerCase();
+  const atual  =(document.getElementById("adm-rs-atual")?.value||"").trim();
+  const nova   =(document.getElementById("adm-rs-nova")?.value||"").trim();
+  const confirm=(document.getElementById("adm-rs-confirm")?.value||"").trim();
+  if(!email||!atual||!nova){adminErr="Preencha todos os campos.";render();return;}
+  if(nova!==confirm){adminErr="As senhas não coincidem.";render();return;}
+  if(nova.length<6){adminErr="A nova senha precisa ter pelo menos 6 caracteres.";render();return;}
   adminBusy=true;adminErr="";render();
+  const sa=getSecAuth();
   try{
-    await sendPasswordResetEmail(auth,email);
-    adminBusy=false;
-    adminErr="";
-    render();
-    showToast(`✓ Link de redefinição enviado para ${email}`,{bg:"#16a34a",color:"#fff"});
+    const cred=await signInWithEmailAndPassword(sa,email,atual);
+    await updatePassword(cred.user,nova);
+    await signOut(sa);
+    adminBusy=false;render();
+    showToast("✓ Senha alterada com sucesso.",{bg:"#16a34a",color:"#fff"});
   }catch(e){
     adminBusy=false;
+    await signOut(sa).catch(()=>{});
     const code=e?.code||"";
-    if(code==="auth/user-not-found")adminErr="Nenhuma conta encontrada com esse e-mail.";
-    else if(code==="auth/invalid-email")adminErr="E-mail inválido.";
-    else adminErr="Erro ao enviar. Tente novamente.";
+    if(code==="auth/invalid-credential"||code==="auth/wrong-password")adminErr="Senha atual incorreta.";
+    else if(code==="auth/user-not-found"||code==="auth/invalid-email")adminErr="Conta não encontrada.";
+    else if(code==="auth/weak-password")adminErr="Nova senha fraca (mínimo 6 caracteres).";
+    else adminErr="Erro ao alterar. Tente novamente.";
     render();
   }
 };
