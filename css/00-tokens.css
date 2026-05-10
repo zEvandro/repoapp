@@ -2,14 +2,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0f1219;--s1:#141720;--s2:#191c27;--s3:#1e2130;--bd:#2e3240;
+  --bg:#13161e;--s1:#1a1d27;--s2:#20232e;--s3:#252830;--bd:#2e3240;
   --am:#fbbf24;--bl:#4b8fd4;--gr:#2d7a50;--rd:#b83030;--pu:#7c5cbf;
   --tx:#c9d1dc;--tx2:#5c6b80;--mu:#3a4455;
-  --bg-op:#0f1219;--s1-op:#141720;--s2-op:#191c27;--bd-op:#2e3240;
+  --bg-op:#13161e;--s1-op:#1a1d27;--s2-op:#20232e;--bd-op:#2e3240;
   --tx-op:#c9d1dc;--tx2-op:#5c6b80;--mu-op:#3a4455;
   --addr-size:82px;--addr-sp:4px;
-  --corp-bg:#0f1219;
-  --corp-header:#131720;
+  --corp-bg:#0F172A;
+  --corp-header:#111827;
   --corp-panel:#1E293B;
   --corp-surface:#1F2937;
   --corp-border:#334155;

@@ -3,7 +3,7 @@
    ══════════════════════════════════════════════════════════════════ */
 
 /* ── Fundação ──────────────────────────────────────────────────── */
-html,body{background:#0f1219!important}
+html,body{background:#13161e!important}
 
 /* ── Login ─────────────────────────────────────────────────────── */
 .login{background:#13161e!important}
@@ -50,9 +50,9 @@ html,body{background:#0f1219!important}
 
 /* ── Fundos de tela ────────────────────────────────────────────── */
 .main-op{background:#13161e!important}
-.main-rep{background:#0f1219!important}
-.rep-dir{background:#0f1219!important}
-.rep-esq{background:#131720!important}
+.main-rep{background:#13161e!important}
+.rep-dir{background:#13161e!important}
+.rep-esq{background:#161920!important}
 
 /* ── Camera tabs ───────────────────────────────────────────────── */
 .cam-tab-bar{background:#1a1d27!important;border-bottom:1px solid #252830!important}
