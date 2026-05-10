@@ -930,32 +930,58 @@ html,body,#app{
 /* ── Produtividade ao vivo ──────────────────────────────────────── */
 .prod-section{
   border-top:1px solid var(--corp-border);
-  padding:14px 16px 16px;
-  background:var(--corp-header);
+  padding:14px 16px 18px;
+  background:#0f1219;
 }
 .prod-title{
-  font-family:'DM Sans';font-size:11px;font-weight:700;letter-spacing:.5px;
-  color:var(--corp-muted);text-transform:uppercase;
-  display:flex;align-items:center;gap:6px;margin-bottom:10px;
+  font-family:'DM Sans';font-size:10px;font-weight:700;letter-spacing:1px;
+  color:#3d4a60;text-transform:uppercase;
+  display:flex;align-items:center;gap:6px;margin-bottom:12px;
 }
-.prod-row{
-  display:grid;grid-template-columns:18px 1fr auto auto;align-items:center;
-  gap:6px;padding:6px 8px;border-radius:8px;margin-bottom:4px;
-  background:var(--corp-surface);border:1px solid var(--corp-border);
-  font-family:'DM Sans';font-size:12px;
+.prod-item{
+  padding:8px 0;
+  border-bottom:1px solid #1a1d27;
+  font-family:'DM Sans';
 }
-.prod-rank{color:var(--corp-muted);font-size:11px;font-weight:700;text-align:center}
-.prod-nome{font-weight:600;color:var(--corp-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.prod-nums{display:flex;align-items:center;gap:6px;flex-shrink:0}
-.prod-conc{color:#22c55e;font-weight:800;font-size:11px}
-.prod-vz{color:#f97316;font-weight:800;font-size:11px}
-.prod-atual{
-  font-family:'Bebas Neue';font-size:13px;letter-spacing:1px;
-  color:#f59e0b;background:#f59e0b18;border-radius:6px;
-  padding:1px 7px;flex-shrink:0;max-width:110px;
+.prod-item:last-child{border-bottom:none}
+.prod-item-1 .prod-nome{color:#f59e0b}
+.prod-item-top{
+  display:flex;align-items:center;gap:8px;margin-bottom:6px;
+}
+.prod-medal{font-size:14px;flex-shrink:0;line-height:1}
+.prod-num{
+  display:inline-block;width:18px;height:18px;border-radius:50%;
+  background:#1e2433;color:#3d4a60;
+  font-size:10px;font-weight:800;text-align:center;line-height:18px;
+}
+.prod-nome{
+  flex:1;font-size:13px;font-weight:600;color:#c9d1dc;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-.prod-livre{font-size:10px;color:var(--corp-muted);flex-shrink:0}
+.prod-score{display:flex;align-items:baseline;gap:3px;flex-shrink:0}
+.prod-conc-n{font-size:20px;font-weight:800;line-height:1}
+.prod-conc-lbl{font-size:11px;color:#3d4a60;font-weight:700}
+.prod-vz-n{font-size:10px;font-weight:800;color:#f97316;margin-left:4px}
+.prod-bar-track{
+  height:4px;border-radius:2px;background:#1e2433;
+  margin:0 0 5px;overflow:hidden;
+}
+.prod-bar-fill{
+  height:100%;border-radius:2px;
+  transition:width .4s ease;
+}
+.prod-working{
+  font-family:'Bebas Neue';font-size:12px;letter-spacing:1.5px;
+  color:#f59e0b;display:flex;align-items:center;gap:5px;
+}
+.prod-working-dot{
+  width:5px;height:5px;border-radius:50%;background:#f59e0b;
+  flex-shrink:0;animation:pulse-dot 1.4s ease-in-out infinite;
+}
+@keyframes pulse-dot{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.4;transform:scale(.7)}
+}
 
 /* ── Pausa de operador ──────────────────────────────────────────── */
 .pausa-overlay{

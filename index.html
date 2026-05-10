@@ -34,7 +34,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.54";
+const APP_VERSION = "v3.55";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
@@ -418,18 +418,32 @@ function renderRepositor(){
           });
           const ranking=Object.values(prod).sort((a,b)=>b.conc-a.conc||a.vz-b.vz);
           if(!ranking.length)return"";
+          const maxConc=Math.max(1,...ranking.map(o=>o.conc));
+          const medals=["🥇","🥈","🥉"];
           return`<div class="prod-section">
             <div class="prod-title">${I.users} Produtividade hoje</div>
-            ${ranking.map((op,i)=>`
-              <div class="prod-row">
-                <span class="prod-rank">${i+1}</span>
-                <span class="prod-nome">${h(op.nome)}</span>
-                <span class="prod-nums">
-                  <span class="prod-conc">✓ ${op.conc}</span>
-                  ${op.vz>0?`<span class="prod-vz">⚠ ${op.vz}</span>`:""}
-                </span>
-                ${op.atual?`<span class="prod-atual" title="Em andamento">${h(op.atual)}</span>`:`<span class="prod-livre">livre</span>`}
-              </div>`).join("")}
+            ${ranking.map((op,i)=>{
+              const pct=Math.round((op.conc/maxConc)*100);
+              const isFirst=i===0;
+              const barColor=isFirst?"#f59e0b":op.conc>0?"#3b82f6":"#2e3240";
+              return`<div class="prod-item${isFirst?" prod-item-1":""}">
+                <div class="prod-item-top">
+                  <span class="prod-medal">${medals[i]||`<span class="prod-num">${i+1}</span>`}</span>
+                  <span class="prod-nome">${h(op.nome)}</span>
+                  <span class="prod-score">
+                    <span class="prod-conc-n" style="color:${isFirst?"#f59e0b":"#22c55e"}">${op.conc}</span>
+                    <span class="prod-conc-lbl">✓</span>
+                    ${op.vz>0?`<span class="prod-vz-n">⚠${op.vz}</span>`:""}
+                  </span>
+                </div>
+                <div class="prod-bar-track">
+                  <div class="prod-bar-fill" style="width:${pct}%;background:${barColor}"></div>
+                </div>
+                ${op.atual
+                  ?`<div class="prod-working"><span class="prod-working-dot"></span>${h(op.atual)}</div>`
+                  :""}
+              </div>`;
+            }).join("")}
           </div>`;
         })()}
       </div>
