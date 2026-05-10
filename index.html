@@ -34,7 +34,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.51";
+const APP_VERSION = "v3.52";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
@@ -81,6 +81,8 @@ const I = {
   flag:       `<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>`,
   pencil:     `<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>`,
   filter:     `<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>`,
+  pause:      `<svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>`,
+  list:       `<svg class="icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>`,
 };
 
 // â"€â"€ ESTADO â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
@@ -158,6 +160,10 @@ function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2
 function h(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));}
 function sq(v){return String(v??"").replace(/\\/g,"\\\\").replace(/'/g,"\\'");}
 function idSafe(v){return String(v??"").replace(/[^A-Za-z0-9_-]/g,"_");}
+function dataHoje(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+async function addLog(acao,tarefaId,endereco,tipo){
+  try{await push(ref(db,`logs/${dataHoje()}`),{ts:Date.now(),acao,tarefaId:tarefaId||null,endereco:endereco||null,tipo:tipo||null,opId:opId||null,opNome:nomeOperador||null});}catch{}
+}
 function cleanInput(v,max=40){return String(v??"").replace(/[<>"'`]/g,"").trim().slice(0,max);}
 
 // â"€â"€ PARSER â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
@@ -262,9 +268,10 @@ function operadoresSelectorHTML(){
     ${lista.map(([id,op])=>{
       const f=getOpCamFilter(id);
       const tags=f&&f.length>0?`<span class="atrib-cam-tags">${f.map(k=>`<span class="atrib-cam-tag" style="background:${CAMARAS[k]?.cor||"#fff"}22;color:${CAMARAS[k]?.cor||"#fff"};border:1px solid ${CAMARAS[k]?.cor||"#fff"}50">${k}</span>`).join("")}</span>`:"";
+      const emPausaOp=op.pausa===true;
       return`<div class="op-sel-row${atribPara===id?" selecionado":""}" data-op-id="${sq(id)}" onclick="window.setAtrib('${sq(id)}')">
-        <span class="online-dot"></span>
-        <span class="op-sel-nome">${h(op.nome)}</span>
+        <span class="${emPausaOp?"pausa-dot":"online-dot"}" title="${emPausaOp?"Em pausa":"Online"}"></span>
+        <span class="op-sel-nome" style="${emPausaOp?"color:#8892b0":""}">${h(op.nome)}${emPausaOp?` <span style="font-size:10px;color:#f97316;font-family:'DM Sans';font-weight:700">PAUSA</span>`:""}</span>
         ${tags}
         <button class="btn-cam-filter" onclick="event.stopPropagation();window.editarFiltroOpCam('${sq(id)}','${sq(op.nome)}')" title="Câmaras permitidas" style="color:${f&&f.length>0?"var(--am)":"#7878a8"}">${I.filter}</button>
         <button class="btn-cam-filter" onclick="event.stopPropagation();window.editarNomeOpRep('${sq(id)}','${sq(op.nome)}')" title="Renomear" style="color:#7878a8">${I.pencil}</button>
@@ -369,6 +376,7 @@ function renderRepositor(){
       ${nFeito>0?`<div class="tstat"><span class="tstat-n" style="color:var(--gr)">${nFeito}</span><span class="tstat-l">feitos</span></div>`:""}
       <span class="tlive"><span class="dot"></span></span>
       <span class="tver">${APP_VERSION}</span>
+      <button class="tbtn-icon" onclick="window.verLog()" title="Log de ações">${I.list}</button>
       <button class="tbtn-icon" onclick="window.toggleFont()">${I.settings}</button>
       <button class="tbtn-out" onclick="window.sair()">${I.logout} Sair</button>
     </div>
@@ -536,6 +544,7 @@ function renderOperador(){
     :statsHTML+(filaFiltrada.length===0
       ?`<div class="empty" style="padding:30px 20px"><div class="empty-icon-wrap">${I.search.replace('stroke="currentColor"','stroke="var(--mu-op)"')}</div><div class="empty-title">Nenhum na Rua ${filtroRua}</div><div class="empty-sub">Selecione outra rua ou "Todas".</div></div>`
       :filaFiltrada.map((t,i)=>cardOp(t,i)).join(""));
+  const emPausa=operadores[opId]?.pausa===true;
   document.getElementById("app").innerHTML=`
     <div class="topbar-op">
       <span class="tlogo">REPO</span>
@@ -544,11 +553,17 @@ function renderOperador(){
       <span class="tsp"></span>
       <span class="tlive"><span class="dot"></span>ao vivo</span>
       <span class="tver">${APP_VERSION}</span>
+      <button class="tbtn-icon${emPausa?" pausa-ativo":""}" onclick="window.togglePausa()" title="${emPausa?"Retomar":"Pausar"}" style="${emPausa?"color:#f97316;border-color:#f9731650":""}">${I.pause}</button>
       <button class="tbtn-icon" onclick="window.toggleFont()">${I.settings}</button>
       <button class="tbtn-out" onclick="window.sair()">${I.logout} Sair</button>
     </div>
     ${fontPanelHTML(true)}
-    ${filtroBarHTML}
+    ${emPausa?`<div class="pausa-overlay">
+      <div class="pausa-icon">⏸</div>
+      <div class="pausa-title">Em Pausa</div>
+      <div class="pausa-sub">Você não receberá novas tarefas enquanto estiver pausado.</div>
+      <button class="abtn abtn-blue" style="max-width:220px;margin-top:8px" onclick="window.togglePausa()">Retomar</button>
+    </div>`:`${filtroBarHTML}
     <div class="main-op">
       ${filaHTML}
       ${filaFiltrada.length>0?`<div class="sdica">${I.swipe} Arraste para direita para <b>concluir</b> &nbsp;·&nbsp; ${I.tap} Toque em <b>Concluído</b></div>`:""}
@@ -563,8 +578,8 @@ function renderOperador(){
               ${fmtHora(t.ts)}
             </span>
           </div>`).join("")}`:""}
-    </div>`;
-  filaFiltrada.forEach(t=>{
+    </div>`}`;
+  if(!emPausa)filaFiltrada.forEach(t=>{
     const el=document.getElementById("op-"+idSafe(t.id));
     if(el)initSwipe(el,()=>window.acao(t.id,"concluido"));
   });
@@ -784,7 +799,7 @@ function bindDataByPerfil(){
         const minhasNovas=novo.filter(t=>t.status==="pendente"&&(!t.atribId||t.atribId===opId)
           &&(!meuFiltroCamera||!meuFiltroCamera.length||meuFiltroCamera.includes((t.endereco||"")[0]))
           &&!prevIds.includes(t.id));
-        if(minhasNovas.length>0)beep();
+        if(minhasNovas.length>0&&!operadores[opId]?.pausa)beep();
       }
       if(perfil==="operador"&&nomeOperador){
         prevIds=novo.filter(t=>t.status==="pendente"&&(!t.atribId||t.atribId===opId)
@@ -803,7 +818,7 @@ function bindDataByPerfil(){
       operadores={};
       Object.entries(raw).forEach(([uid,op])=>{
         if(uid&&op.nome)
-          operadores[uid]={nome:op.nome,ts:op.ts};
+          operadores[uid]={nome:op.nome,ts:op.ts,pausa:op.pausa===true};
       });
       // Sincroniza filtros do localStorage → Firebase (uma vez por sessão)
       if(perfil==="repositor"&&!sessionStorage.getItem("cam_filter_synced")){
@@ -1169,10 +1184,11 @@ window.onEnd=v=>{
 async function doPush(endCompleto){
   window._fs=null;window._endForcar=null;
   try{
-    await push(tasksRef,{endereco:endCompleto,tipo:tipoAtual,status:"pendente",ts:Date.now(),
+    const newRef=await push(tasksRef,{endereco:endCompleto,tipo:tipoAtual,status:"pendente",ts:Date.now(),
       atribId:atribPara||null,
       atribNome:atribPara?(operadores[atribPara]?.nome||null):null,
     });
+    addLog('enviou',newRef.key,endCompleto,tipoAtual);
   }catch(e){
     showToast("Erro ao enviar. Verifique a conexão.",{bg:"#ef4444",color:"#fff"});
     console.error("doPush error:",e);
@@ -1230,18 +1246,71 @@ window.acao=async(id,status)=>{
     const updates={status};
     if(status==="andamento"||status==="vazio"){updates.opId=opId;updates.opNome=nomeOperador;}
     await update(ref(db,`tarefas/${id}`),updates);
+    const t=tarefas.find(t=>t.id===id);
+    const acaoNome=status==="andamento"?"pegou":status==="concluido"?"concluiu":"vazio";
+    addLog(acaoNome,id,t?.endereco,t?.tipo);
   }catch(e){alert("Erro: "+e.message);}
 };
-window.pular=async id=>{try{await update(ref(db,`tarefas/${id}`),{status:"pulado",ts:Date.now()});}catch(e){alert("Erro: "+e.message);}};
+window.pular=async id=>{
+  try{
+    await update(ref(db,`tarefas/${id}`),{status:"pulado",ts:Date.now()});
+    const t=tarefas.find(t=>t.id===id);
+    addLog('pulou',id,t?.endereco,t?.tipo);
+  }catch(e){alert("Erro: "+e.message);}
+};
 window.remover=async id=>{if(!confirm("Remover esta tarefa?"))return;try{await remove(ref(db,`tarefas/${id}`));}catch(e){alert("Erro: "+e.message);}};
 window.marcarVazio=async id=>{if(!confirm("Marcar este endereço como vazio?"))return;try{await update(ref(db,`tarefas/${id}`),{status:"vazio"});}catch(e){alert("Erro: "+e.message);}};
 window.toggleUrgente=async id=>{
   const t=tarefas.find(t=>t.id===id);if(!t)return;
-  try{await update(ref(db,`tarefas/${id}`),{urgente:t.urgente?null:true});}
-  catch(e){alert("Erro: "+e.message);}
+  try{
+    await update(ref(db,`tarefas/${id}`),{urgente:t.urgente?null:true});
+    addLog(t.urgente?'urgente_off':'urgente_on',id,t.endereco,t.tipo);
+  }catch(e){alert("Erro: "+e.message);}
 };
 window.fecharAlerta=async id=>{try{await update(ref(db,`tarefas/${id}`),{alertaVisto:true});}catch{}document.getElementById("al-"+idSafe(id))?.remove();};
-window.limparTudo=async()=>{if(!confirm("Limpar todas as tarefas?"))return;try{await remove(tasksRef);}catch(e){alert("Erro: "+e.message);}};
+window.limparTudo=async()=>{if(!confirm("Limpar todas as tarefas?"))return;try{await remove(tasksRef);}catch(e){alert("Erro: "+e.message);};};
+
+window.togglePausa=async()=>{
+  if(!opId)return;
+  const emPausa=operadores[opId]?.pausa===true;
+  try{await update(ref(db,`operadores/${opId}`),{pausa:emPausa?null:true});}
+  catch(e){alert("Erro: "+e.message);}
+};
+
+window.verLog=async()=>{
+  const snap=await get(ref(db,`logs/${dataHoje()}`)).catch(()=>null);
+  const entradas=snap?.val()?Object.values(snap.val()).sort((a,b)=>b.ts-a.ts):[];
+  const acaoInfo={
+    enviou:{cor:"#3b82f6",txt:"Enviou"},
+    pegou:{cor:"#f59e0b",txt:"Pegou"},
+    concluiu:{cor:"#22c55e",txt:"Concluiu"},
+    vazio:{cor:"#ef4444",txt:"Vazio"},
+    pulou:{cor:"#8892b0",txt:"Pulou"},
+    urgente_on:{cor:"#f97316",txt:"Urgente ▲"},
+    urgente_off:{cor:"#8892b0",txt:"Urgente ▼"},
+  };
+  const rows=entradas.length===0
+    ?`<div style="text-align:center;color:#5c6b80;padding:32px 0">Nenhuma ação registrada hoje</div>`
+    :entradas.map(e=>{
+      const ai=acaoInfo[e.acao]||{cor:"#5c6b80",txt:e.acao};
+      return `<div class="log-entry">
+        <span class="log-time">${fmtHora(e.ts)}</span>
+        <span class="log-acao" style="color:${ai.cor}">${ai.txt}</span>
+        <span class="log-op">${h(e.opNome||"—")}</span>
+        <span class="log-end">${h(e.endereco||"—")}</span>
+      </div>`;
+    }).join("");
+  const ov=document.createElement("div");
+  ov.className="modal-overlay";
+  ov.innerHTML=`<div class="modal" style="max-width:560px;width:95vw">
+    <div class="modal-title">Log de Ações — ${dataHoje()}</div>
+    <div style="font-size:11px;color:#5c6b80;margin-bottom:12px">${entradas.length} registro(s)</div>
+    <div class="log-list">${rows}</div>
+    <button class="modal-cancel" style="margin-top:16px;width:100%" onclick="this.closest('.modal-overlay').remove()">Fechar</button>
+  </div>`;
+  ov.addEventListener("click",e=>{if(e.target===ov)ov.remove();});
+  document.body.appendChild(ov);
+};
 window.novoDia=async()=>{
   const conc=tarefas.filter(t=>t.status==="concluido");
   const vz=tarefas.filter(t=>t.status==="vazio");
