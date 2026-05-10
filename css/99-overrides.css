@@ -828,7 +828,7 @@ html,body,#app{
   .main-rep .rep-hist-col{
     min-width:0;
     border-left:1px solid var(--corp-border);
-    padding-left:0;
+    padding:0 10px;
     opacity:.84;
     position:sticky;
     top:0;
@@ -850,6 +850,7 @@ html,body,#app{
   .main-rep .rep-hist-col .rep-dir-hdr{
     margin-top:0!important;
     color:#8FA1B9!important;
+    justify-content:center!important;
   }
 
   .main-rep .rep-hist-col .rep-fila-n{
