@@ -927,6 +927,36 @@ html,body,#app{
 .btn-urgente:hover{color:#f97316}
 .btn-urgente.ativo{color:#f97316}
 
+/* ── Produtividade ao vivo ──────────────────────────────────────── */
+.prod-section{
+  border-top:1px solid var(--corp-border);
+  padding:14px 16px 16px;
+  background:var(--corp-header);
+}
+.prod-title{
+  font-family:'DM Sans';font-size:11px;font-weight:700;letter-spacing:.5px;
+  color:var(--corp-muted);text-transform:uppercase;
+  display:flex;align-items:center;gap:6px;margin-bottom:10px;
+}
+.prod-row{
+  display:grid;grid-template-columns:18px 1fr auto auto;align-items:center;
+  gap:6px;padding:6px 8px;border-radius:8px;margin-bottom:4px;
+  background:var(--corp-surface);border:1px solid var(--corp-border);
+  font-family:'DM Sans';font-size:12px;
+}
+.prod-rank{color:var(--corp-muted);font-size:11px;font-weight:700;text-align:center}
+.prod-nome{font-weight:600;color:var(--corp-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prod-nums{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.prod-conc{color:#22c55e;font-weight:800;font-size:11px}
+.prod-vz{color:#f97316;font-weight:800;font-size:11px}
+.prod-atual{
+  font-family:'Bebas Neue';font-size:13px;letter-spacing:1px;
+  color:#f59e0b;background:#f59e0b18;border-radius:6px;
+  padding:1px 7px;flex-shrink:0;max-width:110px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.prod-livre{font-size:10px;color:var(--corp-muted);flex-shrink:0}
+
 /* ── Pausa de operador ──────────────────────────────────────────── */
 .pausa-overlay{
   display:flex;flex-direction:column;align-items:center;justify-content:center;

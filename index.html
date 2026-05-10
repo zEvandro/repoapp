@@ -34,7 +34,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.53";
+const APP_VERSION = "v3.54";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
@@ -407,6 +407,31 @@ function renderRepositor(){
           ${operadoresSelectorHTML()}
           <button class="btn-send" onclick="window.enviar()">${I.send} Enviar ao operador</button>
         </div>
+        ${(()=>{
+          const prod={};
+          tarefas.forEach(t=>{
+            if(!t.opId||!t.opNome)return;
+            if(!prod[t.opId])prod[t.opId]={nome:t.opNome,conc:0,vz:0,atual:null};
+            if(t.status==="concluido")prod[t.opId].conc++;
+            else if(t.status==="vazio")prod[t.opId].vz++;
+            else if(t.status==="andamento")prod[t.opId].atual=t.endereco;
+          });
+          const ranking=Object.values(prod).sort((a,b)=>b.conc-a.conc||a.vz-b.vz);
+          if(!ranking.length)return"";
+          return`<div class="prod-section">
+            <div class="prod-title">${I.users} Produtividade hoje</div>
+            ${ranking.map((op,i)=>`
+              <div class="prod-row">
+                <span class="prod-rank">${i+1}</span>
+                <span class="prod-nome">${h(op.nome)}</span>
+                <span class="prod-nums">
+                  <span class="prod-conc">✓ ${op.conc}</span>
+                  ${op.vz>0?`<span class="prod-vz">⚠ ${op.vz}</span>`:""}
+                </span>
+                ${op.atual?`<span class="prod-atual" title="Em andamento">${h(op.atual)}</span>`:`<span class="prod-livre">livre</span>`}
+              </div>`).join("")}
+          </div>`;
+        })()}
       </div>
       <div class="rep-dir">
         <div class="rep-queue-col">
