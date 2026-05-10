@@ -170,11 +170,10 @@ O admin libera ou rejeita. Ao liberar: cria entrada em `roles/` e remove de `pen
 | `tarefas` | lê + escreve tudo | lê + escreve status/opId/opNome | — |
 | `operadores` | lê; escreve só `nome` | lê; escreve próprio nó | — |
 | `opCamFiltros` | lê + escreve | lê | — |
-| `logs` | lê + escreve* | escreve* | — |
+| `logs` | lê + escreve | escreve | — |
 | `roles` | — | — | lê + escreve |
 | `pendingUsers` | — | lê próprio | lê + escreve |
-
-*Pendente de adicionar a regra (ver seção `/logs/` acima).
+| `preRoles` | — | — | lê + escreve |
 
 ---
 
