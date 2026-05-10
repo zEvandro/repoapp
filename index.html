@@ -34,7 +34,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
   signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-const APP_VERSION = "v3.52";
+const APP_VERSION = "v3.53";
 
 const firebaseConfig = window.FIREBASE_CONFIG;
 if(!firebaseConfig) throw new Error("firebase-config.js não carregado.");
@@ -829,7 +829,7 @@ function bindDataByPerfil(){
           set(ref(db,`opCamFiltros/${uid}`),obj).catch(()=>{});
         });
       }
-      if(perfil==="repositor")render();
+      if(perfil==="repositor"||perfil==="operador")render();
     },()=>{}));
     if(perfil==="operador"){
       dataUnsubs.push(onValue(ref(db,`opCamFiltros/${opId}`),snap=>{
